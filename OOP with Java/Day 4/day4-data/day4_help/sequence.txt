@@ -1,0 +1,173 @@
+Assignment status???????????????????????
+Help :
+In Tester (FruitBasket) :
+Fruit[] basket=new Fruti[sc.nextInt()];
+
+//assume : basket is populated
+Add Mango/.... : 
+basket[counter]=new Mango(nm,wt,clr);
+counter++;
+
+
+
+6. Mark a fruit in a basket , as stale(=not fresh)
+i/p : index 
+o/p : error message (in case of invalid index) or mark it stale
+
+code : sop("Enter array index");
+int index=sc.nextInt();
+if(index >= 0 && index < counter)
+{
+  basket[index].setFresh(false);
+}
+else
+ sop("Invalid Index!!!!!!!!!!!!!!!!!");
+
+
+
+
+
+
+
+Revise 
+Interfaces
+
+Enter 
+Exception handling
+String Handling
+
+--------------------
+Answer this
+What is an i/f ? : Blue print or logical template for creating a class.
+Pure abstract structure
+Can't be instantiated.
+
+
+Why Interfaces ?
+1. To enable multiple inh
+2. Pure abstraction
+3. Complete separation bet "WHAT" (method decl) and HOW (impl) leading to loose coupling
+eg : JDBC later!
+
+
+
+Which keyword to use For the following  relationships ?
+Between super class n sub class : extends
+Between super i/fs n sub i/f : extends
+Between i/fs n implementation class : implements
+
+Can 1 class implement multiple i/fs? : YES
+Can 1 i/f extend from multiple super i/fs? : YES
+Can 1 class extend from multiple super classes ? NO
+Which are the keywords added by javac for i/f data members implicitly ? public static final
+Which are the keywords added by javac for i/f method members implicitly ? public abstract
+Can you assign i/f ref directly(w/o type casting)  to ANY imple class instance ? YES (up casting)
+eg : Printer p =new FilePrinter();//up casting
+
+When will you need downcasting with i/f n implementation classes ???
+In case of indirect referencing(i/f ref ---> imple class instance) , n trying to access imple class specific (i.e additional) func)  
+eg : In order to access open n close file : i.e a specific func
+Printer p =new FilePrinter();
+((FilePrinter)p).openFile();
+
+
+Will you need instanceof checking ever with i/fs? : ?? YES , before downcasting
+Why : to avoid ClassCastException
+
+Student Question : Can you add a toString method in the i/f ??? YES
+eg :public interface A
+{
+ String toString();
+}
+public class B imple A
+{
+}
+
+
+More on interfaces :
+
+Marker i/f : Empty (Tag i/f) i/f --NO data members n no methods
+eg : Serializable , Cloneable
+
+Functional i/f : i/f containing single abstract method (SAM)
+Java 8 added annotation : @FunctionalInterface : i/f level annotation
+
+------------------------------
+Exception(run time errors : JVM) handling
+Why
+1. To avoid abnormal termination of the application.
+2. Separation between B.L(try) n error handling logic(catch)
+
+Flow
+
+Inheritance hierarchy
+
+checked vs un checked exceptions
+
+Keywords---try,catch,finally,throw,throws,try-with-resources
+
+
+Custom exception(user defined excs / application exc) --need n steps
+
+Why ? 
+To catch n recover from validation errors n B.L failures : which are not detected by JVM
+
+eg : Validate the speed of a vehicle running on the express way
+min speed =40
+max speed =80
+If the speed is within range : continue...
+o.w : raise the exc n alert the driver!!!!
+
+steps 
+1. Create custom exception class : by extending from Throwable / Error / Exception / RuntimeException...
+eg : public class MyException extends Exception {
+  public MyException (String mesg)
+  {
+     super(mesg);
+  }
+}
+
+2. In B.L / validation rules 
+If there are any failures : 
+if(some error)
+ throw new MyException(actual details);
+
+3. JVM check : MATCHING catch  or catch-all
+
+
+syntax : 
+ throw Throwable instance;
+
+
+Objective :
+Validate speed of a vehicle on a highway
+min speed = 40, max speed=80
+Alert user via custom exception , in case speed is out of range.
+
+1. Create custom exception class(SpeedOutOfRangeException) --in the package "custom_excs"
+
+2. Create static method , in the ValidationUtils class (in pkg utils) checkSpeed method --
+which should throw the custom exc if speed is out of range.
+Otherwise --display mesg --"Speed within range"
+Don't apply method level level handling
+
+3. Create TestSpeed in the package "exc" , with main method
+3.1 Using scanner(try-with-resources) , accept speed of the vehicle.
+3.2 Invoke "checkSpeed(int speed) --from within try --catch-all block in main
+Centralized exc handling
+
+---------------------
+String Handling
+1. Immutability of strings
+
+
+
+
+
+
+
+
+
+
+
+

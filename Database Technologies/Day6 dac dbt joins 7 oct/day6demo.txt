@@ -1,0 +1,1052 @@
+Enter password: *******
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 13
+Server version: 8.0.22 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2020, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use test
+Database changed
+mysql> select * from emp;
++-------+--------+-----------+------+------------+---------+---------+--------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL     | COMM    | DEPTNO |
++-------+--------+-----------+------+------------+---------+---------+--------+
+|  7369 | SMITH  | CLERK     | 7902 | 1980-12-17 |  800.00 |    NULL |     20 |
+|  7499 | ALLEN  | SALESMAN  | 7698 | 1981-02-20 | 1600.00 |  300.00 |     30 |
+|  7521 | WARD   | SALESMAN  | 7698 | 1981-02-22 | 1250.00 |  500.00 |     30 |
+|  7566 | JONES  | MANAGER   | 7839 | 1981-04-02 | 2975.00 |    NULL |     20 |
+|  7654 | MARTIN | SALESMAN  | 7698 | 1981-09-28 | 1250.00 | 1400.00 |     30 |
+|  7698 | BLAKE  | MANAGER   | 7839 | 1981-05-01 | 2850.00 |    NULL |     30 |
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450.00 |    NULL |     10 |
+|  7788 | SCOTT  | ANALYST   | 7566 | 1982-12-09 | 3000.00 |    NULL |     20 |
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 | 5000.00 |    NULL |     10 |
+|  7844 | TURNER | SALESMAN  | 7698 | 1981-09-08 | 1500.00 |    0.00 |     30 |
+|  7876 | ADAMS  | CLERK     | 7788 | 1983-01-12 | 1100.00 |    NULL |     20 |
+|  7900 | JAMES  | CLERK     | 7698 | 1981-12-03 |  950.00 |    NULL |     30 |
+|  7902 | FORD   | ANALYST   | 7566 | 1981-12-03 | 3000.00 |    NULL |     20 |
+|  7934 | MILLER | CLERK     | 7782 | 1982-01-23 | 1300.00 |    NULL |     10 |
+|   100 | xxx    | SALESMAN  | NULL | NULL       | 2345.00 |    NULL |     10 |
+|   101 | yyy    | SALESMAN  | NULL | NULL       | 3345.00 |    NULL |     10 |
+|   102 | zzz    | SALESMAN  | NULL | NULL       | 3745.00 |    NULL |     20 |
++-------+--------+-----------+------+------------+---------+---------+--------+
+17 rows in set (0.02 sec)
+
+mysql> select * from dept;
++--------+------------+----------+
+| DEPTNO | DNAME      | LOC      |
++--------+------------+----------+
+|     10 | ACCOUNTING | NEW YORK |
+|     20 | RESEARCH   | DALLAS   |
+|     30 | SALES      | CHICAGO  |
+|     40 | OPERATIONS | BOSTON   |
++--------+------------+----------+
+4 rows in set (0.00 sec)
+
+mysql> select *
+    -> from dept d
+    -> where not exists(select * from emp
+    -> where emp.deptno=dept.deptno)
+    -> ;
+ERROR 1054 (42S22): Unknown column 'dept.deptno' in 'where clause'
+mysql> select *
+    -> from dept d
+    -> where not exists(select * from emp
+    -> where emp.deptno=d.deptno);
++--------+------------+--------+
+| DEPTNO | DNAME      | LOC    |
++--------+------------+--------+
+|     40 | OPERATIONS | BOSTON |
++--------+------------+--------+
+1 row in set (0.00 sec)
+
+mysql> select *
+    -> from dept d
+    -> where exists(select * from emp e
+    -> where e.deptno=d.deptno);
++--------+------------+----------+
+| DEPTNO | DNAME      | LOC      |
++--------+------------+----------+
+|     10 | ACCOUNTING | NEW YORK |
+|     20 | RESEARCH   | DALLAS   |
+|     30 | SALES      | CHICAGO  |
++--------+------------+----------+
+3 rows in set (0.00 sec)
+
+mysql> select *
+    -> from emp e
+    -> where exists(select *
+    -> from emp m
+    -> where m.mgr=e.empno);
++-------+-------+-----------+------+------------+---------+------+--------+
+| EMPNO | ENAME | JOB       | MGR  | HIREDATE   | SAL     | COMM | DEPTNO |
++-------+-------+-----------+------+------------+---------+------+--------+
+|  7566 | JONES | MANAGER   | 7839 | 1981-04-02 | 2975.00 | NULL |     20 |
+|  7698 | BLAKE | MANAGER   | 7839 | 1981-05-01 | 2850.00 | NULL |     30 |
+|  7782 | CLARK | MANAGER   | 7839 | 1981-06-09 | 2450.00 | NULL |     10 |
+|  7788 | SCOTT | ANALYST   | 7566 | 1982-12-09 | 3000.00 | NULL |     20 |
+|  7839 | KING  | PRESIDENT | NULL | 1981-11-17 | 5000.00 | NULL |     10 |
+|  7902 | FORD  | ANALYST   | 7566 | 1981-12-03 | 3000.00 | NULL |     20 |
++-------+-------+-----------+------+------------+---------+------+--------+
+6 rows in set (0.00 sec)
+
+mysql> use iacsdsep22;
+Database changed
+mysql> show tables;
++----------------------+
+| Tables_in_iacsdsep22 |
++----------------------+
+| child_mytable        |
+| course               |
+| course_room          |
+| customer             |
+| mytable              |
+| room                 |
+| vehicle              |
++----------------------+
+7 rows in set (0.02 sec)
+
+mysql> select * from vehicle;
++-----+--------+-------+---------------+--------+
+| vid | vname  | model | chassienumber | custid |
++-----+--------+-------+---------------+--------+
+|   1 | activa | x-35  |          2345 |   NULL |
+|   2 | santro | x-36  |          2346 |   NULL |
+|   3 | santro | x-37  |          2346 |     20 |
++-----+--------+-------+---------------+--------+
+3 rows in set (0.00 sec)
+
+mysql> select * from customer;
++-----+--------+---------+
+| cid | cname  | address |
++-----+--------+---------+
+|  20 | Rajesh | Pune    |
++-----+--------+---------+
+1 row in set (0.00 sec)
+
+mysql> insert into customer values(30,'Ashu', 'Baner');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from vehicle;
++-----+--------+-------+---------------+--------+
+| vid | vname  | model | chassienumber | custid |
++-----+--------+-------+---------------+--------+
+|   1 | activa | x-35  |          2345 |   NULL |
+|   2 | santro | x-36  |          2346 |   NULL |
+|   3 | santro | x-37  |          2346 |     20 |
++-----+--------+-------+---------------+--------+
+3 rows in set (0.00 sec)
+
+mysql> select * from customer;
++-----+--------+---------+
+| cid | cname  | address |
++-----+--------+---------+
+|  20 | Rajesh | Pune    |
+|  30 | Ashu   | Baner   |
++-----+--------+---------+
+2 rows in set (0.00 sec)
+
+mysql> select * from customer c
+    -> where not exists(select * from vehicle v where v.custid=c.cid)
+    -> ;
++-----+-------+---------+
+| cid | cname | address |
++-----+-------+---------+
+|  30 | Ashu  | Baner   |
++-----+-------+---------+
+1 row in set (0.00 sec)
+
+mysql> select * from course;
+Empty set (0.02 sec)
+
+mysql> select * from room;
+Empty set (0.00 sec)
+
+mysql> desc course;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| cid      | int         | NO   | PRI | NULL    |       |
+| cname    | varchar(25) | YES  |     | NULL    |       |
+| capacity | int         | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> desc room;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| rid      | int         | NO   | PRI | NULL    |       |
+| rname    | varchar(25) | YES  |     | NULL    |       |
+| location | varchar(20) | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> alter table course
+    -> add column rid int;
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc course;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| cid      | int         | NO   | PRI | NULL    |       |
+| cname    | varchar(25) | YES  |     | NULL    |       |
+| capacity | int         | YES  |     | NULL    |       |
+| rid      | int         | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> desc roomid
+    -> ;
+ERROR 1146 (42S02): Table 'iacsdsep22.roomid' doesn't exist
+mysql> desc room;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| rid      | int         | NO   | PRI | NULL    |       |
+| rname    | varchar(25) | YES  |     | NULL    |       |
+| location | varchar(20) | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> insert into room values(1,'Lotus','1 st floor')
+    -> ;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into room values(2,'Mogra','1 st floor')
+    -> ;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into room values(3,'Rose','2nd floor')
+    -> ;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into course values(100, 'DAC', 250,1);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into course(cid,cname,capacity) values(100, 'DAC', 250);
+ERROR 1062 (23000): Duplicate entry '100' for key 'course.PRIMARY'
+mysql> insert into course(cid,cname,capacity) values(101, 'DBDA', 60);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into course(cid,cname,capacity) values(102, 'DTISS', 60);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from course;
++-----+-------+----------+------+
+| cid | cname | capacity | rid  |
++-----+-------+----------+------+
+| 100 | DAC   |      250 |    1 |
+| 101 | DBDA  |       60 | NULL |
+| 102 | DTISS |       60 | NULL |
++-----+-------+----------+------+
+3 rows in set (0.00 sec)
+
+mysql> select * from room;
++-----+-------+------------+
+| rid | rname | location   |
++-----+-------+------------+
+|   1 | Lotus | 1 st floor |
+|   2 | Mogra | 1 st floor |
+|   3 | Rose  | 2nd floor  |
++-----+-------+------------+
+3 rows in set (0.00 sec)
+
+mysql> select *
+    -> from room r
+    -> where not exists(select *
+    -> from course c
+    -> where c.rid=r.rid);
++-----+-------+------------+
+| rid | rname | location   |
++-----+-------+------------+
+|   2 | Mogra | 1 st floor |
+|   3 | Rose  | 2nd floor  |
++-----+-------+------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from course;
++-----+-------+----------+------+
+| cid | cname | capacity | rid  |
++-----+-------+----------+------+
+| 100 | DAC   |      250 |    1 |
+| 101 | DBDA  |       60 | NULL |
+| 102 | DTISS |       60 | NULL |
++-----+-------+----------+------+
+3 rows in set (0.00 sec)
+
+mysql> select * from room;
++-----+-------+------------+
+| rid | rname | location   |
++-----+-------+------------+
+|   1 | Lotus | 1 st floor |
+|   2 | Mogra | 1 st floor |
+|   3 | Rose  | 2nd floor  |
++-----+-------+------------+
+3 rows in set (0.00 sec)
+
+mysql> select *
+    -> from course c,room r;
++-----+-------+----------+------+-----+-------+------------+
+| cid | cname | capacity | rid  | rid | rname | location   |
++-----+-------+----------+------+-----+-------+------------+
+| 100 | DAC   |      250 |    1 |   1 | Lotus | 1 st floor |
+| 101 | DBDA  |       60 | NULL |   1 | Lotus | 1 st floor |
+| 102 | DTISS |       60 | NULL |   1 | Lotus | 1 st floor |
+| 100 | DAC   |      250 |    1 |   2 | Mogra | 1 st floor |
+| 101 | DBDA  |       60 | NULL |   2 | Mogra | 1 st floor |
+| 102 | DTISS |       60 | NULL |   2 | Mogra | 1 st floor |
+| 100 | DAC   |      250 |    1 |   3 | Rose  | 2nd floor  |
+| 101 | DBDA  |       60 | NULL |   3 | Rose  | 2nd floor  |
+| 102 | DTISS |       60 | NULL |   3 | Rose  | 2nd floor  |
++-----+-------+----------+------+-----+-------+------------+
+9 rows in set (0.00 sec)
+
+mysql> select *
+    -> from course c,room r
+    -> where c.rid=r.rid;
++-----+-------+----------+------+-----+-------+------------+
+| cid | cname | capacity | rid  | rid | rname | location   |
++-----+-------+----------+------+-----+-------+------------+
+| 100 | DAC   |      250 |    1 |   1 | Lotus | 1 st floor |
++-----+-------+----------+------+-----+-------+------------+
+1 row in set (0.00 sec)
+
+mysql> select cid,cname,c.rid,rname,location
+    -> from course c, room r
+    -> where c.rid=r.rid;
++-----+-------+------+-------+------------+
+| cid | cname | rid  | rname | location   |
++-----+-------+------+-------+------------+
+| 100 | DAC   |    1 | Lotus | 1 st floor |
++-----+-------+------+-------+------------+
+1 row in set (0.00 sec)
+
+mysql> use test
+Database changed
+mysql> select * from emp;
++-------+--------+-----------+------+------------+---------+---------+--------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL     | COMM    | DEPTNO |
++-------+--------+-----------+------+------------+---------+---------+--------+
+|  7369 | SMITH  | CLERK     | 7902 | 1980-12-17 |  800.00 |    NULL |     20 |
+|  7499 | ALLEN  | SALESMAN  | 7698 | 1981-02-20 | 1600.00 |  300.00 |     30 |
+|  7521 | WARD   | SALESMAN  | 7698 | 1981-02-22 | 1250.00 |  500.00 |     30 |
+|  7566 | JONES  | MANAGER   | 7839 | 1981-04-02 | 2975.00 |    NULL |     20 |
+|  7654 | MARTIN | SALESMAN  | 7698 | 1981-09-28 | 1250.00 | 1400.00 |     30 |
+|  7698 | BLAKE  | MANAGER   | 7839 | 1981-05-01 | 2850.00 |    NULL |     30 |
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450.00 |    NULL |     10 |
+|  7788 | SCOTT  | ANALYST   | 7566 | 1982-12-09 | 3000.00 |    NULL |     20 |
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 | 5000.00 |    NULL |     10 |
+|  7844 | TURNER | SALESMAN  | 7698 | 1981-09-08 | 1500.00 |    0.00 |     30 |
+|  7876 | ADAMS  | CLERK     | 7788 | 1983-01-12 | 1100.00 |    NULL |     20 |
+|  7900 | JAMES  | CLERK     | 7698 | 1981-12-03 |  950.00 |    NULL |     30 |
+|  7902 | FORD   | ANALYST   | 7566 | 1981-12-03 | 3000.00 |    NULL |     20 |
+|  7934 | MILLER | CLERK     | 7782 | 1982-01-23 | 1300.00 |    NULL |     10 |
+|   100 | xxx    | SALESMAN  | NULL | NULL       | 2345.00 |    NULL |     10 |
+|   101 | yyy    | SALESMAN  | NULL | NULL       | 3345.00 |    NULL |     10 |
+|   102 | zzz    | SALESMAN  | NULL | NULL       | 3745.00 |    NULL |     20 |
++-------+--------+-----------+------+------------+---------+---------+--------+
+17 rows in set (0.00 sec)
+
+mysql> select from salgrade;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'from salgrade' at line 1
+mysql> select * from salgrade;
++-------+-------+-------+
+| GRADE | LOSAL | HISAL |
++-------+-------+-------+
+|     1 |   700 |  1200 |
+|     2 |  1201 |  1400 |
+|     3 |  1401 |  2000 |
+|     4 |  2001 |  3000 |
+|     5 |  3001 |  9999 |
++-------+-------+-------+
+5 rows in set (0.01 sec)
+
+mysql> select * from emp;
++-------+--------+-----------+------+------------+---------+---------+--------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL     | COMM    | DEPTNO |
++-------+--------+-----------+------+------------+---------+---------+--------+
+|  7369 | SMITH  | CLERK     | 7902 | 1980-12-17 |  800.00 |    NULL |     20 |
+|  7499 | ALLEN  | SALESMAN  | 7698 | 1981-02-20 | 1600.00 |  300.00 |     30 |
+|  7521 | WARD   | SALESMAN  | 7698 | 1981-02-22 | 1250.00 |  500.00 |     30 |
+|  7566 | JONES  | MANAGER   | 7839 | 1981-04-02 | 2975.00 |    NULL |     20 |
+|  7654 | MARTIN | SALESMAN  | 7698 | 1981-09-28 | 1250.00 | 1400.00 |     30 |
+|  7698 | BLAKE  | MANAGER   | 7839 | 1981-05-01 | 2850.00 |    NULL |     30 |
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450.00 |    NULL |     10 |
+|  7788 | SCOTT  | ANALYST   | 7566 | 1982-12-09 | 3000.00 |    NULL |     20 |
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 | 5000.00 |    NULL |     10 |
+|  7844 | TURNER | SALESMAN  | 7698 | 1981-09-08 | 1500.00 |    0.00 |     30 |
+|  7876 | ADAMS  | CLERK     | 7788 | 1983-01-12 | 1100.00 |    NULL |     20 |
+|  7900 | JAMES  | CLERK     | 7698 | 1981-12-03 |  950.00 |    NULL |     30 |
+|  7902 | FORD   | ANALYST   | 7566 | 1981-12-03 | 3000.00 |    NULL |     20 |
+|  7934 | MILLER | CLERK     | 7782 | 1982-01-23 | 1300.00 |    NULL |     10 |
+|   100 | xxx    | SALESMAN  | NULL | NULL       | 2345.00 |    NULL |     10 |
+|   101 | yyy    | SALESMAN  | NULL | NULL       | 3345.00 |    NULL |     10 |
+|   102 | zzz    | SALESMAN  | NULL | NULL       | 3745.00 |    NULL |     20 |
++-------+--------+-----------+------+------------+---------+---------+--------+
+17 rows in set (0.00 sec)
+
+mysql> select empno,ename,sal,grade,losal,hisal
+    -> from emp e,salgrade s;
++-------+--------+---------+-------+-------+-------+
+| empno | ename  | sal     | grade | losal | hisal |
++-------+--------+---------+-------+-------+-------+
+|  7369 | SMITH  |  800.00 |     1 |   700 |  1200 |
+|  7369 | SMITH  |  800.00 |     2 |  1201 |  1400 |
+|  7369 | SMITH  |  800.00 |     3 |  1401 |  2000 |
+|  7369 | SMITH  |  800.00 |     4 |  2001 |  3000 |
+|  7369 | SMITH  |  800.00 |     5 |  3001 |  9999 |
+|  7499 | ALLEN  | 1600.00 |     1 |   700 |  1200 |
+|  7499 | ALLEN  | 1600.00 |     2 |  1201 |  1400 |
+|  7499 | ALLEN  | 1600.00 |     3 |  1401 |  2000 |
+|  7499 | ALLEN  | 1600.00 |     4 |  2001 |  3000 |
+|  7499 | ALLEN  | 1600.00 |     5 |  3001 |  9999 |
+|  7521 | WARD   | 1250.00 |     1 |   700 |  1200 |
+|  7521 | WARD   | 1250.00 |     2 |  1201 |  1400 |
+|  7521 | WARD   | 1250.00 |     3 |  1401 |  2000 |
+|  7521 | WARD   | 1250.00 |     4 |  2001 |  3000 |
+|  7521 | WARD   | 1250.00 |     5 |  3001 |  9999 |
+|  7566 | JONES  | 2975.00 |     1 |   700 |  1200 |
+|  7566 | JONES  | 2975.00 |     2 |  1201 |  1400 |
+|  7566 | JONES  | 2975.00 |     3 |  1401 |  2000 |
+|  7566 | JONES  | 2975.00 |     4 |  2001 |  3000 |
+|  7566 | JONES  | 2975.00 |     5 |  3001 |  9999 |
+|  7654 | MARTIN | 1250.00 |     1 |   700 |  1200 |
+|  7654 | MARTIN | 1250.00 |     2 |  1201 |  1400 |
+|  7654 | MARTIN | 1250.00 |     3 |  1401 |  2000 |
+|  7654 | MARTIN | 1250.00 |     4 |  2001 |  3000 |
+|  7654 | MARTIN | 1250.00 |     5 |  3001 |  9999 |
+|  7698 | BLAKE  | 2850.00 |     1 |   700 |  1200 |
+|  7698 | BLAKE  | 2850.00 |     2 |  1201 |  1400 |
+|  7698 | BLAKE  | 2850.00 |     3 |  1401 |  2000 |
+|  7698 | BLAKE  | 2850.00 |     4 |  2001 |  3000 |
+|  7698 | BLAKE  | 2850.00 |     5 |  3001 |  9999 |
+|  7782 | CLARK  | 2450.00 |     1 |   700 |  1200 |
+|  7782 | CLARK  | 2450.00 |     2 |  1201 |  1400 |
+|  7782 | CLARK  | 2450.00 |     3 |  1401 |  2000 |
+|  7782 | CLARK  | 2450.00 |     4 |  2001 |  3000 |
+|  7782 | CLARK  | 2450.00 |     5 |  3001 |  9999 |
+|  7788 | SCOTT  | 3000.00 |     1 |   700 |  1200 |
+|  7788 | SCOTT  | 3000.00 |     2 |  1201 |  1400 |
+|  7788 | SCOTT  | 3000.00 |     3 |  1401 |  2000 |
+|  7788 | SCOTT  | 3000.00 |     4 |  2001 |  3000 |
+|  7788 | SCOTT  | 3000.00 |     5 |  3001 |  9999 |
+|  7839 | KING   | 5000.00 |     1 |   700 |  1200 |
+|  7839 | KING   | 5000.00 |     2 |  1201 |  1400 |
+|  7839 | KING   | 5000.00 |     3 |  1401 |  2000 |
+|  7839 | KING   | 5000.00 |     4 |  2001 |  3000 |
+|  7839 | KING   | 5000.00 |     5 |  3001 |  9999 |
+|  7844 | TURNER | 1500.00 |     1 |   700 |  1200 |
+|  7844 | TURNER | 1500.00 |     2 |  1201 |  1400 |
+|  7844 | TURNER | 1500.00 |     3 |  1401 |  2000 |
+|  7844 | TURNER | 1500.00 |     4 |  2001 |  3000 |
+|  7844 | TURNER | 1500.00 |     5 |  3001 |  9999 |
+|  7876 | ADAMS  | 1100.00 |     1 |   700 |  1200 |
+|  7876 | ADAMS  | 1100.00 |     2 |  1201 |  1400 |
+|  7876 | ADAMS  | 1100.00 |     3 |  1401 |  2000 |
+|  7876 | ADAMS  | 1100.00 |     4 |  2001 |  3000 |
+|  7876 | ADAMS  | 1100.00 |     5 |  3001 |  9999 |
+|  7900 | JAMES  |  950.00 |     1 |   700 |  1200 |
+|  7900 | JAMES  |  950.00 |     2 |  1201 |  1400 |
+|  7900 | JAMES  |  950.00 |     3 |  1401 |  2000 |
+|  7900 | JAMES  |  950.00 |     4 |  2001 |  3000 |
+|  7900 | JAMES  |  950.00 |     5 |  3001 |  9999 |
+|  7902 | FORD   | 3000.00 |     1 |   700 |  1200 |
+|  7902 | FORD   | 3000.00 |     2 |  1201 |  1400 |
+|  7902 | FORD   | 3000.00 |     3 |  1401 |  2000 |
+|  7902 | FORD   | 3000.00 |     4 |  2001 |  3000 |
+|  7902 | FORD   | 3000.00 |     5 |  3001 |  9999 |
+|  7934 | MILLER | 1300.00 |     1 |   700 |  1200 |
+|  7934 | MILLER | 1300.00 |     2 |  1201 |  1400 |
+|  7934 | MILLER | 1300.00 |     3 |  1401 |  2000 |
+|  7934 | MILLER | 1300.00 |     4 |  2001 |  3000 |
+|  7934 | MILLER | 1300.00 |     5 |  3001 |  9999 |
+|   100 | xxx    | 2345.00 |     1 |   700 |  1200 |
+|   100 | xxx    | 2345.00 |     2 |  1201 |  1400 |
+|   100 | xxx    | 2345.00 |     3 |  1401 |  2000 |
+|   100 | xxx    | 2345.00 |     4 |  2001 |  3000 |
+|   100 | xxx    | 2345.00 |     5 |  3001 |  9999 |
+|   101 | yyy    | 3345.00 |     1 |   700 |  1200 |
+|   101 | yyy    | 3345.00 |     2 |  1201 |  1400 |
+|   101 | yyy    | 3345.00 |     3 |  1401 |  2000 |
+|   101 | yyy    | 3345.00 |     4 |  2001 |  3000 |
+|   101 | yyy    | 3345.00 |     5 |  3001 |  9999 |
+|   102 | zzz    | 3745.00 |     1 |   700 |  1200 |
+|   102 | zzz    | 3745.00 |     2 |  1201 |  1400 |
+|   102 | zzz    | 3745.00 |     3 |  1401 |  2000 |
+|   102 | zzz    | 3745.00 |     4 |  2001 |  3000 |
+|   102 | zzz    | 3745.00 |     5 |  3001 |  9999 |
++-------+--------+---------+-------+-------+-------+
+85 rows in set (0.00 sec)
+
+mysql> select empno,ename,sal,grade,losal,hisal
+    -> from emp e,salgrade s
+    -> where e.sal between s.losal and s.hisal;
++-------+--------+---------+-------+-------+-------+
+| empno | ename  | sal     | grade | losal | hisal |
++-------+--------+---------+-------+-------+-------+
+|  7369 | SMITH  |  800.00 |     1 |   700 |  1200 |
+|  7499 | ALLEN  | 1600.00 |     3 |  1401 |  2000 |
+|  7521 | WARD   | 1250.00 |     2 |  1201 |  1400 |
+|  7566 | JONES  | 2975.00 |     4 |  2001 |  3000 |
+|  7654 | MARTIN | 1250.00 |     2 |  1201 |  1400 |
+|  7698 | BLAKE  | 2850.00 |     4 |  2001 |  3000 |
+|  7782 | CLARK  | 2450.00 |     4 |  2001 |  3000 |
+|  7788 | SCOTT  | 3000.00 |     4 |  2001 |  3000 |
+|  7839 | KING   | 5000.00 |     5 |  3001 |  9999 |
+|  7844 | TURNER | 1500.00 |     3 |  1401 |  2000 |
+|  7876 | ADAMS  | 1100.00 |     1 |   700 |  1200 |
+|  7900 | JAMES  |  950.00 |     1 |   700 |  1200 |
+|  7902 | FORD   | 3000.00 |     4 |  2001 |  3000 |
+|  7934 | MILLER | 1300.00 |     2 |  1201 |  1400 |
+|   100 | xxx    | 2345.00 |     4 |  2001 |  3000 |
+|   101 | yyy    | 3345.00 |     5 |  3001 |  9999 |
+|   102 | zzz    | 3745.00 |     5 |  3001 |  9999 |
++-------+--------+---------+-------+-------+-------+
+17 rows in set (0.00 sec)
+
+mysql> select * from emp;
++-------+--------+-----------+------+------------+---------+---------+--------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL     | COMM    | DEPTNO |
++-------+--------+-----------+------+------------+---------+---------+--------+
+|  7369 | SMITH  | CLERK     | 7902 | 1980-12-17 |  800.00 |    NULL |     20 |
+|  7499 | ALLEN  | SALESMAN  | 7698 | 1981-02-20 | 1600.00 |  300.00 |     30 |
+|  7521 | WARD   | SALESMAN  | 7698 | 1981-02-22 | 1250.00 |  500.00 |     30 |
+|  7566 | JONES  | MANAGER   | 7839 | 1981-04-02 | 2975.00 |    NULL |     20 |
+|  7654 | MARTIN | SALESMAN  | 7698 | 1981-09-28 | 1250.00 | 1400.00 |     30 |
+|  7698 | BLAKE  | MANAGER   | 7839 | 1981-05-01 | 2850.00 |    NULL |     30 |
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450.00 |    NULL |     10 |
+|  7788 | SCOTT  | ANALYST   | 7566 | 1982-12-09 | 3000.00 |    NULL |     20 |
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 | 5000.00 |    NULL |     10 |
+|  7844 | TURNER | SALESMAN  | 7698 | 1981-09-08 | 1500.00 |    0.00 |     30 |
+|  7876 | ADAMS  | CLERK     | 7788 | 1983-01-12 | 1100.00 |    NULL |     20 |
+|  7900 | JAMES  | CLERK     | 7698 | 1981-12-03 |  950.00 |    NULL |     30 |
+|  7902 | FORD   | ANALYST   | 7566 | 1981-12-03 | 3000.00 |    NULL |     20 |
+|  7934 | MILLER | CLERK     | 7782 | 1982-01-23 | 1300.00 |    NULL |     10 |
+|   100 | xxx    | SALESMAN  | NULL | NULL       | 2345.00 |    NULL |     10 |
+|   101 | yyy    | SALESMAN  | NULL | NULL       | 3345.00 |    NULL |     10 |
+|   102 | zzz    | SALESMAN  | NULL | NULL       | 3745.00 |    NULL |     20 |
++-------+--------+-----------+------+------------+---------+---------+--------+
+17 rows in set (0.00 sec)
+
+mysql> select *
+    -> from emp
+    -> where comm is not null and comm=!0;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '=!0' at line 3
+mysql> select * from emp;
++-------+--------+-----------+------+------------+---------+---------+--------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL     | COMM    | DEPTNO |
++-------+--------+-----------+------+------------+---------+---------+--------+
+|  7369 | SMITH  | CLERK     | 7902 | 1980-12-17 |  800.00 |    NULL |     20 |
+|  7499 | ALLEN  | SALESMAN  | 7698 | 1981-02-20 | 1600.00 |  300.00 |     30 |
+|  7521 | WARD   | SALESMAN  | 7698 | 1981-02-22 | 1250.00 |  500.00 |     30 |
+|  7566 | JONES  | MANAGER   | 7839 | 1981-04-02 | 2975.00 |    NULL |     20 |
+|  7654 | MARTIN | SALESMAN  | 7698 | 1981-09-28 | 1250.00 | 1400.00 |     30 |
+|  7698 | BLAKE  | MANAGER   | 7839 | 1981-05-01 | 2850.00 |    NULL |     30 |
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450.00 |    NULL |     10 |
+|  7788 | SCOTT  | ANALYST   | 7566 | 1982-12-09 | 3000.00 |    NULL |     20 |
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 | 5000.00 |    NULL |     10 |
+|  7844 | TURNER | SALESMAN  | 7698 | 1981-09-08 | 1500.00 |    0.00 |     30 |
+|  7876 | ADAMS  | CLERK     | 7788 | 1983-01-12 | 1100.00 |    NULL |     20 |
+|  7900 | JAMES  | CLERK     | 7698 | 1981-12-03 |  950.00 |    NULL |     30 |
+|  7902 | FORD   | ANALYST   | 7566 | 1981-12-03 | 3000.00 |    NULL |     20 |
+|  7934 | MILLER | CLERK     | 7782 | 1982-01-23 | 1300.00 |    NULL |     10 |
+|   100 | xxx    | SALESMAN  | NULL | NULL       | 2345.00 |    NULL |     10 |
+|   101 | yyy    | SALESMAN  | NULL | NULL       | 3345.00 |    NULL |     10 |
+|   102 | zzz    | SALESMAN  | NULL | NULL       | 3745.00 |    NULL |     20 |
++-------+--------+-----------+------+------------+---------+---------+--------+
+17 rows in set (0.00 sec)
+
+mysql> select e.empno,e.ename,e.mgr,m.empno,m.ename
+    -> from emp e,emp m
+    -> where e.mgr=m.empno;
++-------+--------+------+-------+-------+
+| empno | ename  | mgr  | empno | ename |
++-------+--------+------+-------+-------+
+|  7788 | SCOTT  | 7566 |  7566 | JONES |
+|  7902 | FORD   | 7566 |  7566 | JONES |
+|  7499 | ALLEN  | 7698 |  7698 | BLAKE |
+|  7521 | WARD   | 7698 |  7698 | BLAKE |
+|  7654 | MARTIN | 7698 |  7698 | BLAKE |
+|  7844 | TURNER | 7698 |  7698 | BLAKE |
+|  7900 | JAMES  | 7698 |  7698 | BLAKE |
+|  7934 | MILLER | 7782 |  7782 | CLARK |
+|  7876 | ADAMS  | 7788 |  7788 | SCOTT |
+|  7566 | JONES  | 7839 |  7839 | KING  |
+|  7698 | BLAKE  | 7839 |  7839 | KING  |
+|  7782 | CLARK  | 7839 |  7839 | KING  |
+|  7369 | SMITH  | 7902 |  7902 | FORD  |
++-------+--------+------+-------+-------+
+13 rows in set (0.00 sec)
+
+mysql> select e.empno,e.ename,e.mgr,m.empno "manager no",m.ename "Manager name"
+    -> from emp e,emp m
+    -> where e.mgr=m.empno;
++-------+--------+------+------------+--------------+
+| empno | ename  | mgr  | manager no | Manager name |
++-------+--------+------+------------+--------------+
+|  7788 | SCOTT  | 7566 |       7566 | JONES        |
+|  7902 | FORD   | 7566 |       7566 | JONES        |
+|  7499 | ALLEN  | 7698 |       7698 | BLAKE        |
+|  7521 | WARD   | 7698 |       7698 | BLAKE        |
+|  7654 | MARTIN | 7698 |       7698 | BLAKE        |
+|  7844 | TURNER | 7698 |       7698 | BLAKE        |
+|  7900 | JAMES  | 7698 |       7698 | BLAKE        |
+|  7934 | MILLER | 7782 |       7782 | CLARK        |
+|  7876 | ADAMS  | 7788 |       7788 | SCOTT        |
+|  7566 | JONES  | 7839 |       7839 | KING         |
+|  7698 | BLAKE  | 7839 |       7839 | KING         |
+|  7782 | CLARK  | 7839 |       7839 | KING         |
+|  7369 | SMITH  | 7902 |       7902 | FORD         |
++-------+--------+------+------------+--------------+
+13 rows in set (0.00 sec)
+
+mysql> select * from course;
+ERROR 1146 (42S02): Table 'test.course' doesn't exist
+mysql> use iacsdsep22
+Database changed
+mysql> select * from course;
++-----+-------+----------+------+
+| cid | cname | capacity | rid  |
++-----+-------+----------+------+
+| 100 | DAC   |      250 |    1 |
+| 101 | DBDA  |       60 | NULL |
+| 102 | DTISS |       60 | NULL |
++-----+-------+----------+------+
+3 rows in set (0.00 sec)
+
+mysql> select * from room;
++-----+-------+------------+
+| rid | rname | location   |
++-----+-------+------------+
+|   1 | Lotus | 1 st floor |
+|   2 | Mogra | 1 st floor |
+|   3 | Rose  | 2nd floor  |
++-----+-------+------------+
+3 rows in set (0.00 sec)
+
+mysql> select *
+    -> from course c, room r
+    -> where c.rid=r.rid;
++-----+-------+----------+------+-----+-------+------------+
+| cid | cname | capacity | rid  | rid | rname | location   |
++-----+-------+----------+------+-----+-------+------------+
+| 100 | DAC   |      250 |    1 |   1 | Lotus | 1 st floor |
++-----+-------+----------+------+-----+-------+------------+
+1 row in set (0.00 sec)
+
+mysql> select *
+    -> from course c inner join room r on c.rid=r.rid;
++-----+-------+----------+------+-----+-------+------------+
+| cid | cname | capacity | rid  | rid | rname | location   |
++-----+-------+----------+------+-----+-------+------------+
+| 100 | DAC   |      250 |    1 |   1 | Lotus | 1 st floor |
++-----+-------+----------+------+-----+-------+------------+
+1 row in set (0.00 sec)
+
+mysql> use test;
+Database changed
+mysql> select e.empno,e.ename,e.mgr,m.empno mgrno,m.ename mgrname
+    -> from emp e,emp m
+    -> where e.mgr=m.empno;
++-------+--------+------+-------+---------+
+| empno | ename  | mgr  | mgrno | mgrname |
++-------+--------+------+-------+---------+
+|  7788 | SCOTT  | 7566 |  7566 | JONES   |
+|  7902 | FORD   | 7566 |  7566 | JONES   |
+|  7499 | ALLEN  | 7698 |  7698 | BLAKE   |
+|  7521 | WARD   | 7698 |  7698 | BLAKE   |
+|  7654 | MARTIN | 7698 |  7698 | BLAKE   |
+|  7844 | TURNER | 7698 |  7698 | BLAKE   |
+|  7900 | JAMES  | 7698 |  7698 | BLAKE   |
+|  7934 | MILLER | 7782 |  7782 | CLARK   |
+|  7876 | ADAMS  | 7788 |  7788 | SCOTT   |
+|  7566 | JONES  | 7839 |  7839 | KING    |
+|  7698 | BLAKE  | 7839 |  7839 | KING    |
+|  7782 | CLARK  | 7839 |  7839 | KING    |
+|  7369 | SMITH  | 7902 |  7902 | FORD    |
++-------+--------+------+-------+---------+
+13 rows in set (0.00 sec)
+
+mysql> select e.empno,e.ename,e.mgr,m.empno mgrno,m.ename mgrname
+    -> from emp e inner join  emp m on e.mgr=m.empno;
++-------+--------+------+-------+---------+
+| empno | ename  | mgr  | mgrno | mgrname |
++-------+--------+------+-------+---------+
+|  7788 | SCOTT  | 7566 |  7566 | JONES   |
+|  7902 | FORD   | 7566 |  7566 | JONES   |
+|  7499 | ALLEN  | 7698 |  7698 | BLAKE   |
+|  7521 | WARD   | 7698 |  7698 | BLAKE   |
+|  7654 | MARTIN | 7698 |  7698 | BLAKE   |
+|  7844 | TURNER | 7698 |  7698 | BLAKE   |
+|  7900 | JAMES  | 7698 |  7698 | BLAKE   |
+|  7934 | MILLER | 7782 |  7782 | CLARK   |
+|  7876 | ADAMS  | 7788 |  7788 | SCOTT   |
+|  7566 | JONES  | 7839 |  7839 | KING    |
+|  7698 | BLAKE  | 7839 |  7839 | KING    |
+|  7782 | CLARK  | 7839 |  7839 | KING    |
+|  7369 | SMITH  | 7902 |  7902 | FORD    |
++-------+--------+------+-------+---------+
+13 rows in set (0.00 sec)
+
+mysql>  select * from course;
+ERROR 1146 (42S02): Table 'test.course' doesn't exist
+mysql> use iacsdsep22
+Database changed
+mysql> select * from course;
++-----+-------+----------+------+
+| cid | cname | capacity | rid  |
++-----+-------+----------+------+
+| 100 | DAC   |      250 |    1 |
+| 101 | DBDA  |       60 | NULL |
+| 102 | DTISS |       60 | NULL |
++-----+-------+----------+------+
+3 rows in set (0.00 sec)
+
+mysql> select * from room;
++-----+-------+------------+
+| rid | rname | location   |
++-----+-------+------------+
+|   1 | Lotus | 1 st floor |
+|   2 | Mogra | 1 st floor |
+|   3 | Rose  | 2nd floor  |
++-----+-------+------------+
+3 rows in set (0.00 sec)
+
+mysql> select cid,cname,r.rid,r.rname
+    -> from course c inner join room r on c.rid=r.rid
+    -> where capacity>100 or r.location='1 st floor';
++-----+-------+-----+-------+
+| cid | cname | rid | rname |
++-----+-------+-----+-------+
+| 100 | DAC   |   1 | Lotus |
++-----+-------+-----+-------+
+1 row in set (0.00 sec)
+
+mysql> select e.empno,e.ename,d.dname,d.deptno
+    -> from emp e inner join dept d on e.deptno=d.deptno;
+ERROR 1146 (42S02): Table 'iacsdsep22.emp' doesn't exist
+mysql> use test;
+Database changed
+mysql> select e.empno,e.ename,d.dname,d.deptno
+    -> from emp e inner join dept d on e.deptno=d.deptno;
++-------+--------+------------+--------+
+| empno | ename  | dname      | deptno |
++-------+--------+------------+--------+
+|  7369 | SMITH  | RESEARCH   |     20 |
+|  7499 | ALLEN  | SALES      |     30 |
+|  7521 | WARD   | SALES      |     30 |
+|  7566 | JONES  | RESEARCH   |     20 |
+|  7654 | MARTIN | SALES      |     30 |
+|  7698 | BLAKE  | SALES      |     30 |
+|  7782 | CLARK  | ACCOUNTING |     10 |
+|  7788 | SCOTT  | RESEARCH   |     20 |
+|  7839 | KING   | ACCOUNTING |     10 |
+|  7844 | TURNER | SALES      |     30 |
+|  7876 | ADAMS  | RESEARCH   |     20 |
+|  7900 | JAMES  | SALES      |     30 |
+|  7902 | FORD   | RESEARCH   |     20 |
+|  7934 | MILLER | ACCOUNTING |     10 |
+|   100 | xxx    | ACCOUNTING |     10 |
+|   101 | yyy    | ACCOUNTING |     10 |
+|   102 | zzz    | RESEARCH   |     20 |
++-------+--------+------------+--------+
+17 rows in set (0.00 sec)
+
+mysql> select * from dept;
++--------+------------+----------+
+| DEPTNO | DNAME      | LOC      |
++--------+------------+----------+
+|     10 | ACCOUNTING | NEW YORK |
+|     20 | RESEARCH   | DALLAS   |
+|     30 | SALES      | CHICAGO  |
+|     40 | OPERATIONS | BOSTON   |
++--------+------------+----------+
+4 rows in set (0.00 sec)
+
+mysql> select e.empno,e.ename,d.dname,d.deptno
+    -> from emp e right join dept d on e.deptno=d.deptno;
++-------+--------+------------+--------+
+| empno | ename  | dname      | deptno |
++-------+--------+------------+--------+
+|  7782 | CLARK  | ACCOUNTING |     10 |
+|  7839 | KING   | ACCOUNTING |     10 |
+|  7934 | MILLER | ACCOUNTING |     10 |
+|   100 | xxx    | ACCOUNTING |     10 |
+|   101 | yyy    | ACCOUNTING |     10 |
+|  7369 | SMITH  | RESEARCH   |     20 |
+|  7566 | JONES  | RESEARCH   |     20 |
+|  7788 | SCOTT  | RESEARCH   |     20 |
+|  7876 | ADAMS  | RESEARCH   |     20 |
+|  7902 | FORD   | RESEARCH   |     20 |
+|   102 | zzz    | RESEARCH   |     20 |
+|  7499 | ALLEN  | SALES      |     30 |
+|  7521 | WARD   | SALES      |     30 |
+|  7654 | MARTIN | SALES      |     30 |
+|  7698 | BLAKE  | SALES      |     30 |
+|  7844 | TURNER | SALES      |     30 |
+|  7900 | JAMES  | SALES      |     30 |
+|  NULL | NULL   | OPERATIONS |     40 |
++-------+--------+------------+--------+
+18 rows in set (0.00 sec)
+
+mysql> select e.empno,e.ename,d.dname,d.deptno
+    -> from dept d left join emp e on e.deptno=d.deptno;
++-------+--------+------------+--------+
+| empno | ename  | dname      | deptno |
++-------+--------+------------+--------+
+|  7782 | CLARK  | ACCOUNTING |     10 |
+|  7839 | KING   | ACCOUNTING |     10 |
+|  7934 | MILLER | ACCOUNTING |     10 |
+|   100 | xxx    | ACCOUNTING |     10 |
+|   101 | yyy    | ACCOUNTING |     10 |
+|  7369 | SMITH  | RESEARCH   |     20 |
+|  7566 | JONES  | RESEARCH   |     20 |
+|  7788 | SCOTT  | RESEARCH   |     20 |
+|  7876 | ADAMS  | RESEARCH   |     20 |
+|  7902 | FORD   | RESEARCH   |     20 |
+|   102 | zzz    | RESEARCH   |     20 |
+|  7499 | ALLEN  | SALES      |     30 |
+|  7521 | WARD   | SALES      |     30 |
+|  7654 | MARTIN | SALES      |     30 |
+|  7698 | BLAKE  | SALES      |     30 |
+|  7844 | TURNER | SALES      |     30 |
+|  7900 | JAMES  | SALES      |     30 |
+|  NULL | NULL   | OPERATIONS |     40 |
++-------+--------+------------+--------+
+18 rows in set (0.00 sec)
+
+mysql> select cid,cname,r.rid,r.rname
+    -> from course c rigth join room r
+    -> on c.rid=r.rid;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'rigth join room r
+on c.rid=r.rid' at line 2
+mysql> select cid,cname,r.rid,r.rname
+    -> from course c right join room r
+    -> on c.rid=r.rid;
+ERROR 1146 (42S02): Table 'test.room' doesn't exist
+mysql> use iacsdsep22
+Database changed
+mysql> select cid,cname,r.rid,r.rname
+    -> from course c right join room r
+    -> on c.rid=r.rid;
++------+-------+-----+-------+
+| cid  | cname | rid | rname |
++------+-------+-----+-------+
+|  100 | DAC   |   1 | Lotus |
+| NULL | NULL  |   2 | Mogra |
+| NULL | NULL  |   3 | Rose  |
++------+-------+-----+-------+
+3 rows in set (0.00 sec)
+
+mysql> select cid,cname,r.rid,r.rname
+    -> from course c left join room r
+    -> on c.rid=r.rid;
++-----+-------+------+-------+
+| cid | cname | rid  | rname |
++-----+-------+------+-------+
+| 100 | DAC   |    1 | Lotus |
+| 101 | DBDA  | NULL | NULL  |
+| 102 | DTISS | NULL | NULL  |
++-----+-------+------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select cid,cname,r.rid,r.rname
+    -> from course c full join room r
+    -> on c.rid=r.rid;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'full join room r
+on c.rid=r.rid' at line 2
+mysql> select cid,cname,r.rid,r.rname
+    -> from course c right join room r
+    -> on c.rid=r.rid
+    -> union
+    -> select cid,cname,r.rid,r.rname
+    -> from course c left join room r
+    -> on c.rid=r.rid;
++------+-------+------+-------+
+| cid  | cname | rid  | rname |
++------+-------+------+-------+
+|  100 | DAC   |    1 | Lotus |
+| NULL | NULL  |    2 | Mogra |
+| NULL | NULL  |    3 | Rose  |
+|  101 | DBDA  | NULL | NULL  |
+|  102 | DTISS | NULL | NULL  |
++------+-------+------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select cid,cname,r.rid,r.rname
+    -> from course c left join room r
+    -> on c.rid=r.rid
+    -> where r.rname is null
+    -> union
+    -> select cid,cname,r.rid,r.rname
+    -> from course c right join room r
+    -> on c.rid=r.rid
+    -> where c.cname is null;
++------+-------+------+-------+
+| cid  | cname | rid  | rname |
++------+-------+------+-------+
+|  101 | DBDA  | NULL | NULL  |
+|  102 | DTISS | NULL | NULL  |
+| NULL | NULL  |    2 | Mogra |
+| NULL | NULL  |    3 | Rose  |
++------+-------+------+-------+
+4 rows in set (0.00 sec)
+
+mysql> select * from salgrade;
+ERROR 1146 (42S02): Table 'iacsdsep22.salgrade' doesn't exist
+mysql> use test
+Database changed
+mysql> select * from salgrade;
++-------+-------+-------+
+| GRADE | LOSAL | HISAL |
++-------+-------+-------+
+|     1 |   700 |  1200 |
+|     2 |  1201 |  1400 |
+|     3 |  1401 |  2000 |
+|     4 |  2001 |  3000 |
+|     5 |  3001 |  9999 |
++-------+-------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select empno,ename,dname,null
+    -> from emp e inner join dept d on e.deptno=d.deptno
+    -> union
+    -> select empno,ename,null,grade
+    -> from emp e inner join salgrade s on e.sal between s.losal and s.hisal;
++-------+--------+------------+------+
+| empno | ename  | dname      | NULL |
++-------+--------+------------+------+
+|  7369 | SMITH  | RESEARCH   | NULL |
+|  7499 | ALLEN  | SALES      | NULL |
+|  7521 | WARD   | SALES      | NULL |
+|  7566 | JONES  | RESEARCH   | NULL |
+|  7654 | MARTIN | SALES      | NULL |
+|  7698 | BLAKE  | SALES      | NULL |
+|  7782 | CLARK  | ACCOUNTING | NULL |
+|  7788 | SCOTT  | RESEARCH   | NULL |
+|  7839 | KING   | ACCOUNTING | NULL |
+|  7844 | TURNER | SALES      | NULL |
+|  7876 | ADAMS  | RESEARCH   | NULL |
+|  7900 | JAMES  | SALES      | NULL |
+|  7902 | FORD   | RESEARCH   | NULL |
+|  7934 | MILLER | ACCOUNTING | NULL |
+|   100 | xxx    | ACCOUNTING | NULL |
+|   101 | yyy    | ACCOUNTING | NULL |
+|   102 | zzz    | RESEARCH   | NULL |
+|  7369 | SMITH  | NULL       |    1 |
+|  7499 | ALLEN  | NULL       |    3 |
+|  7521 | WARD   | NULL       |    2 |
+|  7566 | JONES  | NULL       |    4 |
+|  7654 | MARTIN | NULL       |    2 |
+|  7698 | BLAKE  | NULL       |    4 |
+|  7782 | CLARK  | NULL       |    4 |
+|  7788 | SCOTT  | NULL       |    4 |
+|  7839 | KING   | NULL       |    5 |
+|  7844 | TURNER | NULL       |    3 |
+|  7876 | ADAMS  | NULL       |    1 |
+|  7900 | JAMES  | NULL       |    1 |
+|  7902 | FORD   | NULL       |    4 |
+|  7934 | MILLER | NULL       |    2 |
+|   100 | xxx    | NULL       |    4 |
+|   101 | yyy    | NULL       |    5 |
+|   102 | zzz    | NULL       |    5 |
++-------+--------+------------+------+
+34 rows in set (0.00 sec)
+
+mysql> select empno,ename,dname,grade
+    -> from emp e,dept d,salgrade s
+    -> where e.deptno=d.deptno and e.sal between s.losal and s.hisal;
++-------+--------+------------+-------+
+| empno | ename  | dname      | grade |
++-------+--------+------------+-------+
+|  7369 | SMITH  | RESEARCH   |     1 |
+|  7876 | ADAMS  | RESEARCH   |     1 |
+|  7900 | JAMES  | SALES      |     1 |
+|  7521 | WARD   | SALES      |     2 |
+|  7654 | MARTIN | SALES      |     2 |
+|  7934 | MILLER | ACCOUNTING |     2 |
+|  7499 | ALLEN  | SALES      |     3 |
+|  7844 | TURNER | SALES      |     3 |
+|  7566 | JONES  | RESEARCH   |     4 |
+|  7698 | BLAKE  | SALES      |     4 |
+|  7782 | CLARK  | ACCOUNTING |     4 |
+|  7788 | SCOTT  | RESEARCH   |     4 |
+|  7902 | FORD   | RESEARCH   |     4 |
+|   100 | xxx    | ACCOUNTING |     4 |
+|  7839 | KING   | ACCOUNTING |     5 |
+|   101 | yyy    | ACCOUNTING |     5 |
+|   102 | zzz    | RESEARCH   |     5 |
++-------+--------+------------+-------+
+17 rows in set (0.00 sec)
+
+mysql> select empno,ename,dname,grade
+    -> from emp e inner join dept d on e.deptno=d.deptno
+    -> inner join salgrade s on e.sal between s.losal and s.hisal;
++-------+--------+------------+-------+
+| empno | ename  | dname      | grade |
++-------+--------+------------+-------+
+|  7369 | SMITH  | RESEARCH   |     1 |
+|  7876 | ADAMS  | RESEARCH   |     1 |
+|  7900 | JAMES  | SALES      |     1 |
+|  7521 | WARD   | SALES      |     2 |
+|  7654 | MARTIN | SALES      |     2 |
+|  7934 | MILLER | ACCOUNTING |     2 |
+|  7499 | ALLEN  | SALES      |     3 |
+|  7844 | TURNER | SALES      |     3 |
+|  7566 | JONES  | RESEARCH   |     4 |
+|  7698 | BLAKE  | SALES      |     4 |
+|  7782 | CLARK  | ACCOUNTING |     4 |
+|  7788 | SCOTT  | RESEARCH   |     4 |
+|  7902 | FORD   | RESEARCH   |     4 |
+|   100 | xxx    | ACCOUNTING |     4 |
+|  7839 | KING   | ACCOUNTING |     5 |
+|   101 | yyy    | ACCOUNTING |     5 |
+|   102 | zzz    | RESEARCH   |     5 |
++-------+--------+------------+-------+
+17 rows in set (0.00 sec)
+
+mysql> select * from emp;
++-------+--------+-----------+------+------------+---------+---------+--------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL     | COMM    | DEPTNO |
++-------+--------+-----------+------+------------+---------+---------+--------+
+|  7369 | SMITH  | CLERK     | 7902 | 1980-12-17 |  800.00 |    NULL |     20 |
+|  7499 | ALLEN  | SALESMAN  | 7698 | 1981-02-20 | 1600.00 |  300.00 |     30 |
+|  7521 | WARD   | SALESMAN  | 7698 | 1981-02-22 | 1250.00 |  500.00 |     30 |
+|  7566 | JONES  | MANAGER   | 7839 | 1981-04-02 | 2975.00 |    NULL |     20 |
+|  7654 | MARTIN | SALESMAN  | 7698 | 1981-09-28 | 1250.00 | 1400.00 |     30 |
+|  7698 | BLAKE  | MANAGER   | 7839 | 1981-05-01 | 2850.00 |    NULL |     30 |
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450.00 |    NULL |     10 |
+|  7788 | SCOTT  | ANALYST   | 7566 | 1982-12-09 | 3000.00 |    NULL |     20 |
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 | 5000.00 |    NULL |     10 |
+|  7844 | TURNER | SALESMAN  | 7698 | 1981-09-08 | 1500.00 |    0.00 |     30 |
+|  7876 | ADAMS  | CLERK     | 7788 | 1983-01-12 | 1100.00 |    NULL |     20 |
+|  7900 | JAMES  | CLERK     | 7698 | 1981-12-03 |  950.00 |    NULL |     30 |
+|  7902 | FORD   | ANALYST   | 7566 | 1981-12-03 | 3000.00 |    NULL |     20 |
+|  7934 | MILLER | CLERK     | 7782 | 1982-01-23 | 1300.00 |    NULL |     10 |
+|   100 | xxx    | SALESMAN  | NULL | NULL       | 2345.00 |    NULL |     10 |
+|   101 | yyy    | SALESMAN  | NULL | NULL       | 3345.00 |    NULL |     10 |
+|   102 | zzz    | SALESMAN  | NULL | NULL       | 3745.00 |    NULL |     20 |
++-------+--------+-----------+------+------------+---------+---------+--------+
+17 rows in set (0.00 sec)
+
+mysql> select * from salgrade;
++-------+-------+-------+
+| GRADE | LOSAL | HISAL |
++-------+-------+-------+
+|     1 |   700 |  1200 |
+|     2 |  1201 |  1400 |
+|     3 |  1401 |  2000 |
+|     4 |  2001 |  3000 |
+|     5 |  3001 |  9999 |
++-------+-------+-------+
+5 rows in set (0.00 sec)
+
+mysql>

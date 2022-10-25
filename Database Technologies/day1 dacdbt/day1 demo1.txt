@@ -1,0 +1,613 @@
+Enter password: *******
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.0.22 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2020, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> create database test;
+ERROR 1007 (HY000): Can't create database 'test'; database exists
+mysql> create database if not exists test;
+Query OK, 1 row affected, 1 warning (0.00 sec)
+
+mysql> show databases
+    -> show databses
+    -> show databses
+    -> ^C
+mysql> show databases
+    -> ;
++--------------------+
+| Database           |
++--------------------+
+| hospital           |
+| hsbcdb             |
+| iacsd2111          |
+| iacsdedacmay21     |
+| iacsdmar22         |
+| information_schema |
+| knowit2111         |
+| mysql              |
+| performance_schema |
+| sakila             |
+| spring             |
+| sys                |
+| test               |
+| world              |
++--------------------+
+14 rows in set (0.03 sec)
+
+mysql> use test
+Database changed
+mysql> source D:\mysql_databse\demobldmysql.sql
+Database changed
+ERROR 1050 (42S01): Table 'emp' already exists
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+ERROR 1050 (42S01): Table 'dept' already exists
+Query OK, 1 row affected (0.01 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+ERROR 1050 (42S01): Table 'bonus' already exists
+ERROR 1050 (42S01): Table 'salgrade' already exists
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+ERROR 1050 (42S01): Table 'dummy' already exists
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ON
+PROMPT Demonstration table build is complete.
+
+EXIT' at line 1
+mysql> select * from emp;
++-------+---------+-----------+------+------------+---------+---------+--------+---------+
+| EMPNO | ENAME   | JOB       | MGR  | HIREDATE   | SAL     | COMM    | DEPTNO | status  |
++-------+---------+-----------+------+------------+---------+---------+--------+---------+
+|  7369 | SMITH   | CLERK     | 7902 | 1980-12-17 | 1113.20 |    NULL |     20 | lesser  |
+|  7499 | ALLEN   | SALESMAN  | 7698 | 1981-02-20 | 2000.00 |  300.00 |     30 | greater |
+|  7521 | WARD    | SALESMAN  | 7698 | 1981-02-22 | 1718.75 |  500.00 |     30 | lesser  |
+|  7566 | JONES   | MANAGER   | 7839 | 1981-04-02 | 3599.75 |    NULL |     20 | greater |
+|  7654 | MARTIN  | SALESMAN  | 7698 | 1981-09-28 | 1718.75 | 1400.00 |     30 | lesser  |
+|  7698 | BLAKE   | MANAGER   | 7839 | 1981-05-01 | 3135.00 |    NULL |     30 | greater |
+|  7782 | CLARK   | MANAGER   | 7839 | 1981-06-09 | 2695.00 |    NULL |     10 | lesser  |
+|  7788 | SCOTT   | ANALYST   | 7566 | 1982-12-09 | 3960.00 |    NULL |     20 | greater |
+|  7839 | KING    | PRESIDENT | NULL | 1981-11-17 | 6250.00 |    NULL |     10 | greater |
+|  7844 | TURNER  | SALESMAN  | 7698 | 1981-09-08 | 2062.50 |    0.00 |     30 | greater |
+|  7876 | ADAMS   | CLERK     | 7788 | 1983-01-12 | 1530.65 |    NULL |     20 | lesser  |
+|  7900 | JAMES   | CLERK     | 7698 | 1981-12-03 | 1201.75 |    NULL |     30 | lesser  |
+|  7902 | FORD    | ANALYST   | 7566 | 1981-12-03 | 3960.00 |    NULL |     20 | greater |
+|  7934 | MILLER  | CLERK     | 7782 | 1982-01-23 | 1644.50 |    NULL |     10 | lesser  |
+|  1234 | kishori | trainer   | NULL | NULL       |    NULL |    NULL |   NULL | equal   |
+|  1235 | Rajasi  | Prgm      | 7902 | 2022-03-11 | 4320.00 |  300.00 |     20 | greater |
+|    33 | Ashu    | Prgm      | 7902 | 2022-03-11 | 4320.00 |  300.00 |     20 | greater |
++-------+---------+-----------+------+------------+---------+---------+--------+---------+
+17 rows in set (0.00 sec)
+
+mysql> drop table emp;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> drop table dept;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> drop table salgrade;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> source D:\mysql_databse\demobldmysql.sql
+Database changed
+Query OK, 0 rows affected, 3 warnings (0.05 sec)
+
+Query OK, 1 row affected (0.01 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.01 sec)
+
+Query OK, 1 row affected (0.01 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 0 rows affected, 1 warning (0.02 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+ERROR 1050 (42S01): Table 'bonus' already exists
+Query OK, 0 rows affected (0.02 sec)
+
+Query OK, 1 row affected (0.01 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+ERROR 1050 (42S01): Table 'dummy' already exists
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ON
+PROMPT Demonstration table build is complete.
+
+EXIT' at line 1
+mysql> use test
+Database changed
+mysql> source D:\mysql_databse\demobldmysql.sql
+Database changed
+Query OK, 0 rows affected, 3 warnings (0.04 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 0 rows affected, 1 warning (0.02 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.01 sec)
+
+Query OK, 0 rows affected (0.02 sec)
+
+Query OK, 0 rows affected (0.02 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 0 rows affected (0.02 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ON
+PROMPT Demonstration table build is complete.
+
+EXIT' at line 1
+mysql> show tables;
++----------------------+
+| Tables_in_test       |
++----------------------+
+| address              |
+| addressmany          |
+| addressmany1         |
+| addresstab1          |
+| addresstab1_usertab1 |
+| bonus                |
+| booking              |
+| category             |
+| customer             |
+| custtab1             |
+| custtab11            |
+| department           |
+| dept                 |
+| dummy                |
+| emp                  |
+| employee             |
+| emptab1              |
+| emptab11             |
+| event                |
+| hibernate_sequence   |
+| myemployee           |
+| myprod11             |
+| myprodtab            |
+| myprodtab22          |
+| myprodtab33          |
+| myprodtab44          |
+| myproduct            |
+| myproduct_table      |
+| myproducttable       |
+| mystud               |
+| myuser               |
+| myuser12             |
+| nonperishableprod    |
+| orderitem            |
+| perishableprod       |
+| persontab            |
+| pertab11             |
+| product              |
+| product_analysis     |
+| quetions             |
+| salgrade             |
+| student              |
+| user                 |
+| useraddress          |
+| userentity           |
+| usermany             |
+| usermany1            |
+| usertab              |
+| usertab1             |
++----------------------+
+49 rows in set (0.01 sec)
+
+mysql> desc emp;
++----------+--------------+------+-----+---------+-------+
+| Field    | Type         | Null | Key | Default | Extra |
++----------+--------------+------+-----+---------+-------+
+| EMPNO    | int          | NO   |     | NULL    |       |
+| ENAME    | varchar(10)  | YES  |     | NULL    |       |
+| JOB      | varchar(9)   | YES  |     | NULL    |       |
+| MGR      | int          | YES  |     | NULL    |       |
+| HIREDATE | date         | YES  |     | NULL    |       |
+| SAL      | decimal(7,2) | YES  |     | NULL    |       |
+| COMM     | decimal(7,2) | YES  |     | NULL    |       |
+| DEPTNO   | int          | YES  |     | NULL    |       |
++----------+--------------+------+-----+---------+-------+
+8 rows in set (0.01 sec)
+
+mysql> desc dept
+    -> ;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| DEPTNO | int         | YES  |     | NULL    |       |
+| DNAME  | varchar(14) | YES  |     | NULL    |       |
+| LOC    | varchar(13) | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> desc salgrade;
++-------+------+------+-----+---------+-------+
+| Field | Type | Null | Key | Default | Extra |
++-------+------+------+-----+---------+-------+
+| GRADE | int  | YES  |     | NULL    |       |
+| LOSAL | int  | YES  |     | NULL    |       |
+| HISAL | int  | YES  |     | NULL    |       |
++-------+------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> desc product;
++-------+--------------+------+-----+---------+-------+
+| Field | Type         | Null | Key | Default | Extra |
++-------+--------------+------+-----+---------+-------+
+| pid   | int          | YES  |     | NULL    |       |
+| pname | varchar(25)  | YES  |     | NULL    |       |
+| qty   | int          | YES  |     | NULL    |       |
+| price | decimal(9,2) | YES  |     | NULL    |       |
+| cid   | int          | YES  |     | NULL    |       |
++-------+--------------+------+-----+---------+-------+
+5 rows in set (0.01 sec)
+
+mysql> select *
+    -> from product;
++------+---------------+------+--------+------+
+| pid  | pname         | qty  | price  | cid  |
++------+---------------+------+--------+------+
+|    2 | Nachos123     |  302 | 150.00 |    1 |
+|    3 | Pringles123   |   12 | 150.00 |    1 |
+|    4 | Marie gold    |   20 |  50.00 |    2 |
+|    5 | nice1234      |   35 |  45.00 |    2 |
+|    6 | good day123   |   45 |  60.00 |    2 |
+|   20 | Hide and seek |   45 |  40.00 |    2 |
+|  145 | bread         |   30 | 100.00 |    2 |
+|  222 | Marie         |   45 |  45.00 |    2 |
+|   35 | 50-50         |   34 |  45.00 |    2 |
+|  111 | xxx           |   30 |  20.00 |    1 |
+|   12 | marie         |   23 |  34.00 |    4 |
+|   12 | marie         |   23 |  34.00 |    4 |
+|  100 | aaaaa         |   41 |  51.00 |    1 |
++------+---------------+------+--------+------+
+13 rows in set (0.00 sec)
+
+mysql> select pname,pid,price
+    -> from product;
++---------------+------+--------+
+| pname         | pid  | price  |
++---------------+------+--------+
+| Nachos123     |    2 | 150.00 |
+| Pringles123   |    3 | 150.00 |
+| Marie gold    |    4 |  50.00 |
+| nice1234      |    5 |  45.00 |
+| good day123   |    6 |  60.00 |
+| Hide and seek |   20 |  40.00 |
+| bread         |  145 | 100.00 |
+| Marie         |  222 |  45.00 |
+| 50-50         |   35 |  45.00 |
+| xxx           |  111 |  20.00 |
+| marie         |   12 |  34.00 |
+| marie         |   12 |  34.00 |
+| aaaaa         |  100 |  51.00 |
++---------------+------+--------+
+13 rows in set (0.00 sec)
+
+mysql> Select *
+    -> from product
+    -> where price > 40;
++------+-------------+------+--------+------+
+| pid  | pname       | qty  | price  | cid  |
++------+-------------+------+--------+------+
+|    2 | Nachos123   |  302 | 150.00 |    1 |
+|    3 | Pringles123 |   12 | 150.00 |    1 |
+|    4 | Marie gold  |   20 |  50.00 |    2 |
+|    5 | nice1234    |   35 |  45.00 |    2 |
+|    6 | good day123 |   45 |  60.00 |    2 |
+|  145 | bread       |   30 | 100.00 |    2 |
+|  222 | Marie       |   45 |  45.00 |    2 |
+|   35 | 50-50       |   34 |  45.00 |    2 |
+|  100 | aaaaa       |   41 |  51.00 |    1 |
++------+-------------+------+--------+------+
+9 rows in set (0.00 sec)
+
+mysql> Select *
+    -> From product
+    -> Where qty between 11 and 29;
++------+-------------+------+--------+------+
+| pid  | pname       | qty  | price  | cid  |
++------+-------------+------+--------+------+
+|    3 | Pringles123 |   12 | 150.00 |    1 |
+|    4 | Marie gold  |   20 |  50.00 |    2 |
+|   12 | marie       |   23 |  34.00 |    4 |
+|   12 | marie       |   23 |  34.00 |    4 |
++------+-------------+------+--------+------+
+4 rows in set (0.00 sec)
+
+mysql> update product
+    -> set qty=29
+    -> where pid=3;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from product;
++------+---------------+------+--------+------+
+| pid  | pname         | qty  | price  | cid  |
++------+---------------+------+--------+------+
+|    2 | Nachos123     |  302 | 150.00 |    1 |
+|    3 | Pringles123   |   29 | 150.00 |    1 |
+|    4 | Marie gold    |   20 |  50.00 |    2 |
+|    5 | nice1234      |   35 |  45.00 |    2 |
+|    6 | good day123   |   45 |  60.00 |    2 |
+|   20 | Hide and seek |   45 |  40.00 |    2 |
+|  145 | bread         |   30 | 100.00 |    2 |
+|  222 | Marie         |   45 |  45.00 |    2 |
+|   35 | 50-50         |   34 |  45.00 |    2 |
+|  111 | xxx           |   30 |  20.00 |    1 |
+|   12 | marie         |   23 |  34.00 |    4 |
+|   12 | marie         |   23 |  34.00 |    4 |
+|  100 | aaaaa         |   41 |  51.00 |    1 |
++------+---------------+------+--------+------+
+13 rows in set (0.00 sec)
+
+mysql> Select *
+    -> From product
+    -> Where qty between 11 and 29;
++------+-------------+------+--------+------+
+| pid  | pname       | qty  | price  | cid  |
++------+-------------+------+--------+------+
+|    3 | Pringles123 |   29 | 150.00 |    1 |
+|    4 | Marie gold  |   20 |  50.00 |    2 |
+|   12 | marie       |   23 |  34.00 |    4 |
+|   12 | marie       |   23 |  34.00 |    4 |
++------+-------------+------+--------+------+
+4 rows in set (0.00 sec)
+
+mysql> Select *
+    -> From product
+    -> Where name like ‘N%’;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '?N%?' at line 3
+mysql> Select *
+    -> From product
+    -> Where pname like 'N%';
++------+-----------+------+--------+------+
+| pid  | pname     | qty  | price  | cid  |
++------+-----------+------+--------+------+
+|    2 | Nachos123 |  302 | 150.00 |    1 |
+|    5 | nice1234  |   35 |  45.00 |    2 |
++------+-----------+------+--------+------+
+2 rows in set (0.00 sec)
+
+mysql> Select *
+    -> From product
+    -> Where price between 40 and 100;
++------+---------------+------+--------+------+
+| pid  | pname         | qty  | price  | cid  |
++------+---------------+------+--------+------+
+|    4 | Marie gold    |   20 |  50.00 |    2 |
+|    5 | nice1234      |   35 |  45.00 |    2 |
+|    6 | good day123   |   45 |  60.00 |    2 |
+|   20 | Hide and seek |   45 |  40.00 |    2 |
+|  145 | bread         |   30 | 100.00 |    2 |
+|  222 | Marie         |   45 |  45.00 |    2 |
+|   35 | 50-50         |   34 |  45.00 |    2 |
+|  100 | aaaaa         |   41 |  51.00 |    1 |
++------+---------------+------+--------+------+
+8 rows in set (0.00 sec)
+
+mysql> Select *
+    -> From product
+    -> Where pname like ‘N%4’ or pname like ‘M%e’;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '?N%4? or pname like ?M%e?' at line 3
+mysql>
+mysql> Select *
+    -> From product
+    -> Where pname like 'N%4' or pname like 'M%e';
++------+----------+------+-------+------+
+| pid  | pname    | qty  | price | cid  |
++------+----------+------+-------+------+
+|    5 | nice1234 |   35 | 45.00 |    2 |
+|  222 | Marie    |   45 | 45.00 |    2 |
+|   12 | marie    |   23 | 34.00 |    4 |
+|   12 | marie    |   23 | 34.00 |    4 |
++------+----------+------+-------+------+
+4 rows in set (0.00 sec)
+
+mysql> Select *
+    -> from product
+    -> where catid in (1,2) and price between 41 and 99;
+ERROR 1054 (42S22): Unknown column 'catid' in 'where clause'
+mysql> Select *
+    -> from product
+    -> where cid in (1,2) and price between 41 and 99;
++------+-------------+------+-------+------+
+| pid  | pname       | qty  | price | cid  |
++------+-------------+------+-------+------+
+|    4 | Marie gold  |   20 | 50.00 |    2 |
+|    5 | nice1234    |   35 | 45.00 |    2 |
+|    6 | good day123 |   45 | 60.00 |    2 |
+|  222 | Marie       |   45 | 45.00 |    2 |
+|   35 | 50-50       |   34 | 45.00 |    2 |
+|  100 | aaaaa       |   41 | 51.00 |    1 |
++------+-------------+------+-------+------+
+6 rows in set (0.00 sec)
+
+mysql> show tables
+    -> ;
++----------------------+
+| Tables_in_test       |
++----------------------+
+| address              |
+| addressmany          |
+| addressmany1         |
+| addresstab1          |
+| addresstab1_usertab1 |
+| bonus                |
+| booking              |
+| category             |
+| customer             |
+| custtab1             |
+| custtab11            |
+| department           |
+| dept                 |
+| dummy                |
+| emp                  |
+| employee             |
+| emptab1              |
+| emptab11             |
+| event                |
+| hibernate_sequence   |
+| myemployee           |
+| myprod11             |
+| myprodtab            |
+| myprodtab22          |
+| myprodtab33          |
+| myprodtab44          |
+| myproduct            |
+| myproduct_table      |
+| myproducttable       |
+| mystud               |
+| myuser               |
+| myuser12             |
+| nonperishableprod    |
+| orderitem            |
+| perishableprod       |
+| persontab            |
+| pertab11             |
+| product              |
+| product_analysis     |
+| quetions             |
+| salgrade             |
+| student              |
+| user                 |
+| useraddress          |
+| userentity           |
+| usermany             |
+| usermany1            |
+| usertab              |
+| usertab1             |
++----------------------+
+49 rows in set (0.00 sec)
+
+mysql> desc addressmany1
+    -> ;
++--------+--------------+------+-----+---------+-------+
+| Field  | Type         | Null | Key | Default | Extra |
++--------+--------------+------+-----+---------+-------+
+| aid    | int          | NO   | PRI | NULL    |       |
+| city   | varchar(255) | YES  |     | NULL    |       |
+| pin    | varchar(255) | YES  |     | NULL    |       |
+| street | varchar(255) | YES  |     | NULL    |       |
++--------+--------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql>

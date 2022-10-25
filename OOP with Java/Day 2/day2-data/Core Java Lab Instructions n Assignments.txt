@@ -1,0 +1,102 @@
+Day 1
+1. Refer to today's sequence (day1-data\day1-help\sequence.txt) , to revise
+1.1 Solve ready code samples , as discussed in the theory session
+(Test Param Passing )
+1.2 import day1.1 in your new workspace to revise inheritance n run time polymorphism.
+
+2. Hands on 
+Create a  class Point2D  , under package "com.cdac.geometry" for representing a point in x-y co-ordinate system.
+
+3.1 Create a parameterized constructor to accept x & y co-ords.
+
+3.2 Add public String show()) --to return point's x & y co-ords
+
+3.3 Add isEqual method to Point2D class : boolean returning method : must return true if both points are having same x,y co-ords or false otherwise.
+
+3.4 Add a method , calculateDistance , to calc distance between 2 points
+Hint : use distance formula.
+
+3.5  Create a driver  class(for UI)  , in the "tester" package "TestPoints" , with main(..)
+
+Ask user , how many points to plot? :
+Create suitable array.
+
+3.6  Accept x,y co-ordinates for all the points n store it suitably.
+3.7  Display x,y co-ordinates of all the points plotted so far ,using for-each loop.
+3.8  Accept 2 indices from user .
+Find out if the points at these indices are same or different (Hint : isEqual)
+Print the message accordingly. 
+If points are not same , display distance between these 2 points.
+
+
+Day 2
+
+0. Open java docs , index.html in your browser
+
+1. Complete pending work
+(MUST)
+
+2. Revise today's work , by referring to sequence.txt n importing day2.1 project in your workspace
+
+3. Answer this
+When you call : System.out.println(ref);
+ how does it automatically call ref.toString() ?
+
+4. Look at the mem diagrams.
+
+5. Hands on (OPTIONAL)
+
+5.1 Can you arrange Fruit,Apple,Orange,Mango in inheritance hierarchy ?
+
+Use tight encapsulation.
+
+5.2 Properties (instance variables)  : color : String , weight : double , name:String, fresh : boolean
+
+5.3 Add suitable constructor.
+
+5.4 Override  toString correctly to return state of all fruits (return only  : name ,color , weight )
+
+5.5 Add a taste() method to return String form of the taste of the Fruit
+eg :  public String taste()
+
+For Fruit : Can you identify taste of any general fruit ?
+So  return :  "no specific taste" 
+
+Apple : should return  "sweet n sour"
+Mango : should return  "sweet"
+Orange : should return  "sour"
+
+5.6 Add specific functionality , in the sub classes
+In Mango : public void pulp() {Display name n color of the fruit + a mesg  creating  pulp!}
+In Orange : public void juice() {Display name n weight of the fruit + a mesg extracting juice!}
+In Apple : public void jam() {Display name of the fruit + a mesg  making jam!}
+
+
+5.7 Add all of above classes under the package "com.app.fruits"
+
+5.8 Create java application FruitBasket , with main method , as a tester
+5.9 Prompt user for the basket size n create suitable data structure
+
+5.10 Supply options
+1. Add Mango
+2. Add Orange
+3. Add Apple
+NOTE : You will be adding a fresh fruit in the basket , in all of above options.
+
+4. Display names of all fruits in the basket.
+
+5. Display name,color,weight , taste of all fresh fruits , in the basket.
+
+
+6. Mark a fruit in a basket , as stale(=not fresh)
+i/p : index 
+o/p : error message (in case of invalid index) or mark it stale
+
+7. Mark all sour fruits stale 
+Hint : Use equals() method of the String class.
+
+8. Invoke fruit specific functionality (pulp / juice / jam)
+i/p : index
+Invoke correct functionality (pulp / juice / jam)
+
+10. Exit 

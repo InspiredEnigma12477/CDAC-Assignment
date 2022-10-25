@@ -1,0 +1,1125 @@
+Enter password: *******
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 12
+Server version: 8.0.22 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2020, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use iacsdsep22
+Database changed
+mysql> Create table mytable(
+    -> Id int auto_increament,
+    -> Name varchar(20),
+    -> Address varchar(20));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'auto_increament,
+Name varchar(20),
+Address varchar(20))' at line 2
+mysql> Create table mytable(
+    -> Id int auto_increment,
+    -> Name varchar(20),
+    -> Address varchar(20));
+ERROR 1075 (42000): Incorrect table definition; there can be only one auto column and it must be defined as a key
+mysql> Create table mytable(
+    -> Id int auto_increment primary key,
+    -> Name varchar(20),
+    -> Address varchar(20));
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> insert into mytable values(default,'xxxx','Pune');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into mytable(name,address) values('Rajat','Pune');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from mytable;
++----+-------+---------+
+| Id | Name  | Address |
++----+-------+---------+
+|  1 | xxxx  | Pune    |
+|  2 | Rajat | Pune    |
++----+-------+---------+
+2 rows in set (0.00 sec)
+
+mysql> insert into mytable values(default,'xxxx','Pune');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into mytable(name,address) values('Rajat','Pune');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from mytable;
++----+-------+---------+
+| Id | Name  | Address |
++----+-------+---------+
+|  1 | xxxx  | Pune    |
+|  2 | Rajat | Pune    |
+|  3 | xxxx  | Pune    |
+|  4 | Rajat | Pune    |
++----+-------+---------+
+4 rows in set (0.00 sec)
+
+mysql> ALTER TABLE mytable AUTO_INCREMENT=1001;
+Query OK, 0 rows affected (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> insert into mytable(name,address) values('Rajat','Pune');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from mytable;
++------+-------+---------+
+| Id   | Name  | Address |
++------+-------+---------+
+|    1 | xxxx  | Pune    |
+|    2 | Rajat | Pune    |
+|    3 | xxxx  | Pune    |
+|    4 | Rajat | Pune    |
+| 1001 | Rajat | Pune    |
++------+-------+---------+
+5 rows in set (0.00 sec)
+
+mysql> delete from mytable
+    -> where id=3;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from mytable;
++------+-------+---------+
+| Id   | Name  | Address |
++------+-------+---------+
+|    1 | xxxx  | Pune    |
+|    2 | Rajat | Pune    |
+|    4 | Rajat | Pune    |
+| 1001 | Rajat | Pune    |
++------+-------+---------+
+4 rows in set (0.00 sec)
+
+mysql> insert into mytable values(3,'xxxx','Pune');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into mytable values(1002,'xxxx','Pune');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from mytable;
++------+-------+---------+
+| Id   | Name  | Address |
++------+-------+---------+
+|    1 | xxxx  | Pune    |
+|    2 | Rajat | Pune    |
+|    3 | xxxx  | Pune    |
+|    4 | Rajat | Pune    |
+| 1001 | Rajat | Pune    |
+| 1002 | xxxx  | Pune    |
++------+-------+---------+
+6 rows in set (0.00 sec)
+
+mysql> insert into mytable(name,address) values('Rajat','Pune');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from mytable;
++------+-------+---------+
+| Id   | Name  | Address |
++------+-------+---------+
+|    1 | xxxx  | Pune    |
+|    2 | Rajat | Pune    |
+|    3 | xxxx  | Pune    |
+|    4 | Rajat | Pune    |
+| 1001 | Rajat | Pune    |
+| 1002 | xxxx  | Pune    |
+| 1003 | Rajat | Pune    |
++------+-------+---------+
+7 rows in set (0.00 sec)
+
+mysql> insert into mytable values(default,'xxxx','Pune');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from mytable;
++------+-------+---------+
+| Id   | Name  | Address |
++------+-------+---------+
+|    1 | xxxx  | Pune    |
+|    2 | Rajat | Pune    |
+|    3 | xxxx  | Pune    |
+|    4 | Rajat | Pune    |
+| 1001 | Rajat | Pune    |
+| 1002 | xxxx  | Pune    |
+| 1003 | Rajat | Pune    |
+| 1004 | xxxx  | Pune    |
++------+-------+---------+
+8 rows in set (0.00 sec)
+
+mysql> update mytable
+    -> set id=101
+    -> where id=1;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from mytable;
++------+-------+---------+
+| Id   | Name  | Address |
++------+-------+---------+
+|    2 | Rajat | Pune    |
+|    3 | xxxx  | Pune    |
+|    4 | Rajat | Pune    |
+|  101 | xxxx  | Pune    |
+| 1001 | Rajat | Pune    |
+| 1002 | xxxx  | Pune    |
+| 1003 | Rajat | Pune    |
+| 1004 | xxxx  | Pune    |
++------+-------+---------+
+8 rows in set (0.00 sec)
+
+mysql> alter table mytable
+    -> add mobile int;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc mytable;
++---------+-------------+------+-----+---------+----------------+
+| Field   | Type        | Null | Key | Default | Extra          |
++---------+-------------+------+-----+---------+----------------+
+| Id      | int         | NO   | PRI | NULL    | auto_increment |
+| Name    | varchar(20) | YES  |     | NULL    |                |
+| Address | varchar(20) | YES  |     | NULL    |                |
+| mobile  | int         | YES  |     | NULL    |                |
++---------+-------------+------+-----+---------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> select * from mytable;
++------+-------+---------+--------+
+| Id   | Name  | Address | mobile |
++------+-------+---------+--------+
+|    2 | Rajat | Pune    |   NULL |
+|    3 | xxxx  | Pune    |   NULL |
+|    4 | Rajat | Pune    |   NULL |
+|  101 | xxxx  | Pune    |   NULL |
+| 1001 | Rajat | Pune    |   NULL |
+| 1002 | xxxx  | Pune    |   NULL |
+| 1003 | Rajat | Pune    |   NULL |
+| 1004 | xxxx  | Pune    |   NULL |
++------+-------+---------+--------+
+8 rows in set (0.00 sec)
+
+mysql> update mytable
+    -> set mobile=111111
+    -> where id=2;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from mytable;
++------+-------+---------+--------+
+| Id   | Name  | Address | mobile |
++------+-------+---------+--------+
+|    2 | Rajat | Pune    | 111111 |
+|    3 | xxxx  | Pune    |   NULL |
+|    4 | Rajat | Pune    |   NULL |
+|  101 | xxxx  | Pune    |   NULL |
+| 1001 | Rajat | Pune    |   NULL |
+| 1002 | xxxx  | Pune    |   NULL |
+| 1003 | Rajat | Pune    |   NULL |
+| 1004 | xxxx  | Pune    |   NULL |
++------+-------+---------+--------+
+8 rows in set (0.00 sec)
+
+mysql> alter table mytable
+    -> add lname varchar(20) after name;
+Query OK, 0 rows affected (0.06 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc mytable;
++---------+-------------+------+-----+---------+----------------+
+| Field   | Type        | Null | Key | Default | Extra          |
++---------+-------------+------+-----+---------+----------------+
+| Id      | int         | NO   | PRI | NULL    | auto_increment |
+| Name    | varchar(20) | YES  |     | NULL    |                |
+| lname   | varchar(20) | YES  |     | NULL    |                |
+| Address | varchar(20) | YES  |     | NULL    |                |
+| mobile  | int         | YES  |     | NULL    |                |
++---------+-------------+------+-----+---------+----------------+
+5 rows in set (0.01 sec)
+
+mysql> select * from mytable;
++------+-------+-------+---------+--------+
+| Id   | Name  | lname | Address | mobile |
++------+-------+-------+---------+--------+
+|    2 | Rajat | NULL  | Pune    | 111111 |
+|    3 | xxxx  | NULL  | Pune    |   NULL |
+|    4 | Rajat | NULL  | Pune    |   NULL |
+|  101 | xxxx  | NULL  | Pune    |   NULL |
+| 1001 | Rajat | NULL  | Pune    |   NULL |
+| 1002 | xxxx  | NULL  | Pune    |   NULL |
+| 1003 | Rajat | NULL  | Pune    |   NULL |
+| 1004 | xxxx  | NULL  | Pune    |   NULL |
++------+-------+-------+---------+--------+
+8 rows in set (0.00 sec)
+
+mysql> insert into mytable values(default,'Rajashree','Joshi','Mumbai',333333);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from mytable;
++------+-----------+-------+---------+--------+
+| Id   | Name      | lname | Address | mobile |
++------+-----------+-------+---------+--------+
+|    2 | Rajat     | NULL  | Pune    | 111111 |
+|    3 | xxxx      | NULL  | Pune    |   NULL |
+|    4 | Rajat     | NULL  | Pune    |   NULL |
+|  101 | xxxx      | NULL  | Pune    |   NULL |
+| 1001 | Rajat     | NULL  | Pune    |   NULL |
+| 1002 | xxxx      | NULL  | Pune    |   NULL |
+| 1003 | Rajat     | NULL  | Pune    |   NULL |
+| 1004 | xxxx      | NULL  | Pune    |   NULL |
+| 1005 | Rajashree | Joshi | Mumbai  | 333333 |
++------+-----------+-------+---------+--------+
+9 rows in set (0.00 sec)
+
+mysql> desc mytable
+    -> ;
++---------+-------------+------+-----+---------+----------------+
+| Field   | Type        | Null | Key | Default | Extra          |
++---------+-------------+------+-----+---------+----------------+
+| Id      | int         | NO   | PRI | NULL    | auto_increment |
+| Name    | varchar(20) | YES  |     | NULL    |                |
+| lname   | varchar(20) | YES  |     | NULL    |                |
+| Address | varchar(20) | YES  |     | NULL    |                |
+| mobile  | int         | YES  |     | NULL    |                |
++---------+-------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> alter table mytable
+    -> drop column mobile;
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc mytable
+    -> ;
++---------+-------------+------+-----+---------+----------------+
+| Field   | Type        | Null | Key | Default | Extra          |
++---------+-------------+------+-----+---------+----------------+
+| Id      | int         | NO   | PRI | NULL    | auto_increment |
+| Name    | varchar(20) | YES  |     | NULL    |                |
+| lname   | varchar(20) | YES  |     | NULL    |                |
+| Address | varchar(20) | YES  |     | NULL    |                |
++---------+-------------+------+-----+---------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> alter table mytable
+    -> modify name varchar(50) not null;
+Query OK, 0 rows affected (0.07 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc mytable;
++---------+-------------+------+-----+---------+----------------+
+| Field   | Type        | Null | Key | Default | Extra          |
++---------+-------------+------+-----+---------+----------------+
+| Id      | int         | NO   | PRI | NULL    | auto_increment |
+| name    | varchar(50) | NO   |     | NULL    |                |
+| lname   | varchar(20) | YES  |     | NULL    |                |
+| Address | varchar(20) | YES  |     | NULL    |                |
++---------+-------------+------+-----+---------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> alter table mytable
+    -> rename column name to fname;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc mytable;
++---------+-------------+------+-----+---------+----------------+
+| Field   | Type        | Null | Key | Default | Extra          |
++---------+-------------+------+-----+---------+----------------+
+| Id      | int         | NO   | PRI | NULL    | auto_increment |
+| fname   | varchar(50) | NO   |     | NULL    |                |
+| lname   | varchar(20) | YES  |     | NULL    |                |
+| Address | varchar(20) | YES  |     | NULL    |                |
++---------+-------------+------+-----+---------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> alter table mytable
+    -> add mobile int not null;
+Query OK, 0 rows affected (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc mytable;
++---------+-------------+------+-----+---------+----------------+
+| Field   | Type        | Null | Key | Default | Extra          |
++---------+-------------+------+-----+---------+----------------+
+| Id      | int         | NO   | PRI | NULL    | auto_increment |
+| fname   | varchar(50) | NO   |     | NULL    |                |
+| lname   | varchar(20) | YES  |     | NULL    |                |
+| Address | varchar(20) | YES  |     | NULL    |                |
+| mobile  | int         | NO   |     | NULL    |                |
++---------+-------------+------+-----+---------+----------------+
+5 rows in set (0.01 sec)
+
+mysql> select * from mytable;
++------+-----------+-------+---------+--------+
+| Id   | fname     | lname | Address | mobile |
++------+-----------+-------+---------+--------+
+|    2 | Rajat     | NULL  | Pune    |      0 |
+|    3 | xxxx      | NULL  | Pune    |      0 |
+|    4 | Rajat     | NULL  | Pune    |      0 |
+|  101 | xxxx      | NULL  | Pune    |      0 |
+| 1001 | Rajat     | NULL  | Pune    |      0 |
+| 1002 | xxxx      | NULL  | Pune    |      0 |
+| 1003 | Rajat     | NULL  | Pune    |      0 |
+| 1004 | xxxx      | NULL  | Pune    |      0 |
+| 1005 | Rajashree | Joshi | Mumbai  |      0 |
++------+-----------+-------+---------+--------+
+9 rows in set (0.00 sec)
+
+mysql> alter table mytable
+    -> add mobile varchar(20) not null;
+ERROR 1060 (42S21): Duplicate column name 'mobile'
+mysql> add mobile2 varchar(20) not null;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'add mobile2 varchar(20) not null' at line 1
+mysql> alter table mytable
+    -> add mobile2 varchar(20) not null;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from mytable;
++------+-----------+-------+---------+--------+---------+
+| Id   | fname     | lname | Address | mobile | mobile2 |
++------+-----------+-------+---------+--------+---------+
+|    2 | Rajat     | NULL  | Pune    |      0 |         |
+|    3 | xxxx      | NULL  | Pune    |      0 |         |
+|    4 | Rajat     | NULL  | Pune    |      0 |         |
+|  101 | xxxx      | NULL  | Pune    |      0 |         |
+| 1001 | Rajat     | NULL  | Pune    |      0 |         |
+| 1002 | xxxx      | NULL  | Pune    |      0 |         |
+| 1003 | Rajat     | NULL  | Pune    |      0 |         |
+| 1004 | xxxx      | NULL  | Pune    |      0 |         |
+| 1005 | Rajashree | Joshi | Mumbai  |      0 |         |
++------+-----------+-------+---------+--------+---------+
+9 rows in set (0.00 sec)
+
+mysql> create table child_mytable(
+    -> child_id int,
+    -> parent_id int);
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> desc child_mytable;
++-----------+------+------+-----+---------+-------+
+| Field     | Type | Null | Key | Default | Extra |
++-----------+------+------+-----+---------+-------+
+| child_id  | int  | YES  |     | NULL    |       |
+| parent_id | int  | YES  |     | NULL    |       |
++-----------+------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> alter table child_mytable
+    -> add constraint child_pk primary key(child_id);
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc child_mytable;
++-----------+------+------+-----+---------+-------+
+| Field     | Type | Null | Key | Default | Extra |
++-----------+------+------+-----+---------+-------+
+| child_id  | int  | NO   | PRI | NULL    |       |
+| parent_id | int  | YES  |     | NULL    |       |
++-----------+------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> alter table child_mytable
+    -> add constraint parent_fk foreign key(parent_id) references mytable(id);
+Query OK, 0 rows affected (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc child_mytable;
++-----------+------+------+-----+---------+-------+
+| Field     | Type | Null | Key | Default | Extra |
++-----------+------+------+-----+---------+-------+
+| child_id  | int  | NO   | PRI | NULL    |       |
+| parent_id | int  | YES  | MUL | NULL    |       |
++-----------+------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> alter table child_mytable
+    -> drop constraint primary key;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'primary key' at line 2
+mysql> alter table child_mytable
+    -> drop primary key;
+Query OK, 0 rows affected (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc child_mytable;
++-----------+------+------+-----+---------+-------+
+| Field     | Type | Null | Key | Default | Extra |
++-----------+------+------+-----+---------+-------+
+| child_id  | int  | NO   |     | NULL    |       |
+| parent_id | int  | YES  | MUL | NULL    |       |
++-----------+------+------+-----+---------+-------+
+2 rows in set (0.01 sec)
+
+mysql> alter table child_mytable
+    -> drop constraint parent_fk;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> Alter table mytable
+    -> Rename to newmytable
+    -> ;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> desc mytable;
+ERROR 1146 (42S02): Table 'iacsdsep22.mytable' doesn't exist
+mysql> desc newmytable;
++---------+-------------+------+-----+---------+----------------+
+| Field   | Type        | Null | Key | Default | Extra          |
++---------+-------------+------+-----+---------+----------------+
+| Id      | int         | NO   | PRI | NULL    | auto_increment |
+| fname   | varchar(50) | NO   |     | NULL    |                |
+| lname   | varchar(20) | YES  |     | NULL    |                |
+| Address | varchar(20) | YES  |     | NULL    |                |
+| mobile  | int         | NO   |     | NULL    |                |
+| mobile2 | varchar(20) | NO   |     | NULL    |                |
++---------+-------------+------+-----+---------+----------------+
+6 rows in set (0.01 sec)
+
+mysql> insert into newmytable values(default,'Rajashree','Joshi','Mumbai',333333);
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> desc newmytable;
++---------+-------------+------+-----+---------+----------------+
+| Field   | Type        | Null | Key | Default | Extra          |
++---------+-------------+------+-----+---------+----------------+
+| Id      | int         | NO   | PRI | NULL    | auto_increment |
+| fname   | varchar(50) | NO   |     | NULL    |                |
+| lname   | varchar(20) | YES  |     | NULL    |                |
+| Address | varchar(20) | YES  |     | NULL    |                |
+| mobile  | int         | NO   |     | NULL    |                |
+| mobile2 | varchar(20) | NO   |     | NULL    |                |
++---------+-------------+------+-----+---------+----------------+
+6 rows in set (0.00 sec)
+
+mysql> insert into newmytable values(default,'Rajashree','Joshi','Mumbai',333333,44444);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from newmytable;
++------+-----------+-------+---------+--------+---------+
+| Id   | fname     | lname | Address | mobile | mobile2 |
++------+-----------+-------+---------+--------+---------+
+|    2 | Rajat     | NULL  | Pune    |      0 |         |
+|    3 | xxxx      | NULL  | Pune    |      0 |         |
+|    4 | Rajat     | NULL  | Pune    |      0 |         |
+|  101 | xxxx      | NULL  | Pune    |      0 |         |
+| 1001 | Rajat     | NULL  | Pune    |      0 |         |
+| 1002 | xxxx      | NULL  | Pune    |      0 |         |
+| 1003 | Rajat     | NULL  | Pune    |      0 |         |
+| 1004 | xxxx      | NULL  | Pune    |      0 |         |
+| 1005 | Rajashree | Joshi | Mumbai  |      0 |         |
+| 1006 | Rajashree | Joshi | Mumbai  | 333333 | 44444   |
++------+-----------+-------+---------+--------+---------+
+10 rows in set (0.00 sec)
+
+mysql> alter table newmytable auto_increment=102;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> insert into newmytable values(default,'Rajashree','Joshi','Mumbai',333333,55555);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from newmytable;
++------+-----------+-------+---------+--------+---------+
+| Id   | fname     | lname | Address | mobile | mobile2 |
++------+-----------+-------+---------+--------+---------+
+|    2 | Rajat     | NULL  | Pune    |      0 |         |
+|    3 | xxxx      | NULL  | Pune    |      0 |         |
+|    4 | Rajat     | NULL  | Pune    |      0 |         |
+|  101 | xxxx      | NULL  | Pune    |      0 |         |
+| 1001 | Rajat     | NULL  | Pune    |      0 |         |
+| 1002 | xxxx      | NULL  | Pune    |      0 |         |
+| 1003 | Rajat     | NULL  | Pune    |      0 |         |
+| 1004 | xxxx      | NULL  | Pune    |      0 |         |
+| 1005 | Rajashree | Joshi | Mumbai  |      0 |         |
+| 1006 | Rajashree | Joshi | Mumbai  | 333333 | 44444   |
+| 1007 | Rajashree | Joshi | Mumbai  | 333333 | 55555   |
++------+-----------+-------+---------+--------+---------+
+11 rows in set (0.00 sec)
+
+mysql> show constraints;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'constraints' at line 1
+mysql> alter table newmytable
+    -> rename to mytable;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> alter table mytable
+    -> drop column lname;
+Query OK, 0 rows affected (0.06 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table mytable
+    -> drop column mobile;
+Query OK, 0 rows affected (0.06 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table mytable
+    -> drop column mobile2;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc mytable
+    -> ;
++---------+-------------+------+-----+---------+----------------+
+| Field   | Type        | Null | Key | Default | Extra          |
++---------+-------------+------+-----+---------+----------------+
+| Id      | int         | NO   | PRI | NULL    | auto_increment |
+| fname   | varchar(50) | NO   |     | NULL    |                |
+| Address | varchar(20) | YES  |     | NULL    |                |
++---------+-------------+------+-----+---------+----------------+
+3 rows in set (0.00 sec)
+
+mysql> set autocommit=0;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from mytable
+    -> ;
++------+-----------+---------+
+| Id   | fname     | Address |
++------+-----------+---------+
+|    2 | Rajat     | Pune    |
+|    3 | xxxx      | Pune    |
+|    4 | Rajat     | Pune    |
+|  101 | xxxx      | Pune    |
+| 1001 | Rajat     | Pune    |
+| 1002 | xxxx      | Pune    |
+| 1003 | Rajat     | Pune    |
+| 1004 | xxxx      | Pune    |
+| 1005 | Rajashree | Mumbai  |
+| 1006 | Rajashree | Mumbai  |
+| 1007 | Rajashree | Mumbai  |
++------+-----------+---------+
+11 rows in set (0.00 sec)
+
+mysql> delete from mytable
+    -> where id>100;
+Query OK, 8 rows affected (0.00 sec)
+
+mysql> select * from mytable;
++----+-------+---------+
+| Id | fname | Address |
++----+-------+---------+
+|  2 | Rajat | Pune    |
+|  3 | xxxx  | Pune    |
+|  4 | Rajat | Pune    |
++----+-------+---------+
+3 rows in set (0.00 sec)
+
+mysql> rollback;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from mytable;
++------+-----------+---------+
+| Id   | fname     | Address |
++------+-----------+---------+
+|    2 | Rajat     | Pune    |
+|    3 | xxxx      | Pune    |
+|    4 | Rajat     | Pune    |
+|  101 | xxxx      | Pune    |
+| 1001 | Rajat     | Pune    |
+| 1002 | xxxx      | Pune    |
+| 1003 | Rajat     | Pune    |
+| 1004 | xxxx      | Pune    |
+| 1005 | Rajashree | Mumbai  |
+| 1006 | Rajashree | Mumbai  |
+| 1007 | Rajashree | Mumbai  |
++------+-----------+---------+
+11 rows in set (0.00 sec)
+
+mysql> delete from mytable
+    -> where id>100;
+Query OK, 8 rows affected (0.00 sec)
+
+mysql> select * from mytable
+    -> ;
++----+-------+---------+
+| Id | fname | Address |
++----+-------+---------+
+|  2 | Rajat | Pune    |
+|  3 | xxxx  | Pune    |
+|  4 | Rajat | Pune    |
++----+-------+---------+
+3 rows in set (0.00 sec)
+
+mysql> commit;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from mytable
+    -> ;
++----+-------+---------+
+| Id | fname | Address |
++----+-------+---------+
+|  2 | Rajat | Pune    |
+|  3 | xxxx  | Pune    |
+|  4 | Rajat | Pune    |
++----+-------+---------+
+3 rows in set (0.00 sec)
+
+mysql> rollback;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from mytable;
++----+-------+---------+
+| Id | fname | Address |
++----+-------+---------+
+|  2 | Rajat | Pune    |
+|  3 | xxxx  | Pune    |
+|  4 | Rajat | Pune    |
++----+-------+---------+
+3 rows in set (0.00 sec)
+
+mysql> insert into mytable(default,'aaa','Mumbai');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'default,'aaa','Mumbai')' at line 1
+mysql> insert into mytable values(default,'aaa','Mumbai');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into mytable values(default,'aaa1','Mumbai');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into mytable values(default,'aaa11','Mumbai');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from mytable
+    -> ;
++------+-------+---------+
+| Id   | fname | Address |
++------+-------+---------+
+|    2 | Rajat | Pune    |
+|    3 | xxxx  | Pune    |
+|    4 | Rajat | Pune    |
+| 1008 | aaa   | Mumbai  |
+| 1009 | aaa1  | Mumbai  |
+| 1010 | aaa11 | Mumbai  |
++------+-------+---------+
+6 rows in set (0.00 sec)
+
+mysql> commit
+    -> ;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> insert into mytable values(default,'aaa12','Mumbai');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into mytable values(default,'aaa12','Mumbai');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into mytable values(default,'aaa12','Mumbai');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> rollback;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> select * from mytable
+    -> ;
++------+-------+---------+
+| Id   | fname | Address |
++------+-------+---------+
+|    2 | Rajat | Pune    |
+|    3 | xxxx  | Pune    |
+|    4 | Rajat | Pune    |
+| 1008 | aaa   | Mumbai  |
+| 1009 | aaa1  | Mumbai  |
+| 1010 | aaa11 | Mumbai  |
++------+-------+---------+
+6 rows in set (0.00 sec)
+
+mysql> update mytable
+    -> set address='mumbai';
+Query OK, 6 rows affected (0.00 sec)
+Rows matched: 6  Changed: 6  Warnings: 0
+
+mysql> select * from mytable;
++------+-------+---------+
+| Id   | fname | Address |
++------+-------+---------+
+|    2 | Rajat | mumbai  |
+|    3 | xxxx  | mumbai  |
+|    4 | Rajat | mumbai  |
+| 1008 | aaa   | mumbai  |
+| 1009 | aaa1  | mumbai  |
+| 1010 | aaa11 | mumbai  |
++------+-------+---------+
+6 rows in set (0.00 sec)
+
+mysql> rollback;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from mytable;
++------+-------+---------+
+| Id   | fname | Address |
++------+-------+---------+
+|    2 | Rajat | Pune    |
+|    3 | xxxx  | Pune    |
+|    4 | Rajat | Pune    |
+| 1008 | aaa   | Mumbai  |
+| 1009 | aaa1  | Mumbai  |
+| 1010 | aaa11 | Mumbai  |
++------+-------+---------+
+6 rows in set (0.00 sec)
+
+mysql> insert into mytable values(default,'aaa11','Mumbai');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into mytable values(default,'aaa11','Mumbai');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> savepoint A
+    -> ;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> insert into mytable values(default,'aaa11','Mumbai');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into mytable values(default,'aaa11','Mumbai');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> savepint B
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'savepint B' at line 1
+mysql> savepoint B
+    -> ;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from mytable;
++------+-------+---------+
+| Id   | fname | Address |
++------+-------+---------+
+|    2 | Rajat | Pune    |
+|    3 | xxxx  | Pune    |
+|    4 | Rajat | Pune    |
+| 1008 | aaa   | Mumbai  |
+| 1009 | aaa1  | Mumbai  |
+| 1010 | aaa11 | Mumbai  |
+| 1014 | aaa11 | Mumbai  |
+| 1015 | aaa11 | Mumbai  |
+| 1016 | aaa11 | Mumbai  |
+| 1017 | aaa11 | Mumbai  |
++------+-------+---------+
+10 rows in set (0.00 sec)
+
+mysql> delete from mytable where id<=3;
+Query OK, 2 rows affected (0.00 sec)
+
+mysql> select * from mytable;
++------+-------+---------+
+| Id   | fname | Address |
++------+-------+---------+
+|    4 | Rajat | Pune    |
+| 1008 | aaa   | Mumbai  |
+| 1009 | aaa1  | Mumbai  |
+| 1010 | aaa11 | Mumbai  |
+| 1014 | aaa11 | Mumbai  |
+| 1015 | aaa11 | Mumbai  |
+| 1016 | aaa11 | Mumbai  |
+| 1017 | aaa11 | Mumbai  |
++------+-------+---------+
+8 rows in set (0.00 sec)
+
+mysql> rollback to B;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from mytable;
++------+-------+---------+
+| Id   | fname | Address |
++------+-------+---------+
+|    2 | Rajat | Pune    |
+|    3 | xxxx  | Pune    |
+|    4 | Rajat | Pune    |
+| 1008 | aaa   | Mumbai  |
+| 1009 | aaa1  | Mumbai  |
+| 1010 | aaa11 | Mumbai  |
+| 1014 | aaa11 | Mumbai  |
+| 1015 | aaa11 | Mumbai  |
+| 1016 | aaa11 | Mumbai  |
+| 1017 | aaa11 | Mumbai  |
++------+-------+---------+
+10 rows in set (0.00 sec)
+
+mysql> commit;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from emp;
+ERROR 1146 (42S02): Table 'iacsdsep22.emp' doesn't exist
+mysql> use test;
+Database changed
+mysql> select * from emp;
++-------+--------+-----------+------+------------+---------+---------+--------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL     | COMM    | DEPTNO |
++-------+--------+-----------+------+------------+---------+---------+--------+
+|  7369 | SMITH  | CLERK     | 7902 | 1980-12-17 |  800.00 |    NULL |     20 |
+|  7499 | ALLEN  | SALESMAN  | 7698 | 1981-02-20 | 1600.00 |  300.00 |     30 |
+|  7521 | WARD   | SALESMAN  | 7698 | 1981-02-22 | 1250.00 |  500.00 |     30 |
+|  7566 | JONES  | MANAGER   | 7839 | 1981-04-02 | 2975.00 |    NULL |     20 |
+|  7654 | MARTIN | SALESMAN  | 7698 | 1981-09-28 | 1250.00 | 1400.00 |     30 |
+|  7698 | BLAKE  | MANAGER   | 7839 | 1981-05-01 | 2850.00 |    NULL |     30 |
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450.00 |    NULL |     10 |
+|  7788 | SCOTT  | ANALYST   | 7566 | 1982-12-09 | 3000.00 |    NULL |     20 |
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 | 5000.00 |    NULL |     10 |
+|  7844 | TURNER | SALESMAN  | 7698 | 1981-09-08 | 1500.00 |    0.00 |     30 |
+|  7876 | ADAMS  | CLERK     | 7788 | 1983-01-12 | 1100.00 |    NULL |     20 |
+|  7900 | JAMES  | CLERK     | 7698 | 1981-12-03 |  950.00 |    NULL |     30 |
+|  7902 | FORD   | ANALYST   | 7566 | 1981-12-03 | 3000.00 |    NULL |     20 |
+|  7934 | MILLER | CLERK     | 7782 | 1982-01-23 | 1300.00 |    NULL |     10 |
+|   100 | xxx    | SALESMAN  | NULL | NULL       | 2345.00 |    NULL |     10 |
+|   101 | yyy    | SALESMAN  | NULL | NULL       | 3345.00 |    NULL |     10 |
+|   102 | zzz    | SALESMAN  | NULL | NULL       | 3745.00 |    NULL |     20 |
++-------+--------+-----------+------+------------+---------+---------+--------+
+17 rows in set (0.00 sec)
+
+mysql> select * from dept;
++--------+------------+----------+
+| DEPTNO | DNAME      | LOC      |
++--------+------------+----------+
+|     10 | ACCOUNTING | NEW YORK |
+|     20 | RESEARCH   | DALLAS   |
+|     30 | SALES      | CHICAGO  |
+|     40 | OPERATIONS | BOSTON   |
++--------+------------+----------+
+4 rows in set (0.01 sec)
+
+mysql> select * from emp
+    -> where deptno=(select deptno)
+    -> from dept
+    -> where dname='ACCOUNTING');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'from dept
+where dname='ACCOUNTING')' at line 3
+mysql> select * from emp
+    -> where deptno=(select deptno
+    -> from dept
+    -> where dname='ACCOUNTING');
++-------+--------+-----------+------+------------+---------+------+--------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL     | COMM | DEPTNO |
++-------+--------+-----------+------+------------+---------+------+--------+
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450.00 | NULL |     10 |
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 | 5000.00 | NULL |     10 |
+|  7934 | MILLER | CLERK     | 7782 | 1982-01-23 | 1300.00 | NULL |     10 |
+|   100 | xxx    | SALESMAN  | NULL | NULL       | 2345.00 | NULL |     10 |
+|   101 | yyy    | SALESMAN  | NULL | NULL       | 3345.00 | NULL |     10 |
++-------+--------+-----------+------+------------+---------+------+--------+
+5 rows in set (0.00 sec)
+
+mysql> select *
+    -> from emp
+    -> where 1=2;
+Empty set (0.00 sec)
+
+mysql> Create table employee_history
+    -> As
+    -> (select empno,ename,sal from emp
+    -> Where 1=2 );
+Query OK, 0 rows affected (0.06 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from employee_history;
+Empty set (0.00 sec)
+
+mysql> desc employee_history;
++-------+--------------+------+-----+---------+-------+
+| Field | Type         | Null | Key | Default | Extra |
++-------+--------------+------+-----+---------+-------+
+| empno | int          | NO   |     | NULL    |       |
+| ename | varchar(10)  | YES  |     | NULL    |       |
+| sal   | decimal(7,2) | YES  |     | NULL    |       |
++-------+--------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> insert into employee_history
+    -> as
+    -> (select empno,ename,sal
+    -> from emp
+    -> where sal>2000);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'as
+(select empno,ename,sal
+from emp
+where sal>2000)' at line 2
+mysql> insert into employee_history
+    -> (select empno,ename,sal
+    -> from emp
+    -> where sal>2000);
+Query OK, 9 rows affected (0.00 sec)
+Records: 9  Duplicates: 0  Warnings: 0
+
+mysql> Delete from emp
+    -> Where deptno=(select deptno
+    -> From emp
+    -> Where ename=’ALLEN’)
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '?ALLEN?)' at line 4
+mysql> Delete from emp
+    -> Where deptno=(select deptno
+    -> From emp
+    -> Where ename='ALLEN');
+ERROR 1093 (HY000): You can't specify target table 'emp' for update in FROM clause
+mysql> Delete from emp
+    -> Where deptno=(select deptno
+    -> from (select * from emp) e
+    -> Where ename='ALLEN');
+Query OK, 6 rows affected (0.00 sec)
+
+mysql> select * from emp;
++-------+--------+-----------+------+------------+---------+------+--------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL     | COMM | DEPTNO |
++-------+--------+-----------+------+------------+---------+------+--------+
+|  7369 | SMITH  | CLERK     | 7902 | 1980-12-17 |  800.00 | NULL |     20 |
+|  7566 | JONES  | MANAGER   | 7839 | 1981-04-02 | 2975.00 | NULL |     20 |
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450.00 | NULL |     10 |
+|  7788 | SCOTT  | ANALYST   | 7566 | 1982-12-09 | 3000.00 | NULL |     20 |
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 | 5000.00 | NULL |     10 |
+|  7876 | ADAMS  | CLERK     | 7788 | 1983-01-12 | 1100.00 | NULL |     20 |
+|  7902 | FORD   | ANALYST   | 7566 | 1981-12-03 | 3000.00 | NULL |     20 |
+|  7934 | MILLER | CLERK     | 7782 | 1982-01-23 | 1300.00 | NULL |     10 |
+|   100 | xxx    | SALESMAN  | NULL | NULL       | 2345.00 | NULL |     10 |
+|   101 | yyy    | SALESMAN  | NULL | NULL       | 3345.00 | NULL |     10 |
+|   102 | zzz    | SALESMAN  | NULL | NULL       | 3745.00 | NULL |     20 |
++-------+--------+-----------+------+------------+---------+------+--------+
+11 rows in set (0.00 sec)
+
+mysql> select deptno,avg(sal)
+    -> from emp
+    -> group by deptno;
++--------+-------------+
+| deptno | avg(sal)    |
++--------+-------------+
+|     20 | 2436.666667 |
+|     10 | 2888.000000 |
++--------+-------------+
+2 rows in set (0.00 sec)
+
+mysql> rollback;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from emp;
++-------+--------+-----------+------+------------+---------+---------+--------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL     | COMM    | DEPTNO |
++-------+--------+-----------+------+------------+---------+---------+--------+
+|  7369 | SMITH  | CLERK     | 7902 | 1980-12-17 |  800.00 |    NULL |     20 |
+|  7499 | ALLEN  | SALESMAN  | 7698 | 1981-02-20 | 1600.00 |  300.00 |     30 |
+|  7521 | WARD   | SALESMAN  | 7698 | 1981-02-22 | 1250.00 |  500.00 |     30 |
+|  7566 | JONES  | MANAGER   | 7839 | 1981-04-02 | 2975.00 |    NULL |     20 |
+|  7654 | MARTIN | SALESMAN  | 7698 | 1981-09-28 | 1250.00 | 1400.00 |     30 |
+|  7698 | BLAKE  | MANAGER   | 7839 | 1981-05-01 | 2850.00 |    NULL |     30 |
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450.00 |    NULL |     10 |
+|  7788 | SCOTT  | ANALYST   | 7566 | 1982-12-09 | 3000.00 |    NULL |     20 |
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 | 5000.00 |    NULL |     10 |
+|  7844 | TURNER | SALESMAN  | 7698 | 1981-09-08 | 1500.00 |    0.00 |     30 |
+|  7876 | ADAMS  | CLERK     | 7788 | 1983-01-12 | 1100.00 |    NULL |     20 |
+|  7900 | JAMES  | CLERK     | 7698 | 1981-12-03 |  950.00 |    NULL |     30 |
+|  7902 | FORD   | ANALYST   | 7566 | 1981-12-03 | 3000.00 |    NULL |     20 |
+|  7934 | MILLER | CLERK     | 7782 | 1982-01-23 | 1300.00 |    NULL |     10 |
+|   100 | xxx    | SALESMAN  | NULL | NULL       | 2345.00 |    NULL |     10 |
+|   101 | yyy    | SALESMAN  | NULL | NULL       | 3345.00 |    NULL |     10 |
+|   102 | zzz    | SALESMAN  | NULL | NULL       | 3745.00 |    NULL |     20 |
++-------+--------+-----------+------+------------+---------+---------+--------+
+17 rows in set (0.00 sec)
+
+mysql> select deptno,avg(sal)
+    -> from emp
+    -> group by deptno;
++--------+-------------+
+| deptno | avg(sal)    |
++--------+-------------+
+|     20 | 2436.666667 |
+|     30 | 1566.666667 |
+|     10 | 2888.000000 |
++--------+-------------+
+3 rows in set (0.00 sec)
+
+mysql> select * from emp;
++-------+--------+-----------+------+------------+---------+---------+--------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL     | COMM    | DEPTNO |
++-------+--------+-----------+------+------------+---------+---------+--------+
+|  7369 | SMITH  | CLERK     | 7902 | 1980-12-17 |  800.00 |    NULL |     20 |
+|  7499 | ALLEN  | SALESMAN  | 7698 | 1981-02-20 | 1600.00 |  300.00 |     30 |
+|  7521 | WARD   | SALESMAN  | 7698 | 1981-02-22 | 1250.00 |  500.00 |     30 |
+|  7566 | JONES  | MANAGER   | 7839 | 1981-04-02 | 2975.00 |    NULL |     20 |
+|  7654 | MARTIN | SALESMAN  | 7698 | 1981-09-28 | 1250.00 | 1400.00 |     30 |
+|  7698 | BLAKE  | MANAGER   | 7839 | 1981-05-01 | 2850.00 |    NULL |     30 |
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450.00 |    NULL |     10 |
+|  7788 | SCOTT  | ANALYST   | 7566 | 1982-12-09 | 3000.00 |    NULL |     20 |
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 | 5000.00 |    NULL |     10 |
+|  7844 | TURNER | SALESMAN  | 7698 | 1981-09-08 | 1500.00 |    0.00 |     30 |
+|  7876 | ADAMS  | CLERK     | 7788 | 1983-01-12 | 1100.00 |    NULL |     20 |
+|  7900 | JAMES  | CLERK     | 7698 | 1981-12-03 |  950.00 |    NULL |     30 |
+|  7902 | FORD   | ANALYST   | 7566 | 1981-12-03 | 3000.00 |    NULL |     20 |
+|  7934 | MILLER | CLERK     | 7782 | 1982-01-23 | 1300.00 |    NULL |     10 |
+|   100 | xxx    | SALESMAN  | NULL | NULL       | 2345.00 |    NULL |     10 |
+|   101 | yyy    | SALESMAN  | NULL | NULL       | 3345.00 |    NULL |     10 |
+|   102 | zzz    | SALESMAN  | NULL | NULL       | 3745.00 |    NULL |     20 |
++-------+--------+-----------+------+------------+---------+---------+--------+
+17 rows in set (0.00 sec)
+
+mysql> select * from dept;
++--------+------------+----------+
+| DEPTNO | DNAME      | LOC      |
++--------+------------+----------+
+|     10 | ACCOUNTING | NEW YORK |
+|     20 | RESEARCH   | DALLAS   |
+|     30 | SALES      | CHICAGO  |
+|     40 | OPERATIONS | BOSTON   |
++--------+------------+----------+
+4 rows in set (0.00 sec)
+
+mysql> Select *
+    -> From dept d
+    -> Where  not  exists    (select *
+    -> From emp e
+    -> Where e.deptno=d.deptno)
+    ->
+    -> ;
++--------+------------+--------+
+| DEPTNO | DNAME      | LOC    |
++--------+------------+--------+
+|     40 | OPERATIONS | BOSTON |
++--------+------------+--------+
+1 row in set (0.00 sec)
+
+mysql> Select *
+    -> From dept d
+    -> Where  exists    (select *
+    -> From emp e
+    -> Where e.deptno=d.deptno);
++--------+------------+----------+
+| DEPTNO | DNAME      | LOC      |
++--------+------------+----------+
+|     10 | ACCOUNTING | NEW YORK |
+|     20 | RESEARCH   | DALLAS   |
+|     30 | SALES      | CHICAGO  |
++--------+------------+----------+
+3 rows in set (0.00 sec)
+
+mysql> select *
+    -> from emp
+    -> where sal > any (select avg(sal)
+    -> from emp
+    -> where deptno in (10,20)
+    -> group by deptno);
++-------+-------+-----------+------+------------+---------+------+--------+
+| EMPNO | ENAME | JOB       | MGR  | HIREDATE   | SAL     | COMM | DEPTNO |
++-------+-------+-----------+------+------------+---------+------+--------+
+|  7566 | JONES | MANAGER   | 7839 | 1981-04-02 | 2975.00 | NULL |     20 |
+|  7698 | BLAKE | MANAGER   | 7839 | 1981-05-01 | 2850.00 | NULL |     30 |
+|  7782 | CLARK | MANAGER   | 7839 | 1981-06-09 | 2450.00 | NULL |     10 |
+|  7788 | SCOTT | ANALYST   | 7566 | 1982-12-09 | 3000.00 | NULL |     20 |
+|  7839 | KING  | PRESIDENT | NULL | 1981-11-17 | 5000.00 | NULL |     10 |
+|  7902 | FORD  | ANALYST   | 7566 | 1981-12-03 | 3000.00 | NULL |     20 |
+|   101 | yyy   | SALESMAN  | NULL | NULL       | 3345.00 | NULL |     10 |
+|   102 | zzz   | SALESMAN  | NULL | NULL       | 3745.00 | NULL |     20 |
++-------+-------+-----------+------+------------+---------+------+--------+
+8 rows in set (0.00 sec)
+
+mysql> select deptno,avg(sal)
+    -> from emp
+    -> group by deptno;
++--------+-------------+
+| deptno | avg(sal)    |
++--------+-------------+
+|     20 | 2436.666667 |
+|     30 | 1566.666667 |
+|     10 | 2888.000000 |
++--------+-------------+
+3 rows in set (0.00 sec)
+
+mysql>

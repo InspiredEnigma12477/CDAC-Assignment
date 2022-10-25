@@ -1,0 +1,154 @@
+Revise 
+toString , @Override 
+Answer the H.W question
+
+Important : 
+
+When will you need to apply downcasting?
+In indirect referencing , i.e when super class ref ---> sub class instance AND it's calling sub class spcific func.
+Any examples : 
+BankAccount acct=new LoanAccount(....);//up casting
+((LoanAccount)acct).payLoan(.....);//no err
+acct=new SavingAccount(....);
+((LoanAccount)acct).payLoan(.....);//no javac err ,run time err : ClassCastExc
+
+Any probable run time error ?? :   ClassCastExc
+
+
+Any soln : 
+Before down casting :  check using instanceof
+BankAccount acct=new LoanAccount(....);//up casting
+if(acct instanceof LoanAccount)
+ ((LoanAccount)acct).payLoan(.....);//no err
+else 
+ sop(1);
+acct=new SavingAccount(....);
+if(acct instanceof LoanAccount)
+ ((LoanAccount)acct).payLoan(.....);//no javac err ,run time err : ClassCastExc
+else 
+sop(2);
+
+
+
+
+
+Answer this
+
+Given : 
+eg ---Object <----Fruit <--- Mango <--- Alphonso
+
+ 
+Fruit f=new Mango();//up casting
+
+What will be the o/p : 
+f instanceof Fruit : true
+f instanceof Alphonso : false
+f instanceof Object : true
+f instanceof Flower : false
+f=null;
+f instanceof Object : false
+f instanceof Fruit : false
+f instanceof Alphonso : false
+
+
+
+Discuss lab assignment
+
+Abstraction
+Complete abstraction : interfaces
+---------------------------------Revision over------------------------
+
+
+Design n solve this
+Create a java application to handle different bounded shapes , accessing their information n computing the area n perimeter
+eg : Circle , Rectangle ,Triangle ....
+
+
+
+
+
+Can you apply abstraction in the above scenario ? 
+How ? abstract method n abstract class
+
+
+
+
+
+Refer to Abstraction
+
+Does encapsulation help to achieve Abstraction ????
+
+How ?
+
+
+When do u add abstract methods? : Any time you want to add a common func. in the super class AND you don't have any imple. details 
+eg : area() in BoundedShape
+
+Where  do you add them ? super class
+
+If u add abstract method/s what about the class ? : Class MUST be declared as abstract class
+
+
+Can abstract class be instaniated? NO
+refer to emp hierarchy
+
+Emp e = new SalesMgr(......);// no javac err 
+e=new Mgr(....);//javac err : since Mgr is abstract class
+e=new TempWorker(....);// no javac err 
+e=new Worker(...);//javac err : since Worker is abstract class
+
+
+Can abstract class contain concrete methods ? YES
+
+Can abstract class contain a parameterized ctor ? YES
+Will it be used for : creating instance of concrete subclass 
+
+Can you declare abstract class with full concrete(=non abstract) func : YES
+eg :
+public abstract class A
+{
+ // no abstract method 
+}
+
+What will happen ?
+public abstract final class A {....} ---NO
+
+
+final keyword
+
+
+
+Enter interfaces
+Refer to readme
+Refer to whiteboard
+
+Objectives
+0. Create different type of Printers(ConsolePrinter, FilePrinter ,NetworkPrinter) n access it's common functionality n specific functionality in a single for-each loop.
+
+
+1. Why Java does not allow multiple inheritance through classes ?
+Ambiguity !
+
+What will happen with i/fs ?
+Demo : Create a class implementing multiple i/fs .
+Will you face ambiguity issue with extact duplicate behaviour ? : NO
+(since all u are inheriting is the abstract method declaration n NOT the method def.)
+
+Same Method names  with different signature : NO ambiguity, Imple class will have to implement 2 distinct methods 
+
+Same Method names  same signature n different ret type : causes ambiguity
+
+2. Demo : Create a class implementing multiple i/fs .
+
+Will you face ambiguity issue with duplicate data members ? YES
+How to resolve : i/fName.dataMemberName
+
+3. Demo : 1 i/f extending multiple super i/fs , n then write imple class
+In order to create concrete imple class : MUST imple all inherited abstract behaviour.
+
+4. Marker i/f : Empty (Tag i/f) i/f --NO data members n no methods
+eg : Serializable , Cloneable
+
+5. Functional i/f : i/f containing single abstract method (SAM)
+Java 8 added annotation : @FunctionalInterface : i/f level annotation
+

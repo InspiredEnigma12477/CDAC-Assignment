@@ -1,0 +1,167 @@
+C++ is a statically typed, compiled, general-purpose, case-sensitive, free-form programming language that supports procedural, object-oriented, and generic programming.
+
+C++ is regarded as a middle-level language, as it comprises a combination of both high-level and low-level language features.
+
+C++ was developed by Bjarne Stroustrup starting in 1979 at Bell Labs in Murray Hill, New Jersey, as an enhancement to the C language and originally named C with Classes but later it was renamed C++ in 1983.
+
+C++ is a superset of C, and that virtually any legal C program is a legal C++ program.
+
+C++ fully supports object-oriented programming, including the four pillars of object-oriented development −
+Encapsulation
+Data hiding/Abstraction
+Inheritance:
+Polymorphism:
+
+
+cin and cout:
+cin is an object of the input stream and is used to take input from input streams like files, console, etc. 
+cout is an object of the output stream that is used to show output. 
+Basically, cin is an input statement while cout is an output statement.
+
+
+
+sizeof()
+The size of variables might be different , depending on the compiler and the computer you are using.
+Following is the example, which will produce correct size of various data types on your computer.
+use sizeof() operator to get size of various data types.
+
+   cout << "Size of char : " << sizeof(char) << endl;
+   cout << "Size of int : " << sizeof(int) << endl;
+   cout << "Size of short int : " << sizeof(short int) << endl;
+   cout << "Size of long int : " << sizeof(long int) << endl;
+   cout << "Size of float : " << sizeof(float) << endl;
+   cout << "Size of double : " << sizeof(double) << endl;
+
+
+Reference Variable:
+A reference variable is an alias, that is, another name for an already existing variable. Once a reference is initialized with a variable, either the variable name or the reference name may be used to refer to the variable.
+The main use of references is acting as function formal parameters to support pass-by-reference. In an reference variable is passed into a function, the function works on the original copy (instead of a clone copy in pass-by-value). Changes inside the function are reflected outside the function.
+A reference is similar to a pointer. In many cases, a reference can be used as an alternative to pointer, in particular, for the function parameter.
+
+demo:
+ int number = 88;          // Declare an int variable called number
+   int &refNumber = number; // Declare a reference (alias) to the variable number
+                                             // Both refNumber and number refer to the same value
+   cout << number << endl;    // Print value of variable number (88)
+   cout << refNumber << endl; // Print value of reference (88)
+ 
+   refNumber = 99;            // Re-assign a new value to refNumber
+   cout << refNumber << endl;
+   cout << number << endl;    // Value of number also changes (99)
+ 
+   number = 55;               // Re-assign a new value to number
+   cout << number << endl;
+   cout << refNumber << endl; // Value of refNumber also changes (55)
+
+
+
+function:
+A function is a group of statements that together perform a task. Every C++ program has at least one function, which is main(), and all the most trivial programs can define additional functions.
+A function declaration tells the compiler about a function's name, return type, and parameters. A function definition provides the actual body of the function.
+The general form of a C++ function definition is as follows −
+
+return_type function_name( parameter list ) {
+   body of the function
+}
+
+
+
+C++ OOP Concepts:
+The major purpose of C++ programming is to introduce the concept of object orientation to the C programming language.
+Object Oriented Programming is a paradigm that provides many concepts such as inheritance, data binding, polymorphism etc.
+The programming paradigm where everything is represented as an object is known as truly object-oriented programming language. Smalltalk is considered as the first truly object-oriented programming language.
+
+Object means a real word entity such as pen, chair, table etc. Object-Oriented Programming is a methodology or paradigm to design a program using classes and objects. It simplifies the software development and maintenance by providing some concepts:
+
+Object
+Class
+Inheritance
+Polymorphism
+Abstraction
+Encapsulation
+
+Abstraction:
+Abstraction is the process of identifying the key aspects of an entity and ignoring the rest.
+Only those aspects are selected that are important to the current problem scenario.
+Example : Abstraction of a person object
+Enumerate attributes of a “person object” that need to be created for developing a database
+useful for social survey
+useful for health care industry
+useful for payroll system
+
+
+Encapsulation:
+Encapsulation is a mechanism used to hide the data, internal structure, and implementation details of an object.
+All interaction with the object is through a public interface of operations.
+The user knows only about the interface; any changes to the implementation does not affect the user.
+
+
+Inheritance:
+Classification helps in handling complexity.
+Inheritance is the process by which one object can acquire the properties of another object.
+Broad category is formed and then sub-categories are formed. 
+“is – a” a kind of hierarchy.
+
+Polymorphism:
+The ability of different types of objects to respond to the same message in different ways is called polymorphism.
+Polymorphism helps to :
+Design extensible software; as new objects can be added to the design without rewriting existing procedures.
+
+
+Containment:
+One object may contain another as a part of its attribute
+Document contains sentences which contain words.
+Computer system has a hard disk, processor, RAM, mouse, monitor, etc.
+Containment need not be physical
+E.g. Computer system has a warranty.
+
+Containment VS Inheritance
+Containment is used: 
+When the features of an existing class are wanted inside a new class, but not its interface.
+Computer system has a hard disk.
+Car has an engine, chassis, steering wheel.
+
+Inheritance is used:
+When it is necessary that the new type has to be the same type as the base class.
+Computer system is an electronic device.
+Car is a vehicle.
+
+
+Class:
+A template for creating similar objects.
+Maps real world entities into classes through data members and member functions.
+A user defined type.
+An object is an instance of a class.
+By writing a class and creating objects of that class, one can map two concepts of object model, abstraction and encapsulation, into software domain.
+
+Template for the creation of similar objects.
+A class in C++ is an encapsulation of data members and member functions that manipulate the data.
+If semicolon is missing, compiler throws an error 
+syntax error : missing ';' before 'PCH creation point’  Error executing cl.exe
+
+Class Component:
+A class declaration consists of following components
+Access specifiers: restrict access of class members
+        private
+        protected 
+        public
+Data members
+Member functions
+Constructors
+Destructors 
+
+Access Specifiers:
+public - members are accessible from outside the class
+private - members cannot be accessed (or viewed) from outside the class
+protected - members cannot be accessed from outside the class, however, they can be accessed in inherited classes.
+
+DataMembers And Members Functions:
+Data members are the data variables and member functions are the functions used to manipulate these variables and together these data members and member functions defines the properties and behavior of the objects in a Class.
+
+
+
+
+
+
+
+

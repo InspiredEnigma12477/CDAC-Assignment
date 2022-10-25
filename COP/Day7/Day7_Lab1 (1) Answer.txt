@@ -1,0 +1,218 @@
+===========================================================================================================
+1. Create Date class with members day,month ,year.
+Write no argument and parameterised constructor .Create two object s and initialize them using no argument and parameterised constructor
+respectively.Print date using display function.
+----------------------------------------------------------------------------------------------------------
+package Day7Lab1;
+
+import java.util.Scanner;
+
+class Date {
+    private int date, month, year;
+    Scanner sc = new Scanner(System.in);
+
+    Date() {
+        date = 1;
+        month = 1;
+        year = 2000;
+        //AcceptInfo();
+    }
+
+    Date(int date, int month, int year) {
+        this.date = date;
+        this.month = month;
+        this.year = year;
+    }
+
+    void AcceptInfo() {
+        do {
+            if ((!((date <= 31 && date >= 1) && (month <= 12 && month >= 1) && (year <= 3000 && year >= 1))))
+                System.out.println("Entered the Wrong date \n Please Enter again");
+            else
+                System.out.print("Enter date in the format date month year = ");
+
+            date = sc.nextInt();
+            month = sc.nextInt();
+            year = sc.nextInt();
+        } while (!((date <= 31 && date >= 1) && (month <= 12 && month >= 1) && (year <= 3000 && year >= 1)));
+    }
+
+    void Display() {
+        System.out.println("Date = " + date + " " + month + " " + year);
+    }
+
+}
+/*
+Create Date class with members day,month ,year.
+Write no argument and parameterised constructor .
+Create two object s and initialize them using no argument and parameterised constructor respectively.
+Print date using display function.
+*/
+package Day7Lab1;
+public class Question1 {
+    public static void main(String[] args) {
+        Date d1 = new Date();
+        Date d2 = new Date(22,9,2022);
+        d1.Display();
+        d2.Display();
+    }
+}
+
+    ********************** OUTPUT ******************************************
+"C:\Program Files\Microsoft\jdk-11.0.12.7-hotspot\bin\java.exe" "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA 2022.2.2\lib\idea_rt.jar=65408:C:\Program Files\JetBrains\IntelliJ IDEA 2022.2.2\bin" -Dfile.encoding=UTF-8 -classpath D:\CDAC\out\production\CDAC Day7Lab1.Question1
+Date = 1 1 2000
+Date = 22 9 2022
+
+Process finished with exit code 0
+
+===========================================================================================================
+2. Create Employee class with members id(int),name(string),dob(Date).Use above created Date class.
+Write default and parameterised constructor in Employee Class.Write accept() function to accept information and display() to display emp information.
+----------------------------------------------------------------------------------------------------------
+package Day7Lab1;
+
+import java.util.Scanner;
+
+public class EmployeeDateInherit extends Date {
+    int id;
+    String name;
+    Scanner sc = new Scanner(System.in);
+
+    EmployeeDateInherit(){
+        super.AcceptInfo();
+        this.AcceptInfo();
+    }
+    EmployeeDateInherit(int id, String name,int dd,int mm,int yy){
+        super(dd,mm,yy);
+        this.id = id;
+        this.name = name;
+    }
+
+    void AcceptInfo(){
+        System.out.print("Enter id: ");
+        id= sc.nextInt();
+        System.out.println("Enter name: ");
+        name =sc.next();
+    }
+    void Display(){
+        System.out.println("Id : " + id);
+        System.out.println("Name: " + name);
+        super.Display();
+    }
+}
+
+    ********************** OUTPUT ******************************************
+ "C:\Program Files\Microsoft\jdk-11.0.12.7-hotspot\bin\java.exe" "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA 2022.2.2\lib\idea_rt.jar=53400:C:\Program Files\JetBrains\IntelliJ IDEA 2022.2.2\bin" -Dfile.encoding=UTF-8 -classpath D:\CDAC\out\production\CDAC Day7Lab1.Question2
+Id: 1001Name: Shivam
+Date = 22 8 2022
+Id : 1002
+Name: Saurabh
+Date = 23 1 1997
+Enter date in the format date month year = 23 1 1997
+Enter id: 1234
+Enter name: 
+shivam
+Id : 1234
+Name: shivam
+Date = 23 1 1997
+
+Process finished with exit code 0
+
+===========================================================================================================
+3. Consider that payroll software needs to be developed for computerization of operations of an ABC organization. The organization has employees.
+3.1. Construct a class Employee with following members using private access specifies:
+ Employee Id integer
+ Employee Name string
+ Basic Salary double
+ HRA double
+ Medical double=1000
+ PF double
+ PT double
+ Net Salary double
+ Gross Salary double
+Please use following expressions for calculations:
+Note:Don't accept HRA,PF PT from user
+ * HRA = 50% of Basic Salary
+ * PF = 12% of Basic Salary
+ * PT = Rs. 200
+
+3.2. Write methods to display the details of an employee and calculate the gross and net salary.
+ * Goss Salary = Basic Salary + HRA + Medical
+ * Net Salary = Gross Salary – (PT + PF)
+
+Create Object of employee class and assign values and display Details.
+----------------------------------------------------------------------------------------------------------
+package Day7Lab1;
+
+import java.util.Scanner;
+
+public class PayRoll {
+    Employee emp;
+    private double Basic_Salary, HRA, PF, Net_Salary, Gross_Salary;
+    private static double Medical, PT;
+    public static String Organization;
+
+    Scanner sc = new Scanner(System.in);
+    static {
+        Medical = 1000;
+        PT = 200;
+        Organization = "ABC";
+    }
+    PayRoll(){
+        System.out.println("-----Default-------");
+        AcceptInfo();
+    }
+    private void Calculate(){
+        HRA = Basic_Salary * 0.5;
+        PF = Basic_Salary *0.12;
+
+        Gross_Salary = Basic_Salary + HRA + Medical ;
+        Net_Salary = Gross_Salary - (PT + PF);
+    }
+    public void AcceptInfo(){
+        emp = new Employee();
+        System.out.println("Enter the Basic Salary: ");
+        Basic_Salary = sc.nextDouble();
+
+        Calculate();
+    }
+
+    public void Display(){
+        emp.Display();
+        System.out.println("HRA = " + HRA);
+        System.out.println("PF = " + PF);
+        System.out.println("PT = " + PT);
+        System.out.println("Medical = " + Medical);
+        System.out.println("Basic Salary = " + Basic_Salary);
+        System.out.println("Gross Salary = " + Gross_Salary);
+        System.out.println("Net Salary = " + Net_Salary);
+    }
+}
+
+package Day7Lab1;
+public class Question3 {
+    public static void main(String[] args) {
+        PayRoll p1 = new PayRoll();
+        p1.Display();
+    }
+}
+
+    ********************** OUTPUT ******************************************
+ "C:\Program Files\Microsoft\jdk-11.0.12.7-hotspot\bin\java.exe" "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA 2022.2.2\lib\idea_rt.jar=53437:C:\Program Files\JetBrains\IntelliJ IDEA 2022.2.2\bin" -Dfile.encoding=UTF-8 -classpath D:\CDAC\out\production\CDAC Day7Lab1.Question3
+-----Default-------
+Enter id: 1234
+Enter name: Shivam
+Enter date in the format date month year = 03 09 2001
+Enter the Basic Salary: 
+95000
+Id: 1234Name: Shivam
+Date = 3 9 2001
+HRA = 47500.0
+PF = 11400.0
+PT = 200.0
+Medical = 1000.0
+Basic Salary = 95000.0
+Gross Salary = 143500.0
+Net Salary = 131900.0
+
+Process finished with exit code 0

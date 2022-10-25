@@ -1,0 +1,273 @@
+1)2d array simple with pointer notation:-
+#include<stdio.h>
+int main()
+{
+	int arr[][2]={10,20,30},r,c;
+	printf("Enter the elements");
+	/*for(r=0;r<3;r++)
+	{
+		for(c=0;c<2;c++)
+		{
+			//scanf("%d",&arr[r][c]);
+			scanf("%d",*(arr+r)+c); 
+		}
+	}*/
+	printf("2d array as follow:-\n");
+	for(r=0;r<3;r++)
+	{
+		for(c=0;c<2;c++)
+		{
+			//printf("%d\t",arr[r][c]);
+			//printf("%d\t",*(arr+r)+c);
+			printf("%d\t %d\t",*(*(arr+r)+c),*(arr+r)+c);
+		       //printf("%d\t",*(arr+r)+c);//row address
+		       //printf("%d\t",(arr+r));
+			
+			
+		}
+		printf("\n");
+	}
+	//printf("%d",*(arr+1)+1);
+	//printf("%d",*(*(arr+1)+1));
+}
+------------------------------------------------------
+malloc:-
+#include<stdio.h>
+#include<stdlib.h>
+int main()
+{
+	int *ptr,n,i;
+	printf("how many integer elements do u want to insert:-");
+	scanf("%d",&n);
+	ptr=(int*)malloc(n*sizeof(int));
+	//ptr=(int*)calloc(n,sizeof(int));
+	if(ptr==NULL)
+	{
+		printf("Memory not available\n");
+		exit(1);//end the program
+		
+	}
+	for(i=0;i<n;i++)
+	{
+		printf("Enter the number:");
+		scanf("%d",ptr+i);//ptr[i];
+		
+	}
+	for(i=0;i<n;i++)
+	{
+		printf("%d\t",ptr[i]);
+	}
+	free(ptr);
+}
+	
+---------------------------------------------------------
+realloc:-
+#include<stdio.h>
+#include<stdlib.h>
+int main()
+{
+	int *ptr;
+	int n,i;
+	printf("Enter the elements");
+	scanf("%d",&n);
+	ptr=(int*)malloc(n*sizeof(int));//10
+	printf("Enter the %d integer values:\n",n);
+	for(i=0;i<n;i++)
+	{
+		scanf("%d",&ptr[i]);
+		//scanf("%d",ptr+i);
+	}
+	printf("You have entered values:\n");
+	for(i=0;i<n;i++)
+	{
+		printf("\t%d",ptr[i]);
+	
+	
+	}
+	ptr=realloc(ptr,(n+5)*sizeof(int));
+	printf("\nenter more 5 value:\n");
+	for(i=n;i<n+5;i++)
+	{
+		scanf("%d",&ptr[i]);
+	}
+	for(i=0;i<n+5;i++)
+	{
+		printf("Address are %u \tValues Are %d\n",(ptr+i),ptr[i]);
+	
+	
+	}
+	free(ptr);
+	
+}
+---------------------------------------------------------
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+
+int main()
+{
+	char *str;
+	char temp[10];
+	int len;
+	printf("\nEnter the string");
+	gets(temp);
+	len=strlen(temp);
+	str=(char *)malloc(len);
+	strcpy(str,temp);
+	printf("\nString is=");
+	puts(str);
+}
+-------------------------------------------------------
+pointer to pointer
+#include<stdio.h>
+#include<stdlib.h>
+int main()
+{
+	int **ptr,norows,nocols,i,j;
+	printf("Enter the no. of rows");
+	scanf("%d",&norows);
+	printf("Enter the no. of Columns");
+	scanf("%d",&nocols);
+	ptr=(int**)malloc(sizeof(int*)*norows);
+	for(i=0;i<norows;i++)
+	{
+		ptr[i]=(int*)malloc(sizeof(int)*nocols);
+
+	}
+	printf("Enter the Elements");
+	for(i=0;i<norows;i++)
+	{
+		for(j=0;j<nocols;j++)
+		{
+			scanf("%d",(ptr[i]+j));
+		}
+	}
+	printf("DisPlay\n");
+	for(i=0;i<norows;i++)
+	{
+		for(j=0;j<nocols;j++)
+		{
+			printf("%d\t",*(ptr[i]+j));
+			printf("%d\t",(ptr[i]+j));
+		}
+		printf("\n");
+	}
+	for(i=0;i<norows;i++)
+	{
+		free(ptr[i]);
+	}
+}
+------------------------------------------
+simple structure
+#include<stdio.h>
+struct student
+{
+	double a;//8 byte
+	int rollno;//8 bytes  
+	char name[10];//8 bytes
+	
+};//s1;//structure variable
+int main()
+{
+struct student s1;//s2={101,"Rahul"};	
+/*printf("Enter the roll no:-");
+scanf("%d",&s1.rollno);
+printf("Enter the name:-");
+scanf("%s",s1.name);
+printf("Roll no is=%d \n Name=%s",s1.rollno,s1.name);*/
+//printf("Roll no is=%d \n Name=%s",s2.rollno,s2.name);
+printf("%d\n",sizeof(s1));
+//printf("%d\t",sizeof(s1.name));
+//printf("%d\t",sizeof(s1.rollno));
+
+}
+-------------------------------------------------
+pointer to structure:-
+typedef struct Student
+{
+int rollno;
+char name[20];
+float marks;
+}Stud;
+int main()
+{
+	Stud s1;
+	Stud *ps;
+	ps=&s1;
+	printf("\nEnter the name::");
+	fflush(stdin);
+	gets(ps->name);
+	printf("\nEnter the Roll no::");
+	scanf("%d",&ps->rollno);
+	printf("\nEnter the Marks::");
+	scanf("%f",&ps->marks);
+	printf("\n\n Name \t  Roll no\t Marks\n\n");
+	printf("%s\t%d\t%f\t",ps->name,ps->rollno,ps->marks);
+}
+------------------------------------------
+nested structure
+
+#include<stdio.h>  
+struct address   
+{  
+    char city[20];  
+    int pin;  
+    char phone[14];  
+};  
+struct employee  
+{  
+    char name[20];  
+    struct address add;  
+};  
+void main ()  
+{  
+    struct employee emp;  
+    printf("Enter employee information?\n");  
+    scanf("%s %s %d %s",emp.name,emp.add.city, &emp.add.pin, emp.add.phone);  
+    printf("Printing the employee information....\n");  
+    printf("name: %s\nCity: %s\nPincode: %d\nPhone: %s",emp.name,emp.add.city,emp.add.pin,emp.add.phone);  
+}  
+--------------------------------------------
+
+------------------------------------------------------------
+nested enum
+#include<stdio.h>
+//enum actype{SAVEING,FIXED,RECURRING};
+enum day{MON,TUE,WED=10,THR,FRI,SAT,SUN};//bydefault 0
+
+typedef struct employee
+{
+	int empid;
+	char name[20];
+	//enum actype at;
+	enum day d;
+}Emp;
+int main()
+{
+Emp e;
+/*printf("Enter the name:");
+	fflush(stdin);
+	gets(e.empname);
+	printf("Enter the empid:");
+	scanf("%d",&e.empid);*/
+/*	e.at=SAVEING;
+	printf("%d\t",e.at)	;
+	e.at=FIXED;
+	printf("%d\t",e.at)	;*/
+	e.d=MON;
+	printf("%d\t",e.d);
+	e.d=TUE;
+	printf("%d\t",e.d);
+	e.d=SUN;
+	printf("%d\t",e.d);
+}
+---------------------------------------------
+enum colors{RED,GREEN,BLUE,GREY,PINK};
+int main(void)
+{
+    enum colors clr=(RED,GREEN,BLUE);//int n=(10,20,30);
+    printf("\n clr = %d",clr);
+    printf("\n sizeof clr = %d \n",sizeof(clr));
+    printf("\n Sizeof Enum = %d \n",sizeof(enum colors));
+    return 0;
+}

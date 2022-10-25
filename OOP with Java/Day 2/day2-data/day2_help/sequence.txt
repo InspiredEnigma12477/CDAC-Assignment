@@ -1,0 +1,230 @@
+Confirmed ????
+1. JDK 11 from Oracle
+2. STS 3.9.18
+3. Downloaded java docs 
+
+Have you revised day1 topics ?
+Assignment status
+
+Solve : isEqual part of the assignment
+3.3 Add isEqual method to Point2D class : boolean returning method : must return true if both points are having same x,y co-ords or false otherwise.
+
+
+In Tester
+Point2D p1=new Point2D(sc.nextInt(),sc.nextInt());
+Point2D p2=new Point2D(sc.nextInt(),sc.nextInt());
+sop(p1.isEqual(p2)?"SAME":DIFFERENT");
+
+
+In Point2D  class
+x,y
+constr
+show
+public boolean isEqual(Point2D anotherPoint)
+{
+//this=p1 , anotherPoint=p2
+  sop(this); //cls name@23456
+  sop(anotherPoint);//cls name@34567
+ return this.x == anotherPoint.x && this.y == anotherPoint.y;
+}
+
+Today's topics
+Revision
+Polymorphism
+Abstraction
+
+Revise
+
+What is inheritance ?
+Important part of OOP 
+Represents which relationship between classes ? IS-A
+Upper hierarchy : Base class/Parent/Super class
+lower hierarchy : Dervided/child/sub class
+key word : extends
+
+Any examples : Object <----BankAccount <--- SavingAccount , CurrentAccount , LoanAccount
+
+Universal super class : java.lang.Object
+
+Why : reduces redundancy n incs re usablity
+Types : single , multi-level , hierarchial : supported
+multiple inheritance : not supported 
+eg : public class Student extends Person,Artist : javac error!!!!!!!!!!!!
+Discuss Diamond issue
+refer : diagram
+
+
+super keyword
+
+super keyword usages
+1. To invoke immediate super cls's matching constr (eg : super(fn,ln))
+2. To access super cls's accessible members (eg : super.fetchDetails())
+
+Important statements
+Sub class IS A super class + something more(addtional data members + methods) + something modofied(behaviour : methods : method overriding)
+
+IMPORTANT : Javac resolves method binding by type of the reference BUT JVM resolves it by type of the instance it's referring to .
+
+Solve :
+Fruit : super class
+public String taste()
+{
+ return "No specific taste";
+}
+
+Mango extends Fruit
+{
+ 
+public String taste()
+{
+  return "sweet";
+}
++ additional func
+public void pulp()
+{
+  sop("extracting mango pulp");
+}
+
+}
+Orange extends Fruit
+{
+ override taste : to return "sour"
++ additional func
+public void juice()
+{
+  sop("extracting orange juice");
+}
+}
+Alphonso extends Mango
+{
+   
+public String taste()
+{
+  return "very sweet";
+}
+}
+Apple extends Fruit 
+{
+   override taste : to return"sweet n sour"
+   //jam 
+   public void jam() 
+   {
+      sop("creating apple jam...");
+   }
+}
+
+
+Solve
+What will happen ?
+
+1. Fruit f=new Mango();//no javac err : up casting , super cls ref can DIRECTLY (w/o type casting) refer to any sub class object
+sop(f.taste());//javac chks for taste() : Fruit class ,JVM invokes : Mango's taste : sweet
+: run time poly = dynamic method dispatch(DMD)
+
+f=new Orange(...);//up casting
+f.taste();//D.M.D 
+
+f=new Alphonso();//up casting
+f.taste();//o/p : very sweet  (run time poly)
+
+
+2. Object o=f;//up casting(here OBject type of ref ---> Alphonso)
+//o.taste();//javac will chk for taste() : Object class --javac err!!!
+((Alphonso)o).taste();//javac no err ,no run time err , o/p : very sweet !
+
+Is there any soln to satisfy the javac ? : explicit down casting
+
+Solve :
+
+Fruit f=new Orange();
+f.taste();//o/p : sour
+//f.juice();//javac err
+((Orange)f).juice();//no errs , o/p : sour
+
+
+f=new Apple();//up casting
+f.taste();//DMD
+//f.jam();//javac err
+((Apple)f).jam(); //no errs !
+//f.juice();//javac err
+if(f instanceof Orange)
+ ((Orange)f).juice();//NO javac err , run time err : java.lang.ClassCastException : Apple cast to Orange
+else 
+sop("Can't extract juice!!!!!!!!!!!!");
+
+Any solution or checking ?
+
+
+
+Is there any way to avoid class  cast exc due to wrong down casting ?
+YES : java keyword : instanceof : RTTI : run time type info. checking
+
+
+Enter polymorphism formally : refer to readme inheritance polymorphism
+
+Refer to method overloading vs method overriding
+
+Identify the rules.
+Examples of method overloading : print / println methods
+
+Example of Method overriding
+eg : toString
+
+Refer to Object's toString method
+
+
+
+Add new options in event org app
+
+4. Display specific participant details
+i/p : seat no
+o/p : Display details of the participants (use toString)
+
+5.
+Objective : Executing sub class specific functionality.
+Add a new method "study" in Student class & "teach" in Faculty class
+Option 5 : User i/p : seat no
+Check if seat no is valid .
+In case of valid seat no  --- If it's a Student , invoke study method , if it's a Faculty invoke teach method
+
+
+Draw memory diagram to understand run time polymorphism.
+
+
+-------------------Covered so far---------------------------
+
+
+
+5. Enter abstraction
+
+eg : Shapes scenario
+Solve this
+
+1. BoundedShape -- x,y (state) 
+Method --public double area() : return -100;
+public String toString()
+
+2. Circle -- x,y,radius
+Method --public double area()
+public String toString()
+
+3. Rectangle -- x,y,w,h
+Method --public double area()
+public String toString()
+
+eg : In a Tester 
+Create bounded shapes using dyn init of array n display details n area().
+//c1,r1,c2,r2
+BoundedShape[] shapes={new Circle(10,20,12.5),new Rectangle(50,100,10,20),new Circle(14,26,12.8),new Rectangle(51,80,10.5,20.6)};//how many objs ??
+for(BoundedShape s : shapes) {
+ sop(s);
+ if(s instanceof Circle) 
+ sop"Area ="+((Circle)s).area());
+else if (s instanceof Rectangle)
+  sop("Area ="+((Rectangle)s).area());
+ ....
+}
+
+
+Can you apply abstraction in the above scenario ? 
+How ? abstract method n abstract class

@@ -1,0 +1,931 @@
+Enter password: *******
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 18
+Server version: 8.0.22 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2020, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> create table dept_info(
+    -> dno int,
+    -> old_dname varchar(20),
+    -> new_dname varchar(20),
+    -> uname varchar(20),
+    -> changetime datetime,
+    -> action varchar(20))
+    -> ;
+ERROR 1046 (3D000): No database selected
+mysql> use test;
+Database changed
+mysql> create table dept_info(
+    -> dno int,
+    -> old_dname varchar(20),
+    -> new_dname varchar(20),
+    -> uname varchar(20),
+    -> changetime datetime,
+    -> action varchar(20))
+    -> ;
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> Delimiter $$
+mysql> Create trigger dept_monitor before insert on dept
+    -> For each row
+    -> Begin
+    ->     Insert into dept_info(dno,new_dname,uname,changetime,action)
+    ->    Values(NEW.deptno,NEW.dname,current_user(),now(),’insert before’)
+    -> End$$
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '?insert before?)
+End' at line 5
+mysql> Delimiter ;
+mysql> delimiter $$
+mysql> create trigger dept_monitor before insert on dept
+    -> for each row
+    -> begin
+    ->     insert into dept_info(dno,new_dname,uname,changetime,action)
+    ->   values(NEW.deptno,NEW.dname,current_user(),now(),'insert before');
+    -> end$$
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> delimiter ;
+mysql> insert into dept values(75,'test','Pune');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from dept_info;
++------+-----------+-----------+----------------+---------------------+---------------+
+| dno  | old_dname | new_dname | uname          | changetime          | action        |
++------+-----------+-----------+----------------+---------------------+---------------+
+|   75 | NULL      | test      | root@localhost | 2022-10-12 10:01:52 | insert before |
++------+-----------+-----------+----------------+---------------------+---------------+
+1 row in set (0.00 sec)
+
+mysql> create trigger dept_monitor1 before delete on dept
+    -> for each row
+    -> begin
+    ->  insert into dept_info(dno,old_dname,uname,changetime,action)
+    -> values(OLD.deptno,OLD.dname,current_user(),now(),'delete before')
+    -> end;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'end' at line 6
+mysql> delimiter $$
+mysql> create trigger dept_monitor1 before delete on dept
+    -> for each row
+    -> begin
+    ->  insert into dept_info(dno,old_dname,uname,changetime,action);
+    -> $$
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 4
+mysql> create trigger dept_monitor1 before delete on dept
+    -> for each row
+    -> begin
+    ->  insert into dept_info(dno,old_dname,uname,changetime,action)
+    -> values(OLD.deptno,OLD.dname,current_user(),now(),'delete before');
+    -> end$$
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> delimiter ;
+mysql> select * from dept;
++--------+------------+----------+
+| DEPTNO | DNAME      | LOC      |
++--------+------------+----------+
+|     10 | ACCOUNTING | NEW YORK |
+|     20 | RESEARCH   | DALLAS   |
+|     30 | SALES      | CHICAGO  |
+|     40 | OPERATIONS | BOSTON   |
+|    102 | Loan       | Pune     |
+|     75 | test       | Pune     |
++--------+------------+----------+
+6 rows in set (0.01 sec)
+
+mysql> delete from dept where deptno=102;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from dept_info;
++------+-----------+-----------+----------------+---------------------+---------------+
+| dno  | old_dname | new_dname | uname          | changetime          | action        |
++------+-----------+-----------+----------------+---------------------+---------------+
+|   75 | NULL      | test      | root@localhost | 2022-10-12 10:01:52 | insert before |
+|  102 | Loan      | NULL      | root@localhost | 2022-10-12 10:17:44 | delete before |
++------+-----------+-----------+----------------+---------------------+---------------+
+2 rows in set (0.00 sec)
+
+mysql> delimiter $$
+mysql> create trigger dept_monitor_update after update on dept
+    -> for each row
+    -> begin
+    -> insert into dept_info(dno,new _dname,old_dname,uname,changetime,action)
+    -> values(OLD.deptno,NEW.dname,Old.dname,current_user(),now(),'after update');
+    -> end$$
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '_dname,old_dname,uname,changetime,action)
+values(OLD.deptno,NEW.dname,Old.dname,' at line 4
+mysql> create trigger dept_monitor_update after update on dept
+    -> for each row
+    -> begin
+    -> insert into dept_info(dno,new_dname,old_dname,uname,changetime,action)
+    -> values(OLD.deptno,NEW.dname,Old.dname,current_user(),now(),'after update');
+    -> end$$
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> delimiter ;
+mysql> update dept
+    -> set dname='develop'
+    -> where deptno=75;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from dept_info;
++------+-----------+-----------+----------------+---------------------+---------------+
+| dno  | old_dname | new_dname | uname          | changetime          | action        |
++------+-----------+-----------+----------------+---------------------+---------------+
+|   75 | NULL      | test      | root@localhost | 2022-10-12 10:01:52 | insert before |
+|  102 | Loan      | NULL      | root@localhost | 2022-10-12 10:17:44 | delete before |
+|   75 | test      | develop   | root@localhost | 2022-10-12 10:31:07 | after update  |
++------+-----------+-----------+----------------+---------------------+---------------+
+3 rows in set (0.00 sec)
+
+mysql> select * from emp;
++-------+--------+-----------+------+------------+---------+---------+--------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL     | COMM    | DEPTNO |
++-------+--------+-----------+------+------------+---------+---------+--------+
+|  7369 | SMITH  | CLERK     | 7902 | 1980-12-17 | 1040.00 |    NULL |     20 |
+|  7499 | ALLEN  | SALESMAN  | 7698 | 1981-02-20 | 1600.00 |  300.00 |     30 |
+|  7521 | WARD   | SALESMAN  | 7698 | 1981-02-22 | 1250.00 |  500.00 |     30 |
+|  7566 | JONES  | MANAGER   | 7839 | 1981-04-02 | 3272.50 |    NULL |     20 |
+|  7654 | MARTIN | SALESMAN  | 7698 | 1981-09-28 | 1250.00 | 1400.00 |     30 |
+|  7698 | BLAKE  | MANAGER   | 7839 | 1981-05-01 | 3448.50 |    NULL |     30 |
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2695.00 |    NULL |     10 |
+|  7788 | SCOTT  | ANALYST   | 7566 | 1982-12-09 | 3600.00 |    NULL |     20 |
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 | 5000.00 |    NULL |     10 |
+|  7844 | TURNER | SALESMAN  | 7698 | 1981-09-08 | 1500.00 |    0.00 |     30 |
+|  7876 | ADAMS  | CLERK     | 7788 | 1983-01-12 | 1430.00 |    NULL |     20 |
+|  7900 | JAMES  | CLERK     | 7698 | 1981-12-03 | 1235.00 |    NULL |     30 |
+|  7902 | FORD   | MANAGER   | 7566 | 1981-12-03 | 6600.00 |    NULL |     20 |
+|  7934 | MILLER | CLERK     | 7782 | 1982-01-23 | 2197.00 |    NULL |     10 |
+|   100 | xxx    | SALESMAN  | NULL | NULL       | 2345.00 |    NULL |     10 |
+|   101 | yyy    | SALESMAN  | NULL | NULL       | 3345.00 |    NULL |     10 |
+|   102 | zzz    | SALESMAN  | NULL | NULL       | 3745.00 |    NULL |     20 |
+|  1000 | Manasi | Designer  | 7902 | 2022-10-08 | 3456.00 |  567.00 |     10 |
+|  1001 | Kavita | SAP prog  | 7902 | 2022-10-01 | 3456.00 |  567.00 |     20 |
++-------+--------+-----------+------+------------+---------+---------+--------+
+19 rows in set (0.00 sec)
+
+mysql> use iacsdsep22;
+Database changed
+mysql> select * from customer;
++-----+--------+---------+
+| cid | cname  | address |
++-----+--------+---------+
+|  20 | Rajesh | Pune    |
+|  30 | Ashu   | Baner   |
++-----+--------+---------+
+2 rows in set (0.00 sec)
+
+mysql> select * from vehicle;
++-----+--------+-------+---------------+--------+
+| vid | vname  | model | chassienumber | custid |
++-----+--------+-------+---------------+--------+
+|   1 | activa | x-35  |          2345 |   NULL |
+|   2 | santro | x-36  |          2346 |   NULL |
+|   3 | santro | x-37  |          2346 |     20 |
++-----+--------+-------+---------------+--------+
+3 rows in set (0.00 sec)
+
+mysql> alter table vehicle
+    -> add column cname varchar(20);
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc vehicle;
++---------------+-------------+------+-----+---------+-------+
+| Field         | Type        | Null | Key | Default | Extra |
++---------------+-------------+------+-----+---------+-------+
+| vid           | int         | NO   | PRI | NULL    |       |
+| vname         | varchar(20) | YES  |     | NULL    |       |
+| model         | varchar(20) | YES  |     | NULL    |       |
+| chassienumber | int         | YES  |     | NULL    |       |
+| custid        | int         | YES  | MUL | NULL    |       |
+| cname         | varchar(20) | YES  |     | NULL    |       |
++---------------+-------------+------+-----+---------+-------+
+6 rows in set (0.01 sec)
+
+mysql> update vehicle
+    -> set cname='Rajesh'
+    -> where custid=20;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from customer;
++-----+--------+---------+
+| cid | cname  | address |
++-----+--------+---------+
+|  20 | Rajesh | Pune    |
+|  30 | Ashu   | Baner   |
++-----+--------+---------+
+2 rows in set (0.00 sec)
+
+mysql> select * from vehicle;
++-----+--------+-------+---------------+--------+--------+
+| vid | vname  | model | chassienumber | custid | cname  |
++-----+--------+-------+---------------+--------+--------+
+|   1 | activa | x-35  |          2345 |   NULL | NULL   |
+|   2 | santro | x-36  |          2346 |   NULL | NULL   |
+|   3 | santro | x-37  |          2346 |     20 | Rajesh |
++-----+--------+-------+---------------+--------+--------+
+3 rows in set (0.00 sec)
+
+mysql> delimiter $$
+mysql> create trigger update_vehicle after update on customer
+    -> for each row
+    -> begin
+    -> update vehicle
+    -> set cname=NEW.cname
+    -> where custid=OLD.cid;
+    -> end$$
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> delimiter ;
+mysql> update customer
+    -> set cname='Rajesh joshi'
+    -> where cid=20;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from customer;
++-----+--------------+---------+
+| cid | cname        | address |
++-----+--------------+---------+
+|  20 | Rajesh joshi | Pune    |
+|  30 | Ashu         | Baner   |
++-----+--------------+---------+
+2 rows in set (0.00 sec)
+
+mysql> select * from vehicle;
++-----+--------+-------+---------------+--------+--------------+
+| vid | vname  | model | chassienumber | custid | cname        |
++-----+--------+-------+---------------+--------+--------------+
+|   1 | activa | x-35  |          2345 |   NULL | NULL         |
+|   2 | santro | x-36  |          2346 |   NULL | NULL         |
+|   3 | santro | x-37  |          2346 |     20 | Rajesh joshi |
++-----+--------+-------+---------------+--------+--------------+
+3 rows in set (0.00 sec)
+
+mysql> desc customer;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| cid     | int         | NO   | PRI | NULL    |       |
+| cname   | varchar(20) | YES  |     | NULL    |       |
+| address | varchar(20) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> create procedure insert_cust(pcid int,pcnm varchar(20),paddr varchar(20))
+    -> begin
+    -> insert into customer values(pcid,pcnm,paddr);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 3
+mysql> delimiter $$
+mysql> create procedure insert_cust(pcid int,pcnm varchar(20),paddr varchar(20))
+    -> begin
+    -> insert into customer values(pcid,pcnm,paddr);
+    -> end$$
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> delimiter ;
+mysql> select * from customer;
++-----+--------------+---------+
+| cid | cname        | address |
++-----+--------------+---------+
+|  20 | Rajesh joshi | Pune    |
+|  30 | Ashu         | Baner   |
++-----+--------------+---------+
+2 rows in set (0.00 sec)
+
+mysql> call insert_cust(40,'Deepali','Pune');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> call insert_cust(40,'Deepali','Pune');
+ERROR 1062 (23000): Duplicate entry '40' for key 'customer.PRIMARY'
+mysql> select *
+    -> from customer where cid=40;
++-----+---------+---------+
+| cid | cname   | address |
++-----+---------+---------+
+|  40 | Deepali | Pune    |
++-----+---------+---------+
+1 row in set (0.00 sec)
+
+mysql> drop procedure  insert_cust;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> delimiter $$
+mysql> create procedure insert_cust(pcid int,pcnm varchar(20),paddr varchar(20))
+    ->     begin
+    ->        insert into customer values(pcid,pcnm,paddr);
+    ->        select * from customer;
+    ->     end$$
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> delimiter ;
+mysql> call insert_cust(40,'Deepali','Pune');
+ERROR 1062 (23000): Duplicate entry '40' for key 'customer.PRIMARY'
+mysql> drop procedure insert_cust;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> delimiter $$
+mysql> create procedure insert_cust(pcid int,pcnm varchar(20),paddr varchar(20))
+    ->     begin
+    ->        declare continue handler for SQLEXCEPTION select 'error occured';
+    ->        insert into customer values(pcid,pcnm,paddr);
+    ->        select * from customer;
+    ->     end$$
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> call insert_cust(40,'Deepali','Pune');
+    -> $$
++---------------+
+| error occured |
++---------------+
+| error occured |
++---------------+
+1 row in set (0.00 sec)
+
++-----+--------------+---------+
+| cid | cname        | address |
++-----+--------------+---------+
+|  20 | Rajesh joshi | Pune    |
+|  30 | Ashu         | Baner   |
+|  40 | Deepali      | Pune    |
++-----+--------------+---------+
+3 rows in set (0.00 sec)
+
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> delimiter $$
+mysql> drop procedure insert_cust$$
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> create procedure insert_cust(pcid int,pcnm varchar(20),paddr varchar(20))
+    ->     begin
+    ->        #declare continue handler for SQLEXCEPTION select 'error occured';
+    ->        declare exit handler for SQLEXCEPTION select 'error occured';
+    ->        insert into customer values(pcid,pcnm,paddr);
+    ->        select * from customer;
+    ->     end$$
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> call insert_cust(40,'Deepali','Pune');
+    -> $$
++---------------+
+| error occured |
++---------------+
+| error occured |
++---------------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> delimiter $$
+mysql> drop procedure insert_cust$$
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> create procedure insert_cust(pcid int,pcnm varchar(20),paddr varchar(20))
+    ->     begin
+    ->        #declare continue handler for SQLEXCEPTION select 'error occured';
+    ->        declare exit handler for 1062 select 'duplicate entry';
+    ->        declare exit handler for SQLEXCEPTION select 'error occured';
+    ->        insert into customer values(pcid,pcnm,paddr);
+    ->        select * from customer;
+    ->     end$$
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> delimiter;
+    -> $$
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'delimiter' at line 1
+mysql> delimiter ;
+mysql> call insert_cust(40,'Deepali','Pune');
++-----------------+
+| duplicate entry |
++-----------------+
+| duplicate entry |
++-----------------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> call insert_cust('40','Deepali','Pune');
++-----------------+
+| duplicate entry |
++-----------------+
+| duplicate entry |
++-----------------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> call insert_cust('40','deepali','Pune','cccc');
+ERROR 1318 (42000): Incorrect number of arguments for PROCEDURE iacsdsep22.insert_cust; expected 3, got 4
+mysql>
+mysql> delimiter $$
+mysql> drop procedure insert_cust$$
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> create procedure insert_cust(pcid int,pcnm varchar(20),paddr varchar(20))
+    ->     begin
+    ->        #declare continue handler for SQLEXCEPTION select 'error occured';
+    ->        declare exit handler for 1062 select 'duplicate entry';
+    ->        declare exit handler for 1318 select 'wrong values';
+    ->        declare exit handler for SQLEXCEPTION select 'error occured';
+    ->        insert into customer values(pcid,pcnm,paddr);
+    ->        select * from customer;
+    ->     end$$
+Query OK, 0 rows affected (0.00 sec)
+
+mysql>
+mysql> delimiter ;
+mysql> call insert_cust('40','deepali','Pune','cccc');
+ERROR 1318 (42000): Incorrect number of arguments for PROCEDURE iacsdsep22.insert_cust; expected 3, got 4
+mysql> call insert_cust('40',100,'Pune');
++-----------------+
+| duplicate entry |
++-----------------+
+| duplicate entry |
++-----------------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> call insert_cust(50,100,'Pune');
++-----+--------------+---------+
+| cid | cname        | address |
++-----+--------------+---------+
+|  20 | Rajesh joshi | Pune    |
+|  30 | Ashu         | Baner   |
+|  40 | Deepali      | Pune    |
+|  50 | 100          | Pune    |
++-----+--------------+---------+
+4 rows in set (0.00 sec)
+
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> select * from vehicle;
++-----+--------+-------+---------------+--------+--------------+
+| vid | vname  | model | chassienumber | custid | cname        |
++-----+--------+-------+---------------+--------+--------------+
+|   1 | activa | x-35  |          2345 |   NULL | NULL         |
+|   2 | santro | x-36  |          2346 |   NULL | NULL         |
+|   3 | santro | x-37  |          2346 |     20 | Rajesh joshi |
++-----+--------+-------+---------------+--------+--------------+
+3 rows in set (0.00 sec)
+
+mysql> insert into vehicle values(4,'civic','x-56',3456,30);
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into vehicle values(4,'civic','x-56',3456,30,'Ashu');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into vehicle values(4,'civic','x-56',3456,30,'Ashu');
+ERROR 1062 (23000): Duplicate entry '4' for key 'vehicle.PRIMARY'
+mysql> insert into vehicle values(4,'civic','x-56',3456,60,'Ashu');
+ERROR 1062 (23000): Duplicate entry '4' for key 'vehicle.PRIMARY'
+mysql> insert into vehicle values(5,'civic111','x-56',3456,60,'Ashu');
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`iacsdsep22`.`vehicle`, CONSTRAINT `cid_fk1` FOREIGN KEY (`custid`) REFERENCES `customer` (`cid`) ON DELETE SET NULL ON UPDATE CASCADE)
+mysql> delimiter $$
+mysql> create procedure insert_vehicle(pvid int,pvnm varchar(20),pmd varchar(20),pcn int,pcid int,pcnm varchar(20))
+    ->     begin
+    ->
+    ->        #declare continue handler for SQLEXCEPTION select 'error occured';
+    ->        declare exit handler for 1062 select 'duplicate entry';
+    ->        declare exit handler for SQLEXCEPTION select 'error occured';
+    ->        insert into vehicle values(pvid,pvnm,pmd,pcn,pcid,pcnm);
+    ->        select * from vehicle;
+    ->     end$$
+Query OK, 0 rows affected (0.01 sec)
+
+mysql>
+mysql> delimiter ;
+mysql> call insert_vehicle(5,'civic111','x-56',3456,60,'Ashu');
++---------------+
+| error occured |
++---------------+
+| error occured |
++---------------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> call insert_vehicle(5,'civic111','x-56',3456,30,'Ashu');
++-----+----------+-------+---------------+--------+--------------+
+| vid | vname    | model | chassienumber | custid | cname        |
++-----+----------+-------+---------------+--------+--------------+
+|   1 | activa   | x-35  |          2345 |   NULL | NULL         |
+|   2 | santro   | x-36  |          2346 |   NULL | NULL         |
+|   3 | santro   | x-37  |          2346 |     20 | Rajesh joshi |
+|   4 | civic    | x-56  |          3456 |     30 | Ashu         |
+|   5 | civic111 | x-56  |          3456 |     30 | Ashu         |
++-----+----------+-------+---------------+--------+--------------+
+5 rows in set (0.01 sec)
+
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> call insert_vehicle(5,'civic111','x-56',3456,30,'Ashu');
++-----------------+
+| duplicate entry |
++-----------------+
+| duplicate entry |
++-----------------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> delimiter $$
+mysql> drop procedure insert_vehicle$$
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> create procedure insert_vehicle(pvid int,pvnm varchar(20),pmd varchar(20),pcn int,pcid int,pcnm varchar(20))
+    ->     begin
+    ->
+    ->        #declare continue handler for SQLEXCEPTION select 'error occured' msg;
+    ->        declare exit handler for 1062 select 'duplicate entry';
+    ->        declare exit handler for SQLEXCEPTION select 'error occured';
+    ->        insert into vehicle values(pvid,pvnm,pmd,pcn,pcid,pcnm);
+    ->        select * from vehicle;
+    ->     end$$
+Query OK, 0 rows affected (0.00 sec)
+
+mysql>
+mysql> delimiter ;
+mysql> call insert_vehicle(5,'civic111','x-56',3456,30,'Ashu');
++-----------------+
+| duplicate entry |
++-----------------+
+| duplicate entry |
++-----------------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> call insert_vehicle(6,'civic111','x-56',3456,60,'Ashu');
++---------------+
+| error occured |
++---------------+
+| error occured |
++---------------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> select 'error occured' msg;
++---------------+
+| msg           |
++---------------+
+| error occured |
++---------------+
+1 row in set (0.00 sec)
+
+mysql> delimiter $$
+mysql> drop procedure insert_vehicle$$
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> create procedure insert_vehicle(pvid int,pvnm varchar(20),pmd varchar(20),pcn int,pcid int,pcnm varchar(20))
+    ->     begin
+    ->
+    ->        #declare continue handler for SQLEXCEPTION select 'error occured' msg;
+    ->        declare exit handler for 1062 select 'duplicate entry';
+    ->        declare exit handler for SQLEXCEPTION select 'error occured' msg;
+    ->        insert into vehicle values(pvid,pvnm,pmd,pcn,pcid,pcnm);
+    ->        select * from vehicle;
+    ->     end$$
+Query OK, 0 rows affected (0.00 sec)
+
+mysql>
+mysql> delimiter ;
+mysql> call insert_vehicle(6,'civic111','x-56',3456,60,'Ashu');
++---------------+
+| msg           |
++---------------+
+| error occured |
++---------------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> use test;
+Database changed
+mysql> show tables;
++----------------------+
+| Tables_in_test       |
++----------------------+
+| address              |
+| addressmany          |
+| addressmany1         |
+| addresstab1          |
+| addresstab1_usertab1 |
+| allemp               |
+| bonus                |
+| booking              |
+| category             |
+| category1            |
+| customer             |
+| custtab1             |
+| custtab11            |
+| department           |
+| dept                 |
+| dept_info            |
+| dummy                |
+| emp                  |
+| emp_india            |
+| emp_japan            |
+| emp_us               |
+| employee             |
+| employee_history     |
+| emptab1              |
+| emptab11             |
+| event                |
+| hibernate_sequence   |
+| mgr10                |
+| myemployee           |
+| myprod11             |
+| myprodtab            |
+| myprodtab22          |
+| myprodtab33          |
+| myprodtab44          |
+| myproduct            |
+| myproduct_table      |
+| myproducttable       |
+| mystud               |
+| mytext               |
+| myuser               |
+| myuser12             |
+| nonperishableprod    |
+| orderitem            |
+| perishableprod       |
+| persontab            |
+| pertab11             |
+| product              |
+| product_analysis     |
+| quetions             |
+| salgrade             |
+| student              |
+| studentiacsd         |
+| user                 |
+| useraddress          |
+| userentity           |
+| usermany             |
+| usermany1            |
+| usertab              |
+| usertab1             |
++----------------------+
+59 rows in set (0.01 sec)
+
+mysql> use iacsdsep22;
+Database changed
+mysql> show tables;
++----------------------+
+| Tables_in_iacsdsep22 |
++----------------------+
+| child_mytable        |
+| course               |
+| course_room          |
+| customer             |
+| mytable              |
+| room                 |
+| vehicle              |
++----------------------+
+7 rows in set (0.00 sec)
+
+mysql> desc course;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| cid      | int         | NO   | PRI | NULL    |       |
+| cname    | varchar(25) | YES  |     | NULL    |       |
+| capacity | int         | YES  |     | NULL    |       |
+| rid      | int         | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> create table testtable
+    -> (id int primary key,
+    -> name varchar(20) not null,
+    -> passport int unique);
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> insert into testtable values(12,'xxx',12345);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into testtable values(13,'xxx',12345);
+ERROR 1062 (23000): Duplicate entry '12345' for key 'testtable.passport'
+mysql> insert into testtable(id,passport) values(13,123451);
+ERROR 1364 (HY000): Field 'name' doesn't have a default value
+mysql> delimiter $$
+mysql>
+mysql> create procedure insert_testtable(pid int,pnm varchar(20),passnum int)
+    ->     begin
+    ->        declare exit handler for 1062 select 'duplicate entry' msg;
+    ->        declare continue handler for 1364 select 'null not allowed' msg;
+    ->        declare exit handler for SQLEXCEPTION select 'error occured' msg;
+    ->        insert into testtable(id,passport) values(pid,passnum);
+    ->        select * from testtable;
+    ->     end$$
+Query OK, 0 rows affected (0.01 sec)
+
+mysql>
+mysql> call insert_testtable(13,'yyy',12345);
+    -> $$
++------------------+
+| msg              |
++------------------+
+| null not allowed |
++------------------+
+1 row in set (0.00 sec)
+
++----+------+----------+
+| id | name | passport |
++----+------+----------+
+| 12 | xxx  |    12345 |
++----+------+----------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> select * from vehicle;
+    -> $$
++-----+----------+-------+---------------+--------+--------------+
+| vid | vname    | model | chassienumber | custid | cname        |
++-----+----------+-------+---------------+--------+--------------+
+|   1 | activa   | x-35  |          2345 |   NULL | NULL         |
+|   2 | santro   | x-36  |          2346 |   NULL | NULL         |
+|   3 | santro   | x-37  |          2346 |     20 | Rajesh joshi |
+|   4 | civic    | x-56  |          3456 |     30 | Ashu         |
+|   5 | civic111 | x-56  |          3456 |     30 | Ashu         |
++-----+----------+-------+---------------+--------+--------------+
+5 rows in set (0.00 sec)
+
+mysql> use test;
+ERROR 1049 (42000): Unknown database 'test;'
+mysql> use test;
+ERROR 1049 (42000): Unknown database 'test;'
+mysql> delimiter ;
+mysql> use test;
+Database changed
+mysql> select empno,ename,sal from emp;
++-------+--------+---------+
+| empno | ename  | sal     |
++-------+--------+---------+
+|  7369 | SMITH  | 1040.00 |
+|  7499 | ALLEN  | 1600.00 |
+|  7521 | WARD   | 1250.00 |
+|  7566 | JONES  | 3272.50 |
+|  7654 | MARTIN | 1250.00 |
+|  7698 | BLAKE  | 3448.50 |
+|  7782 | CLARK  | 2695.00 |
+|  7788 | SCOTT  | 3600.00 |
+|  7839 | KING   | 5000.00 |
+|  7844 | TURNER | 1500.00 |
+|  7876 | ADAMS  | 1430.00 |
+|  7900 | JAMES  | 1235.00 |
+|  7902 | FORD   | 6600.00 |
+|  7934 | MILLER | 2197.00 |
+|   100 | xxx    | 2345.00 |
+|   101 | yyy    | 3345.00 |
+|   102 | zzz    | 3745.00 |
+|  1000 | Manasi | 3456.00 |
+|  1001 | Kavita | 3456.00 |
++-------+--------+---------+
+19 rows in set (0.00 sec)
+
+mysql> select empno,ename,sal from emp
+    -> order by sal
+    -> ;
++-------+--------+---------+
+| empno | ename  | sal     |
++-------+--------+---------+
+|  7369 | SMITH  | 1040.00 |
+|  7900 | JAMES  | 1235.00 |
+|  7521 | WARD   | 1250.00 |
+|  7654 | MARTIN | 1250.00 |
+|  7876 | ADAMS  | 1430.00 |
+|  7844 | TURNER | 1500.00 |
+|  7499 | ALLEN  | 1600.00 |
+|  7934 | MILLER | 2197.00 |
+|   100 | xxx    | 2345.00 |
+|  7782 | CLARK  | 2695.00 |
+|  7566 | JONES  | 3272.50 |
+|   101 | yyy    | 3345.00 |
+|  7698 | BLAKE  | 3448.50 |
+|  1000 | Manasi | 3456.00 |
+|  1001 | Kavita | 3456.00 |
+|  7788 | SCOTT  | 3600.00 |
+|   102 | zzz    | 3745.00 |
+|  7839 | KING   | 5000.00 |
+|  7902 | FORD   | 6600.00 |
++-------+--------+---------+
+19 rows in set (0.00 sec)
+
+mysql> select empno,ename,sal from emp
+    -> order by sal desc;
++-------+--------+---------+
+| empno | ename  | sal     |
++-------+--------+---------+
+|  7902 | FORD   | 6600.00 |
+|  7839 | KING   | 5000.00 |
+|   102 | zzz    | 3745.00 |
+|  7788 | SCOTT  | 3600.00 |
+|  1000 | Manasi | 3456.00 |
+|  1001 | Kavita | 3456.00 |
+|  7698 | BLAKE  | 3448.50 |
+|   101 | yyy    | 3345.00 |
+|  7566 | JONES  | 3272.50 |
+|  7782 | CLARK  | 2695.00 |
+|   100 | xxx    | 2345.00 |
+|  7934 | MILLER | 2197.00 |
+|  7499 | ALLEN  | 1600.00 |
+|  7844 | TURNER | 1500.00 |
+|  7876 | ADAMS  | 1430.00 |
+|  7521 | WARD   | 1250.00 |
+|  7654 | MARTIN | 1250.00 |
+|  7900 | JAMES  | 1235.00 |
+|  7369 | SMITH  | 1040.00 |
++-------+--------+---------+
+19 rows in set (0.00 sec)
+
+mysql> select empno,ename,sal from emp
+    -> order by sal desc
+    -> limit 5;
++-------+--------+---------+
+| empno | ename  | sal     |
++-------+--------+---------+
+|  7902 | FORD   | 6600.00 |
+|  7839 | KING   | 5000.00 |
+|   102 | zzz    | 3745.00 |
+|  7788 | SCOTT  | 3600.00 |
+|  1000 | Manasi | 3456.00 |
++-------+--------+---------+
+5 rows in set (0.00 sec)
+
+mysql> select count(*) from emp
+    -> where sal > 3745;
++----------+
+| count(*) |
++----------+
+|        2 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> select count(*) from emp
+    -> where sal > 3456;
++----------+
+| count(*) |
++----------+
+|        4 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> select empno,ename,sal
+    -> from emp e
+    -> where 5 > (select count(*) from emp m
+    ->     where m.sal > e.sal);
++-------+--------+---------+
+| empno | ename  | sal     |
++-------+--------+---------+
+|  7788 | SCOTT  | 3600.00 |
+|  7839 | KING   | 5000.00 |
+|  7902 | FORD   | 6600.00 |
+|   102 | zzz    | 3745.00 |
+|  1000 | Manasi | 3456.00 |
+|  1001 | Kavita | 3456.00 |
++-------+--------+---------+
+6 rows in set (0.00 sec)
+
+mysql> select count(*)
+    -> from emp
+    -> where sal>3445;
++----------+
+| count(*) |
++----------+
+|        7 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> select count(*)
+    -> from emp
+    -> where sal>3448;
++----------+
+| count(*) |
++----------+
+|        7 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> select count(*)
+    -> from emp
+    -> where sal>3448.50;
++----------+
+| count(*) |
++----------+
+|        6 |
++----------+
+1 row in set (0.00 sec)
+
+mysql>

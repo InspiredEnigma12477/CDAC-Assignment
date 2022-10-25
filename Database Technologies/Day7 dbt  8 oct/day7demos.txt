@@ -1,0 +1,311 @@
+Enter password: *******
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 14
+Server version: 8.0.22 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2020, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use test;
+Database changed
+mysql> desc emp
+    -> ;
++----------+--------------+------+-----+---------+-------+
+| Field    | Type         | Null | Key | Default | Extra |
++----------+--------------+------+-----+---------+-------+
+| EMPNO    | int          | NO   |     | NULL    |       |
+| ENAME    | varchar(10)  | YES  |     | NULL    |       |
+| JOB      | varchar(9)   | YES  |     | NULL    |       |
+| MGR      | int          | YES  |     | NULL    |       |
+| HIREDATE | date         | YES  |     | NULL    |       |
+| SAL      | decimal(7,2) | YES  |     | NULL    |       |
+| COMM     | decimal(7,2) | YES  |     | NULL    |       |
+| DEPTNO   | int          | YES  |     | NULL    |       |
++----------+--------------+------+-----+---------+-------+
+8 rows in set (0.02 sec)
+
+mysql> create view mgr10
+    -> as
+    -> (select *
+    -> from emp
+    -> where deptno=10);
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> select * from mgr10;
++-------+--------+-----------+------+------------+---------+------+--------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL     | COMM | DEPTNO |
++-------+--------+-----------+------+------------+---------+------+--------+
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450.00 | NULL |     10 |
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 | 5000.00 | NULL |     10 |
+|  7934 | MILLER | CLERK     | 7782 | 1982-01-23 | 1300.00 | NULL |     10 |
+|   100 | xxx    | SALESMAN  | NULL | NULL       | 2345.00 | NULL |     10 |
+|   101 | yyy    | SALESMAN  | NULL | NULL       | 3345.00 | NULL |     10 |
++-------+--------+-----------+------+------------+---------+------+--------+
+5 rows in set (0.00 sec)
+
+mysql> insert into mgr10 values(1000,'Manasi','Designer',7902,'2022-10-08',3456,567,10);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from mgr10;
++-------+--------+-----------+------+------------+---------+--------+--------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL     | COMM   | DEPTNO |
++-------+--------+-----------+------+------------+---------+--------+--------+
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450.00 |   NULL |     10 |
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 | 5000.00 |   NULL |     10 |
+|  7934 | MILLER | CLERK     | 7782 | 1982-01-23 | 1300.00 |   NULL |     10 |
+|   100 | xxx    | SALESMAN  | NULL | NULL       | 2345.00 |   NULL |     10 |
+|   101 | yyy    | SALESMAN  | NULL | NULL       | 3345.00 |   NULL |     10 |
+|  1000 | Manasi | Designer  | 7902 | 2022-10-08 | 3456.00 | 567.00 |     10 |
++-------+--------+-----------+------+------------+---------+--------+--------+
+6 rows in set (0.00 sec)
+
+mysql> select * from emp;
++-------+--------+-----------+------+------------+---------+---------+--------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL     | COMM    | DEPTNO |
++-------+--------+-----------+------+------------+---------+---------+--------+
+|  7369 | SMITH  | CLERK     | 7902 | 1980-12-17 |  800.00 |    NULL |     20 |
+|  7499 | ALLEN  | SALESMAN  | 7698 | 1981-02-20 | 1600.00 |  300.00 |     30 |
+|  7521 | WARD   | SALESMAN  | 7698 | 1981-02-22 | 1250.00 |  500.00 |     30 |
+|  7566 | JONES  | MANAGER   | 7839 | 1981-04-02 | 2975.00 |    NULL |     20 |
+|  7654 | MARTIN | SALESMAN  | 7698 | 1981-09-28 | 1250.00 | 1400.00 |     30 |
+|  7698 | BLAKE  | MANAGER   | 7839 | 1981-05-01 | 2850.00 |    NULL |     30 |
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450.00 |    NULL |     10 |
+|  7788 | SCOTT  | ANALYST   | 7566 | 1982-12-09 | 3000.00 |    NULL |     20 |
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 | 5000.00 |    NULL |     10 |
+|  7844 | TURNER | SALESMAN  | 7698 | 1981-09-08 | 1500.00 |    0.00 |     30 |
+|  7876 | ADAMS  | CLERK     | 7788 | 1983-01-12 | 1100.00 |    NULL |     20 |
+|  7900 | JAMES  | CLERK     | 7698 | 1981-12-03 |  950.00 |    NULL |     30 |
+|  7902 | FORD   | ANALYST   | 7566 | 1981-12-03 | 3000.00 |    NULL |     20 |
+|  7934 | MILLER | CLERK     | 7782 | 1982-01-23 | 1300.00 |    NULL |     10 |
+|   100 | xxx    | SALESMAN  | NULL | NULL       | 2345.00 |    NULL |     10 |
+|   101 | yyy    | SALESMAN  | NULL | NULL       | 3345.00 |    NULL |     10 |
+|   102 | zzz    | SALESMAN  | NULL | NULL       | 3745.00 |    NULL |     20 |
+|  1000 | Manasi | Designer  | 7902 | 2022-10-08 | 3456.00 |  567.00 |     10 |
++-------+--------+-----------+------+------------+---------+---------+--------+
+18 rows in set (0.00 sec)
+
+mysql> insert into mgr10 values(1001,'Kavita','SAP programmer',7902,'2022-10-01',3456,567,20);
+ERROR 1406 (22001): Data too long for column 'JOB' at row 1
+mysql> insert into mgr10 values(1001,'Kavita','SAP prog',7902,'2022-10-01',3456,567,20);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from mgr10;
++-------+--------+-----------+------+------------+---------+--------+--------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL     | COMM   | DEPTNO |
++-------+--------+-----------+------+------------+---------+--------+--------+
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450.00 |   NULL |     10 |
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 | 5000.00 |   NULL |     10 |
+|  7934 | MILLER | CLERK     | 7782 | 1982-01-23 | 1300.00 |   NULL |     10 |
+|   100 | xxx    | SALESMAN  | NULL | NULL       | 2345.00 |   NULL |     10 |
+|   101 | yyy    | SALESMAN  | NULL | NULL       | 3345.00 |   NULL |     10 |
+|  1000 | Manasi | Designer  | 7902 | 2022-10-08 | 3456.00 | 567.00 |     10 |
++-------+--------+-----------+------+------------+---------+--------+--------+
+6 rows in set (0.00 sec)
+
+mysql> select * from emp;
++-------+--------+-----------+------+------------+---------+---------+--------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL     | COMM    | DEPTNO |
++-------+--------+-----------+------+------------+---------+---------+--------+
+|  7369 | SMITH  | CLERK     | 7902 | 1980-12-17 |  800.00 |    NULL |     20 |
+|  7499 | ALLEN  | SALESMAN  | 7698 | 1981-02-20 | 1600.00 |  300.00 |     30 |
+|  7521 | WARD   | SALESMAN  | 7698 | 1981-02-22 | 1250.00 |  500.00 |     30 |
+|  7566 | JONES  | MANAGER   | 7839 | 1981-04-02 | 2975.00 |    NULL |     20 |
+|  7654 | MARTIN | SALESMAN  | 7698 | 1981-09-28 | 1250.00 | 1400.00 |     30 |
+|  7698 | BLAKE  | MANAGER   | 7839 | 1981-05-01 | 2850.00 |    NULL |     30 |
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450.00 |    NULL |     10 |
+|  7788 | SCOTT  | ANALYST   | 7566 | 1982-12-09 | 3000.00 |    NULL |     20 |
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 | 5000.00 |    NULL |     10 |
+|  7844 | TURNER | SALESMAN  | 7698 | 1981-09-08 | 1500.00 |    0.00 |     30 |
+|  7876 | ADAMS  | CLERK     | 7788 | 1983-01-12 | 1100.00 |    NULL |     20 |
+|  7900 | JAMES  | CLERK     | 7698 | 1981-12-03 |  950.00 |    NULL |     30 |
+|  7902 | FORD   | ANALYST   | 7566 | 1981-12-03 | 3000.00 |    NULL |     20 |
+|  7934 | MILLER | CLERK     | 7782 | 1982-01-23 | 1300.00 |    NULL |     10 |
+|   100 | xxx    | SALESMAN  | NULL | NULL       | 2345.00 |    NULL |     10 |
+|   101 | yyy    | SALESMAN  | NULL | NULL       | 3345.00 |    NULL |     10 |
+|   102 | zzz    | SALESMAN  | NULL | NULL       | 3745.00 |    NULL |     20 |
+|  1000 | Manasi | Designer  | 7902 | 2022-10-08 | 3456.00 |  567.00 |     10 |
+|  1001 | Kavita | SAP prog  | 7902 | 2022-10-01 | 3456.00 |  567.00 |     20 |
++-------+--------+-----------+------+------------+---------+---------+--------+
+19 rows in set (0.00 sec)
+
+mysql> drop view mgr10;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> create view mgr10
+    -> as
+    -> select *
+    -> from emp
+    -> where deptno=10;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> drop view mgr10;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> create view mgr10
+    -> as
+    -> (select *
+    -> from emp
+    -> where deptno=10
+    -> with check option);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'with check option)' at line 6
+mysql> create view mgr10
+    -> as
+    -> (select *
+    -> from emp
+    -> where deptno=10
+    -> with check option constraint cn);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'with check option constraint cn)' at line 6
+mysql> create view mgr10
+    -> as
+    -> select *
+    -> from emp
+    -> where deptno=10
+    -> with check option;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> insert into mgr10 values(1002,'Kavita111','SAP prog',7902,'2022-10-01',3456,567,20);
+ERROR 1369 (HY000): CHECK OPTION failed 'test.mgr10'
+mysql> create view mgr20
+    -> as
+    -> select *
+    -> from emp
+    -> where deptno=20
+    -> with read only;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'read only' at line 6
+mysql> create materialized view myview
+    -> as
+    -> select *
+    -> from dept;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'materialized view myview
+as
+select *
+from dept' at line 1
+mysql> select * from emp_us;
+ERROR 1146 (42S02): Table 'test.emp_us' doesn't exist
+mysql> create table emp_us
+    -> (id int, name varchar(20), location varchar(20));
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> create table emp_india
+    -> (id int, name varchar(20), location varchar(20));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> create table emp_japan
+    -> (id int, name varchar(20), location varchar(20));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> insert into emp_us values(100,'Rajan', 'India');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into emp_us values(101,'Rajat', 'US');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into emp_us values(103,'Shivesh', 'India');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into emp_india values(103,'Shivesh', 'India');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into emp_india values(104,'Shivali', 'India');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into emp_japan values(103,'Shivesh', 'India');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into emp_japan values(104,'Ashish', 'Japan');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from emp_us;
++------+---------+----------+
+| id   | name    | location |
++------+---------+----------+
+|  100 | Rajan   | India    |
+|  101 | Rajat   | US       |
+|  103 | Shivesh | India    |
++------+---------+----------+
+3 rows in set (0.00 sec)
+
+mysql> select * from emp_india;
++------+---------+----------+
+| id   | name    | location |
++------+---------+----------+
+|  103 | Shivesh | India    |
+|  104 | Shivali | India    |
++------+---------+----------+
+2 rows in set (0.00 sec)
+
+mysql> select * from emp_japn;
+ERROR 1146 (42S02): Table 'test.emp_japn' doesn't exist
+mysql> select * from emp_japan;
++------+---------+----------+
+| id   | name    | location |
++------+---------+----------+
+|  103 | Shivesh | India    |
+|  104 | Ashish  | Japan    |
++------+---------+----------+
+2 rows in set (0.00 sec)
+
+mysql> select * from emp_us
+    -> union
+    -> select * from emp_japan
+    -> union
+    -> select * from emp_india;
++------+---------+----------+
+| id   | name    | location |
++------+---------+----------+
+|  100 | Rajan   | India    |
+|  101 | Rajat   | US       |
+|  103 | Shivesh | India    |
+|  104 | Ashish  | Japan    |
+|  104 | Shivali | India    |
++------+---------+----------+
+5 rows in set (0.00 sec)
+
+mysql> create view allemp
+    -> as
+    -> select * from emp_us
+    -> union
+    -> select * from emp_japan
+    -> union
+    -> select * from emp_india;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> select * from allemp;
++------+---------+----------+
+| id   | name    | location |
++------+---------+----------+
+|  100 | Rajan   | India    |
+|  101 | Rajat   | US       |
+|  103 | Shivesh | India    |
+|  104 | Ashish  | Japan    |
+|  104 | Shivali | India    |
++------+---------+----------+
+5 rows in set (0.02 sec)
+
+mysql> create index sal_idx
+    -> on emp(sal);
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> create table mytext(
+    -> col1 text);
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> insert into mytext values('this is paragraph testing');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> create full text index col1_idx
+    -> on mytext(col1);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'full text index col1_idx
+on mytext(col1)' at line 1
+mysql> create fulltext index col1_idx
+    -> on mytext(col1);
+Query OK, 0 rows affected, 1 warning (0.20 sec)
+Records: 0  Duplicates: 0  Warnings: 1
+
+mysql>

@@ -1,0 +1,55 @@
+Binary Number System
+--A binary number system is one of the four types of number system.  0 1
+In computer applications, where binary numbers are represented by only 
+two symbols or digits, i.e. 0 (zero) and 1(one). 
+The binary numbers here are expressed in the base-2 numeral system. (
+For example, (101)base2 is a binary number. 
+Each digit in this system is said to be a bit.
+bit:-smallest unit of information
+byte:-8bit = 1 byte
+1024bytes=1kilobyte
+1024kb=1megabyte
+1024mb=1gigabyte
+tb 
+
+-----------------------------------------------------------------------------
+What is a Binary Number System?
+Binary Number System: According to digital electronics and mathematics, 
+a binary number is defined as a number that is expressed in 
+the binary system or base 2 numeral system. 
+It describes numeric values by two separate symbols; 
+1 (one) and 0 (zero). The base-2 system is the positional 
+notation with 2 as a radix.
+
+The binary system is applied internally by almost 
+all latest computers and computer-based devices because of its 
+direct implementation in electronic circuits using logic gates. 
+Every digit is referred to as a bit.
+---------------------------------------------------------------------
+How to Calculate Binary Numbers
+For example, the number to be operated is 1235.
+
+Thousands	Hundreds	Tens	Ones
+1	          2	         3	5
+This indicates,
+
+1235 = 1 × 1000 + 2 × 100 + 3 × 10 + 5 × 1
+
+Given,
+
+1000	= (10)^3 = 10 × 10 × 10
+100	= (10)^2= 10 × 10
+10	= (10)^1 = 10
+1	= (10)^0 (any value to the exponent zero is one) 
+The above table can be described as,
+
+Thousands|	|Hundreds|	|Tens|	  |Ones|
+(10)^3	           (10)^2      (10)^1	 (10)^0
+1	           2	          3	  5
+
+1235 = 1 × 1000 + 2 × 100 + 3 × 10 + 5 × 1
+
+= 1 × (10)^3 + 2 × (10)^2 + 3 × (10)^1 + 5 × (10)^0
+-----------------------------------------------------------------
+
+

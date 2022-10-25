@@ -1,0 +1,111 @@
+Today's topics
+
+Revise through code samples
+System threads
+Enter Inheritance.
+Enter polymorphism
+
+
+Revision
+1. Refer to param_passing n guess what will happen ?
+This is to understand mem pic , object creation , 
+
+2. Array revision
+
+eg : main(...)
+int[] data;
+data=new int[4];
+for(int i=0;i<data.length;i++)
+ data[i]=i*100;
+
+for(int i : data)
+ sop(i);
+
+
+package com.app.geometry;
+
+public class Point2D {
+	private int x, y;
+
+	public Point2D(int x, int y) {
+		this.x = x;
+		this.y = y;
+	}
+	public String show()
+	{
+	 return "x="+x+" y="+y;
+	} 	
+}
+
+What will happen , for the following code in the Tester class , with main ?
+
+int value=5;
+Point2D[] points=new Point2D[3];
+for(Point2D p : points) {
+ p=new Point2D(value,value+10);
+ value++;
+}
+
+for(Point2D p : points)
+ sop(p.show());
+
+4. Dynamic initialization of array
+int[] ints= {10,20,30,40,50}; 
+mem pic ??
+
+
+--------------------------------------------
+Enter Inheritance 
+refer to "readme inheritance.txt" from today's help.
+Person-Student-Faculty scenarion (constr invocation in inheritance hierarchy)
+
+
+What is inheritance ?
+Important part of OOP 
+Represents IS A relationship
+Higher hierarchy : super class
+lower hierarchy :sub class
+key word : extends
+eg : class Emp extends Object{....}
+class Mgr extends Emp {...}
+class SalesMgr extends Mgr {...}
+Universal super class : java.lang.Object
+
+Why : Reduces redundancy , increases re usability
+Types : single , multilevel  ,hierarchial , multiple (not supported) : ambiguity
+
+constr invocation in inheritance hierarchy : refer to diag.
+
+How to display details of student n faculty ?
+
+
+super keyword
+super keyword usages
+1. To invoke super cls constr (eg : super(fn,ln))
+2. To access super cls's accessible members (eg : super.toString())
+
+Important statements
+Sub class IS A super class + something more(addtional data members + methods) + something modofied(behaviour : methods : method overriding)
+
+
+Enter polymorphism : refer to readme inheritance poly.
+
+1.  Upcasting
+With simple example :  Person , Student Faculty
+
+
+
+
+2. Event Organizer app
+sop("enter event capacity");
+Person[] participants=new Person[sc.nextInt()];//50
+int counter=0;
+Menu :
+1 : Register Student
+//after chking boundary condition
+sop("Enter student dtls ");
+participants[counter++]=new Student(......);//javac err or no javac err : up casting
+
+2. : Register Faculty
+3. Display participant details
+10. : Exit

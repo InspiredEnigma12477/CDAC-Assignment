@@ -1,0 +1,1028 @@
+Enter password: *******
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 11
+Server version: 8.0.22 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2020, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use test
+Database changed
+mysql> select deptno,count(*),sum(sal),avg(sal),min(sal),max(sal)
+    -> from emp
+    -> group by deptno;
++--------+----------+----------+-------------+----------+----------+
+| deptno | count(*) | sum(sal) | avg(sal)    | min(sal) | max(sal) |
++--------+----------+----------+-------------+----------+----------+
+|     20 |        6 | 14620.00 | 2436.666667 |   800.00 |  3745.00 |
+|     30 |        6 |  9400.00 | 1566.666667 |   950.00 |  2850.00 |
+|     10 |        5 | 14440.00 | 2888.000000 |  1300.00 |  5000.00 |
++--------+----------+----------+-------------+----------+----------+
+3 rows in set (0.00 sec)
+
+mysql> select job,count(*),sum(sal),avg(sal),min(sal),max(sal)
+    -> from emp
+    -> group by job;
++-----------+----------+----------+-------------+----------+----------+
+| job       | count(*) | sum(sal) | avg(sal)    | min(sal) | max(sal) |
++-----------+----------+----------+-------------+----------+----------+
+| CLERK     |        4 |  4150.00 | 1037.500000 |   800.00 |  1300.00 |
+| SALESMAN  |        7 | 15035.00 | 2147.857143 |  1250.00 |  3745.00 |
+| MANAGER   |        3 |  8275.00 | 2758.333333 |  2450.00 |  2975.00 |
+| ANALYST   |        2 |  6000.00 | 3000.000000 |  3000.00 |  3000.00 |
+| PRESIDENT |        1 |  5000.00 | 5000.000000 |  5000.00 |  5000.00 |
++-----------+----------+----------+-------------+----------+----------+
+5 rows in set (0.00 sec)
+
+mysql> select deptno,job,count(*),sum(sal),avg(sal),min(sal),max(sal)
+    -> from emp
+    -> group by deptno,job;
++--------+-----------+----------+----------+-------------+----------+----------+
+| deptno | job       | count(*) | sum(sal) | avg(sal)    | min(sal) | max(sal) |
++--------+-----------+----------+----------+-------------+----------+----------+
+|     20 | CLERK     |        2 |  1900.00 |  950.000000 |   800.00 |  1100.00 |
+|     30 | SALESMAN  |        4 |  5600.00 | 1400.000000 |  1250.00 |  1600.00 |
+|     20 | MANAGER   |        1 |  2975.00 | 2975.000000 |  2975.00 |  2975.00 |
+|     30 | MANAGER   |        1 |  2850.00 | 2850.000000 |  2850.00 |  2850.00 |
+|     10 | MANAGER   |        1 |  2450.00 | 2450.000000 |  2450.00 |  2450.00 |
+|     20 | ANALYST   |        2 |  6000.00 | 3000.000000 |  3000.00 |  3000.00 |
+|     10 | PRESIDENT |        1 |  5000.00 | 5000.000000 |  5000.00 |  5000.00 |
+|     30 | CLERK     |        1 |   950.00 |  950.000000 |   950.00 |   950.00 |
+|     10 | CLERK     |        1 |  1300.00 | 1300.000000 |  1300.00 |  1300.00 |
+|     10 | SALESMAN  |        2 |  5690.00 | 2845.000000 |  2345.00 |  3345.00 |
+|     20 | SALESMAN  |        1 |  3745.00 | 3745.000000 |  3745.00 |  3745.00 |
++--------+-----------+----------+----------+-------------+----------+----------+
+11 rows in set (0.00 sec)
+
+mysql> select deptno,job,count(*),sum(sal),avg(sal),min(sal),max(sal)
+    -> from emp
+    -> group by deptno,job
+    -> order by deptno;
++--------+-----------+----------+----------+-------------+----------+----------+
+| deptno | job       | count(*) | sum(sal) | avg(sal)    | min(sal) | max(sal) |
++--------+-----------+----------+----------+-------------+----------+----------+
+|     10 | CLERK     |        1 |  1300.00 | 1300.000000 |  1300.00 |  1300.00 |
+|     10 | MANAGER   |        1 |  2450.00 | 2450.000000 |  2450.00 |  2450.00 |
+|     10 | PRESIDENT |        1 |  5000.00 | 5000.000000 |  5000.00 |  5000.00 |
+|     10 | SALESMAN  |        2 |  5690.00 | 2845.000000 |  2345.00 |  3345.00 |
+|     20 | ANALYST   |        2 |  6000.00 | 3000.000000 |  3000.00 |  3000.00 |
+|     20 | CLERK     |        2 |  1900.00 |  950.000000 |   800.00 |  1100.00 |
+|     20 | MANAGER   |        1 |  2975.00 | 2975.000000 |  2975.00 |  2975.00 |
+|     20 | SALESMAN  |        1 |  3745.00 | 3745.000000 |  3745.00 |  3745.00 |
+|     30 | CLERK     |        1 |   950.00 |  950.000000 |   950.00 |   950.00 |
+|     30 | MANAGER   |        1 |  2850.00 | 2850.000000 |  2850.00 |  2850.00 |
+|     30 | SALESMAN  |        4 |  5600.00 | 1400.000000 |  1250.00 |  1600.00 |
++--------+-----------+----------+----------+-------------+----------+----------+
+11 rows in set (0.00 sec)
+
+mysql> select deptno,count(*),sum(sal),avg(sal),min(sal),max(sal)
+    -> from emp
+    -> group by deptno,job
+    -> order by deptno;
++--------+----------+----------+-------------+----------+----------+
+| deptno | count(*) | sum(sal) | avg(sal)    | min(sal) | max(sal) |
++--------+----------+----------+-------------+----------+----------+
+|     10 |        1 |  1300.00 | 1300.000000 |  1300.00 |  1300.00 |
+|     10 |        1 |  2450.00 | 2450.000000 |  2450.00 |  2450.00 |
+|     10 |        1 |  5000.00 | 5000.000000 |  5000.00 |  5000.00 |
+|     10 |        2 |  5690.00 | 2845.000000 |  2345.00 |  3345.00 |
+|     20 |        2 |  6000.00 | 3000.000000 |  3000.00 |  3000.00 |
+|     20 |        2 |  1900.00 |  950.000000 |   800.00 |  1100.00 |
+|     20 |        1 |  2975.00 | 2975.000000 |  2975.00 |  2975.00 |
+|     20 |        1 |  3745.00 | 3745.000000 |  3745.00 |  3745.00 |
+|     30 |        1 |   950.00 |  950.000000 |   950.00 |   950.00 |
+|     30 |        1 |  2850.00 | 2850.000000 |  2850.00 |  2850.00 |
+|     30 |        4 |  5600.00 | 1400.000000 |  1250.00 |  1600.00 |
++--------+----------+----------+-------------+----------+----------+
+11 rows in set (0.00 sec)
+
+mysql> select *
+    -> from emp;
++-------+--------+-----------+------+------------+---------+---------+--------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL     | COMM    | DEPTNO |
++-------+--------+-----------+------+------------+---------+---------+--------+
+|  7369 | SMITH  | CLERK     | 7902 | 1980-12-17 |  800.00 |    NULL |     20 |
+|  7499 | ALLEN  | SALESMAN  | 7698 | 1981-02-20 | 1600.00 |  300.00 |     30 |
+|  7521 | WARD   | SALESMAN  | 7698 | 1981-02-22 | 1250.00 |  500.00 |     30 |
+|  7566 | JONES  | MANAGER   | 7839 | 1981-04-02 | 2975.00 |    NULL |     20 |
+|  7654 | MARTIN | SALESMAN  | 7698 | 1981-09-28 | 1250.00 | 1400.00 |     30 |
+|  7698 | BLAKE  | MANAGER   | 7839 | 1981-05-01 | 2850.00 |    NULL |     30 |
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450.00 |    NULL |     10 |
+|  7788 | SCOTT  | ANALYST   | 7566 | 1982-12-09 | 3000.00 |    NULL |     20 |
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 | 5000.00 |    NULL |     10 |
+|  7844 | TURNER | SALESMAN  | 7698 | 1981-09-08 | 1500.00 |    0.00 |     30 |
+|  7876 | ADAMS  | CLERK     | 7788 | 1983-01-12 | 1100.00 |    NULL |     20 |
+|  7900 | JAMES  | CLERK     | 7698 | 1981-12-03 |  950.00 |    NULL |     30 |
+|  7902 | FORD   | ANALYST   | 7566 | 1981-12-03 | 3000.00 |    NULL |     20 |
+|  7934 | MILLER | CLERK     | 7782 | 1982-01-23 | 1300.00 |    NULL |     10 |
+|   100 | xxx    | SALESMAN  | NULL | NULL       | 2345.00 |    NULL |     10 |
+|   101 | yyy    | SALESMAN  | NULL | NULL       | 3345.00 |    NULL |     10 |
+|   102 | zzz    | SALESMAN  | NULL | NULL       | 3745.00 |    NULL |     20 |
++-------+--------+-----------+------+------------+---------+---------+--------+
+17 rows in set (0.00 sec)
+
+mysql> select *
+    -> from emp
+    -> order by mgr;
++-------+--------+-----------+------+------------+---------+---------+--------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL     | COMM    | DEPTNO |
++-------+--------+-----------+------+------------+---------+---------+--------+
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 | 5000.00 |    NULL |     10 |
+|   100 | xxx    | SALESMAN  | NULL | NULL       | 2345.00 |    NULL |     10 |
+|   101 | yyy    | SALESMAN  | NULL | NULL       | 3345.00 |    NULL |     10 |
+|   102 | zzz    | SALESMAN  | NULL | NULL       | 3745.00 |    NULL |     20 |
+|  7788 | SCOTT  | ANALYST   | 7566 | 1982-12-09 | 3000.00 |    NULL |     20 |
+|  7902 | FORD   | ANALYST   | 7566 | 1981-12-03 | 3000.00 |    NULL |     20 |
+|  7499 | ALLEN  | SALESMAN  | 7698 | 1981-02-20 | 1600.00 |  300.00 |     30 |
+|  7521 | WARD   | SALESMAN  | 7698 | 1981-02-22 | 1250.00 |  500.00 |     30 |
+|  7654 | MARTIN | SALESMAN  | 7698 | 1981-09-28 | 1250.00 | 1400.00 |     30 |
+|  7844 | TURNER | SALESMAN  | 7698 | 1981-09-08 | 1500.00 |    0.00 |     30 |
+|  7900 | JAMES  | CLERK     | 7698 | 1981-12-03 |  950.00 |    NULL |     30 |
+|  7934 | MILLER | CLERK     | 7782 | 1982-01-23 | 1300.00 |    NULL |     10 |
+|  7876 | ADAMS  | CLERK     | 7788 | 1983-01-12 | 1100.00 |    NULL |     20 |
+|  7566 | JONES  | MANAGER   | 7839 | 1981-04-02 | 2975.00 |    NULL |     20 |
+|  7698 | BLAKE  | MANAGER   | 7839 | 1981-05-01 | 2850.00 |    NULL |     30 |
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450.00 |    NULL |     10 |
+|  7369 | SMITH  | CLERK     | 7902 | 1980-12-17 |  800.00 |    NULL |     20 |
++-------+--------+-----------+------+------------+---------+---------+--------+
+17 rows in set (0.00 sec)
+
+mysql> select *
+    -> from emp
+    -> order by mgr;
++-------+--------+-----------+------+------------+---------+---------+--------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL     | COMM    | DEPTNO |
++-------+--------+-----------+------+------------+---------+---------+--------+
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 | 5000.00 |    NULL |     10 |
+|   100 | xxx    | SALESMAN  | NULL | NULL       | 2345.00 |    NULL |     10 |
+|   101 | yyy    | SALESMAN  | NULL | NULL       | 3345.00 |    NULL |     10 |
+|   102 | zzz    | SALESMAN  | NULL | NULL       | 3745.00 |    NULL |     20 |
+|  7788 | SCOTT  | ANALYST   | 7566 | 1982-12-09 | 3000.00 |    NULL |     20 |
+|  7902 | FORD   | ANALYST   | 7566 | 1981-12-03 | 3000.00 |    NULL |     20 |
+|  7499 | ALLEN  | SALESMAN  | 7698 | 1981-02-20 | 1600.00 |  300.00 |     30 |
+|  7521 | WARD   | SALESMAN  | 7698 | 1981-02-22 | 1250.00 |  500.00 |     30 |
+|  7654 | MARTIN | SALESMAN  | 7698 | 1981-09-28 | 1250.00 | 1400.00 |     30 |
+|  7844 | TURNER | SALESMAN  | 7698 | 1981-09-08 | 1500.00 |    0.00 |     30 |
+|  7900 | JAMES  | CLERK     | 7698 | 1981-12-03 |  950.00 |    NULL |     30 |
+|  7934 | MILLER | CLERK     | 7782 | 1982-01-23 | 1300.00 |    NULL |     10 |
+|  7876 | ADAMS  | CLERK     | 7788 | 1983-01-12 | 1100.00 |    NULL |     20 |
+|  7566 | JONES  | MANAGER   | 7839 | 1981-04-02 | 2975.00 |    NULL |     20 |
+|  7698 | BLAKE  | MANAGER   | 7839 | 1981-05-01 | 2850.00 |    NULL |     30 |
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450.00 |    NULL |     10 |
+|  7369 | SMITH  | CLERK     | 7902 | 1980-12-17 |  800.00 |    NULL |     20 |
++-------+--------+-----------+------+------------+---------+---------+--------+
+17 rows in set (0.00 sec)
+
+mysql> select mgr,sum(sal+ifnull(comm,0))
+    -> from emp
+    -> group by mgr;
++------+-------------------------+
+| mgr  | sum(sal+ifnull(comm,0)) |
++------+-------------------------+
+| 7902 |                  800.00 |
+| 7698 |                 8750.00 |
+| 7839 |                 8275.00 |
+| 7566 |                 6000.00 |
+| NULL |                14435.00 |
+| 7788 |                 1100.00 |
+| 7782 |                 1300.00 |
++------+-------------------------+
+7 rows in set (0.00 sec)
+
+mysql> select count(*),count(comm)
+    -> from emp;
++----------+-------------+
+| count(*) | count(comm) |
++----------+-------------+
+|       17 |           4 |
++----------+-------------+
+1 row in set (0.00 sec)
+
+mysql> select *
+    -> from emp;
++-------+--------+-----------+------+------------+---------+---------+--------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL     | COMM    | DEPTNO |
++-------+--------+-----------+------+------------+---------+---------+--------+
+|  7369 | SMITH  | CLERK     | 7902 | 1980-12-17 |  800.00 |    NULL |     20 |
+|  7499 | ALLEN  | SALESMAN  | 7698 | 1981-02-20 | 1600.00 |  300.00 |     30 |
+|  7521 | WARD   | SALESMAN  | 7698 | 1981-02-22 | 1250.00 |  500.00 |     30 |
+|  7566 | JONES  | MANAGER   | 7839 | 1981-04-02 | 2975.00 |    NULL |     20 |
+|  7654 | MARTIN | SALESMAN  | 7698 | 1981-09-28 | 1250.00 | 1400.00 |     30 |
+|  7698 | BLAKE  | MANAGER   | 7839 | 1981-05-01 | 2850.00 |    NULL |     30 |
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450.00 |    NULL |     10 |
+|  7788 | SCOTT  | ANALYST   | 7566 | 1982-12-09 | 3000.00 |    NULL |     20 |
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 | 5000.00 |    NULL |     10 |
+|  7844 | TURNER | SALESMAN  | 7698 | 1981-09-08 | 1500.00 |    0.00 |     30 |
+|  7876 | ADAMS  | CLERK     | 7788 | 1983-01-12 | 1100.00 |    NULL |     20 |
+|  7900 | JAMES  | CLERK     | 7698 | 1981-12-03 |  950.00 |    NULL |     30 |
+|  7902 | FORD   | ANALYST   | 7566 | 1981-12-03 | 3000.00 |    NULL |     20 |
+|  7934 | MILLER | CLERK     | 7782 | 1982-01-23 | 1300.00 |    NULL |     10 |
+|   100 | xxx    | SALESMAN  | NULL | NULL       | 2345.00 |    NULL |     10 |
+|   101 | yyy    | SALESMAN  | NULL | NULL       | 3345.00 |    NULL |     10 |
+|   102 | zzz    | SALESMAN  | NULL | NULL       | 3745.00 |    NULL |     20 |
++-------+--------+-----------+------+------------+---------+---------+--------+
+17 rows in set (0.00 sec)
+
+mysql> select * from emp
+    -> order by comm;
++-------+--------+-----------+------+------------+---------+---------+--------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL     | COMM    | DEPTNO |
++-------+--------+-----------+------+------------+---------+---------+--------+
+|  7369 | SMITH  | CLERK     | 7902 | 1980-12-17 |  800.00 |    NULL |     20 |
+|  7566 | JONES  | MANAGER   | 7839 | 1981-04-02 | 2975.00 |    NULL |     20 |
+|  7698 | BLAKE  | MANAGER   | 7839 | 1981-05-01 | 2850.00 |    NULL |     30 |
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450.00 |    NULL |     10 |
+|  7788 | SCOTT  | ANALYST   | 7566 | 1982-12-09 | 3000.00 |    NULL |     20 |
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 | 5000.00 |    NULL |     10 |
+|  7876 | ADAMS  | CLERK     | 7788 | 1983-01-12 | 1100.00 |    NULL |     20 |
+|  7900 | JAMES  | CLERK     | 7698 | 1981-12-03 |  950.00 |    NULL |     30 |
+|  7902 | FORD   | ANALYST   | 7566 | 1981-12-03 | 3000.00 |    NULL |     20 |
+|  7934 | MILLER | CLERK     | 7782 | 1982-01-23 | 1300.00 |    NULL |     10 |
+|   100 | xxx    | SALESMAN  | NULL | NULL       | 2345.00 |    NULL |     10 |
+|   101 | yyy    | SALESMAN  | NULL | NULL       | 3345.00 |    NULL |     10 |
+|   102 | zzz    | SALESMAN  | NULL | NULL       | 3745.00 |    NULL |     20 |
+|  7844 | TURNER | SALESMAN  | 7698 | 1981-09-08 | 1500.00 |    0.00 |     30 |
+|  7499 | ALLEN  | SALESMAN  | 7698 | 1981-02-20 | 1600.00 |  300.00 |     30 |
+|  7521 | WARD   | SALESMAN  | 7698 | 1981-02-22 | 1250.00 |  500.00 |     30 |
+|  7654 | MARTIN | SALESMAN  | 7698 | 1981-09-28 | 1250.00 | 1400.00 |     30 |
++-------+--------+-----------+------+------------+---------+---------+--------+
+17 rows in set (0.00 sec)
+
+mysql> select * from emp
+    -> order by comm desc;
++-------+--------+-----------+------+------------+---------+---------+--------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL     | COMM    | DEPTNO |
++-------+--------+-----------+------+------------+---------+---------+--------+
+|  7654 | MARTIN | SALESMAN  | 7698 | 1981-09-28 | 1250.00 | 1400.00 |     30 |
+|  7521 | WARD   | SALESMAN  | 7698 | 1981-02-22 | 1250.00 |  500.00 |     30 |
+|  7499 | ALLEN  | SALESMAN  | 7698 | 1981-02-20 | 1600.00 |  300.00 |     30 |
+|  7844 | TURNER | SALESMAN  | 7698 | 1981-09-08 | 1500.00 |    0.00 |     30 |
+|  7369 | SMITH  | CLERK     | 7902 | 1980-12-17 |  800.00 |    NULL |     20 |
+|  7566 | JONES  | MANAGER   | 7839 | 1981-04-02 | 2975.00 |    NULL |     20 |
+|  7698 | BLAKE  | MANAGER   | 7839 | 1981-05-01 | 2850.00 |    NULL |     30 |
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450.00 |    NULL |     10 |
+|  7788 | SCOTT  | ANALYST   | 7566 | 1982-12-09 | 3000.00 |    NULL |     20 |
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 | 5000.00 |    NULL |     10 |
+|  7876 | ADAMS  | CLERK     | 7788 | 1983-01-12 | 1100.00 |    NULL |     20 |
+|  7900 | JAMES  | CLERK     | 7698 | 1981-12-03 |  950.00 |    NULL |     30 |
+|  7902 | FORD   | ANALYST   | 7566 | 1981-12-03 | 3000.00 |    NULL |     20 |
+|  7934 | MILLER | CLERK     | 7782 | 1982-01-23 | 1300.00 |    NULL |     10 |
+|   100 | xxx    | SALESMAN  | NULL | NULL       | 2345.00 |    NULL |     10 |
+|   101 | yyy    | SALESMAN  | NULL | NULL       | 3345.00 |    NULL |     10 |
+|   102 | zzz    | SALESMAN  | NULL | NULL       | 3745.00 |    NULL |     20 |
++-------+--------+-----------+------+------------+---------+---------+--------+
+17 rows in set (0.00 sec)
+
+mysql> Select count(*)
+    -> From emp
+    -> Where month(hiredate)=5;
++----------+
+| count(*) |
++----------+
+|        1 |
++----------+
+1 row in set (0.00 sec)
+
+mysql>
+mysql> Select *
+    -> From emp;
++-------+--------+-----------+------+------------+---------+---------+--------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL     | COMM    | DEPTNO |
++-------+--------+-----------+------+------------+---------+---------+--------+
+|  7369 | SMITH  | CLERK     | 7902 | 1980-12-17 |  800.00 |    NULL |     20 |
+|  7499 | ALLEN  | SALESMAN  | 7698 | 1981-02-20 | 1600.00 |  300.00 |     30 |
+|  7521 | WARD   | SALESMAN  | 7698 | 1981-02-22 | 1250.00 |  500.00 |     30 |
+|  7566 | JONES  | MANAGER   | 7839 | 1981-04-02 | 2975.00 |    NULL |     20 |
+|  7654 | MARTIN | SALESMAN  | 7698 | 1981-09-28 | 1250.00 | 1400.00 |     30 |
+|  7698 | BLAKE  | MANAGER   | 7839 | 1981-05-01 | 2850.00 |    NULL |     30 |
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450.00 |    NULL |     10 |
+|  7788 | SCOTT  | ANALYST   | 7566 | 1982-12-09 | 3000.00 |    NULL |     20 |
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 | 5000.00 |    NULL |     10 |
+|  7844 | TURNER | SALESMAN  | 7698 | 1981-09-08 | 1500.00 |    0.00 |     30 |
+|  7876 | ADAMS  | CLERK     | 7788 | 1983-01-12 | 1100.00 |    NULL |     20 |
+|  7900 | JAMES  | CLERK     | 7698 | 1981-12-03 |  950.00 |    NULL |     30 |
+|  7902 | FORD   | ANALYST   | 7566 | 1981-12-03 | 3000.00 |    NULL |     20 |
+|  7934 | MILLER | CLERK     | 7782 | 1982-01-23 | 1300.00 |    NULL |     10 |
+|   100 | xxx    | SALESMAN  | NULL | NULL       | 2345.00 |    NULL |     10 |
+|   101 | yyy    | SALESMAN  | NULL | NULL       | 3345.00 |    NULL |     10 |
+|   102 | zzz    | SALESMAN  | NULL | NULL       | 3745.00 |    NULL |     20 |
++-------+--------+-----------+------+------------+---------+---------+--------+
+17 rows in set (0.00 sec)
+
+mysql> Select count(*)
+    -> From emp
+    -> Where month(hiredate)=12;
++----------+
+| count(*) |
++----------+
+|        4 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> Select deptno,count(*)
+    -> From emp
+    -> Where job=’salesman’
+    -> Group by deptno
+    -> Having count(*)>2
+    ->
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '?salesman?
+Group by deptno
+Having count(*)>2' at line 3
+mysql> Select deptno,count(*)
+    -> From emp
+    -> Where job='salesman'
+    -> Group by deptno
+    -> Having count(*)>2
+    -> ;
++--------+----------+
+| deptno | count(*) |
++--------+----------+
+|     30 |        4 |
++--------+----------+
+1 row in set (0.00 sec)
+
+mysql> Select deptno,count(*) count
+    -> From emp
+    -> Where job='salesman'
+    -> Group by deptno;
++--------+-------+
+| deptno | count |
++--------+-------+
+|     30 |     4 |
+|     10 |     2 |
+|     20 |     1 |
++--------+-------+
+3 rows in set (0.00 sec)
+
+mysql> create table student
+    -> (stud_id int,sname varchar(25),address varchar(20));
+ERROR 1050 (42S01): Table 'student' already exists
+mysql> create table studentIACSD
+    -> (stud_id int,sname varchar(25),address varchar(20));
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> desc studentIACSD
+    -> ;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| stud_id | int         | YES  |     | NULL    |       |
+| sname   | varchar(25) | YES  |     | NULL    |       |
+| address | varchar(20) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+mysql> drop table studentIACSD;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> desc studentIACSD;
+ERROR 1146 (42S02): Table 'test.studentiacsd' doesn't exist
+mysql> create table studentIACSD
+    -> (stud_id int primary key,sname varchar(25),address varchar(20));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> insert into studentIACSD
+    -> values(1,'Rashmi','pune');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into studentIACSD
+    -> values(2,'Rashmi','pune');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into studentIACSD
+    -> values(2,'Rashmi','pune');
+ERROR 1062 (23000): Duplicate entry '2' for key 'studentiacsd.PRIMARY'
+mysql> select * from student
+    -> ;
++-----+---------+----------+------------+------+--------+------+
+| sid | sname   | saddress | percentage | city | street | zip  |
++-----+---------+----------+------------+------+--------+------+
+|   1 | Shefali | pune     |     90.700 | NULL | NULL   | NULL |
+|  10 | Medha   | nashik   |     95.000 | NULL | NULL   | NULL |
+|  13 | Manasi  | Mumbai   |     92.300 | NULL | NULL   | NULL |
+|  21 | raj     | kdajfk   |     89.000 | NULL | NULL   | NULL |
+|  23 | deepa   | sinhgad  |     96.000 | NULL | NULL   | NULL |
+| 111 | Raj     | Pashan   |     89.000 | NULL | NULL   | NULL |
++-----+---------+----------+------------+------+--------+------+
+6 rows in set (0.00 sec)
+
+mysql> select * from studentIACSD;
++---------+--------+---------+
+| stud_id | sname  | address |
++---------+--------+---------+
+|       1 | Rashmi | pune    |
+|       2 | Rashmi | pune    |
++---------+--------+---------+
+2 rows in set (0.00 sec)
+
+mysql> Truncate table studentIACSD;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> desc student;
++------------+--------------+------+-----+---------+-------+
+| Field      | Type         | Null | Key | Default | Extra |
++------------+--------------+------+-----+---------+-------+
+| sid        | int          | NO   | PRI | NULL    |       |
+| sname      | varchar(25)  | YES  |     | NULL    |       |
+| saddress   | varchar(25)  | YES  |     | NULL    |       |
+| percentage | decimal(9,3) | YES  |     | NULL    |       |
+| city       | varchar(255) | YES  |     | NULL    |       |
+| street     | varchar(255) | YES  |     | NULL    |       |
+| zip        | varchar(255) | YES  |     | NULL    |       |
++------------+--------------+------+-----+---------+-------+
+7 rows in set (0.01 sec)
+
+mysql> desc studentIACSD;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| stud_id | int         | NO   | PRI | NULL    |       |
+| sname   | varchar(25) | YES  |     | NULL    |       |
+| address | varchar(20) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+mysql> drop table studentIACSD;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> create table studentIACSD(
+    -> sid int primary key,
+    -> sname varchar(25),
+    -> passport_no unique);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'unique)' at line 4
+mysql> create table studentIACSD(
+    -> sid int primary key,
+    -> sname varchar(25),
+    -> passport_no int unique);
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> insert into studentIACSD values(1,'Rashmi',111111)
+    -> ;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into studentIACSD values(2,'Rashmi',111111)
+    -> ;
+ERROR 1062 (23000): Duplicate entry '111111' for key 'studentiacsd.passport_no'
+mysql> insert into studentIACSD(sid,sname) values(3,'Rashmi')
+    -> ;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into studentIACSD(sid,sname) values(4,'Raj');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from studentIACSD;
++-----+--------+-------------+
+| sid | sname  | passport_no |
++-----+--------+-------------+
+|   1 | Rashmi |      111111 |
+|   3 | Rashmi |        NULL |
+|   4 | Raj    |        NULL |
++-----+--------+-------------+
+3 rows in set (0.00 sec)
+
+mysql> create table product1(
+    -> pid int primary key,
+    -> pname varchar(25) not null unique,
+    -> price decimal(9,2) default 100);
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> insert into product values(1,'Lays',40.00);
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into product1 values(1,'Lays',40.00);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into product1(pid,pname) values(2,'Marie');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from product1;
++-----+-------+--------+
+| pid | pname | price  |
++-----+-------+--------+
+|   1 | Lays  |  40.00 |
+|   2 | Marie | 100.00 |
++-----+-------+--------+
+2 rows in set (0.00 sec)
+
+mysql> insert into product1 values(3,'cocacola',-40.00);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> drop table product1;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> create table product1
+    -> (pid int primary key
+    -> pname varchar(20) not null,
+    -> price decimal(9,2) default 100,
+    -> qty int  check(qty>0));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'pname varchar(20) not null,
+price decimal(9,2) default 100,
+qty int  check(qty>0' at line 3
+mysql> create table product1
+    -> (pid int primary key,
+    -> pname varchar(20) not null,
+    -> price decimal(9,2) default 100,
+    -> qty int  check(qty>0));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> insert into product1 values(3,'cocacola',40.00,0);
+ERROR 3819 (HY000): Check constraint 'product1_chk_1' is violated.
+mysql> insert into product1 values(3,'cocacola',40.00,-50);
+ERROR 3819 (HY000): Check constraint 'product1_chk_1' is violated.
+mysql> drop table product1
+    -> ;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> create table category1(
+    -> cid int primary key,
+    -> cname varchar(20),
+    -> description varchar(20));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> create table product1()
+    -> ^C
+mysql> create table product1(
+    -> pid int primary key,
+    -> pname varchar(20),
+    -> price decimal(9,2),
+    -> catid int references category(cid));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> insert into product1 values(1,'lays',40.00,1);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from category;
++------+-------------+-------------------------+
+| cid  | cname       | cdesc                   |
++------+-------------+-------------------------+
+|    1 | chips       | very crispy             |
+|    2 | biscuits    | sweet and tasty         |
+|    3 | chocolate   | yummmmmy                |
+|    4 | cold drinks | thanda thanda cool cool |
++------+-------------+-------------------------+
+4 rows in set (0.01 sec)
+
+mysql> drop table product1;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> create table product1(
+    -> pid int primary key,
+    -> pname varchar(20),
+    -> price decimal(9,2),
+    -> catid int references category1(cid));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> insert into product1 values(1,'lays',40.00,1);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from category1;
+Empty set (0.01 sec)
+
+mysql> insert into product1 values(1,'lays',40.00,2);
+ERROR 1062 (23000): Duplicate entry '1' for key 'product1.PRIMARY'
+mysql> insert into product1 values(2,'Marie',40.00,2);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from product1;
++-----+-------+-------+-------+
+| pid | pname | price | catid |
++-----+-------+-------+-------+
+|   1 | lays  | 40.00 |     1 |
+|   2 | Marie | 40.00 |     2 |
++-----+-------+-------+-------+
+2 rows in set (0.00 sec)
+
+mysql> select * from category1;
+Empty set (0.00 sec)
+
+mysql> drop table product1;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> select * from category1;
+Empty set (0.00 sec)
+
+mysql> show tables;
++----------------------+
+| Tables_in_test       |
++----------------------+
+| address              |
+| addressmany          |
+| addressmany1         |
+| addresstab1          |
+| addresstab1_usertab1 |
+| bonus                |
+| booking              |
+| category             |
+| category1            |
+| customer             |
+| custtab1             |
+| custtab11            |
+| department           |
+| dept                 |
+| dummy                |
+| emp                  |
+| employee             |
+| emptab1              |
+| emptab11             |
+| event                |
+| hibernate_sequence   |
+| myemployee           |
+| myprod11             |
+| myprodtab            |
+| myprodtab22          |
+| myprodtab33          |
+| myprodtab44          |
+| myproduct            |
+| myproduct_table      |
+| myproducttable       |
+| mystud               |
+| myuser               |
+| myuser12             |
+| nonperishableprod    |
+| orderitem            |
+| perishableprod       |
+| persontab            |
+| pertab11             |
+| product              |
+| product_analysis     |
+| quetions             |
+| salgrade             |
+| student              |
+| studentiacsd         |
+| user                 |
+| useraddress          |
+| userentity           |
+| usermany             |
+| usermany1            |
+| usertab              |
+| usertab1             |
++----------------------+
+51 rows in set (0.01 sec)
+
+mysql> create table customer(
+    -> cid int primary key,
+    -> cname varchar(20),
+    -> address varchar(20));
+ERROR 1050 (42S01): Table 'customer' already exists
+mysql> create database iacsdsep22;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> use iacsdsept22;
+ERROR 1049 (42000): Unknown database 'iacsdsept22'
+mysql> use iacsdsep22;
+Database changed
+mysql> show tables;
+Empty set (0.00 sec)
+
+mysql> create table customer(
+    -> cid int primary key,
+    -> cname varchar(20),
+    -> address varchar(20));
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> create table vehicle(
+    -> vid int primary key,
+    -> vname varchar(20),
+    -> model varchar(20),
+    -> chassienumber int,
+    -> custid int,
+    -> constraint cid_fk1 foreign key(custid) references customer(cid));
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> insert into vehicle values(1,'activa','x-34',1234,12);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`iacsdsep22`.`vehicle`, CONSTRAINT `cid_fk1` FOREIGN KEY (`custid`) REFERENCES `customer` (`cid`))
+mysql> notepad
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'notepad' at line 1
+mysql> insert into customer values(12,'Rajesh','Pune');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into customer values(13,'Ashish','Pune');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from customer;
++-----+--------+---------+
+| cid | cname  | address |
++-----+--------+---------+
+|  12 | Rajesh | Pune    |
+|  13 | Ashish | Pune    |
++-----+--------+---------+
+2 rows in set (0.00 sec)
+
+mysql> insert into vehicle values(1,'activa','x-34',1234,12);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into vehicle values(2,'santro','x-34',1234,12);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into vehicle values(3,'santro','x-35',1234,13);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into vehicle values(4,'I10','x-36',1234,15);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`iacsdsep22`.`vehicle`, CONSTRAINT `cid_fk1` FOREIGN KEY (`custid`) REFERENCES `customer` (`cid`))
+mysql> select * from customer;
++-----+--------+---------+
+| cid | cname  | address |
++-----+--------+---------+
+|  12 | Rajesh | Pune    |
+|  13 | Ashish | Pune    |
++-----+--------+---------+
+2 rows in set (0.00 sec)
+
+mysql> select * from vehicle;
++-----+--------+-------+---------------+--------+
+| vid | vname  | model | chassienumber | custid |
++-----+--------+-------+---------------+--------+
+|   1 | activa | x-34  |          1234 |     12 |
+|   2 | santro | x-34  |          1234 |     12 |
+|   3 | santro | x-35  |          1234 |     13 |
++-----+--------+-------+---------------+--------+
+3 rows in set (0.00 sec)
+
+mysql> delete from customer where cid=13;
+ERROR 1451 (23000): Cannot delete or update a parent row: a foreign key constraint fails (`iacsdsep22`.`vehicle`, CONSTRAINT `cid_fk1` FOREIGN KEY (`custid`) REFERENCES `customer` (`cid`))
+mysql> delete from vehicle where custid=13;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> delete from customer where cid=13;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> drop table vehicle;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> create table vehicle(
+    -> vid int primary key,
+    ->     vname varchar(20),
+    ->   model varchar(20),
+    ->     chassienumber int,
+    ->     custid int,
+    ->    constraint cid_fk1 foreign key(custid) references customer(cid)
+    ->    on delete cascade
+    -> on update cascade
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> select * from customer;
++-----+--------+---------+
+| cid | cname  | address |
++-----+--------+---------+
+|  12 | Rajesh | Pune    |
++-----+--------+---------+
+1 row in set (0.01 sec)
+
+mysql> insert into customer values(13,'Ashish','Pune');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from customer;
++-----+--------+---------+
+| cid | cname  | address |
++-----+--------+---------+
+|  12 | Rajesh | Pune    |
+|  13 | Ashish | Pune    |
++-----+--------+---------+
+2 rows in set (0.00 sec)
+
+mysql> insert into vehicle values(1,'activa','x-34',1234,12);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into vehicle values(2,'santro','x-34',1234,12);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into vehicle values(3,'santro','x-35',1234,13);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from customer;
++-----+--------+---------+
+| cid | cname  | address |
++-----+--------+---------+
+|  12 | Rajesh | Pune    |
+|  13 | Ashish | Pune    |
++-----+--------+---------+
+2 rows in set (0.00 sec)
+
+mysql> select * from vehicle;
++-----+--------+-------+---------------+--------+
+| vid | vname  | model | chassienumber | custid |
++-----+--------+-------+---------------+--------+
+|   1 | activa | x-34  |          1234 |     12 |
+|   2 | santro | x-34  |          1234 |     12 |
+|   3 | santro | x-35  |          1234 |     13 |
++-----+--------+-------+---------------+--------+
+3 rows in set (0.00 sec)
+
+mysql> update customer
+    -> set cid=15
+    -> where cid=13;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from customer;
++-----+--------+---------+
+| cid | cname  | address |
++-----+--------+---------+
+|  12 | Rajesh | Pune    |
+|  15 | Ashish | Pune    |
++-----+--------+---------+
+2 rows in set (0.00 sec)
+
+mysql> select * from vehicle;
++-----+--------+-------+---------------+--------+
+| vid | vname  | model | chassienumber | custid |
++-----+--------+-------+---------------+--------+
+|   1 | activa | x-34  |          1234 |     12 |
+|   2 | santro | x-34  |          1234 |     12 |
+|   3 | santro | x-35  |          1234 |     15 |
++-----+--------+-------+---------------+--------+
+3 rows in set (0.00 sec)
+
+mysql> update customer
+    -> set cid=20
+    -> where cid=12;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from customer;
++-----+--------+---------+
+| cid | cname  | address |
++-----+--------+---------+
+|  15 | Ashish | Pune    |
+|  20 | Rajesh | Pune    |
++-----+--------+---------+
+2 rows in set (0.00 sec)
+
+mysql> select * from vehicle;
++-----+--------+-------+---------------+--------+
+| vid | vname  | model | chassienumber | custid |
++-----+--------+-------+---------------+--------+
+|   1 | activa | x-34  |          1234 |     20 |
+|   2 | santro | x-34  |          1234 |     20 |
+|   3 | santro | x-35  |          1234 |     15 |
++-----+--------+-------+---------------+--------+
+3 rows in set (0.00 sec)
+
+mysql> delete from customer
+    -> where cid=15;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from customer;
++-----+--------+---------+
+| cid | cname  | address |
++-----+--------+---------+
+|  20 | Rajesh | Pune    |
++-----+--------+---------+
+1 row in set (0.00 sec)
+
+mysql> select * from vehicle;
++-----+--------+-------+---------------+--------+
+| vid | vname  | model | chassienumber | custid |
++-----+--------+-------+---------------+--------+
+|   1 | activa | x-34  |          1234 |     20 |
+|   2 | santro | x-34  |          1234 |     20 |
++-----+--------+-------+---------------+--------+
+2 rows in set (0.00 sec)
+
+mysql> drop table vehicle;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> create table vehicle(
+    -> vid int primary key,
+    ->     vname varchar(20),
+    ->   model varchar(20),
+    ->     chassienumber int,
+    ->     custid int,
+    ->    constraint cid_fk1 foreign key(custid) references customer(cid)
+    ->    on delete set null
+    -> on update cascade
+    -> );
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> select * from customer;
++-----+--------+---------+
+| cid | cname  | address |
++-----+--------+---------+
+|  20 | Rajesh | Pune    |
++-----+--------+---------+
+1 row in set (0.00 sec)
+
+mysql> insert into customer values(13,'Ashish','Pune');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from customer;
++-----+--------+---------+
+| cid | cname  | address |
++-----+--------+---------+
+|  13 | Ashish | Pune    |
+|  20 | Rajesh | Pune    |
++-----+--------+---------+
+2 rows in set (0.00 sec)
+
+mysql> insert into vehicle values(1,'activa','x-35',2345,13);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into vehicle values(2,'santro','x-36',2346,13);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into vehicle values(3,'santro','x-37',2346,20);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from customer;
++-----+--------+---------+
+| cid | cname  | address |
++-----+--------+---------+
+|  13 | Ashish | Pune    |
+|  20 | Rajesh | Pune    |
++-----+--------+---------+
+2 rows in set (0.00 sec)
+
+mysql> select * from vehicle;
++-----+--------+-------+---------------+--------+
+| vid | vname  | model | chassienumber | custid |
++-----+--------+-------+---------------+--------+
+|   1 | activa | x-35  |          2345 |     13 |
+|   2 | santro | x-36  |          2346 |     13 |
+|   3 | santro | x-37  |          2346 |     20 |
++-----+--------+-------+---------------+--------+
+3 rows in set (0.00 sec)
+
+mysql> delete from customer
+    -> where cid=13;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from customer;
++-----+--------+---------+
+| cid | cname  | address |
++-----+--------+---------+
+|  20 | Rajesh | Pune    |
++-----+--------+---------+
+1 row in set (0.00 sec)
+
+mysql> select * from vehicle;
++-----+--------+-------+---------------+--------+
+| vid | vname  | model | chassienumber | custid |
++-----+--------+-------+---------------+--------+
+|   1 | activa | x-35  |          2345 |   NULL |
+|   2 | santro | x-36  |          2346 |   NULL |
+|   3 | santro | x-37  |          2346 |     20 |
++-----+--------+-------+---------------+--------+
+3 rows in set (0.00 sec)
+
+mysql> create table course(
+    -> cid int primary key,
+    -> cname varchar(25),
+    -> capacity int,
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 5
+mysql> create table course(
+    -> cid int primary key,
+    -> cname varchar(25),
+    -> capacity int);
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> create table room(
+    -> rid int primary key,
+    -> rname varchar(25),
+    -> location varchar(20));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> Create table course_room(
+    -> cid int,
+    -> rid int,
+    -> timing datetime,
+    -> constraint cr_pk primary key(cid,rid,timing))
+    -> ;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> drop table course_room;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> Create table course_room(
+    -> cid int,
+    -> rid int,
+    -> timing datetime,
+    -> constraint cr_pk primary key(cid,rid,timing),
+    -> constraint cid_fk foreign key(cid) references course(cid)
+    -> on delete set null
+    -> on update cascade,
+    -> constraint rid_fk foreign key(rid) references room(rid)
+    -> on delete set null
+    -> on update cascade);
+ERROR 1830 (HY000): Column 'cid' cannot be NOT NULL: needed in a foreign key constraint 'cid_fk' SET NULL
+mysql> Create table course_room(
+    -> cid int,
+    -> rid int,
+    -> timing datetime,
+    -> constraint cr_pk primary key(cid,rid,timing),
+    -> constraint cid_fk foreign key(cid) references course(cid)
+    -> on delete cascade
+    -> on update cascade,
+    -> constraint rid_fk foreign key(rid) references room(rid)
+    -> on delete cascade
+    -> on update cascade);
+Query OK, 0 rows affected (0.03 sec)
+
+mysql>

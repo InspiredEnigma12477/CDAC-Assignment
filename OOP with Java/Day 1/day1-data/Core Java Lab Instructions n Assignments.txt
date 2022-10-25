@@ -1,0 +1,29 @@
+Day 1
+1. Refer to today's sequence (day1-data\day1-help\sequence.txt) , to revise
+1.1 Solve ready code samples , as discussed in the theory session
+(Test Param Passing )
+1.2 import day1.1 in your new workspace to revise inheritance n run time polymorphism.
+
+2. Hands on 
+Create a  class Point2D  , under package "com.cdac.geometry" for representing a point in x-y co-ordinate system.
+
+3.1 Create a parameterized constructor to accept x & y co-ords.
+
+3.2 Add public String show()) --to return point's x & y co-ords
+
+3.3 Add isEqual method to Point2D class : boolean returning method : must return true if both points are having same x,y co-ords or false otherwise.
+
+3.4 Add a method , calculateDistance , to calc distance between 2 points
+Hint : use distance formula.
+
+3.5  Create a driver  class(for UI)  , in the "tester" package "TestPoints" , with main(..)
+
+Ask user , how many points to plot? :
+Create suitable array.
+
+3.6  Accept x,y co-ordinates for all the points n store it suitably.
+3.7  Display x,y co-ordinates of all the points plotted so far ,using for-each loop.
+3.8  Accept 2 indices from user .
+Find out if the points at these indices are same or different (Hint : isEqual)
+Print the message accordingly. 
+If points are not same , display distance between these 2 points.

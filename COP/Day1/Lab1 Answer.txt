@@ -1,0 +1,811 @@
+====================================================================
+1. write program to test Hello World.
+--------------------------------------------------------------------
+
+public class Hello {
+
+	public static void main(String[] args) {
+	System.out.println("Hello World");
+
+	}
+
+}
+
+    ************* OUTPUT ********************
+"C:\Program Files\Microsoft\jdk-11.0.12.7-hotspot\bin\java.exe" "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA 2022.2.2\lib\idea_rt.jar=52219:C:\Program Files\JetBrains\IntelliJ IDEA 2022.2.2\bin" -Dfile.encoding=UTF-8 -classpath D:\CDAC\out\production\CDAC Hello
+Hello World
+
+Process finished with exit code 0
+
+====================================================================
+2. Write a program to adddition of two numbers .
+--------------------------------------------------------------------
+import java.util.Scanner;
+public class Add {
+
+	public static void main(String[] args) {
+		
+		Scanner sc=new Scanner(System.in);
+		System.out.println("enter first number :");
+		int a=sc.nextInt();
+		
+		System.out.println("enter second number :");
+		int b=sc.nextInt();
+		int c=a+b;
+		System.out.println("Addition of two number is "+c);
+
+	}
+
+}
+
+    ************* OUTPUT ********************
+"C:\Program Files\Microsoft\jdk-11.0.12.7-hotspot\bin\java.exe" "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA 2022.2.2\lib\idea_rt.jar=52242:C:\Program Files\JetBrains\IntelliJ IDEA 2022.2.2\bin" -Dfile.encoding=UTF-8 -classpath D:\CDAC\out\production\CDAC Add
+enter first number :
+52
+enter second number :
+63
+Addition of two number is 115
+
+Process finished with exit code 0
+
+====================================================================
+3. Write a program to swap two numbers.
+--------------------------------------------------------------------
+import java.util.Scanner;
+public class Swap {
+
+	public static void main(String[] args) {
+		Scanner sc=new Scanner(System.in);
+		System.out.println("enter First number");
+		int a=sc.nextInt();
+		System.out.println("enter Second number");
+		int b=sc.nextInt();
+		System.out.println("Before Swap: "+a+" "+b);
+		int temp=a;
+		a=b;
+		b=temp;
+		System.out.println("After Swap: "+a+" "+b);
+	}
+
+}
+
+    ************* OUTPUT ********************
+"C:\Program Files\Microsoft\jdk-11.0.12.7-hotspot\bin\java.exe" "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA 2022.2.2\lib\idea_rt.jar=52212:C:\Program Files\JetBrains\IntelliJ IDEA 2022.2.2\bin" -Dfile.encoding=UTF-8 -classpath D:\CDAC\out\production\CDAC Swap
+enter First number
+85
+enter Second number
+36
+Before Swap: 85 36
+After Swap: 36 85
+
+Process finished with exit code 0
+
+====================================================================
+4. Write a program to accept an integer and check if it is even or odd.
+--------------------------------------------------------------------
+import java.util.Scanner;
+public class Even_Odd {
+
+	public static void main(String[] args) {
+	Scanner sc=new Scanner(System.in);
+	System.out.println("enter the number you want to check :");
+	int num=sc.nextInt();
+	if(num%2==0)
+		System.out.println("Number is Even");
+	else
+		System.out.println("Number is Odd");
+
+	}
+
+}
+
+    ************* OUTPUT ********************
+"C:\Program Files\Microsoft\jdk-11.0.12.7-hotspot\bin\java.exe" "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA 2022.2.2\lib\idea_rt.jar=52251:C:\Program Files\JetBrains\IntelliJ IDEA 2022.2.2\bin" -Dfile.encoding=UTF-8 -classpath D:\CDAC\out\production\CDAC Even_Odd
+enter the number you want to check :
+85
+Number is Odd
+
+Process finished with exit code 0
+
+====================================================================
+5. Write a program to accept a number and check if it is divisible by 5 and 7.
+--------------------------------------------------------------------
+import java.util.Scanner;
+public class Div_By_5_7 {
+
+	public static void main(String[] args) {
+		Scanner sc=new Scanner(System.in);
+        System.out.println("Enter the number" );
+		int num=sc.nextInt();
+		if(num%5==0 && num%7==0)
+			System.out.println("Number is Divisible by 5 and also 7");
+		else if(num%5==0)
+			System.out.println("Nmuber is  only Divisible by 5 ");
+		else if(num%7==0)
+			System.out.println("Nmuber is  only Divisible by 7 ");
+		else
+			System.out.println("Nmuber is not Divisible by 5 or 7");
+			
+
+	}
+
+}
+
+    ************* OUTPUT ********************
+"C:\Program Files\Microsoft\jdk-11.0.12.7-hotspot\bin\java.exe" "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA 2022.2.2\lib\idea_rt.jar=52259:C:\Program Files\JetBrains\IntelliJ IDEA 2022.2.2\bin" -Dfile.encoding=UTF-8 -classpath D:\CDAC\out\production\CDAC Div_By_5_7
+Enter the number
+140
+Number is Divisible by 5 and also 7
+
+Process finished with exit code 0
+
+====================================================================
+6. Write a program, which accepts annual basic salary of an employee and calculates and displays the 
+    Income tax as per the following rules. 
+    Basic: < 1, 50,000 Tax = 0
+        1, 50,000 to 3,00,000 Tax = 20% 
+        > 3,00,000 Tax = 30% 
+--------------------------------------------------------------------
+import java.util.Scanner;
+public class Basic_Salary {
+
+	public static void main(String[] args) {
+		Scanner sc =new Scanner(System.in);
+		System.out.println("enter the basic salary of employee");
+		int basic=sc.nextInt();
+		double tax;
+		if(basic<50000) {
+			System.out.println("Free From income Tax");
+		}
+		else if(basic>=50000 && basic<300000) {
+			tax=0.2*basic;
+			System.out.println("Tax on salary is "+tax);
+			tax=0;
+		}
+		else {
+			tax=0.3*basic;
+			System.out.println("Tax on salary is "+tax);
+		}
+
+	}
+
+}
+
+    ************* OUTPUT ********************
+"C:\Program Files\Microsoft\jdk-11.0.12.7-hotspot\bin\java.exe" "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA 2022.2.2\lib\idea_rt.jar=52268:C:\Program Files\JetBrains\IntelliJ IDEA 2022.2.2\bin" -Dfile.encoding=UTF-8 -classpath D:\CDAC\out\production\CDAC Basic_Salary
+enter the basic salary of employee
+850000
+Tax on salary is 255000.0
+
+Process finished with exit code 0
+
+====================================================================
+7. Accept a lowercase character from the user and check whether the character is a vowel or consonant. 
+    (Hint: a, e, i, o, u are vowels)
+--------------------------------------------------------------------
+import java.util.Scanner;
+public class is_lowercase {
+
+	public static void main(String[] args) {
+		
+		Scanner sc =new Scanner(System.in);
+		System.out.println("enter any alphabet");
+		char ch=sc.next().charAt(0);
+		if(ch =='a' ||ch =='e'||ch =='i'||ch =='o'||ch =='u')
+			System.out.println("given alphabet is vowel");
+		else
+			System.out.println("given alphabet is cosonant");
+	}
+
+}
+
+
+    ************* OUTPUT ********************
+"C:\Program Files\Microsoft\jdk-11.0.12.7-hotspot\bin\java.exe" "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA 2022.2.2\lib\idea_rt.jar=52289:C:\Program Files\JetBrains\IntelliJ IDEA 2022.2.2\bin" -Dfile.encoding=UTF-8 -classpath D:\CDAC\out\production\CDAC is_lowercase
+enter any alphabet
+e
+given alphabet is vowel
+
+Process finished with exit code 0
+
+====================================================================
+8. Write a C program to input angles of a triangle and check whether triangle is valid or not.
+--------------------------------------------------------------------
+import java.util.Scanner;
+public class Is_triangle {
+
+	public static void main(String[] args) {
+	Scanner sc=new Scanner(System.in);
+	System.out.println("enter first angle of triangle :");
+	int a=sc.nextInt();
+	System.out.println("enter second angle of triangle :");
+	int b=sc.nextInt();
+	System.out.println("enter third angle of triangle :");
+	int c=sc.nextInt();
+	if(180==a+b+c)
+		System.out.println("yes.this is triangle");
+	else
+		System.out.println("no.Its not a triangle");
+
+	}
+
+}
+
+    ************* OUTPUT ********************
+"C:\Program Files\Microsoft\jdk-11.0.12.7-hotspot\bin\java.exe" "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA 2022.2.2\lib\idea_rt.jar=52301:C:\Program Files\JetBrains\IntelliJ IDEA 2022.2.2\bin" -Dfile.encoding=UTF-8 -classpath D:\CDAC\out\production\CDAC Is_triangle
+enter first angle of triangle :
+56
+enter second angle of triangle :
+84
+enter third angle of triangle :
+40
+yes.this is triangle
+
+Process finished with exit code 0
+
+====================================================================
+9. Write a program to find factorial of a given number. ex:no5  fact=5*4*3*2*1=120
+--------------------------------------------------------------------
+import java.util.Scanner;
+public class Fact {
+
+	public static void main(String[] args) {
+		Scanner sc= new Scanner(System.in);
+		System.out.println("enter the number which you want to find factorial");
+		int num=sc.nextInt();
+		int fact=1;
+		for(int i=1;i<=num;i++)
+		{
+			fact=fact*i;
+		}
+		System.out.println("Fact is : "+fact);
+	}
+
+}
+
+    ************* OUTPUT ********************
+"C:\Program Files\Microsoft\jdk-11.0.12.7-hotspot\bin\java.exe" "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA 2022.2.2\lib\idea_rt.jar=52306:C:\Program Files\JetBrains\IntelliJ IDEA 2022.2.2\bin" -Dfile.encoding=UTF-8 -classpath D:\CDAC\out\production\CDAC Fact
+enter the number which you want to find factorial
+6
+Fact is : 720
+
+Process finished with exit code 0
+
+====================================================================
+10. Write a program to find m to the power n. m=3 and n=4 so 3*3*3*3
+--------------------------------------------------------------------
+import java.util.Scanner;
+public class M_to_the_power_n {
+
+	public static void main(String[] args) {
+		Scanner sc=new Scanner(System.in);
+		System.out.println("enter the base value");
+		int m=sc.nextInt();
+		System.out.println("enter the exponent value");
+		int n=sc.nextInt();
+		int total=1;
+		while(n != 0)
+		{
+			total=total*m;
+			n--;
+		}
+		System.out.println("total is "+total);
+
+	}
+
+}
+
+    ************* OUTPUT ********************
+"C:\Program Files\Microsoft\jdk-11.0.12.7-hotspot\bin\java.exe" "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA 2022.2.2\lib\idea_rt.jar=52312:C:\Program Files\JetBrains\IntelliJ IDEA 2022.2.2\bin" -Dfile.encoding=UTF-8 -classpath D:\CDAC\out\production\CDAC M_to_the_power_n
+enter the base value
+3
+enter the exponent value
+4
+total is 81
+
+Process finished with exit code 0
+
+====================================================================
+11. Check if number is a prime number or not.: 
+--------------------------------------------------------------------
+import java.util.Scanner;
+public class Is_Prime {
+
+	public static void main(String[] args) {
+		Scanner sc=new Scanner(System.in);
+		int flag=0;
+		System.out.println("enter the number");
+		int num=sc.nextInt();
+		for(int i=2;i<num/2;i++)
+		{
+			if(num%i==0) {
+				flag=1;
+				break;
+			}
+		}
+		if(flag==0)
+			System.out.println("given number is prime");
+		else
+			System.out.println("given number is not prime");
+
+	}
+
+}
+
+    ************* OUTPUT ********************
+"C:\Program Files\Microsoft\jdk-11.0.12.7-hotspot\bin\java.exe" "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA 2022.2.2\lib\idea_rt.jar=52325:C:\Program Files\JetBrains\IntelliJ IDEA 2022.2.2\bin" -Dfile.encoding=UTF-8 -classpath D:\CDAC\out\production\CDAC Is_Prime
+enter the number
+93
+given number is not prime
+
+Process finished with exit code 0
+
+====================================================================
+12. Sum of series :	1+2+3+….+n
+--------------------------------------------------------------------
+import java.util.Scanner;
+public class Sum_of_N_number {
+	public static void main(String[] args) {
+		Scanner sc=new Scanner(System.in);
+		System.out.println("enter the max limit from 1 to n");
+		int num=sc.nextInt();
+		int sum=0;
+		for(int i=1;i<=num;i++)
+		{
+			 sum= sum+i;
+		}
+		System.out.println("Addition of series is: "+sum);
+	}
+}
+
+    ************* OUTPUT ********************
+"C:\Program Files\Microsoft\jdk-11.0.12.7-hotspot\bin\java.exe" "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA 2022.2.2\lib\idea_rt.jar=52145:C:\Program Files\JetBrains\IntelliJ IDEA 2022.2.2\bin" -Dfile.encoding=UTF-8 -classpath D:\CDAC\out\production\CDAC Sum_of_N_number
+enter the max limit from 1 to n
+25
+Addition of series is: 325
+
+Process finished with exit code 0
+
+====================================================================
+13. Check whether the number is palindrome or not?
+--------------------------------------------------------------------
+import java.util.Scanner;
+public class Is_palidrome {
+	public static void main(String[] args)
+	{
+		Scanner sc=new Scanner(System.in);
+		System.out.println("Check the number: ");
+		int num=sc.nextInt();
+		int rem,sum=0;
+		int temp=num;
+		while(num>0)
+		{
+			rem=num%10;
+			num=num/10;
+			sum=(sum*10)+rem;
+		}
+		if(temp==sum)
+			System.out.println("number is palindrome");
+		else
+			System.out.println("number is"
+					+ " palindrome");
+	}
+}
+
+    ************* OUTPUT ********************
+"C:\Program Files\Microsoft\jdk-11.0.12.7-hotspot\bin\java.exe" "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA 2022.2.2\lib\idea_rt.jar=52333:C:\Program Files\JetBrains\IntelliJ IDEA 2022.2.2\bin" -Dfile.encoding=UTF-8 -classpath D:\CDAC\out\production\CDAC Is_palidrome
+Check the number: 
+152686251
+number is palindrome
+
+Process finished with exit code 0
+
+====================================================================
+14. Write a  program to find sum of all even and odd numbers between 1 to n. 
+--------------------------------------------------------------------
+import java.util.Scanner;
+public class Sum_of_even_odd_numbers {
+
+	public static void main(String[] args) {
+		Scanner sc=new Scanner(System.in);
+		System.out.println("enter the max limit");
+		int num=sc.nextInt();
+		int sum_even=0,sum_odd=0;
+		for(int i=1;i<=num;i++)
+		{
+			if(i%2==0)
+				sum_even = sum_even + i; 
+			else
+				sum_odd = sum_odd + i;
+		}
+		System.out.println("sum of even number is: "+sum_even);
+		System.out.println("sum of odd number is: "+sum_odd);
+	}
+
+}
+
+
+    ************* OUTPUT ********************
+"C:\Program Files\Microsoft\jdk-11.0.12.7-hotspot\bin\java.exe" "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA 2022.2.2\lib\idea_rt.jar=52342:C:\Program Files\JetBrains\IntelliJ IDEA 2022.2.2\bin" -Dfile.encoding=UTF-8 -classpath D:\CDAC\out\production\CDAC Sum_of_even_odd_numbers
+enter the max limit
+30
+sum of even number is: 240
+sum of odd number is: 225
+
+Process finished with exit code 0
+
+====================================================================
+15. Write a  program to enter a number and print its reverse.
+--------------------------------------------------------------------
+import java.util.Scanner;
+public class Reverse {
+
+	public static void main(String[] args) {
+		Scanner sc=new Scanner(System.in);
+		System.out.println("enter the number");
+		int num=sc.nextInt();
+		int rem,sum=0;
+		while(num>0)
+		{
+			rem=num%10;
+			num=num/10;
+			sum=(sum*10)+rem;
+		}
+		System.out.println("reverse number is : "+sum);
+
+	}
+
+}
+
+    ************* OUTPUT ********************
+"C:\Program Files\Microsoft\jdk-11.0.12.7-hotspot\bin\java.exe" "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA 2022.2.2\lib\idea_rt.jar=52351:C:\Program Files\JetBrains\IntelliJ IDEA 2022.2.2\bin" -Dfile.encoding=UTF-8 -classpath D:\CDAC\out\production\CDAC Reverse
+enter the number
+9525421
+reverse number is : 1245259
+
+Process finished with exit code 0
+
+====================================================================
+16. Write a  program to print all Prime numbers between 1 to n. 
+--------------------------------------------------------------------
+import java.util.Scanner;
+public class Print_prime {
+
+	public static void main(String[] args) {
+		Scanner sc=new Scanner(System.in);
+		System.out.println("enter the max limit: ");
+		int num=sc.nextInt();
+		int j, count = 0;
+		for(int i=2;i<=num;i++)
+		{
+			for( j=2;j<i;j++)
+			{
+				if(i%j == 0) {
+					break;
+				}
+					
+			}
+			if(i==j) {
+				System.out.print(" "+i);
+				count++;
+				if(count % 5 == 0)
+				{
+					System.out.println("");
+				}
+			}
+
+		}
+
+	}
+
+}
+
+
+    ************* OUTPUT ********************
+"C:\Program Files\Microsoft\jdk-11.0.12.7-hotspot\bin\java.exe" "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA 2022.2.2\lib\idea_rt.jar=52372:C:\Program Files\JetBrains\IntelliJ IDEA 2022.2.2\bin" -Dfile.encoding=UTF-8 -classpath D:\CDAC\out\production\CDAC Print_prime
+enter the max limit: 
+250
+ 2 3 5 7 11
+ 13 17 19 23 29
+ 31 37 41 43 47
+ 53 59 61 67 71
+ 73 79 83 89 97
+ 101 103 107 109 113
+ 127 131 137 139 149
+ 151 157 163 167 173
+ 179 181 191 193 197
+ 199 211 223 227 229
+ 233 239 241
+Process finished with exit code 0
+
+====================================================================
+17. Write a program to check entered number is Armstrong number or not.
+--------------------------------------------------------------------
+import java.util.Scanner;
+import java.lang.Math;
+public class Is_Armstrong {
+
+	public static void main(String[] args) {
+		Scanner sc=new Scanner(System.in);
+		System.out.println("enter the number: ");
+		int	num=sc.nextInt();
+		int rem,count=0;
+		double sum=0;
+		int temp=num;
+		int res=num;
+
+		while(num>0)
+		{
+			rem=num%10;
+			num=num/10;
+			sum= (sum +Math.pow(rem, 3));
+		}
+		if(sum==res)
+		{
+			System.out.println("number is armstrong");
+		}
+		else
+			System.out.println("number is not armstrong");
+
+	}
+
+}
+
+
+    ************* OUTPUT ********************
+"C:\Program Files\Microsoft\jdk-11.0.12.7-hotspot\bin\java.exe" "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA 2022.2.2\lib\idea_rt.jar=52553:C:\Program Files\JetBrains\IntelliJ IDEA 2022.2.2\bin" -Dfile.encoding=UTF-8 -classpath D:\CDAC\out\production\CDAC Is_Armstrong
+enter the number: 
+407
+number is armstrong
+
+Process finished with exit code 0
+
+====================================================================
+18. Write a program to find greatest of three numbers using nested if-else.
+--------------------------------------------------------------------
+import java.util.Scanner;
+public class Gretest_number_from_3 {
+
+	public static void main(String[] args) {
+		Scanner sc=new Scanner(System.in);
+		System.out.println("enter first number: ");
+		int a=sc.nextInt();
+		System.out.println("enter second number: ");
+		int b=sc.nextInt();
+		System.out.println("enter third number: ");
+		int c=sc.nextInt();
+		if(a>b)
+		{
+			if(a>c)
+				System.out.println("a is greatest among them "+a);
+			else
+				System.out.println("c is greatest among them "+c);
+		}
+		else
+		{
+			if(b>c)
+				System.out.println("b is greatest among them "+b);
+			else
+				System.out.println("c is greatest among them "+c);
+		}
+	}
+}
+
+
+    ************* OUTPUT ********************
+"C:\Program Files\Microsoft\jdk-11.0.12.7-hotspot\bin\java.exe" "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA 2022.2.2\lib\idea_rt.jar=52568:C:\Program Files\JetBrains\IntelliJ IDEA 2022.2.2\bin" -Dfile.encoding=UTF-8 -classpath D:\CDAC\out\production\CDAC Gretest_number_from_3
+enter first number: 
+56
+enter second number: 
+89
+enter third number: 
+24
+b is greatest among them 89
+
+Process finished with exit code 0
+
+====================================================================
+19. Create menu driven program for Pizza Shop.And display total amount,
+--------------------------------------------------------------------
+import java.util.Scanner;
+public class Pizza {
+
+	public static void main(String[] args) {
+		Scanner sc=new Scanner(System.in);
+		int ch,amount=0,quant;
+		System.out.println("1.Chiken Golden Delight(500)\n2.Chiken Dominator(550)\n3.Pepper Barbecue&Onion(640)\n4.Chiken Sausage(400)\n5.Exit");
+		do
+		{
+		System.out.println("enter the choice");
+		ch=sc.nextInt();
+		switch(ch)
+		{
+		case 1:
+			System.out.println("enter the quantity:");
+			quant=sc.nextInt();
+			amount=quant*500+amount;
+			break;
+		case 2:
+			System.out.println("enter the quantity:");
+			quant=sc.nextInt();
+			amount=quant*550+amount;
+			break;
+		case 3:
+			System.out.println("enter the quantity:");
+			quant=sc.nextInt();
+			amount=quant*640+amount;
+			break;
+		case 4:
+			System.out.println("enter the quantity:");
+			quant=sc.nextInt();
+			amount=quant*400+amount;
+			break;
+		default:
+			System.out.println("plz pay "+amount+" rs only");
+			System.out.println("Thank you visit again");
+			
+		}
+		}while(ch<5);
+
+	}
+
+}
+
+    ************* OUTPUT ********************
+"C:\Program Files\Microsoft\jdk-11.0.12.7-hotspot\bin\java.exe" "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA 2022.2.2\lib\idea_rt.jar=52600:C:\Program Files\JetBrains\IntelliJ IDEA 2022.2.2\bin" -Dfile.encoding=UTF-8 -classpath D:\CDAC\out\production\CDAC Pizza
+1.Chiken Golden Delight(500)
+2.Chiken Dominator(550)
+3.Pepper Barbecue&Onion(640)
+4.Chiken Sausage(400)
+5.Exit
+enter the choice
+3
+enter the quantity:
+3
+enter the choice
+1
+enter the quantity:
+2
+enter the choice
+5
+plz pay 2920 rs only
+Thank you visit again
+
+Process finished with exit code 0
+
+====================================================================
+20. Accept a single digit from the user and display it in words. For example, if digit entered is 9, display Nine.
+--------------------------------------------------------------------
+import java.util.Scanner;
+public class Use_switch_case {
+
+	public static void main(String[] args) {
+		Scanner sc=new Scanner(System.in);
+		int ch;
+		do {
+		System.out.println("enter the choice");
+		ch=sc.nextInt();
+		switch(ch)
+		{
+		case 0:
+			System.out.println("ZERO");
+			break;
+		case 1:
+			System.out.println("ONE");
+			break;
+		case 2:
+			System.out.println("TWO");
+			break;
+		case 3:
+			System.out.println("THREE");
+			break;
+		case 4:
+			System.out.println("FOUR");
+			break;
+		case 5:
+			System.out.println("FIVE");
+			break;
+		case 6:
+			System.out.println("SIX");
+			break;
+		case 7:
+			System.out.println("SEVEN");
+			break;
+		case 8:
+			System.out.println("EIGHT");
+			break;
+		case 9:
+			System.out.println("NINE");
+			break;
+		default:
+			System.out.println("Thank You");
+		}
+		}while(ch < 10);
+
+	}
+
+}
+
+    ************* OUTPUT ********************
+"C:\Program Files\Microsoft\jdk-11.0.12.7-hotspot\bin\java.exe" "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA 2022.2.2\lib\idea_rt.jar=52614:C:\Program Files\JetBrains\IntelliJ IDEA 2022.2.2\bin" -Dfile.encoding=UTF-8 -classpath D:\CDAC\out\production\CDAC Use_switch_case
+enter the choice
+0
+ZERO
+enter the choice
+
+====================================================================
+21. Write a program, which accepts two integers and an operator as a character (+ - * / ), performs the 
+corresponding operation and displays the result.
+--------------------------------------------------------------------
+import java.util.Scanner;
+public class Operations_using_Switch {
+
+	public static void main(String[] args) {
+		int ch;
+		int a=0,b=0,c;
+		Scanner sc=new Scanner(System.in);
+		System.out.println("1.Add\n2.Sub\n3.Mul\n4.Div\n5.Exit");
+		do
+		{
+		System.out.println("enter the choice");
+		ch=sc.nextInt();
+		
+		switch(ch)
+		{
+		case 1:
+			System.out.println("enter first variable");
+			a=sc.nextInt();
+			System.out.println("enter second variable");
+			b=sc.nextInt();
+			c=a+b;
+			System.out.println("addition is "+c);
+			break;
+		case 2:
+			System.out.println("enter first variable");
+			a=sc.nextInt();
+			System.out.println("enter second variable");
+			b=sc.nextInt();
+			c=a-b;
+			System.out.println("substraction is "+c);
+			break;
+		case 3:
+			System.out.println("enter first variable");
+			a=sc.nextInt();
+			System.out.println("enter second variable");
+			b=sc.nextInt();
+			c=a*b;
+			System.out.println("multiplication is "+c);
+			break;
+		case 4:
+			System.out.println("enter first variable");
+			a=sc.nextInt();
+			System.out.println("enter second variable");
+			b=sc.nextInt();
+			c=a/b;
+			System.out.println("division is "+c);
+			break;
+		
+		default:
+			System.out.println("Thank You");
+		}
+		
+		}while(ch < 5);
+	}
+
+}
+
+    ************* OUTPUT ********************
+"C:\Program Files\Microsoft\jdk-11.0.12.7-hotspot\bin\java.exe" "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA 2022.2.2\lib\idea_rt.jar=52634:C:\Program Files\JetBrains\IntelliJ IDEA 2022.2.2\bin" -Dfile.encoding=UTF-8 -classpath D:\CDAC\out\production\CDAC Operations_using_Switch
+1.Add
+2.Sub
+3.Mul
+4.Div
+5.Exit
+enter the choice
+3
+enter first variable
+86
+enter second variable
+35
+multiplication is 3010
+enter the choice

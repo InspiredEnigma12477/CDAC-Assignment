@@ -1,0 +1,41 @@
+1. Enter java enum
+(refer to it's readme)
+
+
+2. Objective : Showroom Management system , which will keep track of vehicles added in the showroom.
+
+1. Prompt showroom capacity
+Create suitable array.
+Options
+1. Add Vehicle to the showroom.
+Accept data --validate all i/ps --in case of success -- add vehicle , to the showroom.
+o.w : throw exc (which one ??? built in OR  custom exc)
+
+2. Display all vehicle details
+
+10. Exit
+
+Add  validation rules
+4.1 No dup vehicles should be added in the showroom (Solve it last !)
+4.2 manufactureDate : must be in current financial year(1st Apr 2022 ---31st Mar 2023)
+4.3 Vehicle color must be available
+4.4 base price : min 10000 , max 100000
+
+
+Add more options in the Showroom
+3. Display all vehicles having specified color
+i/p : color 
+o/p : vehicle details
+
+4. Apply discount to a particular vehicle
+i/p : chasis no, discount
+o/p : error mesg (via custom exc) : invalid chasis no OR success mesg(discount applied)
+
+
+
+
+
+
+
+
+

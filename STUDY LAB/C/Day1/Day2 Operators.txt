@@ -1,0 +1,113 @@
+Binary Operators:-
+----------------------------------------------------------------------------
+----------------------------------------------------------------------------
+Arithmetic Operators: These are used to perform arithmetic
+/mathematical operations on operands. The binary operators falling in 
+this category are: 
+
+--Addition: The ‘+’ operator adds two operands. For example, x+y.
+
+--Subtraction: The ‘-‘ operator subtracts two operands. For example, x-y.
+
+--Multiplication: The ‘*’ operator multiplies two operands. For example, x*y.
+
+--Division: The ‘/’ operator divides the first operand by the second. 
+
+For example, x/y.
+--Modulus: The ‘%’ operator returns the remainder when first operand is divided by the second. 
+For example, x%y.
+---------------------------------------------------------------------------
+Relational Operators 
+Relational operators are used for comparison of two values to understand the type of 
+relationship a pair of number shares. For example, less than, greater than, equal to etc. 
+Let’s see them one by one 
+ 
+--Equal to operator: Represented as ‘==’, the equal to operator checks whether the two given operands 
+are equal or not. If so, it returns true(1). Otherwise it returns false(0).   True means non zero value
+                                                                              False means Zero
+For example, 5==5 will return true
+
+--Not equal to operator: Represented as ‘!=’, the not equal to operator checks whether the two 
+given operands are equal or not. If not, it returns true. Otherwise it returns false. 
+It is the exact boolean complement of the ‘==’ operator. For example, 5!=5 will return false.
+
+--Greater than operator: Represented as ‘>’, the greater than operator checks whether the first 
+operand is greater than the second operand or not. If so, it returns true. Otherwise it returns false. 
+For example, 6>5 will return true.
+
+--Less than operator: Represented as ‘<‘, the less than operator checks whether the first 
+operand is lesser than the second operand. If so, it returns true. Otherwise it returns false. 
+For example, 6<5 will return false.
+
+--Greater than or equal to operator: Represented as ‘>=’, the greater than or equal to 
+operator checks whether the first operand is greater than or equal to the second operand. 
+If so, it returns true else it returns false. For example, 5>=5 will return true.
+
+
+--Less than or equal to operator: Represented as ‘<=’, the less than or equal tooperator checks whether 
+the first operand is less than or equal to the second operand. If so, it returns true else false. 
+For example, 5<=5 will also return true.
+--------------------------------------------------------------------------------------------------------
+Logical Operators: 
+They are used to combine two or more conditions/constraints or to complement the 
+evaluation of the original condition under consideration. They are described below: 
+ 
+--Logical AND operator: The ‘&&’ operator returns true when both the conditions under consideration are 
+satisfied. Otherwise it returns false. For example, a && b returns true when both a and b are true 
+(i.e. non-zero).
+
+--Logical OR operator: The ‘||’ operator returns true even if one (or both) 
+of the conditions under consideration is satisfied. Otherwise it returns false. 
+For example, a || b returns true if one of a or b or both are true (i.e. non-zero). Of course, 
+it returns true when both a and b are true.
+
+--Logical NOT operator: The ‘!’ operator returns true the condition in 
+consideration is not satisfied. Otherwise it returns false. For example, 
+!a returns true if a is false, i.e. when a=0.
+---------------------------------------------------------------------------------------------------------
+Bitwise Operators:-
+The & (bitwise AND) in C or C++ takes two numbers as operands and does AND on every bit of two numbers. 
+The result of AND is 1 only if both bits are 1. 
+5=101=010
+6=110
+  100
+n=
+101
+n<<2
+10100
+00 
+n>>2
+00101
+The | (bitwise OR) in C or C++ takes two numbers as operands and does OR on every bit of two numbers. 
+The result of OR is 1 if any of the two bits is 1. 
+ 
+The ^ (bitwise XOR) in C or C++ takes two numbers as operands and does XOR on every bit of two numbers.
+ The result of XOR is 1 if the two bits are different. 
+ 
+The << (left shift) in C or C++ takes two numbers, left shifts the bits of the first operand, the second
+ operand decides the number of places to shift. 
+ 
+The >> (right shift) in C or C++ takes two numbers, right shifts the bits of the first operand, 
+the second operand decides the number of places to shift. 
+ 
+The ~ (bitwise NOT) in C or C++ takes one number and inverts all bits of it 
+-------------------------------------------------------------------------------------------------------
+
+-------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------
+Unary Operators:
+---Increment: The ‘++’ operator is used to increment the value of an integer. 
+When placed before the variable name (also called pre-increment operator), 
+its value is incremented instantly. For example, ++x.  x=x+1
+And when it is placed after the variable name (also called post-increment operator), 
+its value is preserved temporarily until the execution of this statement and it gets 
+updated before the execution of the next statement. For example, x++.
+
+--Decrement: The ‘ – – ‘ operator is used to decrement the value of an integer. 
+When placed before the variable name (also called pre-decrement operator), 
+its value is decremented instantly. For example, – – x. 
+And when it is placed after the variable name (also called post-decrement operator), 
+its value is preserved temporarily until the execution of this statement and 
+it gets updated before the execution of the next statement. For example, x – –.
+----------------------------------------------------------------------------------------------------
+ 

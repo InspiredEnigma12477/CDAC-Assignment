@@ -1,0 +1,6 @@
+INDEX VERSION 1.131+\\data\Study Material Sept 22\COP\Day3\.metadata\.plugins\org.eclipse.jdt.core
+2314867905.index
+2088319820.index
+275557627.index
+4118494476.index
+3190251103.index

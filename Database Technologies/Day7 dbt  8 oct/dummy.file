@@ -1,0 +1,3 @@
+Flats(flatno,bldgname,rooms,ownerid) 
+Customer(cno,cname,address,flatno) 
+Owner(ownerid,oname,mobile)

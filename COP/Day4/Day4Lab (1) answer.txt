@@ -1,0 +1,682 @@
+=================================================================================================
+1. Write a program to create student class with data members rollno, marks1,mark2,mark3.
+Accept data (acceptInfo()) and display  using display member function.
+Also display total,percentage and grade.
+-------------------------------------------------------------------------------------------------
+package lab;
+
+public class Student {
+	private int rollno;
+	private int mark1;
+	private int mark2;
+	private int mark3;
+	private int sum;
+	private double per;
+	public void acceptdata(int roll,int m1,int m2,int m3)
+	{
+		rollno=roll;
+		mark1=m1;
+		mark2=m2;
+		mark3=m3;
+	}
+	public void display()
+	{
+		System.out.println("student detail regarding exam performance");
+		System.out.println("roll number "+rollno);
+		System.out.println("marks of sub1 "+mark1);
+		System.out.println("marks of sub2 "+mark2);
+		System.out.println("marks of sub3 "+mark3);
+		percentage();
+		grade();
+		
+	}
+	public void percentage()
+	{
+		sum=mark1 + mark2 + mark3;
+		per=(sum*100)/300;
+		System.out.println("percentage: "+per+"%");
+		
+	}
+	public void grade()
+	{
+		if(per>75)
+		{
+			System.out.println(" passed with Grade A");
+		}
+		else if(per<75 && per>60)
+		{
+			System.out.println(" passed with Grade B");
+		}
+		else
+		{
+			System.out.println(" passed ");
+		}
+	}
+	
+	public static void main(String[] args) {
+		
+		Student obj =new Student();
+		obj.acceptdata(63, 56, 78, 70);
+		obj.display();
+	}
+
+}
+    ************* OUTPUT *************************
+"C:\Program Files\Microsoft\jdk-11.0.12.7-hotspot\bin\java.exe" "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA 2022.2.2\lib\idea_rt.jar=63663:C:\Program Files\JetBrains\IntelliJ IDEA 2022.2.2\bin" -Dfile.encoding=UTF-8 -classpath D:\CDAC\out\production\CDAC lab.Student
+student detail regarding exam performance
+roll number 63
+marks of sub1 56
+marks of sub2 78
+marks of sub3 70
+percentage: 68.0%
+ passed with Grade B
+
+Process finished with exit code 0
+
+=================================================================================================
+2. Create a class Person with data members as name, age, city. Write getters and setters for all the data 
+members. Also add the display function. Create Default and Parameterized constructors. Create the 
+object of this class in main method and invoke all the methods in that class. 
+-------------------------------------------------------------------------------------------------
+package lab;
+
+public class Person {
+	private String name;
+	private int age;
+	private String city;
+	
+	public Person()
+	{
+		System.out.println("inside the parameterless");
+		name="Rushikesh";
+		age=24;
+		city="Kadegaon";
+	}
+	public Person(String nm,int a,String c)
+	{
+		name=nm;
+		age=a;
+		city=c;
+	}
+	public void display()
+	{
+		System.out.println("name: "+name);
+		System.out.println("Age: "+age);
+		System.out.println("City: "+city);
+	}
+	public void setName(String name)
+	{
+		
+		this.name=name;
+		
+	}
+	public void setAge(int age)
+	{
+		this.age=age;
+	}
+	public void setCity(String city)
+	{
+		this.city=city;
+	}
+	public String getName()
+	{
+		return name;
+	}
+	public String getCity()
+	{
+		return city;
+	}
+	public int getAge()
+	{
+		return age;
+	}
+	public static void main(String[] args) {
+		
+		Person p=new Person();
+		p.display();
+		Person q=new Person("Pranav",26,"kolhapur");
+		q.display();
+		q.setName("Akshay");
+		String nm=q.getName();
+		System.out.println(nm);
+		q.setCity("Nanded");
+		String c=q.getCity();
+		System.out.println(c);
+		q.setAge(25);
+		int a=q.getAge();
+		System.out.println(a);
+	}
+	
+
+}
+    ************* OUTPUT *************************
+"C:\Program Files\Microsoft\jdk-11.0.12.7-hotspot\bin\java.exe" "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA 2022.2.2\lib\idea_rt.jar=63678:C:\Program Files\JetBrains\IntelliJ IDEA 2022.2.2\bin" -Dfile.encoding=UTF-8 -classpath D:\CDAC\out\production\CDAC lab.Person
+inside the parameterless
+name: Rushikesh
+Age: 24
+City: Kadegaon
+name: Pranav
+Age: 26
+City: kolhapur
+Akshay
+Nanded
+25
+
+Process finished with exit code 0
+
+=================================================================================================
+3. Create a class Date with data members as dd, mm, yy. Write getters and setters for all the data members. 
+Also add the display function. Create Default and Parameterized constructors. Create the 
+object of this class in main method and invoke all the methods in that class. 
+-------------------------------------------------------------------------------------------------
+package lab;
+
+public class Date1 {
+	private int d;
+	private int m;
+	private int y;
+	public Date1()
+	{
+		System.out.println("Hi pranav and Rushikesh from default constructor");
+		d=4;
+		m=8;
+		y=1986;
+	}
+	public int getD() {
+		return d;
+	}
+	public void setD(int d) {
+		this.d = d;
+	}
+	public int getM() {
+		return m;
+	}
+	public void setM(int m) {
+		this.m = m;
+	}
+	public int getY() {
+		return y;
+	}
+	public void setY(int y) {
+		this.y = y;
+	}
+	public Date1(int day,int mon,int year)
+	{
+		System.out.println("Hello I am From parameterised constr ");
+		d=day;
+		m=mon;
+		y=year;
+	}
+	
+	public void Dis_date()
+	{
+		System.out.println("date is "+d+"-"+m+"-"+y);
+	}
+	public static void main(String[] args) {
+		
+		Date1 t=new Date1();
+		t.Dis_date();
+		Date1 r=new Date1(30,06,1998);
+		r.Dis_date();
+		t.setD(20);
+		System.out.print(t.getD());
+		t.setM(07);
+		System.out.print("-"+t.getM());
+		t.setY(1997);
+		System.out.print("-"+t.getY());
+	}
+
+}
+
+    ************* OUTPUT *************************
+"C:\Program Files\Microsoft\jdk-11.0.12.7-hotspot\bin\java.exe" "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA 2022.2.2\lib\idea_rt.jar=63690:C:\Program Files\JetBrains\IntelliJ IDEA 2022.2.2\bin" -Dfile.encoding=UTF-8 -classpath D:\CDAC\out\production\CDAC lab.Date1
+Hi pranav and Rushikesh from default constructor
+date is 4-8-1986
+Hello I am From parameterised constr 
+date is 30-6-1998
+20-7-1997
+Process finished with exit code 0
+
+=================================================================================================
+4. Create a class Book with data members as bname,id,author,price. Write getters and setters for all the 
+data members. Also add the display function. Create Default and Parameterized constructors. Create 
+the object of this class in main method and invoke all the methods in that class. 
+-------------------------------------------------------------------------------------------------
+package lab;
+
+public class Book {
+	private String bname;
+	private int id;
+	private String author;
+	private int price;
+	public Book()
+	{
+		bname="Yayati";
+		id=4938;
+		author="V S Khandekar";
+		price=220;
+	}
+	public Book(String bnm,int i,String aut,int pri)
+	{
+		bname=bnm;
+		id=i;
+		author=aut;
+		price=pri;
+	}
+	public String getBname() {
+		return bname;
+	}
+	public void setBname(String bname) {
+		this.bname = bname;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public String getAuthor() {
+		return author;
+	}
+	public void setAuthor(String author) {
+		this.author = author;
+	}
+	public int getPrice() {
+		return price;
+	}
+	public void setPrice(int price) {
+		this.price = price;
+	}
+	public void display()
+	{
+		System.out.println("book name is "+bname);
+		System.out.println("book id "+id);
+		System.out.println("Author name is "+author);
+		System.out.println("Price"+price);
+	}
+		
+	public static void main(String[] args) {
+		
+		Book S=new Book();
+		S.display();
+		Book R=new Book("love",143,"pise",100);
+		R.display();
+		
+	}
+
+}
+
+    ************* OUTPUT *************************
+"C:\Program Files\Microsoft\jdk-11.0.12.7-hotspot\bin\java.exe" "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA 2022.2.2\lib\idea_rt.jar=63698:C:\Program Files\JetBrains\IntelliJ IDEA 2022.2.2\bin" -Dfile.encoding=UTF-8 -classpath D:\CDAC\out\production\CDAC lab.Book
+book name is Yayati
+book id 4938
+Author name is V S Khandekar
+Price220
+book name is love
+book id 143
+Author name is pise
+Price100
+
+Process finished with exit code 0
+
+=================================================================================================
+5. Create a class Point with data members as x,y. Create Default and Parameterized constructors. Write 
+getters and setters for all the data members. Also add the display function. Create the object of this 
+class in main method and invoke all the methods in that class. 
+-------------------------------------------------------------------------------------------------
+package lab;
+
+public class Point1 {
+	private int x;
+	private int y;
+	public Point1()//default
+	{
+		this.x=0;
+		this.y=0;
+	}
+	public Point1(int x,int y)
+	{
+		this.x=x;
+		this.y=y;
+	}
+	public void display()
+	{
+		System.out.println("on X axis: "+x);
+		System.out.println("on Y axis: "+y);
+	}
+	public void setX(int x)
+	{
+		this.x=x;
+	}
+	public void setY(int y)
+	{
+		this.y=y;
+	}
+	public int getX()
+	{
+		return this.x;
+	}
+	public int getY()
+	{
+		return this.y;
+	}
+}
+
+package test;
+import lab.Point1;
+public class Point {
+
+	public static void main(String[] args) {
+		Point1 p=new Point1();
+		p.display();
+		p.setX(20);
+		System.out.println("on x axis:"+p.getX());
+		p.setY(30);
+		System.out.println("on y axis:"+p.getY());
+	}
+
+}
+
+    ************* OUTPUT *************************
+"C:\Program Files\Microsoft\jdk-11.0.12.7-hotspot\bin\java.exe" "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA 2022.2.2\lib\idea_rt.jar=64984:C:\Program Files\JetBrains\IntelliJ IDEA 2022.2.2\bin" -Dfile.encoding=UTF-8 -classpath D:\CDAC\out\production\CDAC test.Point
+on X axis: 0
+on Y axis: 0
+on x axis:20
+on y axis:30
+
+Process finished with exit code 0
+
+=================================================================================================
+6. Create a class ComplexNumber with data members real, imaginary. Create Default and Parameterized constructors. 
+Write getters and setters for all the data members. Also add the display function. Create the object of this class 
+in main method and invoke all the methods in that class.
+-------------------------------------------------------------------------------------------------
+package lab;
+
+public class Complex {
+	private int x;
+	private int y;
+	
+	public Complex()
+	{
+		this.x=0;
+		this.y=0;
+		
+				
+	}
+	public Complex(int x,int y)
+	{
+		this.x=x;
+		this.y=y;
+	}
+	public void display()
+	{
+		System.out.println(x  +"+i"+y);
+	}
+	public void setX(int x)
+	{
+		this.x=x;
+	}
+	public void setY(int y)
+	{
+		this.y=y;
+	}
+	public int getX()
+	{
+		return x;
+	}
+	public int getY()
+	{
+		return y;
+	}
+}
+
+package test;
+
+import lab.Complex;
+public class Complex1 {
+
+	public static void main(String[] args) {
+		Complex c=new Complex();
+		c.display();
+	//	Complex p=new Complex(20,30);
+	//	p.display();
+		c.setX(15);
+		System.out.println("x "+c.getX());
+		c.setY(10);
+		System.out.println("y "+c.getY());
+
+	}
+
+}
+
+    ************* OUTPUT *************************
+"C:\Program Files\Microsoft\jdk-11.0.12.7-hotspot\bin\java.exe" "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA 2022.2.2\lib\idea_rt.jar=65039:C:\Program Files\JetBrains\IntelliJ IDEA 2022.2.2\bin" -Dfile.encoding=UTF-8 -classpath D:\CDAC\out\production\CDAC test.Complex1
+0+i0
+x 15
+y 10
+
+Process finished with exit code 0
+
+
+=================================================================================================
+7. Create BankAccount   aaplication for operations like withdraw ,deposite  and ShowBalance
+Create menu drive program for bank operations..
+-------------------------------------------------------------------------------------------------
+package test;
+
+import java.util.Scanner;
+
+public class Bank1 {
+	private double acntno;
+	private int balance;
+	Scanner sc =new Scanner(System.in);
+	
+	public Bank1()
+	{
+		this.acntno=1001;
+		this.balance=10000;
+		
+	}
+	public Bank1(int actno,int balance)
+	{
+		this.acntno=acntno;
+		this.balance=balance;
+		
+	}
+	public void showbalance()
+	{
+		System.out.println("enter account number");
+		acntno=sc.nextInt();
+		System.out.println("Balance is in your account is: "+balance);
+	}
+	public void deposite(int deposite)
+	{
+		System.out.println("enter account number");
+		acntno=sc.nextInt();
+		balance=balance+deposite;
+		System.out.println("After deposite balance is: "+balance);
+	}
+	public void withdraw(int withdraw)
+	{
+		System.out.println("enter account number");
+		acntno=sc.nextInt();
+		balance=balance-withdraw;
+		System.out.println("After withdraw balance is: "+balance);
+	}
+	
+	
+}
+
+package lab;
+
+import test.Bank1;
+import java.util.Scanner;
+public class Bank {
+
+	public static void main(String[] args) {
+		Bank1 b=new Bank1(1234,200000);
+		
+		int ch;
+		Scanner sc=new Scanner(System.in);
+		System.out.println("1.Deposite\n2.Withdraw\n3.Balance Check\n4.exit");
+		do
+		{
+		System.out.println("enter your choice");
+		ch=sc.nextInt();
+		switch(ch)
+		{
+		case 1:
+			System.out.println("enter the amount you want to deposite");
+			b.deposite(sc.nextInt());
+			break;
+		case 2:
+			System.out.println("enter the amount you want to withdraw");
+			b.withdraw(sc.nextInt());
+			break;
+		case 3:
+			b.showbalance();
+			break;
+		case 4:
+			System.out.println("Thank you");
+			break;
+			default :
+				System.out.println("Invalid choice");
+		}
+		}while(ch != 4);
+
+	}
+
+}
+    ************* OUTPUT *************************
+ "C:\Program Files\Microsoft\jdk-11.0.12.7-hotspot\bin\java.exe" "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA 2022.2.2\lib\idea_rt.jar=65069:C:\Program Files\JetBrains\IntelliJ IDEA 2022.2.2\bin" -Dfile.encoding=UTF-8 -classpath D:\CDAC\out\production\CDAC lab.Bank
+1.Deposite
+2.Withdraw
+3.Balance Check
+4.exit
+enter your choice
+3
+enter account number
+1234
+Balance is in your account is: 200000
+enter your choice
+1
+enter the amount you want to deposite
+500000
+enter account number
+1234
+After deposite balance is: 700000
+enter your choice
+2
+enter the amount you want to withdraw
+800000
+enter account number
+1234
+After withdraw balance is: -100000
+enter your choice
+4
+Thank you
+
+Process finished with exit code 0
+   
+=================================================================================================
+8. Create array of BankAccount class  and store 5 objects....create menu  driven application 
+for same.....ex. show all account  names ,balance,email...
+-------------------------------------------------------------------------------------------------
+package test;
+import java.util.Scanner;
+
+import lab.Array_of_object;
+public class Banktester {
+
+	public static void main(String[] args) {
+		Array_of_object[] array=new Array_of_object[5];
+		Array_of_object a=new Array_of_object("Shriniwas","shr@gmail.com",40000);
+		array[0]=a;
+		Array_of_object b=new Array_of_object("Akshay","abc",1000);
+		array[1]=b;
+		Array_of_object c=new Array_of_object("Pranav","pqr",1500);
+		array[2]=c;
+		Array_of_object d=new Array_of_object("Sourabh","xyz",50000);
+		array[3]=d;
+		Array_of_object e=new Array_of_object("mukund","mkr@",25000);
+		array[4]=b;
+		int ch;
+		Scanner sc=new Scanner(System.in);
+		System.out.println("1.Display all info\n2.withdraw\n3.deposite\n4.showbalance\n5.Exit");
+		do {
+		System.out.println("enter your choice");
+		ch=sc.nextInt();
+		switch(ch)
+		{
+		case 1:
+			System.out.println("Displaying all information from server");
+			for(int i=0;i< array.length;i++)
+			{
+				array[i].display();
+			}
+			break;
+		case 2:
+			System.out.println("Withdraw function");
+			System.out.println("enter the amount you want to withdraw");
+			a.withdraw(sc.nextInt());
+			break;
+		case 3:
+			System.out.println("deposite function");
+			System.out.println("enter the amount you want to deposite");
+			a.deposite(sc.nextInt());
+			break;
+		case 4:
+			System.out.println("show Balance function");
+			a.showbalance();
+			break;
+		case 5:
+			System.out.println("Exit");
+			break;
+		default:
+			System.out.println("invalid choice");
+		}
+		}while(ch != 5);
+		
+		
+		
+	}
+
+}
+
+    ************* OUTPUT *************************
+"C:\Program Files\Microsoft\jdk-11.0.12.7-hotspot\bin\java.exe" "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA 2022.2.2\lib\idea_rt.jar=65113:C:\Program Files\JetBrains\IntelliJ IDEA 2022.2.2\bin" -Dfile.encoding=UTF-8 -classpath D:\CDAC\out\production\CDAC test.Banktester
+1.Display all info
+2.withdraw
+3.deposite
+4.showbalance
+5.Exit
+enter your choice
+1
+Displaying all information from server
+Shriniwas shr@gmail.com 40000
+Akshay abc 1000
+Pranav pqr 1500
+Sourabh xyz 50000
+Akshay abc 1000
+enter your choice
+2
+Withdraw function
+enter the amount you want to withdraw
+35000
+after withdraw balance is5000
+enter your choice
+3
+deposite function
+enter the amount you want to deposite
+98000
+after deposite balance is103000
+enter your choice
+4
+show Balance function
+balance is in your account103000
+enter your choice
+5
+Exit
+
+Process finished with exit code 0
