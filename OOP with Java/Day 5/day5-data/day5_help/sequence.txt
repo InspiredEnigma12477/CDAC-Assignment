@@ -1,0 +1,149 @@
+Today's Topics
+
+Continue with strings , StringBuilder
+Date/Time handling in Java 
+Vehicle showroom assignment
+overriding of equals method
+var-args
+Java Enums
+
+Revise 
+
+Checked vs un checked exc
+How to know which category?
+eg : NumberFormatExc , InputMismatchExc... : un chked
+
+Who differentiates between them ? : javac
+Who does not ? : JVM
+Meaning : If you have in your code : un handled (w/o try -catch)unchked or chked exc : JVM simply aborts the code !!!!
+
+Important statement : Javac forces hanlding of chked excs upon the prog
+
+Different ways to satisfy the javac ? 
+1. Actual handling : try-catch
+OR
+2. throws : to delegate exc handling to the caller
+
+When is using "throws" keyword mandatory ?
+1. unhandled chked exc
+2. handled chked exc
+3. unhandled un cheked exc
+4. handled un chked exc
+
+Ans : 1
+
+
+When to use "throw" keyword  ?
+To raise the exc
+1. JVM uses "throw" : to raise built-in exc
+(eg : AE, AOBExc, NPE....)
+If u r trying to acces using nul ref :
+JVM invokes : throw new NullPointerException();
+
+2. In case of validation errs or B.L failures ---prog has to create custom exc instance n throw it to the code
+eg : if the vehilec speed in not within the range :
+throw new SpeedOutOfRangeExc(.....);
+
+
+IN either of above cases : JVM ALTERS flow of exec ---> enters MATCHING catch clause
+
+Steps in custom exception 
+1. Create class extends Exception : chked exc
+Add a paramterized ctor : to init err mesg
+2. Create validation rule/s 
+Detect err condition n throw the exc instance
+
+3. For centralized exc handling --delegate the exc handling to main(...) --handle it using tr-catch
+
+
+
+----------------Revision over ---------------------
+
+1. String Handling
+1.1 Immutability of strings
+1.2 == vs equals
+1.3 literal vs non literal string
+1.4 String class API
+eg : 
+charAt,compareTo,contains,format,valueOf,getBytes,toCharArray,toLowerCase,indexOf,lastIndexOf,split,replace,startsWith,endsWith,length,intern,substring ,matches
+
+1.5 StringBuilder constructors n API
+
+
+What does following reg ex pattern mean ?
+(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[#@$*%]).{6,20}
+
+
+
+
+
+
+2. Date Time Handling 
+(refer to : readme_strings_date_varargs.txt)
+
+java.util.Date : represents Date n time both , till precision msec.
+Constrs : 
+Date() : Creates date class instance : current date n time 
+Date(long msec) : Creates date class instance : that represents date n time , of msecs elapsed after Epoch(1st Jan 1970)
+Methods : toString , before ,after,compareTo,equals
+eg : d1.compareTo(d2) :  -1 => d1 before d2
+0 => d1.equals (d2)
+1 => d1 after d2
+
+3. var-args
+
+4. Java Enums : (PENDING )
+(For understanding the need of enum , refer to next objective : think about vehicle color)
+
+refer to : day6_help\enums\regarding enums.txt
+
+5. Practical scenario , applying all of above concepts
+Showroom management system
+Create java application to store vehicle details in a showroom. 
+Supply suitable options , along with validations
+
+
+Objective : Accept vehicle details : chasisNo(string) : UNIQUE (PK), color(string) , basePrice(double) , manufactureDate(Date),company
+
+What is a relationship between Vehicle n chasisNo(string) , color(string) , price(double) , manufactureDate(Date) ?  : HAS-A
+
+How will you accept manufactureDate from user ?
+
+
+Steps
+1. Create instance of a class : java.text.SimpleDateFormat
+
+2. Parsing (string --> Date) API 
+
+3. Formatting API (Date --> string) 
+
+
+Objective : Add Vehicle details
+
+
+Objective : Showroom Management system , which will keep track of vehicles added in the showroom.
+1. Prompt showroom capacity
+Create suitable array.
+Options
+1. Add Vehicle to the showroom.
+Accept data --validate all i/ps --in case of success -- add vehicle , to the showroom.
+o.w : throw exc (which one ??? built in OR  custom exc)
+
+2. Display all vehicle details
+
+10. Exit
+---------------------Pending -------------------------
+Add  validation rules
+4.1 No dup vehicles should be added in the showroom (Solve it last !)
+4.2 manufactureDate : must be in current financial year(1st Apr 2022 ---31st Mar 2023)
+4.3 Vehicle color must be available
+4.4 base price : min 10000 , max 100000
+
+
+
+
+
+
+
+
+
