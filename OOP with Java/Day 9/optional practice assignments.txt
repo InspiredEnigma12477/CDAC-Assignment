@@ -1,0 +1,101 @@
+Optional Practice assignments
+
+1. Create Java application for fixed stack & growable stack based on Stack i/f , for storing customer details
+
+Customer has : id(int), name (string) , address(string)
+Provide suitable constructor n toString
+
+
+Steps
+1.1  Create Customer class
+1.2 Stack interface -- push & pop functionality for Customer refs. & declare STACK_SIZE as a constant. 
+1.3 Create implementation class of Stack i/f -- FixedStack (array based)
+1.4 Create another implementation class of Stack i/f-- GrowableStack (array based)
+Can you add inheritance between Fixed Stack n Growable Stack ?
+
+1.5
+Create Tester class (Hint :  use dynamic method dispatch using interfaces)
+Display Menu
+
+Note : Must use 1 switch-case only. You won't need any complex nested control structure
+
+Once user selects either fixed or growable stack , user shouldn't be allowed to change the selection of the stack.
+
+1 -- Choose Fixed Stack
+
+2 -- Choose Growable Stack
+Accept following options only after initial selection
+
+3 -- Push data 
+I/P : Accept customer details & store these details in the earlier chosen stack or give error mesg : NO stack chosen !!!
+In case user has chosen fixed stack , n stack is full give err mesg. 
+In case of growable stack , should be able to save customer details w/o getting err.
+
+4 --- Pop data & display the same (from the earlier chosen stack or give error mesg : NO stack chosen !!!)
+No inputs are required : pop customer details from the top of the stack
+
+5 -- Exit
+
+
+--------------------------------------
+
+2.  Mini Project , to apply the learnt concepts.
+
+Create Java application for customer management system.
+
+3.1 Customer : id(int) name(string),email(string),password(string),registrationAmount(double),dob(Date),type (ServicePlan : enum)
+
+ServicePlan : SILVER,GOLD,DIAMOND,PLATINUM
+
+Depending on the plan chosen customer can avail different types of services
+
+
+customer id should be system generated , using auto increment.
+
+Unique ID(Primary Key ) : email  (2 customers are SAME iff their email ids are same)
+
+
+3.2 
+
+Validation Rules 
+email must contain "@" & should be from ".com" or ".org"  domain
+password must be min 4 max 10 chars long. Must be alphanumeric n Must contain atleast 1 special character : # @ $ % * 
+dob should be before 1st Jan 1995
+duplicate customer details should not be stored.
+ 
+
+Centralized exception handling is expected.
+
+3.4 Use suitable data structure for storing customer details.
+
+
+Options
+1. Customer registration
+Accept n Validate customer details.
+Iff it's valid , store it  , o.w display error message via custom exception
+
+2. Display details of all registered customers
+(for-each)
+
+3 Customer login
+i/p : email ,password
+o/p success mesg or error mesg via exc handling
+
+4. Change Password 
+i/p : email ,old password ,new password
+o/p success mesg or error mesg via exc handling
+
+
+5. Un subscribe customer
+i/p : customer id 
+In case of valid id , just nullify customer ref in the array (shifting up of the references is not expected)  . o.w if customer is not found by that id , give suitable error message.
+
+6. Display names of the customers born between 2 specified dates.
+i/p : begin date n end date.
+
+7. Display all the customer details ,who have chosen specific plan
+i/p plan name
+
+
+10. Exit
+
