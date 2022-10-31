@@ -1,0 +1,109 @@
+For BEST understanding of hashing algo
+1. In Emp class : neither equals nor hashCode was overridden => dups were not detected!
+Added true
+Added true
+Added true
+Added true
+Added true
+Added true
+size 6
+Emp details
+Emp [empId=rnd-002, name=Riya, salary=20000.0]
+Emp [empId=rnd-006, name=Rama2, salary=20000.0]
+Emp [empId=rnd-009, name=Rama7, salary=18000.0]
+Emp [empId=rnd-001, name=Rama, salary=10000.0]
+Emp [empId=rnd-001, name=Rama, salary=10000.0]
+Emp [empId=rnd-005, name=Rama4, salary=40000.0]
+
+2. In Emp class : overrode only equals
+NO chnage : => dups were not detected!
+Added true
+Added true
+Added true
+Added true
+Added true
+Added true
+size 6
+Emp details
+Emp [empId=rnd-002, name=Riya, salary=20000.0]
+Emp [empId=rnd-006, name=Rama2, salary=20000.0]
+Emp [empId=rnd-009, name=Rama7, salary=18000.0]
+Emp [empId=rnd-001, name=Rama, salary=10000.0]
+Emp [empId=rnd-001, name=Rama, salary=10000.0]
+Emp [empId=rnd-005, name=Rama4, salary=40000.0]
+
+Reason behind not detecting the dups : Mandatory part of the contract bet overriding of equals n hasCode was NOT followed
+Contract : EQUAL objects MUST produce SAME hash code.
+
+3. In Emp class : overrode equals n hashCode as per mandatory part of the contract
+EQUAL objects MUST produce SAME hash code.
+hashCode : 100
+obs : detecting the dups BUT time complexity : O(n)
+
+o/p
+in emp's hC
+Added true
+in emp's hC
+in emp equals
+Added true
+in emp's hC
+in emp equals
+Added false
+in emp's hC
+in emp equals
+in emp equals
+Added true
+in emp's hC
+in emp equals
+in emp equals
+in emp equals
+Added true
+in emp's hC
+in emp equals
+in emp equals
+in emp equals
+in emp equals
+Added true
+size 5
+Emp details
+Emp [empId=rnd-001, name=Rama, salary=10000.0]
+Emp [empId=rnd-002, name=Riya, salary=20000.0]
+Emp [empId=rnd-006, name=Rama2, salary=20000.0]
+Emp [empId=rnd-005, name=Rama4, salary=40000.0]
+Emp [empId=rnd-009, name=Rama7, salary=18000.0]
+
+4. In emp class : override both : hashCode n equals , to follow mandatory as well as optional poart of the contract
+EQUAL objects MUST produce SAME hash code AND Un equal objects SHOULD produce distinct hash codes to ensure O(1)
+o/p
+in emp's hC
+Added true
+in emp's hC
+Added true
+in emp's hC
+in emp equals
+Added false
+in emp's hC
+Added true
+in emp's hC
+Added true
+in emp's hC
+Added true
+size 5
+Emp details
+Emp [empId=rnd-006, name=Rama2, salary=20000.0]
+Emp [empId=rnd-005, name=Rama4, salary=40000.0]
+Emp [empId=rnd-009, name=Rama7, salary=18000.0]
+Emp [empId=rnd-002, name=Riya, salary=20000.0]
+Emp [empId=rnd-001, name=Rama, salary=10000.0]
+
+
+
+
+
+
+
+
+
+
+
+

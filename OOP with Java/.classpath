@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="Day 1/day1-data/day1_help/ready code"/>
+	<classpathentry kind="src" path="Day 1/day1-data/eclipse-projects/day1.1/src"/>
+	<classpathentry kind="src" path="Day 2/day2-data/eclipse-projects/day2.1/src"/>
+	<classpathentry kind="src" path="Day 3/day3-data/eclipse-projects/day3.1/src"/>
+	<classpathentry kind="src" path="Day 3/day3-data/eclipse-projects/day3.2/src"/>
+	<classpathentry kind="src" path="Day 3/day3-data/eclipse-projects/day3.3/src"/>
+	<classpathentry excluding="p4/" kind="src" path="Day 3/day3-data/eclipse-projects/day3.4/src"/>
+	<classpathentry kind="src" path="Day 3/day3-data/eclipse-projects/day3.4/src/p4"/>
+	<classpathentry kind="src" path="Day 4/day4-data/eclipse-projects/day4.1/src"/>
+	<classpathentry kind="src" path="Day 4/day4-data/eclipse-projects/day4.2/src"/>
+	<classpathentry kind="src" path="Day 5/day5-data/eclipse-projects/day5.1/src"/>
+	<classpathentry kind="src" path="Day 5/day5-data/eclipse-projects/day5.2/src"/>
+	<classpathentry kind="src" path="Day 6/day6-data/eclipse-projects/day6.1/src"/>
+	<classpathentry kind="src" path="Day 6/day6-data/eclipse-projects/day6.2/src"/>
+	<classpathentry kind="src" path="Day 7/day7-data/eclipse-projects/day7.1/src"/>
+	<classpathentry kind="src" path="Day 7/day7-data/eclipse-projects/day7.2/src"/>
+	<classpathentry excluding="day8-data/eclipse-projects/day8.1/src/|day8-data/eclipse-projects/day8.2/src/" kind="src" path="Day 8"/>
+	<classpathentry kind="src" path="Day 8/day8-data/eclipse-projects/day8.1/src"/>
+	<classpathentry kind="src" path="Day 8/day8-data/eclipse-projects/day8.2/src"/>
+	<classpathentry kind="src" path="Day 9/day9-data/eclipse-projects/day9.1/src"/>
+	<classpathentry kind="src" path="Day 9/day9-data/eclipse-projects/day9.2/src"/>
+	<classpathentry kind="src" path="OOPS_class/day1.1/inheritance"/>
+	<classpathentry kind="src" path="OOPS_class/day1.1/tester"/>
+	<classpathentry kind="src" path="OOPS_class/day2.1/inheritance"/>
+	<classpathentry kind="src" path="OOPS_class/day2.1/tester"/>
+	<classpathentry kind="src" path="OOPS_class/day3.1/shapes"/>
+	<classpathentry kind="src" path="OOPS_class/day3.1/tester"/>
+	<classpathentry kind="src" path="OOPS_class/day3.2/shapes"/>
+	<classpathentry kind="src" path="OOPS_class/day3.2/tester"/>
+	<classpathentry kind="src" path="OOPS_class/day3.3/shapes"/>
+	<classpathentry kind="src" path="OOPS_class/day3.3/tester"/>
+	<classpathentry kind="src" path="OOPS_class/day3.4/p1"/>
+	<classpathentry kind="src" path="OOPS_class/day3.4/p2"/>
+	<classpathentry kind="src" path="OOPS_class/day3.4/p3"/>
+	<classpathentry kind="src" path="OOPS_class/day3.4/p4"/>
+	<classpathentry kind="src" path="OOPS_class/day3.4/p5"/>
+	<classpathentry kind="src" path="OOPS_class/day4.1/exc_handling"/>
+	<classpathentry kind="src" path="OOPS_class/day4.2/custom_exception"/>
+	<classpathentry kind="src" path="OOPS_class/day4.2/tester"/>
+	<classpathentry kind="src" path="OOPS_class/day4.2/utils"/>
+	<classpathentry kind="output" path="Day 1/day1-data/eclipse-projects/day1.1/bin"/>
+</classpath>

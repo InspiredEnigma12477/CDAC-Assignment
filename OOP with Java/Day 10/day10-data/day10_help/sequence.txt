@@ -1,0 +1,129 @@
+Today's Topics
+Revise Sorting
+Custom ordering
+Comparator with anonymous inner class
+ArrayList Vs LinkedList
+Set interface & implementation classes
+
+
+Revision
+Sorting in Java
+
+Which are 2 ways of sorting in Java ? 
+Natural Ordering : Internal (Implicit) --Sorting criteria is kept within the generic type of the list.
+eg : Customer --email , pwd....
+Q : sort customer list as per email
+Steps 
+1. public class Customer implements Comparable<Customer>
+2. Typically , compareTo method should be consistent with equals
+(eg : if c1.equals(c2) : true , c1.compareTo(c2) : 0
+@Override
+public int compareTo(Customer anotherCust)
+{
+ // > 0 ,=0,  < 0
+  return this.email.compareTo(anotherCust.email);
+}
+
+3. java.util : Collections.sort(customerList);
+//c1,c2,c3,c4....c100
+c1.compareTo(c2) : <0  or 0 => no shuffling
+> 0 : swapping
+
+
+
+Need of Custom Ordering
+Whenever you need to supply multiple sorting criteria , w.o modifying the core class , can we keep the sorting criteria external ?  YESS
+
+Q : sort customer list as per dob
+
+Steps
+1. Create a separate class --that imple. java.util.Comparator<Customer>
+eg : public class CustomerDobComparator implements Comparator<Customer>
+
+2. imple : compare
+@Override
+public int compare(Customer c1,Customer c2)
+{
+ // > 0 ,=0,  < 0
+  return c1.getDob().compareTo(c2.getDob());
+}
+
+3. Collections.sort (List<T> list,Comparator<T> comp)
+Comparator<Customer> comp=new CustomerDobComparator();
+(customerList,comp);
+
+What will JVM invoke ?
+//list : c1....c100
+comp.compare(c1,c2) --> <0 or 0 : no swapping
+> 0 : swap
+
+
+
+Which are 3 different ways of supplying comparator ?
+3 ways  -- creating a separate  class OR ano inner class OR lambda expression
+
+
+1. Sorting elements in the List
+Objectives : 
+1. Sort vehicle details , as per chasis no (asc)  Use Natural Ordering
+
+2. Sort vehicle details , as per date  : custom ordering , using separate comparator class
+
+3. Sort vehicle details , as per date  : custom ordering , using anonymous inner class.
+eg : Collections.sort(list,new Comparator<Vehicle>() { //ano inner class begins
+  @Override
+	public int compare(Vehicle v1, Vehicle v2) {
+		System.out.println("in compare : by date");
+		return v1.getManufactureDate().compareTo(v2.getManufactureDate());
+}
+} //ano inner class end
+);
+
+
+
+
+new Comparator<Vehicle>()  => instance of ano inner cls that imple Comparator
+
+
+
+
+
+4. Sort vehicle details , as per date n price : custom ordering , using anonymous inner class.
+Steps for 
+
+
+2. When you need multiple sorting criteria : that too w/o touching core class (UDT :eg : Customer)
+keep sorting criteria : external 
+Custom ordering
+Steps
+
+
+3. LinkedList
+Refer to : Collection Framework Overview diagram.
+diagrams : Types of linked lists , node , insert n delete operations
+Refer to readme
+Solve ready code samples.
+Compare ArrayList Vs LinkedList
+
+
+4. Enter Sets
+HashSet , LinkedHashSet , TreeSet
+
+Q. Store emp details in a suitable D.S , to ensure constant time performance for CRUD n searching ops 
+Ans : HashSet<Emp>
+Ans this !
+
+
+4.1  Hashing Algorithm : IMPORTANT
+
+
+
+Example of strings having same hashcode
+Aa BB
+Ba CB 
+Ca DB
+Da EB
+BBBB AaBB AaAa BBAa
+FB Ea
+
+

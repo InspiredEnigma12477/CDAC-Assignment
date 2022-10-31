@@ -1,0 +1,183 @@
+Nested classes in Java
+
+
+What Is a Nested Class?
+
+The Java language allows you to define a class within another class. 
+eg : 
+
+class OuterClass {
+    ...
+    class NestedClass {
+        ...
+    }
+}
+
+Nested classes are divided into two categories:
+
+1. Static Nested Class.
+2. Inner Class(Non-Static Nested Class).
+
+Nested classes that are declared using static keywords are called static nested classes. Whereas Non-static nested classes are called inner classes.
+
+
+1. Static Nested Class:
+The Static Nested Class cannot refer directly to instance fields or methods defined in its enclosing class(i.e. outer class) but it can only use them through an object reference of the enclosing class.
+
+The Static Nested Class interacts with the instance members of its outer class (and other classes) just like any other Top-Level Class.
+
+Syntax To Create An Instance of A Static Nested Class:
+class OuterClass {
+    ...
+    static class StaticNestedClass {
+        ...
+    }
+}
+OuterClass.StaticNestedClass nestedObject = 
+new OuterClass.StaticNestedClass();
+
+How to Use a Static Nested Class?
+//singly linked list
+public class LinkedList {
+    Node head;
+
+    public LinkedList(Node head) {
+        this.head = head;
+    }
+
+    //Creating Node as static class : acting  as a helper of LinkedList class
+    static class Node {
+        int data;
+        Node next;
+
+        public Node(int data, Node next) {
+            this.data = data;
+            this.next = next;
+        }
+    }
+
+    void printLinkedList() {
+        System.out.print("LinkedList is : ");
+        Node temp = head;
+        while (temp != null) {
+            System.out.print("[" + temp.data + "]-->");
+            temp = temp.next;
+        }
+        System.out.println("null\n");
+    }
+
+    void addNode(Node newNode) {
+        if (head == null) {
+            head = newNode;
+        } else {
+            Node temp = head;
+            while (temp.next != null) {
+                temp = temp.next;
+            }
+            temp.next = newNode;
+        }
+        System.out.println("Node " + newNode.data + " added successfully!");
+        printLinkedLis
+    }
+
+    public static void main(String[] args) {
+        LinkedList linkedList = new LinkedList(null);
+        //Creating an object of Node class.
+        LinkedList.Node newNode;
+        newNode = new LinkedList.Node(10, null);
+        linkedList.addNode(newNode);
+        newNode = new LinkedList.Node(20, null);
+        linkedList.addNode(newNode);
+        newNode = new LinkedList.Node(30, null);
+        linkedList.addNode(newNode);
+    }
+}
+
+
+Static nested class example
+Output:
+Node 10 added successfully!
+LinkedList is : [10] → null
+Node 20 added successfully!
+LinkedList is : [10] → [20] → null
+Node 30 added successfully!
+LinkedList is : [10] → [20] → [30] → null
+
+
+2. Inner Class:
+An Inner Class(non-static nested class) is just another member of its enclosing class (i.e. outer class).
+
+ All Inner classes have access to variables(fields) and methods of the enclosing class.
+
+As a member of the outer class, an inner class can be declared private, public, protected, or package-private.
+
+In java programming, the outer classes can only be declared as public or package-private(default).
+
+Syntax To Create An Instance of An Inner Class:
+
+Create an instance of the outer class.
+Then create an instance of an inner class within the instance of the outer class.
+class OuterClass {
+    ...
+    class InnerClass {
+        ...
+    }
+}
+OuterClass outerObject = new OuterClass();
+OuterClass.InnerClass innerObject = outerObject.new InnerClass();
+
+How to Use an Inner Class?
+eg :
+
+public class DataStructure {
+
+    private static final int SIZE = 10;
+    private int arr[] = new int[SIZE];
+
+    private DataStructure() {
+        for (int i = 0; i < SIZE; i++) {
+            arr[i] = i * 10;
+        }
+    }
+
+    //Creating Inner class
+    private class Printer {
+        private void printMultipleOfTen() {
+            //accessing outer class variables
+            for (int i = 0; i < SIZE; i++) {
+                if (arr[i] % 10 == 0) {
+                    System.out.printf("arr{%d}=%d ", i, arr[i]);
+                }
+            }
+            System.out.printf("\n");
+        }
+    }
+
+    public static void main(String[] args) {
+        //Creating an object of outer class
+        DataStructure ds = new DataStructure();
+        //Creating an object of inner class within outer class
+        Printer printer = ds.new Printer();
+        printer.printMultipleOfTen();
+    }
+}
+
+Inner class example
+Output:
+
+arr{0}=0 arr{1}=10 arr{2}=20 arr{3}=30 arr{4}=40 arr{5}=50 arr{6}=60 arr{7}=70 arr{8}=80 arr{9}=90
+
+Why Do We Use Nested/Inner Classes?
+
+The main reasons for using nested/inner classes are:
+
+1. It is a way of logically grouping classes that are only used in one place: If a class is useful to only one other class, then it is logical to embed it in that class and keep the two together. Nesting such “helper classes” makes their package more streamlined.
+2. It increases encapsulation: Consider two top-level classes, A and B, where B needs access to members of A that members would otherwise be declared as private. By hiding class B within class A(B as an inner class and A as an outer class), A's members can be declared private and B can access them. In addition, B itself can be hidden from the outside world(i.e. members of B are declared as private or B itself can be declared as private.
+3. It can lead to more readable and maintainable code: Nesting small classes within top-level classes places the code closer to where it is used.
+
+
+The Inner Classes Are Further Categorized Into:
+
+Local Class: When the inner classes are declared within the body of a method, these classes are known as Local Classes.
+
+Anonymous Classes: When the inner classes are declared within the body of a method(in a single java statement) without naming the class. These classes are known as Anonymous Classes.

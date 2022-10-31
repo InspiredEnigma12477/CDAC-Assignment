@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <output url="file://$MODULE_DIR$/Day 1/day1-data/eclipse-projects/day1.1/bin" />
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/Day 1/day1-data/day1_help/ready code" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Day 1/day1-data/eclipse-projects/day1.1/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Day 2/day2-data/eclipse-projects/day2.1/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Day 3/day3-data/eclipse-projects/day3.1/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Day 3/day3-data/eclipse-projects/day3.2/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Day 3/day3-data/eclipse-projects/day3.3/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Day 3/day3-data/eclipse-projects/day3.4/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Day 3/day3-data/eclipse-projects/day3.4/src/p4" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Day 4/day4-data/eclipse-projects/day4.1/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Day 4/day4-data/eclipse-projects/day4.2/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Day 5/day5-data/eclipse-projects/day5.1/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Day 5/day5-data/eclipse-projects/day5.2/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Day 6/day6-data/eclipse-projects/day6.1/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Day 6/day6-data/eclipse-projects/day6.2/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Day 7/day7-data/eclipse-projects/day7.1/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Day 7/day7-data/eclipse-projects/day7.2/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Day 8" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Day 8/day8-data/eclipse-projects/day8.1/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Day 8/day8-data/eclipse-projects/day8.2/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Day 9/day9-data/eclipse-projects/day9.1/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Day 9/day9-data/eclipse-projects/day9.2/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/OOPS_class/day1.1/inheritance" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/OOPS_class/day1.1/tester" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/OOPS_class/day2.1/inheritance" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/OOPS_class/day2.1/tester" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/OOPS_class/day3.1/shapes" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/OOPS_class/day3.1/tester" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/OOPS_class/day3.2/shapes" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/OOPS_class/day3.2/tester" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/OOPS_class/day3.3/shapes" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/OOPS_class/day3.3/tester" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/OOPS_class/day3.4/p1" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/OOPS_class/day3.4/p2" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/OOPS_class/day3.4/p3" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/OOPS_class/day3.4/p4" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/OOPS_class/day3.4/p5" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/OOPS_class/day4.1/exc_handling" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/OOPS_class/day4.2/custom_exception" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/OOPS_class/day4.2/tester" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/OOPS_class/day4.2/utils" isTestSource="false" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>
