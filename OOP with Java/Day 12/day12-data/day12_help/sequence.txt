@@ -1,0 +1,210 @@
+Today's Topics
+
+
+Revise generic syntax : ? , extends , super
+How will you do this ?
+Q 1If you want to print elements from ANY collection, write a method for it
+In Utils class
+public static void printElements(Collection<Object> collection)
+{
+  for(Object o : collection)
+   sop(o);
+}
+
+In Tester 
+HS<String> hs=new HS<>();
+Collections.addAll(hs,"one".......);
+printElements(hs); //javac err , since Collection<Object> IS NOT a super type of HS<String>
+//LL<Fruit> , AL<Emp> , TS<Integer>
+
+Modify 
+In Utils class
+public static void printElements(Collection<?> collection)
+{
+  for(Object o : collection)
+   sop(o);
+}
+
+OR can it be re written using T ? YES
+In Utils class : non generic class
+public static <T> void printElements(Collection<T> collection)
+{
+  for(T o : collection)
+   sop(o);
+}
+
+In Tester 
+HS<String> hs=new HS<>();
+Collections.addAll(hs,"one".......);
+printElements(hs); //no javac err , since Collection<?> ISa super type of HS<String>
+//LL<Fruit> , AL<Emp> , TS<Integer>
+
+
+Q 2
+Write a method to find sum of all the numbers , from any Collection.
+
+Test cases : AL<Integer> , LL<Double> , Vector<Float> , HS / LHS / TS
+
+
+In Utils class , add a method
+public static double addNumbers(Collection<? extends Number> collection)
+{
+   double sum=0;
+   for(Number o : collection)
+   sum += o.doubleValue();
+   return sum;
+}
+
+OR
+public static <T extends Number> double addNumbers(Collection<T> collection)
+{
+   double sum=0;
+   for(T o : collection)
+   sum += o.doubleValue();
+  return sum;
+}
+
+
+Emp<---Mgr<---SalesMgr
+Write a method to access details of Mgr or any of it's super type --passed in List
+public static void displayDetails(List<? super Mgr> list)
+{
+   //display the elems using an Itr (can be simplified using for-each)
+   Iterator<? super Mgr> itr=list.iterator();
+   while(itr.hasNext())
+    sop(it.next());
+}
+
+Which invocations will be legal ?
+1. AL<Mgr>
+2. HS<Mgr>
+3. LL<Object>
+4. Vector<Emp>
+5. AL<SalesMgr>
+
+Ans : 1 , 3, 4
+
+Find max element from ANY List (any list) : lab work !
+public static <T extends Comparable<T>> T findMaxElement(List<T> list)
+{
+ ......
+}
+
+Find max number from ANY List  : lab work !
+public static <T extends Number & Comparable<T>> T findMaxElement(List<T> list)
+{
+ ......
+}
+(solve generic questions: pending !!!!!!)
+
+Map API n implementation continued
+
+eg : HashMap<K,V> hm=new HashMap<>();//size=0, capa=16 , L.F=0.75
+sop(hm.put(k1,v1)); --> JVM inkvokes k1.hashCode() --> hash func --> bucket id
+--> chks for empty or non empty bucket --empty --adds new entry --> rets null 
+sop(hm.put(k2,v2));
+--> JVM inkvokes k2.hashCode() --> hash func --> bucket id
+--> chks for empty or non empty bucket --
+empty --adds new entry --> rets null 
+
+--> non empty --> hash collision --> k1.equals(k2) --> rets false => new entry is inserted --> rets null
+
+sop(hm.put(k1,v3));
+--> JVM inkvokes k1.hashCode() --> hash func --> bucket id
+--> chks for empty or non empty bucket --
+--> non empty --> hash collision --> k1.equals(k1) --> rets true => old  value is replaced(node : hash,k1,v3,next:null)  --> rets v1
+
+
+
+
+New Features : Java 8 onwards
+Java 8 Date/Time Handling API
+Enter I/O
+
+Objective : Save bank account details in a suitable D.S , for ensuring no dups , const time perf for all CRUD ops. 
+
+Which D.S : HashMap<K,V>
+K : java.lang.Integer
+V : BankAccount
+
+
+BankAccount : acctNo(int) , customer name , type(enum) , creationDate(java.time.LocalDate) , balance(double)
+
+Key type : java.lang.Integer
+
+Value Type : BankAccount
+
+1.1Store a/c details in a suitable map to ensure const time performance for : put/get/remove...
+
+
+1.2  Create a populated map with sample data.
+
+
+1.3 Create A/C
+
+1.4 Display details of all accts
+
+1.6  Get A/C summary
+i/p : acct number
+
+1.7 Funds Transfer
+i/p : src a/c no  dest a/c no , amt
+
+1.8 Close A/C
+i/p : acct no
+
+1.9 Display a/c holder's name of the specified type of the account. 
+i/p : acct type 
+map --> values() --> Collection<BankAcct> --iterate (for-each) --filter --sop name
+
+
+1.10 Display balance of a/cs created between specific dates 
+
+1.11 Sort accounts as per asc a/c nos.
+sorting criteria --key based --can be managed using TreeMap
+which ctor?
+1. TreeMap()
+2. TreeMap(Map<? extends K,? extends V> map)
+3. TreeMap(Comparator<? super K> comp)
+
+1.12 Sort accounts as per desc a/c nos.
+sorting criteria --key based --can be managed using TreeMap
+which ctor?
+1. TreeMap()
+2. TreeMap(Map<? extends K,? extends V> map)
+3. TreeMap(Comparator<? super K> comp)
+
+1.13 Sort accounts as per balance
+map : since to be sorted as per value based (balance) --can't use TreeMap!
+map --> values() ---> Collection<BankAccount>  --> Collections.sort(List<T> list,Comparator c)
+----------------------------
+
+2. Java 8 Date/Time related APIs
+Java 8 New Features 
+java.time : new package is introduced
+LocalDate : Date (immutable)(yr-mon-day)  : inherently thrd safe.
+API 
+1. public static LocalDate now()
+Obtains the current date from the system clock in the default time-zone.
+eg : 
+LocalTime : Time (immutable)(hr-min-sec)  : inherently thrd safe.
+LocalDateTime : Date n Time :  inherently thrd safe.
+eg : sop("curnt date "+now());
+2. public static LocalDate of(int year,int month,int dayOfMonth)
+Obtains an instance of LocalDate from a year, month and day.
+eg : ?????
+1. public static LocalDate parse(CharSequence text)
+Obtains an instance of LocalDate from a text string such as 2007-12-01.
+eg : LocalDate dt=LocalDate.parse(sc.next());//0 based dates
+4. Methods :
+isBefore,isAfter,isEqual
+1. Can you change default Date format ? :
+If yes how ?
+
+6. Computing user Age
+
+7. plus / minus methods
+
+
+--------------------------
+Enter I/O programming : overview .

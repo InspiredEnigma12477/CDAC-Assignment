@@ -1,0 +1,383 @@
+Day 1
+1. Refer to today's sequence (day1-data\day1-help\sequence.txt) , to revise
+1.1 Solve ready code samples , as discussed in the theory session
+(Test Param Passing )
+1.2 import day1.1 in your new workspace to revise inheritance n run time polymorphism.
+
+2. Hands on 
+Create a  class Point2D  , under package "com.cdac.geometry" for representing a point in x-y co-ordinate system.
+
+3.1 Create a parameterized constructor to accept x & y co-ords.
+
+3.2 Add public String show()) --to return point's x & y co-ords
+
+3.3 Add isEqual method to Point2D class : boolean returning method : must return true if both points are having same x,y co-ords or false otherwise.
+
+3.4 Add a method , calculateDistance , to calc distance between 2 points
+Hint : use distance formula.
+
+3.5  Create a driver  class(for UI)  , in the "tester" package "TestPoints" , with main(..)
+
+Ask user , how many points to plot? :
+Create suitable array.
+
+3.6  Accept x,y co-ordinates for all the points n store it suitably.
+3.7  Display x,y co-ordinates of all the points plotted so far ,using for-each loop.
+3.8  Accept 2 indices from user .
+Find out if the points at these indices are same or different (Hint : isEqual)
+Print the message accordingly. 
+If points are not same , display distance between these 2 points.
+
+
+Day 2
+
+0. Open java docs , index.html in your browser
+
+1. Complete pending work
+(MUST)
+
+2. Revise today's work , by referring to sequence.txt n importing day2.1 project in your workspace
+
+3. Answer this
+When you call : System.out.println(ref);
+ how does it automatically call ref.toString() ?
+
+4. Look at the mem diagrams.
+
+5. Hands on (OPTIONAL)
+
+5.1 Can you arrange Fruit,Apple,Orange,Mango in inheritance hierarchy ?
+
+Use tight encapsulation.
+
+5.2 Properties (instance variables)  : color : String , weight : double , name:String, fresh : boolean
+
+5.3 Add suitable constructor.
+
+5.4 Override  toString correctly to return state of all fruits (return only  : name ,color , weight )
+
+5.5 Add a taste() method to return String form of the taste of the Fruit
+eg :  public String taste()
+
+For Fruit : Can you identify taste of any general fruit ?
+So  return :  "no specific taste" 
+
+Apple : should return  "sweet n sour"
+Mango : should return  "sweet"
+Orange : should return  "sour"
+
+5.6 Add specific functionality , in the sub classes
+In Mango : public void pulp() {Display name n color of the fruit + a mesg  creating  pulp!}
+In Orange : public void juice() {Display name n weight of the fruit + a mesg extracting juice!}
+In Apple : public void jam() {Display name of the fruit + a mesg  making jam!}
+
+
+5.7 Add all of above classes under the package "com.app.fruits"
+
+5.8 Create java application FruitBasket , with main method , as a tester
+5.9 Prompt user for the basket size n create suitable data structure
+
+5.10 Supply options
+1. Add Mango
+2. Add Orange
+3. Add Apple
+NOTE : You will be adding a fresh fruit in the basket , in all of above options.
+
+4. Display names of all fruits in the basket.
+
+5. Display name,color,weight , taste of all fresh fruits , in the basket.
+
+
+6. Mark a fruit in a basket , as stale(=not fresh)
+i/p : index 
+o/p : error message (in case of invalid index) or mark it stale
+
+7. Mark all sour fruits stale 
+Hint : Use equals() method of the String class.
+
+8. Invoke fruit specific functionality (pulp / juice / jam)
+i/p : index
+Invoke correct functionality (pulp / juice / jam)
+
+10. Exit 
+
+
+Day 3
+
+NO new assignments !!!
+
+1. Complete Day1 n Day2's assignment
+(MUST)
+
+2. Revise 
+2.1 Refer to today's sequence
+2.2 import day3.1 project in your workspace , to see the need of abstraction
+(Here we had to add un necessarily , instanceof checking n downcasting)
+
+2.3 import day3.2  , to see the need of abstraction
+(Here we DID NOT ADD  , instanceof checking n downcasting , BUT had to add dummy implementation of area n perimeter)
+
+2.4 import day3.3 , to revise abstract methods n class
+
+2.5 import  day3.4 , to revise interfaces.
+
+
+Day 4
+
+1. import day4.1 to revise exception handling.
+Use sequence.txt n readme for complete understanding
+
+2. import day4.2 to revise custom exceptions
+
+2.5 Complete pending work.
+
+3. Solve this.
+Fresh business scenario to apply inheritance , polymorphism n abstraction to emp based organization scenario.
+
+Create Emp based organization structure --- Emp , Mgr , Worker
+All of above classes must be in --com.app.org
+
+3.1 Emp state--- id(int), firstName, lastName , deptId , basic(double)
+emp id MUST be automatically generated.
+
+Behaviour ---1.  get emp details -- using  toString.
+
+2. compute net salary 
+
+3.2 Mgr state  ---id,name,basic,deptId , perfBonus
+Behaviour ----1. get mgr details :  using toString. 
+2. compute net salary (formula: basic+perfBonus) -- override computeNetSalary
+3. get performance bonus. --add a new method to return bonus.(getter)
+
+
+3.3 Worker state  --id,name,basic,deptId,hoursWorked,hourlyRate
+Behaviour--- 
+1. get worker details -- :  override toString.
+2.  compute net salary (formula:  = basic+(hoursWorked*hourlyRate) --override computeNetSalary
+3. get hrlyRate of the worker  -- add a new method to return hourly rate of a worker.(getter)
+
+Organize classes in inheritance  hierarchy.
+
+NOTE : toString method SHOULD NOT include the net salary of the employee
+
+Write TestOrganization in "tester" package.
+Create suitable array to store organization details.
+Provide following options
+
+1. Hire Manager
+i/p : manager details , except id
+
+2. Hire Worker  
+i/p : worker details , except id
+
+3. Display information of all employees(toString) including net salary(computeNetSalary)  using single for-each loop.
+
+4. Update basic salary
+i/p : emp id , salary increment
+In case of invalid emp id  , either : display error message directly 
+OR (still better)
+throw custom exception n handle it in centralized manner 
+(This can be added later!)
+
+10 Exit
+
+
+Day 5.
+
+0. Refer to java docs n go through import String class API
+Object class's equals method
+
+1. import day5.1 to revise string API n string builder API
+
+2. import day5.2 to revise , basic part of Showroom management system :
+Vehicle class
+
+3. IMPORTANT : MUST go through , overriding of equals method , in Vehicle class
+
+4. Complete earlier work
+
+5. New work : 
+Ensure Unique criteria for emps : firstName n lastName
+Meaning : You should not accept dup emp details , if their firstName n lastName is same
+How will you ensure this ?
+
+---------------------
+My Contact Details 
+9823205088 : whatsapp message pls!
+madhura1020.anturkar@gmail.com
+---------------------
+
+Day 6
+
+1. import eclipse project day6.1 to revise
+1.1 Testing string builder
+1.2 enum
+
+2. import eclipse project day6.2 to revise
+2.1 Adding enum Color in Vehicle
+2.2 Validation rules 
+2.3 Exception handling
+
+2.4 MUST complete earlier pending work. 
+
+Optional work 
+
+Continue in the Showroom assignment :
+Add more options in the Showroom
+3. Display all vehicles having specified color
+i/p : color 
+o/p : vehicle details
+
+4. Apply discount to a particular vehicle
+i/p : chasis no, discount
+o/p : error mesg (via custom exc) : invalid chasis no OR success mesg(discount applied)
+
+
+
+Day 7
+1. import day7.1 in your workspace , to revise
+1.1 Additional cost added to enum Color
+1.2 Association between Vehicle n Delivery Address
+1.3 Check day7-data\eclipse-projects\day7.1\src\tester\TestAssociation.java
+Confirm if it's a aggregation or composition?
+Can you create Delivery Address instance w/o Vehicle in this example ?
+
+2. import day7.2 in your workspace , to revise
+2.1 Composition , using the inner class
+Refer to Vehicle as outer n DeliveryAddress as the inner class.
+
+2.2 Refer to nested class rules , diagrams n refer to code from the package "inner_class"
+solve it.
+
+2.3 Revise wrapper classes in java , using readme , diagram n wrappers.TestMe.java
+
+3. Complete pending work.
+
+
+Day 8
+1. Open javadocs , sequence.txt.
+
+2. import day8.1 , in your eclipse workspace n revise
+
+2.1 co variance : refer to day8-data\eclipse-projects\day8.1\src\covariance_demo\CovariantReturn.java
+Guess the o/p n then run it to confirm.
+
+2.2 refer to "pre_generic" package , to understand dis advantages of non generic (pre generic) syntax
+
+2.3 refer to "generic" package , to understand advantages of  generic syntax
+
+3. import day8.2 in your eclipse workspace n revise
+MUST refer to java docs for the APIs(i.e constructors n methods)
+
+3.1 Refer to slides
+3.2 Revise basic ArrayList API using code : TestIntegerList.java
+(PLease take lab faculty's help to revise this code sample)
+
+
+4. MUST solve
+4.1 Create empty arrylist to store strings
+4.2. Add some strings : "one","two","three","four" ....."ten","three","five"
+Confirm if dups are allowed or not 
+Is it a ordered collection ?
+Is it a sorted collection ?
+
+Display list contents , using for-each
+
+4.3 Accept a string from user(using scanner)
+If it exists in the list , display the index of it's 1st occurrence.
+Otherwise print a mesg : doesn't exist
+
+4.4 Upper case all the strings from the array list , which starts with char 't'
+Display the list contents again
+
+4.5 Accept index from user
+Remove the string at a specified index.
+
+4.6 Create another arraylist , having the same contents of the earlier list
+Display it's contents
+
+4.7 Sort 1st arraylist.
+Display contents of both of the arraylist
+
+4.8 Remove all the strings from the 2nd list , containing a char 'e'
+Display it !
+
+
+5. Attach debugger to any of your main class n trace the flow of execution
+
+
+Day 9
+1. import day9.1 , to revise
+1.1 Iterator
+1.2 ListIterator
+1.3 Exceptions associated with iterators 
+(Refer : collections_readme from today's help)
+
+2. import day9.2 , to revise 
+Applying the ArrayList in showroom scenario)
+Do comment equals method in Vehicle class n spot the errors !
+
+2.1 Do refer to today's sequence n solve lab work related questions.
+
+OPTIONAL Hands On
+
+3. Refer to optional practice assignments(shared before Diwali break) : Customer management system
+
+Use  arraylist to store the customer details.
+
+4. MANDATORY : Reading H.W
+4.1 Collections readme 
+4.2 collection frmwork overview
+4.3 Refer to javadocs
+Understand fail-fast iterators (Ref : ArrayList class)
+
+
+Day 10
+1. import day10.1 , to revise custom ordering , ano inner class n linked list
+
+2. import day10.2 to revise different type of sets : HashSet , LinkedHashSet n TreeSet
+Also look at Emp class : hashCode n equals
+
+3. import day10.2 to revise the contract between hashcode n equals
+Pls refer to hashing observation txt file , Java docs of Object's hashCode n diagrams
+
+4. Complete CMS , till whatever is done today.
+
+Day 11
+1. Continue with CMS n complete it in the combined lab session
+
+2. import day11.1 , solve the testers sequenctially , to revise advanced generic syntax.
+(Refer to EmpUtils.java)
+
+3. import day11.2 , to refer to beginning of Banking solution ,added in the HashMap
+
+IMPORTANT
+0. Refer to today's sequence
+1. MUST Solve "\day11-data\day11_help\generic-questions.txt"
+
+2. Refer to "\day11-data\day11_help\generic sequence .txt"
+(It's a detailed one BUT complex. So read it in smaller parts)
+
+3. Refer to today's diagrams , for understanding hashing algo.
+
+
+Day 12
+In a combined lab 
+1. Solve generics based assignments
+1.1Write a method to print elements from ANY collection
+1.2 Write a method to return square root of sum of numbers passed in any Collection.
+1.3 Write a method to display tastes of all the fruits in the basket.
+1.4 Write a method to add a  Mango  to the Fruit basket
+1.5 Write a method to find max number from ANY list(AL/LL/Vector) of any type of numbers (byte/short/int/long....)
+1.6 Write a generic method to remove alternate elements of ANY Collection
+
+2. Revise Hashing algorithm with HashSet
+(Later you can port it to HashMap)
+
+3. Discuss fresh scenarion (Library management --using different simple teste or a single tester ) based on maps.
+refer : optional assignments .txt
+
+In your individual labs :
+4. import day12.1 to revise Map API n LocalDate API
+
+5. If  time permits , refer to additional OPTIONAL assignment n try to solve it (with the help of lab faculty)

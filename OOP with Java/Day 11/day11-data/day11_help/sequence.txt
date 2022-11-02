@@ -1,0 +1,206 @@
+Today's Topics
+
+Revise : Hashing algorithm
+More generic syntax : ? , extends , super
+Map i/f & implementation classes
+New Features : Java 8 onwards
+Java 8 Date/Time Handling API
+
+
+Any Hashing based D.S(data structure) MUST follow a contract .
+
+What is hashing ?
+
+Hashing means using some function or algorithm to map object data(of variable length) to some representative integer value.
+
+What is the contract ???
+
+Contract between which 2 methods ? equals n hashCode
+
+Object class API 
+public boolean equals (Object o) : Bsed upon ref equality (i.e rets true iff this==o)
+public int hashCode() : rets internal addr
+
+Mandatory part of the contract for the hashing based D.S to detect dups
+Equal objects(ie. equals rets true) MUST produce SAME hashcode
+eg : BankAccount : acct NO : int ....
+@Override
+public boolean equals(Object o)
+{
+ if(o instanceof BankAccount)
+  return this.acctNo ==((BankAccount)o).acctNo;
+return false;
+}
+
+@Override
+public int hashCode()
+{
+ return 10;
+}
+
+
+
+
+Obs : HS will definitely detect dups BUT will have O(n) (i.e can't ensure const time performance)
+
+
+Optional BUT reco. part of the contract ???
+Un equal objects (equals rets false) SHOULD return DIFFERENT hash code , so as to improve the perf. of the HS
+
+How to implement the both parts of the contract ?
+1. Identify UID (PK) override equals 
+2. Use same UID data members (+use prime no) to override hashCode
+
+Hashing algo. internals
+Refer to the memory diagram n algo.
+
+
+Objective ( lab work ): Emp : PK : composite PK
+id (string) n deptId (int) n dob(Date)
+Add these emps in a HashSet . Ensure no dups + O(1)
+Steps ?????
+
+
+Refer to 
+public HashSet​(Collection<E> c)
+
+To create populated HashSet<Emp> , which of the following will be legal ?
+1. HS<Emp>
+2. LHS<Emp>
+3. LL<Emp>
+4. HM<String,Emp>
+Ans : 1,2,3
+
+Specify the approach , to remove the dups from the List n sort the data as per Natural Order?
+AL ---> TS
+eg : TreeSet<Emp> ts=new TreeSet<>(al);
+dups will be removed , Emp's compareTo
+---------------------------------
+
+2. More in generic syntax 
+2.1 Create Emp hierarchy
+Emp , Mgr , Worker
+Add name : data member
+toString 
+work method : add in the emp class n override it in the subclasses.
+
+2.2 Write a method to display details (toString) of all emps(mgrs or workers) , stored in the list
+Test it by passing
+AL<Emp>
+AL<Mgr>
+LL<Worker>
+Vector<Mgr>
+
+Observe n conclude
+ Javac err !
+
+? in generic syntax :  wild card => unknown type , it can be substituted by any type!
+
+What will happen if you pass AL<String> to above method ? : It will work!
+
+
+2.3 Write a method to invoke "work" functionality of all emps(mgrs or workers) , stored in the list
+
+
+Given : AL API
+public ArrayList​(Collection<? extends E> c)
+Constructs a list containing the elements of the specified collection, in the order they are returned by the collection's iterator.
+Q : Will you be able to create a populated AL<Mango> from 
+1. AL<Fruit>
+2. LL<Object>
+3. Vector<Alphonso>
+4. HS<Fruit>
+5. TS<Mango>
+6. LHS<Alphonso>
+
+Ans : 3 , 5 , 6
+
+
+3. Enter Maps
+
+Maps Overview
+Refer to Map API
+
+Objective : Save bank account details in a suitable D.S , for ensuring no dups , const time perf for all CRUD ops. 
+
+Which D.S : HashMap<K,V>
+K : java.lang.Integer
+V : BankAccount
+
+
+BankAccount : acctNo(int) , customer name , type(enum) , creationDate(java.time.LocalDate) , balance(double)
+
+Key type ???
+
+Value Type ???
+
+
+
+
+3.1Store a/c details in a suitable map to ensure const time performance for : put/get/remove...
+
+
+3.2  Create a populated map with sample data.
+
+
+-----------------Pending----------------------
+
+
+3.3 Create A/C
+
+3.4 Display details of all accts
+
+3.6  Get A/C summary
+i/p : acct number
+
+3.7 Funds Transfer
+i/p : src a/c no  dest a/c no , amt
+
+3.8 Close A/C
+
+3.9 Display a/c holder's name of the specified type of the account. 
+
+3.10 Display balance of a/cs created between specific dates 
+
+3.11 Sort accounts as per asc a/c nos.
+
+3.12 Sort accounts as per balance
+----------------------------
+
+4. Java 8 Date/Time related APIs
+Java 8 New Features 
+java.time : new package is introduced
+LocalDate : Date (immutable)(yr-mon-day)  : inherently thrd safe.
+API 
+1. public static LocalDate now()
+Obtains the current date from the system clock in the default time-zone.
+eg : 
+LocalTime : Time (immutable)(hr-min-sec)  : inherently thrd safe.
+LocalDateTime : Date n Time :  inherently thrd safe.
+eg : sop("curnt date "+now());
+2. public static LocalDate of(int year,int month,int dayOfMonth)
+Obtains an instance of LocalDate from a year, month and day.
+eg : ?????
+3. public static LocalDate parse(CharSequence text)
+Obtains an instance of LocalDate from a text string such as 2007-12-03.
+eg : LocalDate dt=LocalDate.parse(sc.next());//0 based dates
+4. Methods :
+isBefore,isAfter,isEqual
+3. Can you change default Date format ? : YES
+
+6. Computing Age
+
+7. plus / minus methods
+-------------------------------
+
+
+For more understanding , do refer to :
+
+1. https://www.scientecheasy.com/2020/11/internal-working-of-hashmap-in-java.html/
+2. https://dzone.com/articles/java8-hashmap-implementation-and-performance
+3. https://www.youtube.com/watch?v=c3RVW3KGIIE4. 
+
+4. For advanced concepts in generics
+https://www.youtube.com/watch?v=wTmOoF4-Pi8
+
+5. https://howtodoinjava.com/java/generics/java-generics-what-is-pecs-producer-extends-consumer-super/
