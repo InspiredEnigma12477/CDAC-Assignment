@@ -1,0 +1,21 @@
+Todays's topics 
+
+I/O Programming
+File Handling
+Char data files
+Bin files
+Serialization n de-serialization
+
+
+Objectives (File handling)
+1. Accept name of the text file from user(scanner) . Read the data from the file , in a buffered manner, till EOF n display the same.
+
+2. Copy text files in a buffered manner
+
+3. Read integers from the text file , sum it up n display
+
+4. Store bank account  details --->  store them  in the bin file. (Using DataOutputStream)
+
+5. Restore the same (Using DataInputStream)
+
+6. Store map of accounts in a bin file using ObjectOutputStream

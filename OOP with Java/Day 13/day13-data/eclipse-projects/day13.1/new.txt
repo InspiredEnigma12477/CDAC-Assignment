@@ -1,0 +1,298 @@
+Todays's topics 
+
+I/O Programming
+File Handling
+Char data files
+Bin files
+Serialization n de-serialization
+
+
+Objectives (File handling)
+1. Accept name of the text file from user(scanner) . Read the data from the file , in a buffered manner, till EOF n display the same.
+
+2. Copy text files in a buffered manner
+
+3. Read integers from the text file , sum it up n display
+
+4. Store bank account details in the bin file.
+
+5. Restore the same
+
+Compare various data streams
+
+
+
+
+
+
+
+
+
+
+ I/O
+Which are  the packages for device handling  ? java.io , java.nio
+java.io : which type of methods ? read /write
+java.io API Blocking or non blocking ? Blocking API => Any read/write operation will cause blocking of the invoker thrd , until read/w op. is complete
+
+In case or read/write errors : java.io.IOException : chked exc
+
+java.io Consists  of : I/O streams
+What is a stream ? : data transfer medium (bytes/chars)
+Devices : console(stdin / stdout : System.in : InputStream  / System.out : PrintStream)
+File : File handling streams
+Pipe : pipe handling streams
+Socket : socket strms .....
+
+What will you use ?
+To read data from a data src ----> Java app : input stream
+To write data from a Java app ----> data sink  : output stream
+
+3 different categories of streams --- 
+node streams : device handling streams (meant for abstracting actual device handling from the prog)
+platform independent) : un buffered strms
+eg : FIS, FOS , FR ,FW , PIS,POS,PR,PW...., SIS : device specific
+Mandatory
+
+buffering streams :  in case large data transfer : independent of the device
+eg : BIS,BR,BOS,BW,PW
+
+Filtering / conversion streams : 
+To convert binary data (bytes) ---> prim types / objects
+eg : DIS,DOS,OOS,OIS...
+
+Which are 2 types of streams in java.io ?
+1. Byte oriented strms (binary)
+2. char oriented strms
+
+
+Which are 4 abstract super classes ? : InputStream, OutputStream,Reader,Writer
+
+File Handling Classes ? FIS,FOS,FR,FW
+
+
+
+Objectives : 
+How will you read text data file using buffer?
+Java App --- BR<-- FR <-----Text File
+BR br=new BR(new FR(fileName));
+Methods : readLine , lines : Stream<String>
+Stream : i/f => sequence of elems : to which one can apply pipeline of ops (eg : forEach,filter,map,sorted,collect, sum,average....)
+pkg : java.util.stream : Java 8 added
+
+How to copy files ?
+Java App --- BR<-- FR <-----Text File
+Java Ap ---> PW ---> FW -- text file
+
+func style : br.lines().forEach(line -> pw.println(line));//pw::println
+----------------------------
+Enter Binary Streams for file handling
+Which node streams ? FIS , FOS
+Buffering : BIS , BOS
+
+
+Objective :Write Java App to store product details(map) in a binary file , in a buffered manner.
+Java App --->BOS --->FOS--->Bin File
+BOS out=new BOS(new FOS(fileName));
+
+
+Need of filtering/conversion streams?
+In absence of the conversion strms : prog has to perform the conversion from prim type /strings ---> binary
+Instead use : Conversion streams : DOS
+
+Chain : 
+Java App ----->DOS ---> bytes ---> BOS ---> FOS--->BIn File
+DOS out=new DOS(new BOS(new FOS(fileName)))
+
+Design Steps 
+1. core classes
+2. CollectionUtils
+3. IOUtils
+3.1  static void storeProductDetails(Map<Integer,Product> map) throws IOExc.
+{....}
+
+3.2 static Map<Integer,Product> restoreProductDetails(String fileName) throws IOExc. 
+{...}
+
+4.Tester 
+4.1 Scanner : prompt user for data file name
+4.2 sample data
+4.3 call storeData to write product details
+
+
+Write Java App to  retrieve product details from bin file n display it .
+
+Which  conversion strm ? : DataInputStream imple DataInput
+Ctor
+DataInputStream (InputStream in)
+Methods :
+public int readInt() throws IOExc
+public double readDouble() throws IOExc
+public String readUTF() throws IOExc
+public boolean readBoolean() throws IOExc
+.....
+
+
+Objective : Restore product details from a bin file
+Before attaching I/O streams , how to validate if the file exists , regular file , read permission
+API of java.io.File class
+Methods
+exists, isFile , canRead
+
+
+In case of successful validations --attach i/o strms n read data.
+
+Object streams
+serialization n de serialization
+Objective 
+Get populated HashMap of Products. Save these product details into bin file
+Restore these details from binary file.
+Observe problems n solve the same.
+----------------------------------------------------------------------Todays's topics 
+
+I/O Programming
+File Handling
+Char data files
+Bin files
+Serialization n de-serialization
+
+
+Objectives (File handling)
+1. Accept name of the text file from user(scanner) . Read the data from the file , in a buffered manner, till EOF n display the same.
+
+2. Copy text files in a buffered manner
+
+3. Read integers from the text file , sum it up n display
+
+4. Store bank account details in the bin file.
+
+5. Restore the same
+
+Compare various data streams
+
+
+
+
+
+
+
+
+
+
+ I/O
+Which are  the packages for device handling  ? java.io , java.nio
+java.io : which type of methods ? read /write
+java.io API Blocking or non blocking ? Blocking API => Any read/write operation will cause blocking of the invoker thrd , until read/w op. is complete
+
+In case or read/write errors : java.io.IOException : chked exc
+
+java.io Consists  of : I/O streams
+What is a stream ? : data transfer medium (bytes/chars)
+Devices : console(stdin / stdout : System.in : InputStream  / System.out : PrintStream)
+File : File handling streams
+Pipe : pipe handling streams
+Socket : socket strms .....
+
+What will you use ?
+To read data from a data src ----> Java app : input stream
+To write data from a Java app ----> data sink  : output stream
+
+3 different categories of streams --- 
+node streams : device handling streams (meant for abstracting actual device handling from the prog)
+platform independent) : un buffered strms
+eg : FIS, FOS , FR ,FW , PIS,POS,PR,PW...., SIS : device specific
+Mandatory
+
+buffering streams :  in case large data transfer : independent of the device
+eg : BIS,BR,BOS,BW,PW
+
+Filtering / conversion streams : 
+To convert binary data (bytes) ---> prim types / objects
+eg : DIS,DOS,OOS,OIS...
+
+Which are 2 types of streams in java.io ?
+1. Byte oriented strms (binary)
+2. char oriented strms
+
+
+Which are 4 abstract super classes ? : InputStream, OutputStream,Reader,Writer
+
+File Handling Classes ? FIS,FOS,FR,FW
+
+
+
+Objectives : 
+How will you read text data file using buffer?
+Java App --- BR<-- FR <-----Text File
+BR br=new BR(new FR(fileName));
+Methods : readLine , lines : Stream<String>
+Stream : i/f => sequence of elems : to which one can apply pipeline of ops (eg : forEach,filter,map,sorted,collect, sum,average....)
+pkg : java.util.stream : Java 8 added
+
+How to copy files ?
+Java App --- BR<-- FR <-----Text File
+Java Ap ---> PW ---> FW -- text file
+
+func style : br.lines().forEach(line -> pw.println(line));//pw::println
+----------------------------
+Enter Binary Streams for file handling
+Which node streams ? FIS , FOS
+Buffering : BIS , BOS
+
+
+Objective :Write Java App to store product details(map) in a binary file , in a buffered manner.
+Java App --->BOS --->FOS--->Bin File
+BOS out=new BOS(new FOS(fileName));
+
+
+Need of filtering/conversion streams?
+In absence of the conversion strms : prog has to perform the conversion from prim type /strings ---> binary
+Instead use : Conversion streams : DOS
+
+Chain : 
+Java App ----->DOS ---> bytes ---> BOS ---> FOS--->BIn File
+DOS out=new DOS(new BOS(new FOS(fileName)))
+
+Design Steps 
+1. core classes
+2. CollectionUtils
+3. IOUtils
+3.1  static void storeProductDetails(Map<Integer,Product> map) throws IOExc.
+{....}
+
+3.2 static Map<Integer,Product> restoreProductDetails(String fileName) throws IOExc. 
+{...}
+
+4.Tester 
+4.1 Scanner : prompt user for data file name
+4.2 sample data
+4.3 call storeData to write product details
+
+
+Write Java App to  retrieve product details from bin file n display it .
+
+Which  conversion strm ? : DataInputStream imple DataInput
+Ctor
+DataInputStream (InputStream in)
+Methods :
+public int readInt() throws IOExc
+public double readDouble() throws IOExc
+public String readUTF() throws IOExc
+public boolean readBoolean() throws IOExc
+.....
+
+
+Objective : Restore product details from a bin file
+Before attaching I/O streams , how to validate if the file exists , regular file , read permission
+API of java.io.File class
+Methods
+exists, isFile , canRead
+
+
+In case of successful validations --attach i/o strms n read data.
+
+Object streams
+serialization n de serialization
+Objective 
+Get populated HashMap of Products. Save these product details into bin file
+Restore these details from binary file.
+Observe problems n solve the same.
