@@ -1,0 +1,168 @@
+-----find all movies with price=200 or rating>3 
+and vidya balan acted in it
+price:200
+rating:{$gt:3}
+actor:'Vidya balan'
+$and:[{rating:{$gt:3}},{actor:'Vidya balan'}]
+$or:[{price:200},{$and:[{rating:{$gt:3}},{actor:'Vidya balan'}]}]
+db.movie.find({$or:
+       [{price:200},
+        {$and:[{rating:{$gt:3}},{actor:'Vidya balan'}]}]})
+
+-----find all movies in which rating is in string format
+rating:{$type:"string"}
+db.movie.find({rating:{$type:"string"}})
+
+---find all ratings which are divisible by 3
+rating:{$mod:[3,0]}
+db.movie.find({rating:{$mod:[3,0]}})
+
+---find all movies with odd ratings 
+rating:{$mod:[2,1]}
+db.movie.find({rating:{$mod:[2,1]}})
+
+---to find all restaurent whoes score is 14 , grade is A 
+and the date is  2013-07-10
+{
+                        "date" : ISODate("2012-07-11T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 9
+                }
+
+grades:{$elemMatch:{
+                        "date" : ISODate("2012-07-11T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 9
+                }}
+
+db.restaurent.find({grades:{$elemMatch:{
+                        "date" : ISODate("2012-07-11T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 9
+                }}})
+
+
+----to delete all documents with same dat except one
+_id:{$not:{$eq: ObjectId("634a362e415f63dd06922049")}}
+songid:1
+$and:[{_id:{$not:{$eq: ObjectId("634a362e415f63dd06922049")}}},
+{songid:1}]
+
+db.songs.deleteMany({$and:[{_id:{$not:{$eq: ObjectId("634a362e415f63dd06922049")}}},
+{songid:1}]})
+
+
+------update examples
+$set, $unset, $inc, $min, $max
+
+
+-----to decrese rating of first matching movie by 2
+with name starts with K or k
+db.movie.update({name:/^[Kk]/},{$inc:{rating:-2}})
+
+---to delete a key-value pair for ticket_no from movies with name ends with t
+db.movie.update({name:/t$/},{$unset:{ticket_no:""}},{multi:true})
+
+---to update rating to 3 if the ratig is < 3
+$max will assign the rating to 5 only if the 
+existsing one is < 5
+ 
+db.movie.update({name:/t$/},{$max:{rating:5}},{multi:true})
+
+
+----to increse the rating by 2 also overwrite ticket_no by 400
+for all movies with price in range 200 and 400
+$currentDate will assign today's date to key lastmodified
+
+db.movie.update({price:{$gt:200,$lt:400}},
+             {$inc:{rating:2},
+              $set:{ticket_no:400},
+              $currentDate:{lastmodified:true}},
+            {multi:true}) 
+
+------$mul to multiply the value
+to increament the price by 10%
+db.movie.update({name:/t$/},{$mul:{price:1.10}},{multi:true})
+
+
+$pop, $push, $pull, $, $[], $[identifier]
+$pop ----will delete the value from the end or from the begining
+$push ---- to add a single value at the end
+$push +$each --- to add multiple values at the end
+$push+$each+$position ---- to add multiple or one value at the given position
+$pull ----will delete the by value
+$ ---- update only first matched value
+$[identifier] --- update all matched value ---use filter
+$[] ---- update all values
+
+-----to add new actors at the end in movie paa
+db.movie.update({name:'paa'},{$push:{actor:{$each:['rrr','tttt']}}})
+
+
+-----to add new actors at o th position in movie paa
+db.movie.update({name:'paa'},{$push:{actor:{$each:['cccc'],$position:0}}})
+
+
+
+-----to delete a actor from the end in movie paa
+
+db.movie.update({name:'paa'},{$pop:{actor:1}})
+
+-----to delete a actor from the begining in movie paa
+
+db.movie.update({name:'paa'},{$pop:{actor:-1}})
+
+-----to delete by actor xxx from movie paa
+
+
+db.movie.update({name:'paa'},{$pull:{actor:'xxx'}})
+
+ db.movie.update({name:'paa'},{$pull:{actor:{$in:['Amitabh','Abhishek']}}})
+----to update all values of marks array for all students with name starts with R
+db.student.update({name:/^R/},{$inc:{'marks.$[]':5}},{multi:true})
+
+----to update first matching value of marks array for all students whose marks > 90
+db.student.update({marks:{$gt:90}},{$set:{'marks.$':87}},{multi:true})
+
+---- to update all marks to 87 if the marks > 90
+db.student.update({name:/^R/},
+                 {$set:{'marks.$[elem]':87}},
+                 {multi:true,
+                  arrayFilters:[{elem:{$gt:90}}]})
+
+
+----- write query to increase rating by 2 and overwrite price by 300
+for all movies with name ends with a digit
+
+db.movie.update({name:/[0-9]$/},{$inc:{rating:2},$set:{price:300}},{multi:true})
+
+------All Employee’s with the desg as ‘CLERK’ are now called as (AO) Administrative Officers. 
+Update the Employee collection for this.
+db.employee.update({Desg:'CLERK'},{$set:{Desg:'AO'}},{multi:true})
+
+
+----Change the number of hours for project-1 to 5 for all employees 
+with designation analyst.
+$and:[{desg:'ANALYST'},{'project.name':'project-1'}]
+or 
+{desg:'ANALYST','project.name':'project-1'}
+
+db.employee.update({desg:'ANALYST','project.name':'project-1'},
+{$set:{'Project.$.Hrs':5},{multi:true})
+
+------- Add 2 projects project-3 and project-4 for employee whose name 
+starts with ”Deep” with 2 hrs
+db.employee.update({name:/^Deep/},
+{$push:{project:
+     {$each:[{name:'project-3',Hrs:2},{name:'project-4',Hrs:2}],$position:1}}},
+{multi:true})
+
+
+
+
+
+
+
+
+
+

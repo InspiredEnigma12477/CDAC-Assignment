@@ -1,0 +1,77 @@
+$gt $lt $gte $lte,$in,$nin,$exists,$in:[null],
+$mod,$type,$size,$elemMatch
+
+----- to find all movies with name kahani
+db.movie.find({name:'kahani'})
+
+----to find all movies with rating >3 and price = 200
+rating:{$gt:3}
+price:200
+db.movie.find({rating:{$gt:3},price:200},{name:1,rating:1,price:1,_id:0})
+
+$and :[{rating:{$gt:3}},{price:200}]
+
+db.movie.find({
+$and :[{rating:{$gt:3}},{price:200}]},{name:1,rating:1,price:1,_id:0})
+
+-----using or
+
+$or :[{rating:{$gt:3}},{price:200}]
+
+db.movie.find({
+$or :[{rating:{$gt:3}},{price:200}]},{name:1,rating:1,price:1,_id:0})
+
+
+
+-----to find all movies with price = either 200 or 420 or 300
+price:{$in:[200,300,420]}
+
+db.movie.find({price:{$in:[200,300,420]}}).pretty();
+
+-----to find all movies with price not = either 200 or 420 or 300
+price:{$in:[200,300,420]}
+
+db.movie.find({price:{$nin:[200,300,420]}}).pretty();
+
+----find all movies which has rating key 
+rating:{exists:true}
+
+db.movie.find({rating:{exists:true}})
+
+----find all movies which has rating key exists and the value is =null
+rating:{$in:[null],$exists:true}
+
+db.movie.find({rating:{$in:[null],$exists:true}})
+
+
+---find all movies in which amitabh has acted
+actor:'amitabh'
+db.movie.find({actor:'amitabh'})
+
+---find all movies in which amitabh has acted
+actor:'amitabh'
+db.movie.find({actor:/^[Aa]mitabh/})
+
+---find all movies with name ending with t
+
+db.movie.find({name:/t$/})
+
+----find all movies which has 3 actors in the array
+db.movie.find({actor:{$size:3}})
+
+---to find all restaurent with score = 9
+db.restaurent.find({'grades.score':9}).skip(7000).limit(2).pretty()
+
+
+----to find all movies with price > 200 and < 400
+db.movie.find({price:{$gt:200,$lt:400}})
+
+
+
+
+
+
+
+
+
+

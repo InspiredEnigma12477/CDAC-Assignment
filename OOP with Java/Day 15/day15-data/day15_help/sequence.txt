@@ -1,0 +1,142 @@
+Today's Topics
+Revision
+Applying threads to a practical scenario
+Synchronization
+ITC
+
+
+
+Revise
+Thread state transitions n API
+1. Doesn't Exist ---->NEW
+Which 2 different techniques ? : extends Thread OR imple Runnable i/f
+
+
+Runnable : i/f : which type of i/f : Functional i/f (@FunctionalInterface)
+SAM : public void run() 
+Any relation between Runnable i/f n Thread class : implements
+public class Thread implements Runnable
+
+Ctors
+extends Thread
+1. Thread()
+2.Thread(String name)
+
+
+imple Runnable
+1. Thread(Runnable instance)
+2. Thread(Runnable instance,String name)
+
+How to pass Runnable instance ?
+Runnable instance => 1. Create a separate class that imple Runnable
+OR
+2. : ano inner class
+How to use ano inner class : to print the name of the running thrd .
+eg : main : 
+sop("before");
+Thread t1=new Thread(new Runnable()
+{
+   @Override
+   public void run()
+   {
+     sop("In thread "+Thread.currentThread().getName());
+   }
+}
+
+,"test1");//RUNNABLE : 1 : main
+t1.start();
+sop("after");
+
+OR
+3. Lambda expression
+Thread t1=new Thread(() -> sop("In thread "+Thread.currentThread().getName())
+,"testMe");
+
+
+2. NEW ---> Ready-To-Run (pool=> sharing of resources & collection of equivalent resources)
+
+Ready-To-Run => thrds in this state : are not blocked on any condition , simply waiting for CPU time
+How to trigger this transition ? public void start()
+
+3. Ready --> Running : controlled by Native O.S (scheduler) : ctx switching
+(execs run() method : B.L / exec logic)
+
+4. Running ---> Ready (context switching) : controlled by Native O.S (scheduler) 
+triggers : time slice over/ pre emption /yield()
+
+Ready + Running => RUNNABLE
+
+5. Running ---> dead
+run() over 
+
+
+Triggers for the invoker thread to get java.lang.IllegalThreadStateException : 1.RUNNABLE : start()
+2. Dead : start()
+
+6. Running ---> BLOCKED (Blocking trigger)
+
+6.1 sleep : public static void sleep(long msec) throws InterruptedException
+
+eg : t1 : run()
+Thread.sleep(1000);
+What will happen ? : t1 : Blocked on sleep
+1. After 1 sec : t1 : unblocked --> rdy --> running --> resumes exec of run()
+
+OR 
+
+2.  t1 : run()
+Thread.sleep(1000);
+What will happen ? : t1 : Blocked on sleep
+t2 : run() : after 500msec
+t1.interrupt(); 
+t1 : unblocked --> rdy --> running -->InterruptedExc -->  aborts try block --exec catch all --> cont
+
+
+
+6. When blocking condition is removed 
+BLOCKED ---> Ready-to-Run(competes with other thrds in ready pool)
+
+What is mandatory in either of scenarios (extends or implements) ?
+MUST override/implement run()
+
+
+What will happen ?
+1. extends Thread n don't override run() : no errs(no javac err , no run time er) BUT FATAL mistake : do nothing (NOP) thread
+
+2. implements Runnable  n don't implement run() : javac err
+
+What will happen ?
+Instead of calling start() , run() method is invoked? : 
+no errs(no javac err , no run time er) BUT FATAL mistake : no concurrency !!!! , sequential exec.
+
+Objective : Solve lab assignment
+
+--------------------------
+1. Consider joint account : BankAccount
+inst var : balance
+1.1 update balance(double amount) 
+withdraw amount.... think time(sleep) --- cancel withdraw 
+what should be the balance after updateBal : 
+1.2 check balance
+return curnt balance
+
+2. Runnable Tasks
+UpdaterTask 
+run() : invoke BankAccount's update balance
+jointAccount.updateBalance(...);
+
+CheckerTask
+run() : invoke SAME BankAccount's check balance
+ jointAccount.checkBalance();
+
+3. main : create single joint acct instance n pass it to these tasks : 
+
+Problem : race condition
+Solution : synchronization
+
+Synchronized method
+Synchronized blocks
+
+---------------------------------
+
+ITC

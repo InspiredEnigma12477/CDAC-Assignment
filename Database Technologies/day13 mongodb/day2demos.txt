@@ -1,0 +1,629 @@
+> use test
+switched to db test
+> db.movie.update({price:{$gt:200,$lt:400}},
+...              {$inc:{rating:2},
+...               $set:{ticket_no:400},
+...               $currentDate:{lastmodified:true}},
+...             {multi:true})
+WriteResult({
+        "nMatched" : 0,
+        "nUpserted" : 0,
+        "nModified" : 0,
+        "writeError" : {
+                "code" : 14,
+                "errmsg" : "Cannot apply $inc to a value of non-numeric type. {_id: ObjectId('616f8caa2a05464d34422149')} has the field 'rating' of non-numeric type string"
+        }
+})
+> db.movie.update({price:{$gt:200,$lt:400}},{$set:{ticket_no:400},               $currentDate:{lastmodified:true}},             {multi:true})
+WriteResult({ "nMatched" : 5, "nUpserted" : 0, "nModified" : 5 })
+> db.movie.find({price:{$gt:200,$lt:400}})
+{ "_id" : ObjectId("5bf6a38c57b2d4cc676c7a96"), "name" : "Andhadhund", "price" : 340, "actor" : [ "Tabbu" ], "rating" : 6, "ticket_no" : 400, "lastmodified" : ISODate("2022-10-15T06:04:40.484Z") }
+{ "_id" : ObjectId("616f8caa2a05464d34422149"), "name" : "anadi", "rating" : "5", "price" : 234, "lastmodified" : ISODate("2022-10-15T06:04:40.485Z"), "ticket_no" : 400 }
+{ "_id" : ObjectId("61812603978afbe18d8d4cd1"), "name" : "heraferi", "price" : 300, "lastmodified" : ISODate("2022-10-15T06:04:40.485Z"), "ticket_no" : 400 }
+{ "_id" : ObjectId("6181263c978afbe18d8d4cd2"), "name" : "fir heraferi ", "price" : 300, "rating" : null, "lastmodified" : ISODate("2022-10-15T06:04:40.486Z"), "ticket_no" : 400 }
+{ "_id" : 234, "name" : "pushpa", "price" : 300, "rating" : 5, "actor" : [ "aaa", "rashmika" ], "lastmodified" : ISODate("2022-10-15T06:04:40.486Z"), "ticket_no" : 400 }
+> db.movie.find({price:{$gt:200,$lt:400}}).pretty()
+{
+        "_id" : ObjectId("5bf6a38c57b2d4cc676c7a96"),
+        "name" : "Andhadhund",
+        "price" : 340,
+        "actor" : [
+                "Tabbu"
+        ],
+        "rating" : 6,
+        "ticket_no" : 400,
+        "lastmodified" : ISODate("2022-10-15T06:04:40.484Z")
+}
+{
+        "_id" : ObjectId("616f8caa2a05464d34422149"),
+        "name" : "anadi",
+        "rating" : "5",
+        "price" : 234,
+        "lastmodified" : ISODate("2022-10-15T06:04:40.485Z"),
+        "ticket_no" : 400
+}
+{
+        "_id" : ObjectId("61812603978afbe18d8d4cd1"),
+        "name" : "heraferi",
+        "price" : 300,
+        "lastmodified" : ISODate("2022-10-15T06:04:40.485Z"),
+        "ticket_no" : 400
+}
+{
+        "_id" : ObjectId("6181263c978afbe18d8d4cd2"),
+        "name" : "fir heraferi ",
+        "price" : 300,
+        "rating" : null,
+        "lastmodified" : ISODate("2022-10-15T06:04:40.486Z"),
+        "ticket_no" : 400
+}
+{
+        "_id" : 234,
+        "name" : "pushpa",
+        "price" : 300,
+        "rating" : 5,
+        "actor" : [
+                "aaa",
+                "rashmika"
+        ],
+        "lastmodified" : ISODate("2022-10-15T06:04:40.486Z"),
+        "ticket_no" : 400
+}
+> db.movie.update({name:/t$/},{$mul:{price:1.10}},{multi:true})
+WriteResult({ "nMatched" : 2, "nUpserted" : 0, "nModified" : 2 })
+> db.movie.find({name:/t$/})
+{ "_id" : ObjectId("5ca47e5b2952ebdd7ae2a931"), "name" : "padmavat", "rating" : 6, "actor" : [ "Deepika", "shahid kapoor", "ranveer singh", "Aditi Rao", "aaaaa" ], "price" : 220.00000000000003, "ticket_no" : "300" }
+{ "_id" : ObjectId("61737a2769551d00a36ec4de"), "name" : "Ijazat", "price" : 44, "rating" : 6, "ticket_no" : "300" }
+> db.movie.find({name:/t$/}).pretty()
+{
+        "_id" : ObjectId("5ca47e5b2952ebdd7ae2a931"),
+        "name" : "padmavat",
+        "rating" : 6,
+        "actor" : [
+                "Deepika",
+                "shahid kapoor",
+                "ranveer singh",
+                "Aditi Rao",
+                "aaaaa"
+        ],
+        "price" : 220.00000000000003,
+        "ticket_no" : "300"
+}
+{
+        "_id" : ObjectId("61737a2769551d00a36ec4de"),
+        "name" : "Ijazat",
+        "price" : 44,
+        "rating" : 6,
+        "ticket_no" : "300"
+}
+> db.movie.update({name:/t$/},{$mul:{price:1.10}},{multi:true})
+WriteResult({ "nMatched" : 2, "nUpserted" : 0, "nModified" : 2 })
+> db.movie.find({name:/t$/}).pretty()
+{
+        "_id" : ObjectId("5ca47e5b2952ebdd7ae2a931"),
+        "name" : "padmavat",
+        "rating" : 6,
+        "actor" : [
+                "Deepika",
+                "shahid kapoor",
+                "ranveer singh",
+                "Aditi Rao",
+                "aaaaa"
+        ],
+        "price" : 242.00000000000006,
+        "ticket_no" : "300"
+}
+{
+        "_id" : ObjectId("61737a2769551d00a36ec4de"),
+        "name" : "Ijazat",
+        "price" : 48.400000000000006,
+        "rating" : 6,
+        "ticket_no" : "300"
+}
+> db.movie.find({name:'Kesari'})
+{ "_id" : ObjectId("5ca453ef2952ebdd7ae2a92f"), "name" : "Kesari", "actor" : [ "Akshay Kumar", "Pariniti chopra" ], "rating" : 3, "price" : 410, "ticket_no" : 270, "rdate" : ISODate("2019-01-23T00:00:00Z"), "lastmodified" : { "date" : ISODate("2022-01-04T13:14:05.497Z"), "reason" : "public demand" }, "changeprice" : { "date" : ISODate("2022-01-04T13:14:44.844Z"), "reason" : "public demand" } }
+> db.movie.find({name:'Kesari'}).pretty()
+{
+        "_id" : ObjectId("5ca453ef2952ebdd7ae2a92f"),
+        "name" : "Kesari",
+        "actor" : [
+                "Akshay Kumar",
+                "Pariniti chopra"
+        ],
+        "rating" : 3,
+        "price" : 410,
+        "ticket_no" : 270,
+        "rdate" : ISODate("2019-01-23T00:00:00Z"),
+        "lastmodified" : {
+                "date" : ISODate("2022-01-04T13:14:05.497Z"),
+                "reason" : "public demand"
+        },
+        "changeprice" : {
+                "date" : ISODate("2022-01-04T13:14:44.844Z"),
+                "reason" : "public demand"
+        }
+}
+> db.movie.find({name:'paa'})
+{ "_id" : ObjectId("5ca456072952ebdd7ae2a930"), "name" : "paa", "actor" : [ "Amitabh", "vidya balan", "Abhishek" ], "rating" : 4, "price" : 540, "ticket_no" : 300, "rdate" : ISODate("2019-01-23T00:00:00Z"), "others" : { "director" : "R Balki", "songs" : "Amit trivedi" } }
+> db.movie.find({name:'paa'}).prety()
+uncaught exception: TypeError: db.movie.find(...).prety is not a function :
+@(shell):1:1
+> db.movie.find({name:'paa'}).pretty()
+{
+        "_id" : ObjectId("5ca456072952ebdd7ae2a930"),
+        "name" : "paa",
+        "actor" : [
+                "Amitabh",
+                "vidya balan",
+                "Abhishek"
+        ],
+        "rating" : 4,
+        "price" : 540,
+        "ticket_no" : 300,
+        "rdate" : ISODate("2019-01-23T00:00:00Z"),
+        "others" : {
+                "director" : "R Balki",
+                "songs" : "Amit trivedi"
+        }
+}
+> db.movie.update({name:'paa'},{$push:{actor:'xxx'}}}).pretty()
+uncaught exception: SyntaxError: missing ) after argument list :
+@(shell):1:50
+> db.movie.update({name:'paa'},{$push:{actor:'xxx'}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.movie.find({name:'paa'}).pretty()
+{
+        "_id" : ObjectId("5ca456072952ebdd7ae2a930"),
+        "name" : "paa",
+        "actor" : [
+                "Amitabh",
+                "vidya balan",
+                "Abhishek",
+                "xxx"
+        ],
+        "rating" : 4,
+        "price" : 540,
+        "ticket_no" : 300,
+        "rdate" : ISODate("2019-01-23T00:00:00Z"),
+        "others" : {
+                "director" : "R Balki",
+                "songs" : "Amit trivedi"
+        }
+}
+> db.movie.update({name:'paa'},{$push:{actor:{$each:['rrr','tttt']}}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.movie.find({name:'paa'}).pretty()
+{
+        "_id" : ObjectId("5ca456072952ebdd7ae2a930"),
+        "name" : "paa",
+        "actor" : [
+                "Amitabh",
+                "vidya balan",
+                "Abhishek",
+                "xxx",
+                "rrr",
+                "tttt"
+        ],
+        "rating" : 4,
+        "price" : 540,
+        "ticket_no" : 300,
+        "rdate" : ISODate("2019-01-23T00:00:00Z"),
+        "others" : {
+                "director" : "R Balki",
+                "songs" : "Amit trivedi"
+        }
+}
+> db.movie.update({name:'paa'},{$push:{actor:{$each:['cccc'],$position:0}}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.movie.find({name:'paa'}).pretty()
+{
+        "_id" : ObjectId("5ca456072952ebdd7ae2a930"),
+        "name" : "paa",
+        "actor" : [
+                "cccc",
+                "Amitabh",
+                "vidya balan",
+                "Abhishek",
+                "xxx",
+                "rrr",
+                "tttt"
+        ],
+        "rating" : 4,
+        "price" : 540,
+        "ticket_no" : 300,
+        "rdate" : ISODate("2019-01-23T00:00:00Z"),
+        "others" : {
+                "director" : "R Balki",
+                "songs" : "Amit trivedi"
+        }
+}
+> db.movie.update({name:'paa'},{$pop:{actor:1}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.movie.find({name:'paa'}).pretty()
+{
+        "_id" : ObjectId("5ca456072952ebdd7ae2a930"),
+        "name" : "paa",
+        "actor" : [
+                "cccc",
+                "Amitabh",
+                "vidya balan",
+                "Abhishek",
+                "xxx",
+                "rrr"
+        ],
+        "rating" : 4,
+        "price" : 540,
+        "ticket_no" : 300,
+        "rdate" : ISODate("2019-01-23T00:00:00Z"),
+        "others" : {
+                "director" : "R Balki",
+                "songs" : "Amit trivedi"
+        }
+}
+> db.movie.update({name:'paa'},{$pop:{actor:1}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.movie.find({name:'paa'}).pretty()
+{
+        "_id" : ObjectId("5ca456072952ebdd7ae2a930"),
+        "name" : "paa",
+        "actor" : [
+                "cccc",
+                "Amitabh",
+                "vidya balan",
+                "Abhishek",
+                "xxx"
+        ],
+        "rating" : 4,
+        "price" : 540,
+        "ticket_no" : 300,
+        "rdate" : ISODate("2019-01-23T00:00:00Z"),
+        "others" : {
+                "director" : "R Balki",
+                "songs" : "Amit trivedi"
+        }
+}
+> db.movie.update({name:'paa'},{$pop:{actor:-1}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.movie.find({name:'paa'}).pretty()
+{
+        "_id" : ObjectId("5ca456072952ebdd7ae2a930"),
+        "name" : "paa",
+        "actor" : [
+                "Amitabh",
+                "vidya balan",
+                "Abhishek",
+                "xxx"
+        ],
+        "rating" : 4,
+        "price" : 540,
+        "ticket_no" : 300,
+        "rdate" : ISODate("2019-01-23T00:00:00Z"),
+        "others" : {
+                "director" : "R Balki",
+                "songs" : "Amit trivedi"
+        }
+}
+> db.movie.update({name:'paa'},{$pull:{actor:'xxx'}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.movie.find({name:'paa'}).pretty()
+{
+        "_id" : ObjectId("5ca456072952ebdd7ae2a930"),
+        "name" : "paa",
+        "actor" : [
+                "Amitabh",
+                "vidya balan",
+                "Abhishek"
+        ],
+        "rating" : 4,
+        "price" : 540,
+        "ticket_no" : 300,
+        "rdate" : ISODate("2019-01-23T00:00:00Z"),
+        "others" : {
+                "director" : "R Balki",
+                "songs" : "Amit trivedi"
+        }
+}
+> db.movie.update({name:'paa'},{$pull:{actor:{$in:['Amitabh','Abhishek']}}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.movie.find({name:'paa'}).pretty()
+{
+        "_id" : ObjectId("5ca456072952ebdd7ae2a930"),
+        "name" : "paa",
+        "actor" : [
+                "vidya balan"
+        ],
+        "rating" : 4,
+        "price" : 540,
+        "ticket_no" : 300,
+        "rdate" : ISODate("2019-01-23T00:00:00Z"),
+        "others" : {
+                "director" : "R Balki",
+                "songs" : "Amit trivedi"
+        }
+}
+> db.movie.update({name:'paa'},{$push:{actor:{$each:['Amitabh','Abhishek']}}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.movie.find({name:'paa'}).pretty()
+{
+        "_id" : ObjectId("5ca456072952ebdd7ae2a930"),
+        "name" : "paa",
+        "actor" : [
+                "vidya balan",
+                "Amitabh",
+                "Abhishek"
+        ],
+        "rating" : 4,
+        "price" : 540,
+        "ticket_no" : 300,
+        "rdate" : ISODate("2019-01-23T00:00:00Z"),
+        "others" : {
+                "director" : "R Balki",
+                "songs" : "Amit trivedi"
+        }
+}
+> shoe collections
+uncaught exception: SyntaxError: unexpected token: identifier :
+@(shell):1:5
+> show collections
+blog
+books
+booksnew
+collection11
+collection12
+emp
+employee
+emptab
+emptab1
+emptabs
+friend
+moblog
+movie
+myblog
+mycollection
+newmovie
+prodtab
+product
+restaurent
+songs
+stores
+student
+survey
+> db.student.find();
+{ "_id" : ObjectId("62454316574e9711fcaa1ad1"), "stid" : 1, "name" : "Isha", "marks" : [ 93, 94, 93 ] }
+{ "_id" : ObjectId("62454332574e9711fcaa1ad2"), "stid" : 2, "name" : "Revati", "marks" : [ 88, 90, 95 ] }
+{ "_id" : ObjectId("62454349574e9711fcaa1ad3"), "stid" : 3, "name" : "Rajan", "marks" : [ 99, 89, 94 ] }
+> db.student.find().pretty()
+{
+        "_id" : ObjectId("62454316574e9711fcaa1ad1"),
+        "stid" : 1,
+        "name" : "Isha",
+        "marks" : [
+                93,
+                94,
+                93
+        ]
+}
+{
+        "_id" : ObjectId("62454332574e9711fcaa1ad2"),
+        "stid" : 2,
+        "name" : "Revati",
+        "marks" : [
+                88,
+                90,
+                95
+        ]
+}
+{
+        "_id" : ObjectId("62454349574e9711fcaa1ad3"),
+        "stid" : 3,
+        "name" : "Rajan",
+        "marks" : [
+                99,
+                89,
+                94
+        ]
+}
+> db.student.update({marks:{$gt:90}},{$set:{marks.$:87}})
+uncaught exception: SyntaxError: missing : after property id :
+@(shell):1:47
+> db.student.update({marks:{$gt:90}},{$set:{'marks.$':87}},{multi:true})
+WriteResult({ "nMatched" : 3, "nUpserted" : 0, "nModified" : 3 })
+> db.student.find().pretty()
+{
+        "_id" : ObjectId("62454316574e9711fcaa1ad1"),
+        "stid" : 1,
+        "name" : "Isha",
+        "marks" : [
+                87,
+                94,
+                93
+        ]
+}
+{
+        "_id" : ObjectId("62454332574e9711fcaa1ad2"),
+        "stid" : 2,
+        "name" : "Revati",
+        "marks" : [
+                88,
+                90,
+                87
+        ]
+}
+{
+        "_id" : ObjectId("62454349574e9711fcaa1ad3"),
+        "stid" : 3,
+        "name" : "Rajan",
+        "marks" : [
+                87,
+                89,
+                94
+        ]
+}
+> db.student.update({name:/^R/},{$inc:{'marks.$[]':5}},{multi:true})
+WriteResult({ "nMatched" : 2, "nUpserted" : 0, "nModified" : 2 })
+> db.student.find().pretty()
+{
+        "_id" : ObjectId("62454316574e9711fcaa1ad1"),
+        "stid" : 1,
+        "name" : "Isha",
+        "marks" : [
+                87,
+                94,
+                93
+        ]
+}
+{
+        "_id" : ObjectId("62454332574e9711fcaa1ad2"),
+        "stid" : 2,
+        "name" : "Revati",
+        "marks" : [
+                93,
+                95,
+                92
+        ]
+}
+{
+        "_id" : ObjectId("62454349574e9711fcaa1ad3"),
+        "stid" : 3,
+        "name" : "Rajan",
+        "marks" : [
+                92,
+                94,
+                99
+        ]
+}
+> db.student.find().pretty()
+{
+        "_id" : ObjectId("62454316574e9711fcaa1ad1"),
+        "stid" : 1,
+        "name" : "Isha",
+        "marks" : [
+                87,
+                94,
+                93
+        ]
+}
+{
+        "_id" : ObjectId("62454332574e9711fcaa1ad2"),
+        "stid" : 2,
+        "name" : "Revati",
+        "marks" : [
+                93,
+                95,
+                92
+        ]
+}
+{
+        "_id" : ObjectId("62454349574e9711fcaa1ad3"),
+        "stid" : 3,
+        "name" : "Rajan",
+        "marks" : [
+                92,
+                94,
+                99
+        ]
+}
+> db.student.update({name:/^R/},
+...                  {$set:{'marks.$[elem]':87}},
+...                  {multi:true,
+...                   addFilters:[{elem:{$gt:90}}]})
+WriteResult({
+        "nMatched" : 0,
+        "nUpserted" : 0,
+        "nModified" : 0,
+        "writeError" : {
+                "code" : 2,
+                "errmsg" : "No array filter found for identifier 'elem' in path 'marks.$[elem]'"
+        }
+})
+> db.student.update({name:/^R/},
+...                  {$set:{'marks.$[elem]':87}},
+...                  {multi:true,
+...                   arrayFilters:[{elem:{$gt:90}}]})
+WriteResult({ "nMatched" : 2, "nUpserted" : 0, "nModified" : 2 })
+> db.student.find().pretty()
+{
+        "_id" : ObjectId("62454316574e9711fcaa1ad1"),
+        "stid" : 1,
+        "name" : "Isha",
+        "marks" : [
+                87,
+                94,
+                93
+        ]
+}
+{
+        "_id" : ObjectId("62454332574e9711fcaa1ad2"),
+        "stid" : 2,
+        "name" : "Revati",
+        "marks" : [
+                87,
+                87,
+                87
+        ]
+}
+{
+        "_id" : ObjectId("62454349574e9711fcaa1ad3"),
+        "stid" : 3,
+        "name" : "Rajan",
+        "marks" : [
+                87,
+                87,
+                87
+        ]
+}
+> db.movie.find({name:/[0-9]$/}).pretty()
+{
+        "_id" : ObjectId("5aab6da4639395f86922a883"),
+        "name" : "kahani 2",
+        "ticket_no" : 300,
+        "actor" : [
+                "vidya",
+                "Arjun",
+                "Jonny",
+                "nawaz",
+                "prasad",
+                "Shreyas",
+                "Jonny",
+                "yash"
+        ],
+        "rating" : 4,
+        "lastmodified" : {
+                "date" : ISODate("2022-01-04T13:14:05.497Z"),
+                "reason" : "public demand"
+        },
+        "changeprice" : {
+                "date" : ISODate("2022-01-04T13:14:44.844Z"),
+                "reason" : "public demand"
+        },
+        "currprice" : 340
+}
+> db.movie.update({name:/[0-9]$/},{$inc:{rating:2}},{multi:true})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.movie.find({name:/[0-9]$/}).pretty()
+{
+        "_id" : ObjectId("5aab6da4639395f86922a883"),
+        "name" : "kahani 2",
+        "ticket_no" : 300,
+        "actor" : [
+                "vidya",
+                "Arjun",
+                "Jonny",
+                "nawaz",
+                "prasad",
+                "Shreyas",
+                "Jonny",
+                "yash"
+        ],
+        "rating" : 6,
+        "lastmodified" : {
+                "date" : ISODate("2022-01-04T13:14:05.497Z"),
+                "reason" : "public demand"
+        },
+        "changeprice" : {
+                "date" : ISODate("2022-01-04T13:14:44.844Z"),
+                "reason" : "public demand"
+        },
+        "currprice" : 340
+}
+>

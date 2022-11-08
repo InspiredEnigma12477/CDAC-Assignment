@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Day 8">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/Day 8/day8-data.zip!/" />
+      <root url="jar://$PROJECT_DIR$/Day 8/covariance_demo.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -1,0 +1,5 @@
+BankAccount [acctNo=101, customerName=Rama, balance=10000.0, acType=SAVINGS, creationDate=2020-01-01]
+BankAccount [acctNo=55, customerName=Tejas, balance=14000.0, acType=SAVINGS, creationDate=2020-04-27]
+BankAccount [acctNo=15, customerName=Shubham, balance=100000.0, acType=FD, creationDate=2020-05-21]
+BankAccount [acctNo=10, customerName=Rama, balance=6000.0, acType=CURRENT, creationDate=2020-11-01]
+BankAccount [acctNo=60, customerName=Riya, balance=60000.0, acType=SAVINGS, creationDate=2020-11-11]
