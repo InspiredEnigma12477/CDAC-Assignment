@@ -1,0 +1,15 @@
+Revise All Theory Session Demo:
+
+
+Create Menu Driven Java Application for BankApplication
+(Hint:Create Account table in db...insert some rows in it)
+Menu1 :Show All Accounts
+Menu2: Create New Account
+Menu3 :update Name email for specific BankAccount
+Menu4 :Delete BankAccount for specific BankAccount
+Menu5 :WithDraw Amount for specific BankAccount
+MEnu6: Deposite Amount for specific BankAccount
+Menu7: MoneyTransfer from one account into another account.
+
+Do  validation as per need 
+
