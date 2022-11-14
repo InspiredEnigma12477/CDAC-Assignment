@@ -1,0 +1,30 @@
+dac22
+Table:
+User:UserId,username ,password,role:Admin,Customer
+
+Customer:custid,firstname,lastname,username,....
+
+Product:prdid,name,price,cate,qty,
+
+
+DAL:
+Step1:Create DB Tables
+Step2:Create Java Application:
+     Create Pojo Class--(mapping with db Tables)
+     ClassName-------->TableName
+     fields------------>Columns
+     Object of class--->row 
+
+Step3:Create DbUtil:cor connection
+Step4:Create DAL i/f for Book Table:create iBookDAL interface:add abst methods
+Step5:Create DAO layer:Implements Interface in class and override all abst methods
+Step6:create tester,create obj of impl class and invoke methods
+
+
+
+
+
+
+
+
+

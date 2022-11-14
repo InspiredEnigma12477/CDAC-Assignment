@@ -5,7 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ddca4ed7-8dac-4b91-8c65-7ba32350d099" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Sep22_oop/Data_Cloning_Reflection_Threading/IacsdJars/.classpath" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Sep22_oop/Data_Cloning_Reflection_Threading/IacsdJars/.project" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Sep22_oop/Data_Cloning_Reflection_Threading/IacsdJars/META-INF/MANIFEST.MF" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Sep22_oop/Data_Cloning_Reflection_Threading/IacsdJars/com/payroll/Employee.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Sep22_oop/Data_Cloning_Reflection_Threading/IacsdJars/com/payroll/Employee.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sep22_oop/JDBC/Demo_Streams/src/com/tester/BankAccount.java" beforeDir="false" afterPath="$PROJECT_DIR$/Sep22_oop/JDBC/Demo_Streams/src/com/tester/BankAccount.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,14 +21,20 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
   <component name="ProjectId" id="2H2K6rCHzlyV9zTepD16R9pGW1I" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
@@ -46,10 +58,17 @@
       <workItem from="1667553668955" duration="290000" />
       <workItem from="1668003306972" duration="799000" />
       <workItem from="1668101215674" duration="601000" />
+      <workItem from="1668159928093" duration="5466000" />
+      <workItem from="1668234607172" duration="691000" />
+      <workItem from="1668358320430" duration="1363000" />
+      <workItem from="1668453870084" duration="610000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
 </project>

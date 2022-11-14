@@ -39,8 +39,4 @@ public double getBalance() {
 public void setBalance(double balance) {
 	this.balance = balance;
 }
-
-
-
-
 }
