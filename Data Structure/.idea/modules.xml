@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/code/CircularQueue_new/CircularQueue_new.iml" filepath="$PROJECT_DIR$/code/CircularQueue_new/CircularQueue_new.iml" />
+      <module fileurl="file://$PROJECT_DIR$/code/Queue_new/Queue_new.iml" filepath="$PROJECT_DIR$/code/Queue_new/Queue_new.iml" />
+      <module fileurl="file://$PROJECT_DIR$/code/Stack_Generic/Stack_Generic.iml" filepath="$PROJECT_DIR$/code/Stack_Generic/Stack_Generic.iml" />
+      <module fileurl="file://$PROJECT_DIR$/code/Stack_array/Stack_array.iml" filepath="$PROJECT_DIR$/code/Stack_array/Stack_array.iml" />
+    </modules>
+  </component>
+</project>

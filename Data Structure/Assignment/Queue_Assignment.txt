@@ -1,0 +1,34 @@
+Q1. Create generic class for Queue
+Q2. Create generic class for Circular Queue
+
+Q3. Define Circular Queue of size 5 for storing object of MyProcess Class
+MyProcess has attributes pid, pname, owner
+a. Here enqueue 5 processes 
+b. dequeue 5 processes and display their details one by one
+c. Here enqueue 5 processes 
+d. dequeue 5 processes and display their details one by one
+
+# Extra :: 
+Q. There is a parking slot management problem
+There are 7 parking slots
+Empty parking slot is denoted by 0 and full is denoted by car no
+Also there is queue of size 5 outside the parking slot
+
+If car comes in, 
+	if any parking slot is empty (0) then put the car in that slot
+	If all parking are full, put the car in queue (if queue is not full)
+	if queue is also full --> Give message parking full
+
+If car goes out  
+check if there is any car in queue and put one car in same parking slot as going out car
+if no car in queue then mark the slot of this car as 0
+
+Display parking status and queue for every car coming in or going out.
+
+Sample input:
+i means car goes in , o means car goes out
+
+i/p1 -> i20,i30,i50,o30,i78,i34,i90,i234,i345,i123,o20,o78,i987,i231,o234,i456
+i/p2 -> i20,i30,i50,i78,i34,i90,i234,i345,i123,o20,o78,i987,i231,i456
+
+

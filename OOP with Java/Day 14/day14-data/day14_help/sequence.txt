@@ -1,0 +1,141 @@
+Todays's topics 
+Continue with De-Serialization
+transient keyword
+serial version UID
+
+Enter Multi threading 
+
+Revise I/O
+Which are  the packages for device handling  ?  java.io n java.nio
+java.io : which type of methods ? read n write
+java.io API Blocking or non blocking ? BLOCKING (i.e causes the blocking of the invoker thrd till read/write op completes)
+
+In case or read/write errors : java.io.IOException : chked exc
+
+java.io Consists  of : I/O streams
+
+What is a stream ? : data transfer medium (bytes/chars)
+
+Devices : console(stdin / stdout : System.in : InputStream  / System.out : PrintStream)
+
+File : File handling streams : FIS , FOS , FR , FW
+Pipe : pipe handling streams : PipedInputStream , POS,PR,PW
+Socket : socket strms .....can attch only bin streams --SIS(Socket.getInputStream()) , SOS (Socket.getOutputStream())
+Memory based strms : ByteArrayInputStream , BOS ....
+
+What will you use ?
+To read data from a data src ----> Java app : input stream
+To write data from a java app ----> data sink  : output stream
+
+
+3 different categories of streams --- 
+node streams : device handling streams (meant for abstracting actual device handling from the prog)
+platform independent) : un buffered strms
+eg : FIS, FOS , FR ,FW , PIS,POS,PR,PW...., SIS : device specific
+Mandatory
+
+buffering streams :  in case large data transfer : independent of the device
+eg : BIS(InputStream in),BR(Reader r),BOS(OutputStream out),BW(Writer w),PW(Writer w)
+
+Filtering / conversion streams : independent of the device
+To convert binary data (bytes) ---> prim types / objects
+eg : DIS,DOS,OOS,OIS...
+
+Which are 2 types of streams in java.io ?
+1. Byte oriented strms (binary) : D.T. U : byte/byte[]
+2. char oriented strms : D.T U. : char / char[]
+
+
+Which are 4 abstract super classes ? : InputStream , OutputStream , Reader , Writer
+
+File Handling concrete sub Classes ? FIS,FOS,FR,FW
+
+Buffering related concrete sub Classes strms : BIS,BOS,BR,BW(PW)
+
+DOS : imple DataOutput
+DOS(OutputStream out)
+Methods : writeInt,writeShort....+writeUTF
+
+DIS : imple DataIntput i/f
+DIS(InputStream in)
+Methods : readInt,readShort....+readUTF
+
+
+
+Enter Object streams
+serialization n de serialization
+
+Objective 
+Get populated HashMap of BankAccounts.  Save these details into bin file
+Restore these details from binary file.
+Observe problems n solve the same.
+
+What is Serialization ? : Conversion of state of the object(=non static n non transient data members) ---> binary stream
+
+What is converted into binary stream ? : state of the object + metadata info (Magic no , serial format no,F.Q cls name , class desc...)
+
+Serializer Class : java.io.ObjectOutoutStream
+I/fs implemented : DataOutput , ObjectOutput
+
+Constructor :ObjectOutputStream(OutputStream out)
+out : dest bin o/p stream
+
+Methods : writeInt,writeBoolean....,writeUTF,+ public void writeObject(Object o)
+
+chain of I/O streams for ser.  strm , to be stored in bin file
+Java App --->OOS --->BOS -->  FOS  --->Bin File
+
+chain of I/O streams for ser.  strm , to be uploaded from clnt --> server 
+In clnt side app : 
+Java App --->OOS --->BOS -->  SOS (Socket : getOutputStream()) --->Socket : end point of communication 
+
+eg : HM<Integer,BankAccount> hm=....;
+try(OOS out=new OOS(new FOS(fileName))) {
+  out.writeObject(hm);
+}
+What will happen if BankAccount is NOT Serializable ? : JVM aborts ser ---throws : NotSerializableExc
+
+IMPORTANT
+
+At the time of serialization(@ run time) , JVM will check serializability of the ENTIRE object graph --
+eg : HM --> Integer, BankAccount : not ser.
+
+How does JVM chk the serializability of any object ?
+
+JVM  checks if the class of that object has imple. Serializable i/f (run time marker)
+YES --continues with the conversion
+
+If JVM comes across any object --which has not imple Serializable i/f : aborts ser. --throws java.io.NotSerializableExc. 
+
+-----------------------
+
+What is de-serialization ? : re construction of the entire object graph from binary stream(FIS,PIS,SIS...)
+
+What are the pre requisites of de-serialization ?
+1. Supply(share) .class files of User defined types(eg : Customer, Order,Custom Exc,Category...) : in the run time class path => behavior
+If not found : java.lang.ClassNotFoundException
+
+2.For  JVM to create instance/s in the heap : provide .ser file (=metadata + state)
+
+Which is best way of sharing dependencies ? Using JAR files
+HOW ? : cmd line tool : jar / IDE
+
+Class used for de-ser : java.io.ObjectInputStream
+Constructor : ObjectInputStream(InputStream in)
+I/Fs : DataInput , ObjectInput
+Methods : readInt,readFloat.....readUTF + public Object readObject() throws ClassNotFoundException,
+InvalidClassException , IOException
+
+chain of I/O streams
+Java App <---- OIS <---- FIS <----BIn File(.ser)
+
+Objectives 
+1. JAR file creation n adding this dependency in de-serial project
+
+2. transient keyword
+Suppose application should not store creation date , BUT wants to save all other details . How will you manage it ?
+3. What's the observation n conclusion ?
+Serial version unique id 
+
+--------------------------
+Enter Multi Threading
