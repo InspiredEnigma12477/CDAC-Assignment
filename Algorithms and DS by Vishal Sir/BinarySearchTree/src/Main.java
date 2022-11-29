@@ -23,7 +23,6 @@ public class Main {
         bst.inOrder();
         System.out.println();
 
-
         bst.postOrder( bst.getRoot() );
         System.out.println();
         bst.postOrder();
@@ -31,6 +30,30 @@ public class Main {
 
         System.out.println("Max = " + bst.getMax() );
         System.out.println("Min = " + bst.getMin() );
+
+        bst.deleteNode(50);
+        bst.preOrder();
+        bst.inOrder();
+        bst.postOrder();
+        System.out.println();
+
+        bst.deleteNode(20);
+        bst.preOrder();
+        bst.inOrder();
+        bst.postOrder();
+        System.out.println();
+
+        bst.deleteNode(70);
+        bst.preOrder();
+        bst.inOrder();
+        bst.postOrder();
+        System.out.println();
+
+        bst.deleteNode(70);
+        bst.preOrder();
+        bst.inOrder();
+        bst.postOrder();
+        System.out.println();
     }
 }
 

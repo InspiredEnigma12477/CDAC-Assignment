@@ -193,24 +193,58 @@ public class BinarySearchTree {
             }
         }
 
-        //check if the del node is terminal
-        if(del.getLeft() == null && del.getRight() == null) {
+        while( true ) {
+            //check if the del node is terminal
+            if (del.getLeft() == null && del.getRight() == null) {
 
-            if(del == root) {
-                root = null;
+                if (del == root) {
+                    root = null;
+                    return true;
+                }
+
+                if (del == parent.getLeft()) {
+                    parent.setLeft(null);
+                } else {
+                    parent.setRight(null);
+                }
                 return true;
             }
 
-            if(del == parent.getLeft()) {
-                parent.setLeft(null);
+            //del is a non terminal node, shift it down the tree
+            if(del.getLeft() != null) {
+                //find max from left subtree
+                Node max = del.getLeft();
+                parent = del;
+
+                while(max.getRight() != null) {
+                    parent = max;
+                    max = max.getRight();
+                }
+
+                int temp = del.getData();
+                del.setData(max.getData());
+                max.setData(temp);
+
+                del = max;
+
             }
             else {
-                parent.setRight(null);
-            }
-            return true;
-        }
+                //find min from right subtree
+                Node min = del.getRight();
+                parent = del;
 
-        return false;
+                while (min.getLeft() != null) {
+                    parent = min;
+                    min = min.getLeft();
+                }
+
+                int temp = min.getData();
+                min.setData(del.getData());
+                del.setData(temp);
+
+                del = min;
+            }
+        }
     }
 
 

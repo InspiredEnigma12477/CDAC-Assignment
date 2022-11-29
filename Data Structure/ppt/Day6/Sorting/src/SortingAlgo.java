@@ -23,30 +23,7 @@ public class SortingAlgo {
 
 		System.out.println(Arrays.toString(arr));
 	}
-	
-	public static void charInsertionSort(char[] arr) {
-		// Assume first element is always sorted
-		// So start sorting from 2nd element
-		for(int k=1; k < arr.length ;k++) {
-			char element = arr[k];
-			int j=k-1; // left hand side k is already sorted
-			System.out.println("####################################");
-			System.out.println("Element to be inserted : " + element);
-			while((j>=0) && (element <= arr[j])) { 
-				// While loop --> 
-				// move all values in sorted array 
-				// which are greater than element one position to right
-				System.out.println("Move "+arr[j] + " one position to right");
-				arr[j+1] = arr[j];				
-				j = j -1;
-			}
-			arr[j+1] = element;
-		}
 
-		System.out.println(Arrays.toString(arr));
-	}
-	
-	
 	public static void selectionSort(int[] arr) {
 		// After the complete loop last
 		// element will be automatically at right place
@@ -193,9 +170,6 @@ public class SortingAlgo {
 		int[] arr2 = {234,67,45,220,112,67};
 		bubbleSort(arr2);
 		System.out.println("Sorted array "+ Arrays.toString(arr2));
-		char[] charArr = {'I','A','C','S','D'};
-		charInsertionSort(charArr);
-		System.out.println("Sorted array "+ Arrays.toString(charArr));
 	}
 
 }
