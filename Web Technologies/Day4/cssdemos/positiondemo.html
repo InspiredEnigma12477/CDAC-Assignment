@@ -1,0 +1,183 @@
+<html>
+    <head>
+        <style>
+            div{
+                border:2px solid red;
+            }
+          .fixed{
+            position:fixed;
+            bottom:0;
+            right:0;
+            width:200px;
+            height:100px;
+            border:2px solid red;
+          }
+          #mydiv4{
+            position:static;
+            border:2px solid red;
+            top:60px;
+            left:200px;
+
+          }
+          .relative{
+            /* position:relative; */
+            height:200px;
+            width:400px;
+            left:30px;
+            top:30px;
+            
+          }
+          .absolute{
+            position:absolute;
+            width:100px;
+            right:0;
+            bottom:0;
+            
+          }
+          #mydiv1{
+            /* position:relative; */
+            height:400px;
+            width:500px;
+            border:2px solid green;
+            top:200;
+            left:300px;
+            font-size:40px;
+            color:white;
+            text-shadow:1px 2px 3px red;
+            box-shadow:2px 3px 3px green 
+          }
+          #stickydiv{
+            position:sticky;
+            top:0;
+          }
+        </style>
+    </head>
+    <body>
+        <div id="mydiv1">
+            this is div with position relative parent
+        <div class="relative">
+            this is div with position relative
+            <div class="absolute">
+                this is div with absolute position
+            </div>
+        </div>
+    </div>
+        <div id="stickydiv">
+            this is div with sticky position
+        </div>
+        <div id="mydiv4">
+            This is div with static position
+        </div>
+        <div>
+<ul>
+    <li>one
+        <ul>
+            <li>one</li>
+            <li>one
+                <ul>
+                    <li>one</li>
+                    <li>one</li>
+                    <li>one</li>
+                    <li>one</li>
+                    <li>one</li>
+                    
+                </ul>
+            </li>
+            <li>one</li>
+            <li>one</li>
+            <li>one</li>
+            
+        </ul>
+    </li>
+    <li>two
+        <ul>
+            <li>one</li>
+            <li>one</li>
+            <li>one</li>
+            <li>one</li>
+            <li>one</li>
+            
+        </ul>
+    </li>
+    <li>three
+        <ul>
+            <li>one</li>
+            <li>one</li>
+            <li>one</li>
+            <li>one</li>
+            <li>one</li>
+            
+        </ul>
+    </li>
+    <li>four
+        <ul>
+            <li>one</li>
+            <li>one</li>
+            <li>one</li>
+            <li>one</li>
+            <li>one</li>
+            
+        </ul>
+    </li>
+    <li>one</li>
+
+</ul>
+<ul>
+    <li>one
+        <ul>
+            <li>one</li>
+            <li>one
+                <ul>
+                    <li>one</li>
+                    <li>one</li>
+                    <li>one</li>
+                    <li>one</li>
+                    <li>one</li>
+                    
+                </ul>
+            </li>
+            <li>one</li>
+            <li>one</li>
+            <li>one</li>
+            
+        </ul>
+    </li>
+    <li>two
+        <ul>
+            <li>one</li>
+            <li>one</li>
+            <li>one</li>
+            <li>one</li>
+            <li>one</li>
+            
+        </ul>
+    </li>
+    <li>three
+        <ul>
+            <li>one</li>
+            <li>one</li>
+            <li>one</li>
+            <li>one</li>
+            <li>one</li>
+            
+        </ul>
+    </li>
+    <li>four
+        <ul>
+            <li>one</li>
+            <li>one</li>
+            <li>one</li>
+            <li>one</li>
+            <li>one</li>
+            
+        </ul>
+    </li>
+    <li>one</li>
+
+</ul>
+        </div>
+        <div class="fixed">
+           this is div with fixed position
+        </div>
+    </body>
+</html>

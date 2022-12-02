@@ -1,0 +1,53 @@
+<html>
+
+<head>
+    <script>
+        function showmsg() {
+            document.getElementById("myp").innerHTML = "data submitted successfully";
+        }
+    </script>
+</head>
+
+<body>
+    <table>
+        <form>
+            <tr>
+                <td><label for="nm">Name</label></td>
+                <td><input type="text" name="name" id="nm" required placeholder="enter name" autofocus></td>
+            </tr>
+            <tr>
+                <td><label for="age">Age</label></td>
+                <td><input type="number" name="age" id="age" min="18" max="60"></td>
+            </tr>
+            <tr>
+                <td><label>special subject</label></td>
+                <td>
+                    <input type="radio" name="spsub" id="maths"><label for="maths">Maths</label>
+                    <input type="radio" name="spsub" id="psycology"><label for="psycology">Psycology</label>
+                    <input type="radio" name="spsub" id="chemistry"><label for="chemistry">Chemistry</label>
+                </td>
+            </tr>
+            <tr>
+                <td><label>common subject</label></td>
+                <td>
+                    <input type="checkbox" name="csub" id="marathi"><label for="marathi">Marathi</label>
+                    <input type="checkbox" name="csub" id="english"><label for="english">English</label>
+                    <input type="checkbox" name="csub" id="hindi"><label for="hindi">Hindi</label>
+                </td>
+            </tr>
+            <tr>
+                <td><label>Extra curricular</label></td>
+                <td>
+                    <textarea rows="3" cols="70"></textarea> </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <button type="submit" name="btn" id="btn" onclick="showmsg()">Submit </button> </td>
+            </tr>
+        </form>
+    </table>
+    <p id="myp"></p>
+</body>
+
+</html>

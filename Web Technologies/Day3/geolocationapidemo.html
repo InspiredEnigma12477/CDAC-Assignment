@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function findlocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showposition, showerror);
+                console.log("after gelocation")
+
+            } else {
+                var v = document.getElementById("mydiv");
+                v.innerHTML = "geolocation is not supported"
+            }
+        }
+
+        function showposition(position) {
+            var v = document.getElementById("mydiv");
+            v.innerHTML = "Lattitude : " + position.coords.latitude + "Longitude: " + position.coords.longitude
+        }
+
+        function showerror(err) {
+            var v = document.getElementById("mydiv");
+            v.innerHTML = "error occured" + err;
+        }
+    </script>
+</head>
+
+<body>
+
+    <button type="button" onclick="findlocation()">
+        click me to get location
+    </button>
+    <div id="mydiv">
+
+    </div>
+</body>
+
+</html>

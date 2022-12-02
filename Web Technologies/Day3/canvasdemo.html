@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content-type="aplication/json" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <canvas height="200px" width="600px" name="canvas" id="canvas" style="border:2px solid red"></canvas>
+    <script>
+        var c = document.getElementById("canvas");
+        var ctx = c.getContext("2d");
+        //draw a line
+        ctx.moveTo(0, 0)
+        ctx.lineTo(200, 100);
+        ctx.stroke();
+        //draw a circle
+        ctx.beginPath();
+        ctx.arc(95, 50, 40, 0, 2 * Math.PI);
+        ctx.stroke();
+        ////write text
+        ctx.font = "30px Arial";
+        ctx.fillText("wElcome to canvas drawing", 10, 50)
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function countclicks() {
+            //check whether browser supports Storage object
+            if (typeof(Storage) !== undefined) {
+                ///is count already there
+                if (localStorage.count !== undefined) {
+                    ///increase it by 1
+                    //to retrieve the value 
+                    /// localStorage.setItem("count",parseInt(localStorage.getItem("count"))+1)
+                    localStorage.count = parseInt(localStorage.count) + 1;
+                } else {
+                    ///add count property and initialize it to 1 
+                    localStorage.count = 1;
+                    //localStorage.setItem("count", 1);
+                }
+                document.getElementById("mydiv").innerHTML = "you clicked : " + localStorage.count + "times";
+            } else {
+                document.getElementById("mydiv").innerHTML = "Local storage is not supported";
+            }
+
+        }
+
+        function clearclicks() {
+            //check whether browser supports Storage object
+            if (typeof(Storage) !== undefined) {
+                ///is count already there
+                if (localStorage.count !== undefined) {
+                    localStorage.removeItem("count"); //this will remove only count property
+                    // localStorage.clear();  ///clear all the keys
+
+
+                }
+
+            }
+    </script>
+
+</head>
+
+<body>
+    <button type="button" name="nm" onclick="countclicks()">click me for count</button>
+    <button type="button" name="nm" onclick="clearclicks()">clear count</button>
+</body>
+<div id="mydiv">
+
+</div>
+
+</html>

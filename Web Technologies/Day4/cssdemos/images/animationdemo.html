@@ -1,0 +1,84 @@
+<html>
+    <head>
+        <style>
+            @keyframes animation1{
+                from {
+                    background-color:red;
+                    color:blue;
+                    width:300px;
+                    margin-left:20px;
+                    margin-top:20px
+                }
+                to {background-color:green;
+                    width:600px;
+                    margin-left:50px;
+                    margin-top:40px;
+                }
+            }
+            @keyframes animation2{
+                10% {
+                    background-color:red;
+                    color:blue;
+                    margin-left:20px;
+                    margin-top:20px
+                }
+                25% {background-color:blue;
+                    width:600px;
+                    margin-left:50px;
+                    margin-top:40px;
+                }
+                50%{
+                    margin-left:0px;
+                    margin-top:0px;
+                    background-color:pink;
+                }
+                75% {
+                    margin-left:34px;
+                    margin-top:20px;
+                    background-color:pink;
+                }
+                100% {
+                    background-color:purple;
+                }
+            }
+            div{
+                border:2px solid red;
+                border-radius:6px;
+            }
+
+            #mydiv1{
+                background-color: yellow;
+                height:200px;
+                width:200px;
+                display:none;
+                /* animation-name: animation1;
+                animation-duration: 4s;
+                animation-iteration-count: 2; */
+
+            }
+            #mydiv3{
+                width:200px;
+                height:200px;
+                background-color: green;
+                animation-name:animation2;
+                animation-iteration-count:infinite;
+                animation-duration: 5s;
+                animation-delay: 3s;
+            }
+        </style>
+    </head>
+    <body>
+        <div style="width:300px">
+            This is div for transform demo
+        </div>
+        <div id="mydiv1" style="height:300px; width:400px">
+            With Python, Efteling started the implementation of a new strategy: development from a fairy-tale forest into an all-round amusement park. This change led to many problems with the local community. Environmentalists tried to get the building permit withdrawn, and the park's neighbors feared problems arising from growing visitor numbers. Because of the likely noise pollution, the highest court of public justice ordered the construction to be stopped. After some time, construction recommenced, but legal problems continued for several more years.
+
+                    In 1995, when operating hours were extended until 10 pm, the coaster's 45-decibel noise level became a problem once more. Plans were submitted to the local municipality, describing an extension and complete renovation of the coaster, which would reduce the noise substantially. 
+                  
+        </div>
+        <div id="mydiv3">
+           this is animated
+        </div>
+    </body>
+</html>

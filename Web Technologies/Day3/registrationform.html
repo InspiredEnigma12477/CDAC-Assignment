@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <table>
+        <form>
+            <tr>
+                <td>
+                    <label for="nm"> Name</label>
+                </td>
+                <td>
+                    <input type="text" name="name" id="nm" value="kishori" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="dt"> Date </label>
+                </td>
+                <td>
+                    <input type="date" name="dt" id="dt" min="2022-11-10" max="2022-11-25">
+                </td>
+            </tr>
+            <tr>
+                <td><label for=" mob "> Age</label></td>
+                <td>
+                    <input type="number" name="age " id="age " size="12" min="18" max="60"></td>
+            </tr>
+            <tr>
+                <td><label for=" mob "> Mobile</label></td>
+                <td> <input type="text " name="mob " id="mob " size="12 " pattern="[7-9][0-9]{9} "></td>
+            </tr>
+            <tr>
+                <td><label for="addr "> Address</label></td>
+                <td>
+                    <textarea rows="5 " cols="20 " name="addr " id="addr "></textarea></td>
+            </tr>
+            <tr>
+                <td><label for="gender "> Gender</label></td>
+                <td>
+                    <input type="radio " name="gender " id="female " value="female " checked>
+                    <label for="female ">Female</label><br>
+                    <input type="radio " name="gender " id="male " value="male ">
+                    <label for="male ">male</label>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="Degree ">Degree</label></td>
+                <td>
+                    <input type="radio " name="degree " id="BE " value="BE " checked>
+                    <label for="BE ">BE</label>
+                    <input type="radio " name="degree " id="Btech " value="Btech ">
+                    <label for="Btech ">Btech</label>
+                    <input type="radio " name="degree " id="MSC " value="MSC ">
+                    <label for="MSC ">MSC</label>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="hobbies ">Hobbies</label></td>
+                <td>
+                    <input type="checkbox " name="hobbies " id="Reading " value="Reading ">
+                    <label for="Reading ">Reading</label>
+                    <input type="checkbox " name="hobbies " id="biking " value="biking ">
+                    <label for="biking ">biking</label>
+                    <input type="checkbox " name="hobbies " id="trekking " value="trekking ">
+                    <label for="trekking ">trekking</label>
+                    <input type="checkbox " name="hobbies " id="sleeping " value="sleeping ">
+                    <label for="sleeping ">sleeping</label>
+                    <input type="checkbox " name="hobbies " id="dancing " value="dancing ">
+                    <label for="dancing ">dancing</label>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="city ">city</label></td>
+                <td>
+                    <select name="city " id="city ">
+                        <option value="1 ">-----select one---</option>
+                       <option value="pune ">Pune</option>
+                       <option value="mumbai ">Mumbai</option>
+                       <option value="nashik ">Nashik</option>
+                       <option value="nagpur ">Nagpur</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <button type="submit " name="btn " id="btn " value="submit ">Register user</button>
+                    <button type="reset " name="btn " id="btn1 " value="clear ">clear form</button></td>
+            </tr>
+        </form>
+    </table>
+
+</body>
+
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        var worker1;
+
+        function startjob() {
+            console.log("start job executed");
+            //checks whether worker thread is supported
+            if (typeof(worker) !== undefined) {
+                if (worker1 === undefined && typeof(worker1) !== undefined)
+                    worker1 = new Worker("myjob.js");
+                worker1.onmessage = function(event) {
+                    document.getElementById("myp").innerHTML = event.data;
+                }
+            }
+            for (var i = 0; i < 10; i++) {
+                console.log("in start job outside if", i)
+            }
+        }
+
+        function stopjob() {
+            if (worker1 !== undefined) {
+                worker1.terminate();
+                worker1 = undefined;
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <button type="button" name="btn" onclick="startjob()">start job</button>
+    <button type="button" name="btn" onclick="stopjob()">stop job</button><br> Data is :
+    <p id="myp"></p>
+</body>
+
+</html>
