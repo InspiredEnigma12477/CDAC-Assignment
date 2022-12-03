@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var a=10;
+        var a=34;
+        let b=12;
+        //let b=34;    ///redeclaration is not allowed in let
+        document.write("this is value of a: "+a+"b : "+b+"<br>");
+        //template operator
+        document.write(`this is value of a: ${a} b : ${b}`);
+        //var is global or function scope
+        //let blocked scope
+        for(var i=0;i<5;i++){
+            b++;
+        }
+        document.write(`this is value of i: ${i}`);
+        for(let j=0;j<5;j++){
+            b++;
+        }
+        //document.write(`this is value of i: ${j}`);
+
+        function f1(){
+              var x=45;
+              let y=46;
+              if(x>5){
+                var p=20;
+                let q=30;
+                document.write("<br> y is : "+y)
+              }
+              document.write("<br> p is : "+p);
+              //document.write("<br> q is : "+q); //error
+              document.write("<br> x is : "+x);
+
+              document.write("<br> y is : "+y);
+        }
+        f1(); //call f1 function
+
+        //variable hoisting is allowed in var but not allowed in let
+        var s;   //this will get automatically added and executed because of variable hoisting
+        document.write(`the value : ${s}`);
+        var s=39;
+
+        //var t
+        document.write(`the value : ${t}`);
+        let t=39;
+
+        const c=34;
+        const f1=function(){
+s
+        }
+
+        f1=45;
+
+
+    </script>
+</body>
+</html>

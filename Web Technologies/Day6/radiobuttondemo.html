@@ -1,0 +1,55 @@
+<html>
+    <script>
+        function calculate(ev){
+            alert("Hello");
+            var n1=parseInt(document.getElementById("n1").value);
+            var n2=parseInt(document.getElementById("n2").value);
+            var arr=document.getElementsByName("operation");
+            for(var i=0;i<arr.length;i++){
+                if(arr[i].checked){
+                    var op=arr[i].value;
+                }
+            }
+
+            var v=document.getElementById("mydiv");
+            switch(op){
+                case "+":
+                    var ans=n1+n2;
+                    v.innerHTML=`Addition ${n1+n2}`;
+                    break;
+                case "-":
+                    var ans=n1-n2;
+                    v.innerHTML=`Subtraction ${n1-n2}`;
+                    break;
+                case "/":
+                    var ans=n1/n2;
+                    v.innerHTML+=`division ${n1/n2}`;
+                    break;
+                case "*":
+                    var ans=n1*n2;
+                    v.innerHTML=`Multiplication ${n1*n2}`;
+                    break;
+            }
+            document.getElementById("n1").value="";
+            document.getElementById("n2").value="";
+            document.getElementById("result").value=ans;
+
+
+        }
+    </script>
+    <body>
+        <form>
+            num1: <input type="text" name="n1" id="n1">
+            num2: <input type="text" name="n2" id="n2">
+            Result: <input type="text" name="result" id="result" readonly>
+            <input type="radio" name="operation" id="btn" value="+"><label for="btn">addition</label></button>
+            <input type="radio" name="operation" id="btn1" value="-"><label for="btn1">subtraction</label></button>
+            <input type="radio" name="operation" id="btn2" value="/"><label for="btn2">division</label></button>
+            <input type="radio" name="operation" id="btn3" value="*"><label for="btn3">multiplication</label></button>
+            <button type="button" name="btn" id="btn4" onclick="calculate()">calculate</button>
+        </form>
+        <div id="mydiv">
+           Answer: 
+        </div>
+    </body>
+</html>

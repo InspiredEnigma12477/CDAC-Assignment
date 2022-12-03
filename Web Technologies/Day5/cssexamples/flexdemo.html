@@ -1,0 +1,33 @@
+<html>
+    <style>
+        .fcontainer{
+            display:flex;
+            height:400px;
+            background-color:blue;
+            flex-direction: row;
+            /* flex-wrap:wrap; */
+            /* flex-wrap:wrap  wrap-reverse nowrap; */
+            justify-content:space-around;
+            /* flex-direction: row-reverse column-reverse row */;
+            /* justify-content:space-between center flex-start flex-end; */
+           /*  flex-flow:row wrap */
+        }
+        .fchild{
+            border:2px solid red;
+            width:50px;
+            height:50px;
+            background-color:cyan;
+            margin:10px;
+        }
+    </style>
+    <body>
+        <div class="fcontainer">
+            <div class="fchild" style="order:10;flex-grow:2">1</div>
+            <div class="fchild" style="order:1">2</div>
+            <div class="fchild">3</div>
+            <div class="fchild" style="order:2;flex-grow:2">4</div>
+            <div class="fchild" style="flex-shrink:5">5</div>
+            <div class="fchild" style="align-self:center">6</div>
+        </div>
+    </body>
+</html>

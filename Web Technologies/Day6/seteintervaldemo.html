@@ -1,0 +1,26 @@
+<html>
+    <head>
+        <Script>
+            var dateinterval;
+            function displaydate(){
+                var dt=new Date();
+                document.getElementById("mydiv").innerHTML=dt;
+            }
+            function showdate(){
+                dateinterval=setInterval(displaydate,1000);
+            }
+            function stopinterval(){
+                clearInterval(dateinterval);
+            }
+            
+
+        </Script>
+    </head>
+    <body>
+        <button type="button" name="btn" id="btn" onclick="showdate()">set interval</button>
+        <button type="button" name="btn" id="btn" onclick="stopinterval()">stop interval</button>
+        <div id="mydiv">
+
+        </div>
+    </body>
+</html>

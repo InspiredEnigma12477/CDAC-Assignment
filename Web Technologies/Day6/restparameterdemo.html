@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function f1(x,y){
+            document.write("in f1");
+           console.log(arguments);
+           for(var i=0;i<arguments.length;i++){
+            document.write(arguments[i]+"<br>");
+           }
+           document.write("---------------------------<br>");
+           for(var v of arguments){
+            document.write(v+"<br>");
+           }
+        }
+        f1();
+        f1(1,2,3,4,5)
+        f1(1,2)
+        var f2=(x,y,...arr)=>{
+            document.write("in f2 function");
+            document.write(x+"  "+y);
+            for(var v of arr){
+            document.write(v+"<br>");
+           }
+        }
+        f2(10,20,3,4,5,6,"ssdf")
+    </script>
+</body>
+</html>

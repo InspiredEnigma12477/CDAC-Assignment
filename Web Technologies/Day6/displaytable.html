@@ -1,0 +1,30 @@
+<html>
+    <head>
+        <script>
+            function table(){
+                num=parseInt(document.getElementById("num").value);
+                alert(isNaN(num)+"====="+isFinite(num))
+                if(!isNaN(num)){
+                    for(i=1; i<=10;i++){
+                        sol=num*i;
+                        document.getElementById("para").innerHTML+=num+" * "+i+" = "+sol+"<br>";
+
+                    }
+                }else{
+                    document.getElementById("para").innerHTML="pls enterr the number";
+                    document.getElementById("num").value="";
+                    document.getElementById("num").setAttribute("style","background-color:yellow"),
+                    document.getElementById("num").focus();
+                }
+
+            }
+        </script>
+    </head>
+    <body>
+        <input type="number" name="num" id="num" required><br>
+        <button type="button" id="btn" onclick="table()">Show Table</button>
+        <div id="para">
+
+        </div>
+    </body>
+</html>

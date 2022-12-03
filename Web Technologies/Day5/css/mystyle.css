@@ -1,0 +1,15 @@
+h1::before{
+    content:"this is before h1";
+}
+h1::after{
+    content:"-----this is after h1";
+}
+article p:nth-child(2)::first-line,h1,h3{
+background-color:yellow;
+color:blue;
+border:2px dashed red;
+font-size:40px
+/* border-style:dashed;
+border-width:2px;
+border-color:red; */
+}

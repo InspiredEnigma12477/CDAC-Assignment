@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var str="This is String";
+        document.write("character at i th position--->"+str.charAt(3)+"<br>") //s
+        document.write("substring between 2 to 7 character--->"+str.substr(2,5)+"<br>")//is is
+        document.write("uppercase--->"+str.toUpperCase()+"<br>");
+        document.write("Lowercase--->"+str.toLowerCase()+"<br>");
+        document.write("replace--->"+str.replace("is","are")+"<br>");
+        document.write("startswith this--->"+str.startsWith("this")+"<br>");
+        document.write("startswith This--->"+str.startsWith("This")+"<br>");
+        document.write("endsswith ing--->"+str.endsWith("ing")+"<br>");
+        document.write("includes St--->"+str.includes("St")+"<br>");
+        document.write("concate str and 'test' --->"+str.concat("test")+"<br>");
+        document.write("includes St--->"+str.indexOf("St")+"<br>");
+        str1="123:Rajan:designer";
+        //convert : separated string into | seperated string
+        arr=str1.split(":")
+        document.write("length : "+arr.length);
+        console.log(arr);
+        str2=arr.join("|");
+        var s="to be not be";
+        var re=/be/gi;
+        document.write("replace with regexp"+s.replace(re,"exists")+"<br>");
+        document.write("match with regexp"+s.match(re)+"<br>");
+
+        //search match and replace
+        var test="Something is there somewhere"
+        var re=/s.*?e/gi
+         document.write("search position of first occurance--->"+test.search(re)+"<br>") //position of first match
+         document.write("array of all matches---> "+test.match(re)+"<br>"); //all occurances
+         document.write("replace all matches---> "+test.replace(re,"any")+"<br>");
+         document.write("slice the string from 6 the position onward---> "+test.slice(6)+"<br>");
+         document.write("slice the string between 2 and 8 ---> "+test.slice(2,9)+"<br>"); //end index is exxcluded
+         
+
+
+
+
+
+
+
+    </script
+</body>
+</html>

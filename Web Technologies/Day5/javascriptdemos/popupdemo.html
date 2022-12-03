@@ -1,0 +1,37 @@
+<html>
+    <head>
+        <script>
+            function showmessage(event){
+                console.log(event);
+                window.alert("Hello world!!!");
+                
+            }
+            function showconfirm(event){
+                var ans=confirm("do you want to continue(y/n)?")
+                if(ans){  //click on ok
+                    alert("you selected "+ans)
+                }
+                else{
+                    alert("you selected cancel button   "+ans)
+                }
+            }
+            function showaddition(){
+                num1=prompt("enetr num1")
+                num2=prompt("enter num2")
+                addition=parseInt(num1)+parseInt(num2);
+                alert("addition : "+addition);
+            }
+        </script>
+
+    </head>
+    <body>
+        <script>
+            console.log(window.location);
+            document.write("Hello world!");
+        </script>
+
+        <button type="button" name="btn" onclick="showmessage(event)">show msg</button>
+        <button type="button" name="btn" onclick="showconfirm(event)">show confirm</button>
+        <button type="button" name="btn" onclick="showaddition()">show addition</button>
+    </body>
+</html>

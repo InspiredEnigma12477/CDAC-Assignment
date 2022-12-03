@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+<script>
+    function showdata(){
+        var nm=document.getElementById("nm").value;
+        var addr=document.getElementById("addr").value;
+        var win=window.open("new window");
+        win.document.write("Name :"+nm+"<br>Address: "+addr)
+    }
+    /* var showdata=function(){
+
+    }
+    var showdata=()=>{
+
+    }
+ */
+</script>
+</head>
+<body>
+    <form>
+        name:<input type="text" name="nm" id="nm">
+        address : <input type="text" name="addr" id="addr">
+        <button type="button" name="btn" id="btn" onclick="showdata()">Show data</button>
+    </form>
+
+</body>
+</html>

@@ -1,0 +1,35 @@
+<html>
+    <script>
+        function calculate(ev){
+            alert("Hello");
+            var n1=parseInt(document.getElementById("n1").value);
+            var n2=parseInt(document.getElementById("n2").value)
+            switch(ev.target.id){
+                case "btn":
+                    document.write(`Addition ${n1+n2}`)
+                    break;
+                case "btn1":
+                    document.write(`Subtraction ${n1-n2}`)
+                    break;
+                case "btn2":
+                    document.write(`division ${n1/n2}`)
+                    break;
+                case "btn3":
+                    document.write(`Multiplication ${n1*n2}`)
+                    break;
+            }
+
+
+        }
+    </script>
+    <body>
+        <form>
+            num1: <input type="text" name="n1" id="n1">
+            num2: <input type="text" name="n2" id="n2">
+            <button type="button" name="btn" id="btn" value="+" onclick="calculate(event)" >addition</button>
+            <button type="button" name="btn" id="btn1" value="-" onclick="calculate(event)">subtraction</button>
+            <button type="button" name="btn" id="btn2" value="/" onclick="calculate(event)">division</button>
+            <button type="button" name="btn" id="btn3" value="*" onclick="calculate(event)">multiplication</button>
+        </form>
+    </body>
+</html>
