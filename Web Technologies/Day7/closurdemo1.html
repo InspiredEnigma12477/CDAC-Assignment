@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        var showcount=(function(){
+            var  count=0;
+            return function(){
+                count++;
+                document.getElementById("mydiv").innerHTML=`you clicked ${count} time`;
+            }
+        })()
+        
+        function f1(){
+           var count=34;
+        }
+    </script>
+</head>
+<body>
+    <button type="button" name="btn" id="btn" onclick="showcount()">
+    get count</button>
+    <button type="button" name="btn" id="btn" onclick="f1()">
+        change count</button>
+    <div id="mydiv"> 
+
+    </div>
+</body>
+</html>

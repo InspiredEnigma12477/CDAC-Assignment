@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .myclass{
+            background-color: yellow;
+            border:2px solid red;
+            border-radius: 7px;
+        }
+    </style>
+    <script>
+        var i=1;
+        function displaypara(){
+        //alert("hello");
+        var myp=document.createElement("p");  /// <p></p>
+        var txt=document.createTextNode("thi is para"+i); //this is para
+  
+        myp.appendChild(txt); ///<p>this is para 1</p>
+        myp.setAttribute("id","p"+i);
+        i++;
+        myp.classList.add("myclass");
+        document.getElementById("mydiv").appendChild(myp);
+        var inp=document.createElement("input") //<input>
+        inp.type="text";  ///inp.setAttribute("type","text")
+        inp.name="nm"
+        document.getElementById("mydiv").appendChild(inp);
+       }
+       function assignevent(){
+         var btn=document.getElementById("hello");
+         btn.addEventListener("click",displaypara);
+
+       }
+       function removeevent(){
+        var btn=document.getElementById("hello");
+         btn.removeEventListener("click",displaypara);
+       }
+    </script>
+    
+
+</head>
+<body>
+    <button type="button" name="btn" id="hello">Add para</button>
+    <button type="button" name="btn" onclick="assignevent()">assign event</button>
+    <button type="button" name="btn" onclick="removeevent()">remove event</button>
+    <div id="mydiv"></div>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //create array
+        var arr=new Array(12,13,1,45,6,"sdhfhj",0);
+        var arr2=[2,3,4,"hkjhj",78,56,7,8,67,4];
+        //add new element at the end
+        arr2.push(45);
+        //add new element at the beginning
+        arr2.unshift(50);
+        document.write("after adding data"+arr2+"<br>");
+        //remove data from the end
+        arr2.pop();
+        //remove the data from the begining
+        arr2.shift();
+        document.write("after deleting first and last data"+arr2+"<br>");
+        arr2[3]=344; //overwwrite the value at 3 rd index position
+        //splice is used for deleting from the given position
+        //pos=4;
+        //arr2.splice(pos,1)   ///it will delete 1 value from pos postition
+        //document.write("after deleting pos==4 and last data"+arr2+"<br>");
+        //splice is used for replace at the given position
+        pos=4;
+        arr2.splice(pos,1,100,200,300,30,40)   ///it will delete 1 value from pos postition
+        document.write("after deleting pos==4 and last data"+arr2+"<br>");
+        pos=4;
+        arr2.splice(pos,0,4356)   ///it will delete 0 value from pos postition and add 4356 at position 4
+        document.write("after deleting pos==4 and last data"+arr2+"<br>");
+
+
+    </script>
+</body>
+</html>

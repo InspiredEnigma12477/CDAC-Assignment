@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        //self calling function
+        //if you want to execute the function only once
+        
+
+        (function (){
+           alert("hello");
+        })();
+
+        
+        function displaydata(){
+            alert("hello");
+            arr=[1,2,3,4];
+            //closure function--is a function which has access to all variables in parent
+            //scope
+
+            function showarr(){
+                for(var num of arr){
+                document.write(num);
+                }   
+           }
+           
+            showarr(arr);
+            alert("testing");
+            showarr(arr);
+        }
+       
+    </script>
+</head>
+<body>
+    <button type="button" name="btn" id="btn" onclick="displaydata()">click me</button>
+</body>
+</html>

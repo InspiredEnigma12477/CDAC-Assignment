@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        arr=[1,2,3,45,5,6,13,16,27];
+        //delete 13
+        /*for(var i=0;i<arr3.length;i++){
+            if(arr[i]===13){
+
+            }
+        } */
+        //var pos=arr.findIndex(x=>x==13);
+        //arr.splice(pos,1)
+        //to find the position of first value in the array which satisfies the condition
+        document.write("position 13   " +arr.findIndex(x=>{console.log(x);return x==13})+"<br>");
+        //to find the first value in the array which satisfies the condition
+        document.write("position 13   " +arr.find(x=>x>13)+"<br>");
+        //find all values which are <13
+        document.write("values < 13 ---->" +arr.filter(x=>x<13)+"<br>");
+
+        
+    </script>
+    
+</body>
+</html>

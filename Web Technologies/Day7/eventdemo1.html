@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function displayevent(event){
+           console.log(event.target);
+           console.log(event.type);
+           console.log(event);
+        }
+    </script>
+</head>
+<body>
+    <p onclick="displayevent(event)" onmouseover="displayevent(event)" onmouseleave="displayevent(event)">this is p</p>
+    <input type="text" name="nm" onkeypress="displayevent(event)" onfocus="displayevent(event)" onblur="displayevent(event)" onchange="displayevent(event)"
+
+</body>
+</html>

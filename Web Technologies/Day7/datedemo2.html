@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function showdate(){
+            var dt=new Date("2022-04-28")
+            alert(dt);
+            var dt2=new Date(2022,1,23);
+            alert(dt2);
+            //gettime will conver date in milliseconds
+            var diff=dt2.getTime()-dt.getTime();
+            var days=diff/(1000*3600*24)  ///convert milliseconds ino days
+            alert(days);
+            alert(dt2-dt);  //difference in milliseconds
+            
+        }
+        function shownewdate(){
+            alert("blur event occur");
+            dt1=document.getElementById("dt1").value;
+            alert(typeof(dt1));
+            var dt3=new Date(dt1);
+            alert(typeof(dt3));
+            alert(dt3);
+            //alert(dt3.getFullYear()+"/"+dt3.getMonth());
+        }
+    </script>
+</head>
+<body onload="showdate()">
+    <input type="date" name="dt1" id="dt1" onblur="shownewdate()">
+
+    <div>
+
+    </div>
+    
+</body>
+</html>
