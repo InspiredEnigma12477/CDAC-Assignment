@@ -1,0 +1,123 @@
+Today's topics
+Attaching debugger
+Revise Nested classes
+Generics
+Overview of Collection Framework
+Enter List.
+
+Revision
+
+How many main types of nested classes in java  : 2
+
+Which ones ? static nested class or non static nested class(inner class)
+
+
+
+1. non static nested class
+(inner class)
+class Outer 
+{
+   private int i;
+   //static n non static members : YES
+//can outer class directly(w/o instance) access even private members of the inner cls ? NO
+It's possible after creating the instance of the inner class
+
+   void show()
+   {
+     //how to access j ?
+Inner in=new Inner(...);
+     sop(in.j);     
+   }
+   //static method : in outer class : not asso with outer class instance
+   static void print()
+   {
+      //how to access j ? --create outer cls instance ---create inner cls instance
+     Outer.Inner in=new Outer(...).new Inner(...);
+     sop(in.j);
+   }
+   class Inner {
+ private int j;
+      //what can it contain? : non static data n methods,static final data members
+     //What it  can't contain : static (non final) data, static methods, static init block
+     //can inner class methods DIRECTLY(w/o instantiation) access outer's private members : YES
+     //WHY : All inner classes have implicit access to outer class instance(eg : Outer.this)
+     void print()
+    {
+       sop(i+"  "+j);//Outer.this.i , this.j
+    }
+   }
+}
+Can you create directly inner cls instance ? NO
+
+class Tester
+{
+  psvm(...)
+  {
+   //show different ways to create inner class instance ? YES
+//in 2 lines
+   Outer o1=new Outer(...);
+   Outer.inner i1=o1.new Inner(...);
+//OR
+   Outer.inner i2=new Outer(...).new Inner(...);
+  }
+}
+------------------------------------------
+Co variance : 
+refer to day3_help \ readme inheritance polymorphism.txt
+Solve co variance demo : code sample
+
+--------------------------
+
+1. Generics
+refer to the readme 
+
+What is it ? : Paramterized types
+Applicable for : classes , interfaces, enums , methods , constrs.
+
+Why ? 
+To Add type safety at the compile time
+1. Avoids explicit type casting
+2. Type mismatch errors are caught at the compile time
+
+--------------------------
+2. Collection Framework Overview
+
+Enter : List implementation classes : ArrayList
+
+Test basic API using Integer List n then apply it to vehicle showroom scenario.
+
+Objective 
+
+1. Create empty AL to store vehicles in a showroom
+
+2. Accept  vehicle details from user n store it in AL(along with validation rules)
+No dups please !
+
+2.5 After testing vehicle registration in showroom , add sample data to store 5 vehicles in the showroom.
+
+3. Display all vehicle details
+Using for-each & also using Iterator(later)
+
+4. Fetch Vehicle details from AL
+i/p : PK (chasis no)
+o/p : in case of success : display vehicle details o.w throw custom exception
+
+5. Update Vehicle price
+i/p : chasis no & new price
+o/p : in case of success : update vehicle details o.w throw custom exception
+
+
+6. Delete vehicle details
+i/p : chasis no
+
+7. Apply discount to all vehicles manufactured before a specific date n category
+i/p :  date n category n discount
+
+
+8. Display vehicle chasis no n price  , of all the vehicles dispatched to a specific city
+i/p : city
+
+100. Exit
+
+
+
