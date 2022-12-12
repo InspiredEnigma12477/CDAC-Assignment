@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div{
+            width:200px;
+            height:200px;
+            background-color:yellow;
+            border:2px solid red;
+            border-radius: 6px;
+        }
+    </style>
+    <script src="./js/jquery.js"></script>
+    <script>
+        $(document).ready(function(){
+            $("#btn").click(function(){
+                /*$('div').prepend("<p>This is prepend para");
+                $('div').append("<p>This is append para")
+                $('div').css("font-size","40px");
+                $('div').animate({"background-color":"cyan","margin":"20px","width":"400px"},2000,function(){
+                    alert("anmation complete");
+                })*/
+                //function chaining
+                $('div').prepend("<p>This is prepend para")
+                       .append("<p>This is append para")
+                       .css("font-size","40px")
+                       .animate({"background-color":"cyan","margin":"20px","width":"400px"},2000,function(){
+                            alert("anmation complete");
+                       });
+            })
+        });
+    </script>
+</head>
+<body>
+    <button type="button" name="btn" id="btn">animate</button>
+    <div>
+        <p>This is para 1</p>
+        <p>This is para 2</p>
+        <p>This is para 3</p>
+    </div>
+</body>
+</html>

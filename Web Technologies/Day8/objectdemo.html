@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var ob={id:1,name:"Rajan",desg:"game designer",display:function(){
+            document.write(`Id : ${this.id} name: ${this.name} desg: ${this.desg}`)
+        }};
+        alert(ob.id+"   "+ob["name"]+"   "+ob.desg);
+        console.log(ob)
+        ob.display();
+        //constructor function
+        var person=function(id,nm,mob){
+            this.id=id;
+            this.name=nm;
+            this.mob=mob;
+        }
+
+        var employee=function(dept,desg){
+            this.dept=dept;
+            this.desg=desg;
+        }
+        p=new person(12,"Revati","22222");
+        q=new employee("HR","manager");
+        q.sal=3333;
+        q2=new employee("admin","sr. mgr");
+        q.__proto__=p;
+        for(var prop in q){
+            if(q.hasOwnProperty(prop))
+                  document.write("<br> has own property"+prop+"---->"+q[prop]);
+            else
+            document.write("<br> parent property "+prop+"---->"+q[prop]);       
+        }
+        ob1=Object.create(null);
+        ob1.location="Pune";
+        ob1.name="xxxx";
+        
+
+
+
+
+
+
+        
+
+
+
+
+
+    </script>
+</body>
+</html>

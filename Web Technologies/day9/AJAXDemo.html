@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        //other url for assignment
+        //url="https://dummy.restapiexample.com/api/v1/employees"
+        //declare global variable
+        var xhr = null;
+
+        function displalyuser(ob) {
+            str = "Id: " + ob.id + "<br>";
+            str = str + "USer Id : " + ob.userId + "<br>"
+            str = str + "Title  : " + ob.title + "<br>"
+            str = str + "Body : " + ob.body + "<br>"
+            document.getElementById("mydiv1").innerHTML = str;
+        }
+
+        function sendrequestwithid() {
+            //retrives the index position of selected option
+            var pos = document.getElementById("userdata").selectedIndex;
+            //retrieves the value of selected option
+            var val = document.getElementById("userdata").options[pos].value;
+            alert(val);
+            //generating new url
+            var url = "https://jsonplaceholder.typicode.com/posts/" + val;
+            alert(url);
+            //step 1 ---generate the object
+            getxhrobject();
+            //step 2: generate the rquest
+            // 2.Generate the request
+            xhr.open("GET", url, true);
+            //step3 ----genarate function for onreadystatetechange
+            xhr.onreadystatechange = function() {
+                    // alert("readystate: " + xhr.readyState + "status" + xhr.status);
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        // alert(xhr.responseText);
+                        console.log(xhr.responseText);
+                        // assign jsondata to a variable
+                        jsondata = xhr.responseText;
+                        //convert it into javascript object
+                        javascriptdata = JSON.parse(jsondata);
+                        displalyuser(javascriptdata);
+
+                    }
+                }
+                //step 4 ----- send the request
+            xhr.send();
+
+
+        }
+
+        function displaydropdown(arr) {
+            str = "<select id='userdata'  onchange='sendrequestwithid()'>";
+            for (var ob of arr) {
+                str = str + "<option value='" + ob.id + "'>" + ob.title + "----" + ob.userId + "</option>";
+
+            }
+            str = str + "</select>";
+            document.getElementById("mydiv").innerHTML = str;
+        }
+
+
+
+        function displayTable(arr) {
+            str = "<table border='2'><tr><th>Id</th><th>user id</th><th>title</th><th>body</th></tr>";
+            for (ob of arr) {
+                str = str + "<tr><td>" + ob.id + "</td><td>" + ob.userId + " </td><td>" + ob.title + "</td><td>" + ob.body + "</td></tr>";
+            }
+            str = str + "</table>";
+            //alert(str);
+            document.getElementById("mydiv").innerHTML += str;
+        }
+
+        function getxhrobject() {
+            //check whether browser supports XMLHttpRequestObject
+            if (window.XMLHttpRequest) {
+
+                xhr = new XMLHttpRequest();
+            } else {
+                xhr = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+
+        }
+
+        function sendRequest() {
+            //step 1 ---generate the object
+            getxhrobject();
+            //step 2: generate the rquest
+            // 2.Generate the request
+            var url = "https://jsonplaceholder.typicode.com/posts/";
+            xhr.open("GET", url, true);
+            //step3 ----genarate function for onreadystatetechange
+            xhr.onreadystatechange = function() {
+                    // alert("readystate: " + xhr.readyState + "status" + xhr.status);
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        // alert(xhr.responseText);
+                        console.log(xhr.responseText);
+                        // assign jsondata to a variable
+                        jsondata = xhr.responseText;
+                        //convert it into javascript object
+                        javascriptdata = JSON.parse(jsondata);
+                        //convert array into dropdown box
+                        displaydropdown(javascriptdata);
+                        //convert array into table formate
+                        displayTable(javascriptdata);
+
+                    }
+                }
+                //step 4 ----- send the request
+            xhr.send();
+        }
+    </script>
+</head>
+
+<body>
+    <div>
+        <img src="../images/clock.jpg" height="200px" width="600px"></img>
+    </div>
+    <div>
+        <p style="color:red">
+            this is para this is second<br> line klsdj j klj ksj
+            <span style="color:blue;border:2px solid blue">jsd ksdjkjskldjf</span>
+        </p>
+        <hr width=" 60% " color="red " align="left " size="3 " />
+        <p>
+            this is para this is second<br> line klsdj j klj ksj jsd ksdjkjskldjf
+
+        </p>
+        <p>
+            <i><u> <b>this is para this is second</b></u>
+            </i>
+
+    </div>
+    <button type="button" id="btn" onclick="sendRequest()">Send request</button>
+    <div id="mydiv">
+
+    </div>
+    <div id="mydiv1">
+
+    </div>
+    </div>
+</body>
+
+</html>

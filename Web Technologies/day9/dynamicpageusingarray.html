@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        arr=[100,20,30,400];
+        function display(){
+            str="<ul>";
+            for(var i of arr){
+               str=str+"<li>"+i+"</li>";  //10<br>20<br>30<br>4<br>
+              
+            }
+            str=str+"</ul>";
+            document.getElementById("mydiv").innerHTML=str; 
+        }
+
+    </script>
+</head>
+<body>
+    <button type="button" name="btn" id="btn" onclick="display()">show data</button>
+    <div id="mydiv">
+       
+
+    </div>
+</body>
+</html>

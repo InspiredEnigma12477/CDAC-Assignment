@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        var prodarr=[{pid:1,pname:"Chair",price:2345},
+        {pid:2,pname:"Table",price:5345},
+        {pid:3,pname:"Sofa",price:60000},
+        {pid:1,pname:"Chair",price:2345},
+        {pid:10,pname:"Chair1111",price:2345},
+        {pid:12,pname:"Chair111222",price:4567}];
+
+        //display table dynamically usig prodarr if no array is passed
+        //otherwise display table dynamically usig arr
+        function display(arr=prodarr){
+
+          str="<table><tr><th>Product id</th><th>product name</th><th>price</th></tr>";
+            for(var ob of arr){
+                str=str+"<tr><td>"+ob.pid+"</td><td>"+ob.pname+"</td><td>"+ob.price+"</td></tr>"
+            }
+
+          str=str+"</table>";
+          //alert(str);
+          document.getElementById("mydiv").innerHTML=str; 
+        }
+
+        //display only products in the table whose price > given value in the textt box
+        function selectbyprice(){
+            //retrieve the value from the text box
+            pr=parseInt(document.getElementById("price").value);
+            var newarr=prodarr.filter(x=>x.price>=pr);
+            display(newarr);   //calling function to display newarr in table form
+
+        }
+        function  selectbyname(){
+            nm=document.getElementById("pnm").value;
+            console.log(event.target.value);
+            var newarr=prodarr.filter(x=>x.pname.includes(nm));
+            display(newarr);
+        }
+        function showmydatabyName(event){
+            console.log(event.key+"====="+event.which);
+            selectbyname();
+        }
+
+        //this will display array after pressing enter key in text box
+        //function will be called after every keypress
+        function showmydata(event){
+            console.log(event.key+"====="+event.which);//event.which will give asccii value
+            if (event.which==13){
+                selectbyprice()
+            }
+        }
+    </script>
+</head>
+<body>
+    <input type="text" name="pnm" id="pnm" onkeypress="showmydatabyName(event)"><br>
+    <button type="button" name="btn" id="btn2" onclick="selectbyname()">show by name</button>
+    <input type="text" name="pricerange" id="price" onkeypress="showmydata(event)"><br>
+    <button type="button" name="btn" id="btn1" onclick="selectbyprice()">show by price</button>
+    <button type="button" name="btn" id="btn" onclick="display()">show data</button>
+    <div id="mydiv">
+
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        var prodarr=[{pid:1,pname:"Chair",price:2345},
+        {pid:2,pname:"Table",price:5345},
+        {pid:3,pname:"Sofa",price:60000}];
+        function displaydata(){
+          var str="<select>";
+            for(var ob of prodarr){
+                str+=`<option value='${ob.pid}'>${ob.pname}</option>`
+            }
+            str=str+"</select>";
+            alert(str);
+            document.getElementById("mydiv").innerHTML=str; 
+        }
+    </script>
+</head>
+<body onload="displaydata()">
+    <div id="mydiv">
+        
+    </div>
+</body>
+</html>

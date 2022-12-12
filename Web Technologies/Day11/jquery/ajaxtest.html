@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="./js/jquery.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            function displayTable(arr) {
+                let str = "<table border='2' class='myc'><tr><th>User Id</th><th>Id</th>";
+                str += "<th>Title</th><th>Details</th></tr>";
+                for (var e of arr) {
+                    //"<tr><td>Revati</td><td>Baner</td><td>4444444</td></tr>"
+                    str += "<tr><td>" + e.userId + "</td><td>" + e.id + "</td><td>" + e.title + "</td><td>" + e.body + "</td></tr>";
+                }
+                str += "</table>"
+                alert(str);
+                document.getElementById("mydiv").innerHTML = str;
+
+            }
+
+            function displaydetails(ob) {
+                console.log(ob);
+                str = `UserId : ${ob.userId}<br>Id:${ob.id}<br>title:${ob.title}<br>Body:${ob.body}`;
+                //document.getElementById("userdetails").innerHTML = str;
+                $('#userdetails').html(str);
+            }
+
+            $('#btn1').click(function() {
+                $.ajax({
+                    async: true,
+                    url: "https://jsonplaceholder.typicode.com/posts/",
+                    type: "GET",
+                    success: function(result) {
+                        displayTable(result)
+                    },
+                    error: function(xhr, status, error) {
+                        console.log("error occured" + status);
+                    }
+
+                });
+            });
+
+            $('#btn2').click(function() {
+                var v = $('#nm').val();
+                $.ajax({
+                    async: true,
+                    url: "https://jsonplaceholder.typicode.com/posts/" + v,
+                    type: "GET",
+                    success: function(result) {
+                        displaydetails(result)
+                    },
+                    error: function(xhr, status, error) {
+                        console.log("error occured" + status);
+                    }
+
+                });
+            })
+
+
+        });
+    </script>
+</head>
+
+<body>
+    <pre>
+This is httprequest will dirctly go to server
+After you click on the link this entire page will be changed to new response
+It will not update portion of the page
+It is time consuming
+and dosnot give good user experience
+</pre>
+
+    <!--this is HTTP request  using form action attribute and anchor tag href attribute-->
+    <form method="get">
+        Name <input type="text" name="nm" id="nm">
+        <button type="button" name="btn" id="btn2">send request to get single user details</button>
+        <button type="button" id="btn1" name="btn">send request to get All details</button>
+    </form>
+    <div id="userdetails">
+
+    </div>
+    <div id="mydiv">
+
+    </div>
+</body>
+
+</html>

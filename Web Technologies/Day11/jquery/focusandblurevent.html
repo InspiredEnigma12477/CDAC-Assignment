@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function changebackgound(event){
+            event.target.setAttribute("style","background-color:yellow")
+        }
+        function resetbackgroud(event){
+            event.target.setAttribute("style","background-color:white")
+        }
+    </script>
+</head>
+<body>
+    Name1: <input type="text" name="nm" id="nm1" onfocus="changebackgound(event)" onblur="resetbackgroud(event)">
+    Name2: <input type="text" name="nm" id="nm2" onfocus="changebackgound(event)" onblur="resetbackgroud(event)">
+    Name3: <input type="text" name="nm" id="nm3" onfocus="changebackgound(event)" onblur="resetbackgroud(event)">
+    Name4: <input type="text" name="nm" id="nm4" onfocus="changebackgound(event)" onblur="resetbackgroud(event)">
+</body>
+</html>

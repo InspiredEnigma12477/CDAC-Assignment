@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .myclass{
+            background-color: cyan;
+            border:2px solid red;
+            border-radius:6px;
+            width:200px;
+        
+        }
+    </style>
+    <script src="./js/jquery.js"></script>
+    <script>
+        $(document).ready(function(){
+          $('#slideup').change(function(){
+               if($('#slideup').is(":checked")){
+                  $("#mydiv").slideUp(1000,function(){
+                      $("#myp").html("slide up image")
+                  })
+               }
+
+          })
+          $('#slidedown').change(function(){
+               if($('#slidedown').is(":checked")){
+                  $("#mydiv").slideDown(1000,function(){
+                      $("#myp").html("slide down image")
+                  })
+               }
+
+          });
+
+          $('#slidetoggle').change(function(){
+               if($('#slidetoggle').is(":checked")){
+                  $("#mydiv").slideToggle(1000,function(){
+                      $("#myp").html("slide toggle image")
+                  })
+               }
+
+          })
+
+        });
+    </script>
+</head>
+<body>
+    <div id="mydiv" class="myclass">
+     <img src="./images/flowers.png" width="200px" height="200px">  
+    </div>
+    <div>
+        <input type="radio" name="show1" id="slideup"><label for="slideup">slideup</label>
+        <input type="radio" name="show1" id="slidedown"><label for="slidedown">slidedown</label>
+        <input type="radio" name="show1" id="slidetoggle"><label for="slidetoggle">slidetoggle</label>
+    </div>
+    <p id="myp"></p>
+</body>
+</html>

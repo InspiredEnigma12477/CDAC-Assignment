@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .myclass{
+            display:none;
+        }
+
+        .myc{
+            display:block;
+        }
+    </style>
+    <script>
+        var prodarr=[{pid:1,pname:"Chair",price:2345},
+        {pid:2,pname:"Table",price:5345},
+        {pid:3,pname:"Sofa",price:60000}];
+        function displaydata(){
+            var str="<table border='2'><tr><th>Product id</th><th>product name</th><th>price</th></tr>";
+            for(var ob of prodarr){
+                str+=`<tr><td>${ob.pid}</td><td>${ob.pname}</td><td>${ob.price}</td>`
+                    str+=`<td><button type="button" name="btn1" id="del" onclick="deleteproduct(${ob.pid})">delete</button></td></tr>`
+            }
+            str+="</table>";
+            document.getElementById("mydiv").innerHTML=str;
+        }
+        function dispalyform(){
+           document.getElementById("mydiv1").classList.remove("myclass");
+           document.getElementById("mydiv1").classList.add("myc");
+        }
+        function addproduct(){
+            //1.retrieve the data
+            pid=document.getElementById("pid").value;
+            pname=document.getElementById("pname").value;
+            price=document.getElementById("price").value;
+            //2. create a object
+            //ob={pid:pid,panme:pname,price:price}  same as
+            ob={pid,pname,price};
+            //3.add object in the array
+
+            prodarr.push(ob);
+            //4. clear the form
+           /*document.getElementById("pid").value="";
+            document.getElementById("pname").value="";
+            document.getElementById("price").value="";*/
+            document.getElementById("myfrm").reset();
+            //5. hide the form
+            document.getElementById("mydiv1").classList.remove("myc");
+           document.getElementById("mydiv1").classList.add("myclass");
+            //6. display table
+            displaydata();
+        }
+        function deleteproduct(id){
+            //find the position
+            var pos=prodarr.findIndex(x=>x.pid==id)
+            //delete from the position
+            prodarr.splice(pos,1);
+            displaydata();
+        }
+
+    </script>
+</head>
+<body onload="displaydata()">
+    <button type="button" name="btn" onclick="dispalyform()">Add product</button>
+    <div id="mydiv1" class="myclass">
+        <form id="myfrm">
+          Product id: <input type="text" name="pid" id="pid"><br>
+          ProductName: <input type="text" name="pname" id="pname"><br>
+          Product price: <input type="text" name="price" id="price"><br>
+           <button type="button" name="btn" id="btn" onclick="addproduct()">Add data</button>
+        </form>
+ </div>
+    <div id="mydiv">
+        
+    </div>
+    
+</body>
+</html>

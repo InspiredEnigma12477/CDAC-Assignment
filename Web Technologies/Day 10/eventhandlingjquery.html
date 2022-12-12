@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=\, initial-scale=1.0">
+    <title>Document</title>
+    <!-- <script src="./js/jquery.js"></script> -->
+   <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+      
+        
+       $(document).ready(function(){
+        var count=0;
+        $("#btn1").click(function(){
+             
+             
+              $("#btn").on("click",function(){
+                count++;
+                $("body").append("<input type='text' name='nm' id='nm"+count+"'>");
+                $(":input[type='text']").focus(function(){
+                    $(this).css("background-color","yellow")
+                });
+                $(":input[type='text']").blur(function(){
+                    $(this).css("background-color","white")
+                })
+              })
+
+          });
+          $("#btn1").one("click",function(){
+              $("#btn").on("click",function(){
+                count++;
+                $("body").append("<input type='text' name='nm' id='nm"+count+"'>");
+                $(":input[type='text']").focus(function(){
+                    $(this).css("background-color","yellow")
+                });
+                $(":input[type='text']").blur(function(){
+                    $(this).css("background-color","white")
+                })
+              })
+
+          });
+
+          $('#btn2').click(function(){
+            $("#btn").off("click");
+
+          })
+
+
+       })
+
+    </script>
+</head>
+<body>
+    <button type="button" name="btn" id="btn">add text box event</button> 
+   <button type="button" name="btn" id="btn1">assign event</button>
+   <button type="button" name="btn" id="btn2">remove event</button>  
+</body>
+</html>

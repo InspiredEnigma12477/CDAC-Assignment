@@ -1,0 +1,28 @@
+
+body{
+    background-color: red;
+}
+.body{
+    background-color: aqua;
+}
+#body{
+    background-color: blue;
+}
+pise.body{
+    background-color: yellow;
+}
+shivamsakore{
+    background-color: green;
+}
+
+#body p:nth-child(3){
+    background-color: pink;
+}
+
+h1+p{
+    background-color: orange;
+}
+
+h1~p{
+    background-color: orange;
+}

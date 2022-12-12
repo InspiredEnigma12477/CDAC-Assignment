@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #mydiv{
+            border:2px solid red;
+            border-radius:6px;
+            
+        }
+    </style>
+    <script src="./js/jquery.js"></script>
+    <script>
+        $(document).ready(function(){
+            function displaytable(result){
+                str="<table><tr><th>Id </th><th>user ID</th><th>title </th><th>body</th></tr>"
+                for(var ob of result){
+                    str=str+"<tr><td>"+ ob.id+"</td><td>"+ ob.userId+"</td><td>"+ ob.title+"</td><td>"+ob.body+"</td></tr>"
+                }    
+                str+="</table>"; 
+                $("#mydiv").html(str);   
+            }
+          $('#btn').click(function(){
+              $.ajax({
+                async:true,
+                url:"https://jsonplaceholder.typicode.com/posts",
+                type:"GET",
+                success:function(result){
+                    displaytable(result);
+
+                },
+                error:function(xhr,status,error){
+                     alert("error occured, status"+status);
+                     console.log(error);
+                }
+              })
+          })
+        })
+    </script>
+</head>
+<body>
+    <button type="button" name="btn" id="btn">get Data</button>
+    <div id="mydiv">
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .myclass{
+            background-color: cyan;
+            border:2px solid red;
+            border-radius:6px;
+            width:200px;
+        
+        }
+    </style>
+    <script src="./js/jquery.js"></script>
+    <script>
+        $(document).ready(function(){
+          $('#fadein').change(function(){
+            if($("#fadein").is(":checked")){
+                 $("#mydiv").fadeIn(1000,function(){
+                      $('#myp').html("fadein image")
+                 })
+            }
+
+          });
+
+          $("#fadeout").change(function(){
+            if($('#fadeout').is(":checked"))
+            {
+                $("#mydiv").fadeOut(1000,function(){
+                    $('#myp').html("fadeout the image")
+                })
+            }
+          });
+
+          $("#fadeto").change(function(){
+             if($("#fadeto").is(":checked")){
+                $("#mydiv").fadeTo(2000,0.3,function(){
+                    $("#myp").html("fade To the image")
+                });
+             }
+
+          })
+
+
+        });
+    </script>
+</head>
+<body>
+    <div id="mydiv" class="myclass">
+     <img src="./images/flowers.png" width="200px" height="200px">  
+    </div>
+    <div>
+        <input type="radio" name="show1" id="fadein"><label for="fadein">fadein</label>
+        <input type="radio" name="show1" id="fadeout"><label for="fadeout">fadeout</label>
+        <input type="radio" name="show1" id="fadeto"><label for="fadeto">fadeto</label>
+    </div>
+    <p id="myp"></p>
+</body>
+</html>

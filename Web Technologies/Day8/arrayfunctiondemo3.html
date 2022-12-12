@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body> 
+    <script>
+    arr1=[1,3,23,14,7,8]
+   
+    arr=arr1.map((value,index)=>value*value+index)
+    document.write("after map   "+arr+"<br>");
+    ans=arr1.reduce((acc,num)=>acc+num)
+    document.write("Ans : "+ ans+"<br>")
+     //find maximum value from the array
+     ans=arr1.reduce((acc,num)=>acc<num?num:acc)
+     document.write("maximum number  "+ans+"<br>");
+    ans=arr1.reduce((acc,num)=>acc+num,100)
+    document.write("Ans : "+ ans+"<br>")
+    arr2=["Python","Perl","OS","Datastructure"]
+    //concatenate all stings
+    ans=arr2.reduce((acc,num)=>acc+num)
+   document.write("Ans : "+ ans)
+   //display code for every course which is first 3 characters of the course name
+   code=arr2.map(value=>value.substr(0,3));
+   document.write("codes are :  "+ code)
+   //concatenate first 2 characters of every string and convert it into a string
+   ans=arr2.reduce((acc,str)=>acc+str.substr(0,2),"");
+   document.write("ans  :  "+ ans);
+    </script>
+</body>
+</html>
+
+
+

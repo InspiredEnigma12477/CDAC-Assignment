@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .myclass{
+            background-color: cyan;
+            border:2px solid red;
+            border-radius:6px;
+            width:200px;
+        
+        }
+    </style>
+    <script src="./js/jquery.js"></script>
+    <script>
+        $(document).ready(function(){
+          $('#show').change(function(){
+            if($("#show").is(":checked")){
+                 $("#mydiv").show(1000,function(){
+                      $('#myp').html("showing image")
+                 })
+            }
+
+          });
+
+          $("#hide").change(function(){
+            if($('#hide').is(":checked"))
+            {
+                $("#mydiv").hide(1000,function(){
+                    $('#myp').html("hidden the image")
+                })
+            }
+          });
+
+          $("#toggle").change(function(){
+             if($("#toggle").is(":checked")){
+                $("#mydiv").toggle(2000,function(){
+                    $("#myp").html("toggle the image")
+                });
+             }
+
+          })
+
+
+        });
+    </script>
+</head>
+<body>
+    <div id="mydiv" class="myclass">
+     <img src="./images/flowers.png" width="200px" height="200px">  
+    </div>
+    <div>
+        <input type="radio" name="show1" id="show"><label for="show">Show</label>
+        <input type="radio" name="show1" id="hide"><label for="hide">hide</label>
+        <input type="radio" name="show1" id="toggle"><label for="show">toggle</label>
+    </div>
+    <p id="myp"></p>
+</body>
+</html>
