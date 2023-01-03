@@ -1,0 +1,164 @@
+Non-linear Data structures :
+--- Elements are not in a order --- no fixed sequence.
+--- Elements have one-to-many or many-to-many relationship among themselves.
+--- For e.g. Tree, graph
+
+For e.g.
+To store the organization chart information -- means the hierarchy in the 
+organization --- CEO, directors , managers, etc. --- we use tree data structures.
+
+To store the information about the railway routes or flight details ---
+we use graph.
+Google map internally uses graph to store the route information among the
+cities or the places in the cities.
+
+--------------------------------------------------------------------------------------------------------------
+
+Terms related with Tree :
+
+1. Tree :
+--- it is a finite set of nodes with one specially designated node called the
+    root (root does not have parent) and the remaining nodes are partitioned
+    into n>=0 disjoint sets T1, T2, ...,Tn which are called subtrees of the root.
+
+2. Null tree : a tree without any node is called null tree (empty tree).
+
+3. Node : contains information along with the branches to other nodes.
+
+4. Parent node : node having other nodes connected to it (children nodes).
+              Root is parent of all nodes.
+
+5. Leaf node : terminal node  --- a node without any branch --- does not have 
+            any children.
+
+6. Siblings : Children of same parent.
+           Root is not having any sibling.
+-- All siblings are at the same level.
+
+
+7. Degree of a node : The no.of subtrees of a node is called degree.
+--- degree of leaf node is always 0.
+
+8. Degree of a tree : The maximum degree value is the degree of a tree.
+--- in other words, the maximum no. of children a node can have, is the degree
+    of a tree.
+
+9. Descendents : The descendents of a node are all those nodes which are reachable
+              from that node.
+--- Leaf node does not have any descendents.
+
+10. Ancestors : The ancestor of a node are all the nodes along the path from
+   the root to that node.
+--- Root is ancestor of every node.
+--- Root does not have any ancestors.
+
+11. Level of a node : it indicates the position of a node in the hierarchy.
+
+   The level of a node = level of its parent + 1
+
+   Root is at level 0.
+
+
+12. Height or depth of a tree : The total number of levels in the tree is the height
+    or depth of the tree.
+    In other words, the length of the longest path from root to any leaf is
+    called as height.
+    Height of leaf node subtree is 0.
+
+
+13. Forest : A forest is a set of n>=0 disjoint trees i.e. if we remove the
+    root, we get a forest of trees.
+
+-----------------------------------------------------------------------------------------------
+
+Types of trees :
+
+1. Binary tree : a node can have at the most 2 children.
+   Means a node can have left child and/or right child.
+   A binary tree can have maximum degree 2.
+
+The number of distinct binary trees with 'n' nodes is called as Catalan number.
+
+ Catalan number = T(n) = (2n)! / ((n+1)*n!)
+
+For 5 nodes, possible no.of binary trees ,
+ 
+     T(5) = (2*5)! / ((5+1)*5!)
+          =  10! / (6*120)
+          =  3628800 / 720  
+          = 5040        
+
+
+2. Strictly binary tree : every node except leaf nodes have two children means
+   every node can have either 0 children (leaf node) or 2 children.
+
+3. Full binary tree : All the levels are full (means every node has 2 children) and 
+   all leaf nodes are at the same level.
+   Full binary tree having depth d has 2^d-1 nodes.
+ For e.g. if height / depth of a tree = 5
+     then no. of node in full binary tree = 2^5 - 1 = 31
+
+
+4. Complete binary tree : If a binary tree has 'n' levels, then in complete
+   binary tree, 1 to n-1 levels are full and last level nth level is partially
+   full from left to right.
+
+
+5. Skewed binary tree : A binary tree in which every node has only one child,
+   either left or right child.
+   If every node has only left child then it is left skewed binary tree and
+   if every node has only right child then it is right skewed.
+
+
+6. Binary search tree : It is a binary tree in which left child of the parent node
+   will have less value than it and right child will have greater than or equal
+   to value than it.
+   Left subtree of any node always contains smaller numbers than itself and
+   right subtree always contains greater or equal numbers than itself.
+
+
+7. Heap tree : it is a complete binary tree in which every parent node will contain either
+   greater than value than its children or every parent node will contain smaller than
+   value than its children.
+   Two types of heap trees - max heap and min heap
+a) Max heap tree : every parent will have greater value than its children.  Therefore
+   root node of max heap tree is the largest value among all the values.
+b) Min heap tree : every parent will have smaller value than its children.  Therefore
+   root node of min heap tree is the smallest value among all the values.
+
+
+8. Expression tree : contains operands and operators of the expression (without bracket)
+   which tells us the order of execution of the operators.
+   Operators at the bottom are executed first and operator at root is executed
+   last.
+   All operands are at the leaf node.
+
+-------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

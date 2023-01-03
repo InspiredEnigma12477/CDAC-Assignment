@@ -1,0 +1,87 @@
+Data structures :
+ --- way of organizing the data in a efficient manner.
+ --- it is a template using which we can using mention the different operations
+     that must be defined, which are applied on a data.
+ --- Every data structure is an ADT --- how to store the data, the list of
+     of operations is given, which rules to be applied on the data or the operations.
+
+ADT : It is a mathematical model which is defined using a triplet D, F and A.
+      D : data objects
+      F : functions
+      A : axioms --- rules
+
+Every data structures tells --- what to do, not how to do.
+
+--- It also contains different algorithms -- way of solving the problem.
+  
+Data structure = data object + algorithm + program
+
+Integer stack :
+D : integer domain
+F : push, pop, peak, isEmpty --- basic (isfull -- used for static stack)
+A : only one end is opened, LIFO manner, only one element can be inserted or
+    removed from stack, only topmost element is visible 
+
+------------------------------------------------------------------------------------
+
+Linked list : it is a collection of nodes having information (as a data) and the addresses
+              or references of current node's successor and / or predecessor node.
+              It is a linear data structure --- order is important.
+              Nodes are stored in a random location.
+              Access is sequential.
+              Dynamic in nature --- we can add as many nodes as we want.
+
+There are 5 types of LL :
+1. SLL
+2. DLL
+3. CSLL
+4. CDLL
+5. Generized linked list
+
+1. SLL : Every node contains information plus the address of next or successor node. 
+         We need to maintain the address of first node  
+         Only forward direction traversal is possible.
+         Last node next reference must be null.
+
+2. DLL : Data + reference of next + reference of previous
+         Forward as well as backward traversal possible.
+         We can maintain the DLL by storing the reference of first node and/or
+         tail node.
+         Last node next reference and first node prev reference must be null. 
+
+3. CSLL : Every node contains information plus the address of next or successor node. 
+         We need to maintain the address of first node and / or last node
+         (if we retain the address of last node then that can be efficient). 
+         Only forward direction traversal is possible but we can visit all
+         nodes from any node.
+         Last node next reference must be store reference of first node.
+
+4. CDLL : Data + reference of next + reference of previous
+         Forward as well as backward traversal possible.
+         We can maintain the DLL by storing the reference of first node and/or
+         tail node (efficient way maintain either head or tail).
+         Last node next reference stores the reference of first node
+         and first node prev reference stores the reference of last node. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

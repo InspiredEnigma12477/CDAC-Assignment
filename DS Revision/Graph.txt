@@ -1,0 +1,99 @@
+Graph :
+--- A graph is a collection of two sets V and E.  V is a finite set of vertices
+    and E is a finite set of edges or arcs connecting to a pair of vertices.
+--- Edge is represented by two adjacent vertices means (i,j) edge indicates
+    there is a edge from vertex i to vertex j --- j is adjacent to i.
+
+Types of graph :
+1. undirected graph
+2. Directed graph
+
+
+--------------------------------------------------------------------------------------
+
+Terms used with graph :
+
+1. Degree of vertex : 
+-- In case of undirected graph, degree of vertex is the total number of edges
+   that vertex is connected to.
+
+2. Indegree of vertex :
+-- In case of directed graph, the indegree of a vertex is the number of edges
+   for which that vertex is head i.e. the number of incoming edges to that vertex.
+
+3. outdegree of vertex :
+-- In case of directed graph, the outdegree of a vertex is the number of edges
+   for which that vertex is tail.e. the number of outgoing edges from that vertex.
+
+4. Path : 
+-- A path Vi to Vj exists if there exist vertices V1, V2, ...,Vn such that
+there exist edges (Vi,V1),(V1,V2), ...,(Vn-1,Vn),(Vn,Vj).
+
+5. Length of a path :
+--- No. of edges on the path.
+
+6. Cycle :
+-- a path having same start vertex and end vertex.
+
+7. Subgraph : A graph G' is a subgraph of graph G=(V,E), if
+    V(G') is a subset of V(G) and E(G') is also a subset of E(G). 
+
+
+8. Spanning tree :
+-- It is a subset of graph with all vertices and n-1 edges such that they connect
+   all the vertices.
+
+-------------------------------------------------------------------------------------------------
+
+Representation of graph in program :  Two ways --- using array and using linked list
+
+1. Using array : we use 2D array -- square matrix  --- n by n where n is no. of vertices.
+                 This matrix is called adjacency matrix.
+
+   For undirected graph, adjacency matrix is always symmetric i.e. 
+   adj[i][j]=adj[j][i]
+
+For undirected graph,
+  if there is an edge (i,j) then,
+   adj[i][j]=1, 
+   adj[j][i]=1.
+  otherwise,
+   adj[i][j]=0, 
+   adj[j][i]=0.
+
+If there is no self edge for all vertices, then diagonal entries are zero.
+
+
+2. Using linked list : we generate singly linked list for every vertex containing
+   adjacent vertex number as the value of a node in SLL.
+   So if there are 'n' nodes then we have 'n' no. of singly linked list.
+   all these SLL's first node addresses are maintained in either in an array
+   or in another linked list.
+   This is useful for directed graph.
+   
+--------------------------------------------------------------------------------------
+
+Traversal of a graph : visiting every node.
+
+1. Depth first search / traversal (DFS / DFT) :
+a) Starting vertex is current vertex, visit (print) it first.
+b) Visit (print) one adjacent vertex of the current vertex at at time and make it current.
+c) If current vertex is not having any adjacent vertex, then backtrack. 
+d) Continue step b and c till all the vertices are not visited. 
+    
+--- Backtracking is used.
+--- We may get many DFS traversal for one starting vertex.
+
+
+
+2. Breadth first search / traversal (BFS / BFT) :
+--- Visit all the adjacent vertex of the current vertex and makey any adjacent
+     vertex as current.  Continue this till all the vertices are not visited.
+--- We may get many BFS traversal for one starting vertex.
+
+
+
+
+
+
+

@@ -1,0 +1,114 @@
+Queue : 
+--- it is a linear data structure.
+--- Two ends of a queue are open -- front and rear.
+--- Insertions are made at rear end and deletions are made from front.
+--- Only one element can be inserted or deleted from a queue.
+--- Works in a FIFO --- First in first out.
+--- It is dynamic in nature.
+
+Applications of queue :
+1. OS uses it CPU scheduling purpose.
+2. Resource allocation / sharing.
+3. Synchronous data transfer.
+4. BFT traversal of tree.
+
+Operations on queue :
+1. initialize a queue
+2. insert / enqueue
+3. delete / dequeue
+4. Check whether queue empty or not.
+5. Check whether queue full or not (required for static queue).
+
+Types of queue : 
+1. Linear queue :
+   front and rear are always increased.
+
+a) Static linear queue : implemented using array.
+i)Initialize : 
+ 1. Create an array of some size.
+ 2. Initialize front = rear = -1;  // front and rear are indices --- int
+
+ii) enqueue :
+  1. Check whether queue is full or not. 
+  2. If not, increment rear.
+  3. Store element at rear index.
+
+iv) dequeue :
+  1. Check whether queue is empty or not.
+  2. If not, increment front.
+  3. Retrieve element from front index.
+
+   return(arr[++front]);
+
+
+v) IsEmpty() : front == rear.
+
+vi) IsFull() : rear== size of array - 1.
+
+
+
+Dynamic linear queue : implemented using SLL.
+
+1. Initialize : front = rear = null.
+
+2. enqueue : mapped to insert at end / append in SLL.
+
+3. dequeue : mapped to delete first position node in SLL.
+
+4. isEmpty() : front == null
+
+-------------------------------------------------------------------------------------------
+
+2. circular queue : 
+In case of static linear queue, we cannot utilize the vacant spaces present
+at the beginning of the queue, as front and rear are not reset and they are
+always increased.
+
+To overcome this drawback circular queue is used --- front and rear are reset.
+
+Static circular queue : implemented using array
+
+Different ways :
+1. count the number of elements in a queue.
+2. To give a circular nature to a queue without using counter, we reset the
+   front and rear by keeping one space vacant in the array. 
+
+Second way :
+
+1. Initialize : front = rear = array_size -1. / front = rear = -1
+
+2. enqueue :
+  a) Check whether queue is full or not.
+  b) if not, increment rear as rear =(rear+1) % array_size
+  c) Store element at rear index.
+
+3. dequeue :
+  a) Check whether queue is empty or not.
+  b) if not, increment front as front = (front+1)% array_size.
+  c) Retrieve the element from front index.
+
+
+4. isEmpty() : front == rear
+
+5. isFull() : (rear+1)% array_size == front
+
+
+fornt index is the index of vacant space.
+
+
+-----------------------------------------------------------------------------------------
+
+3. Priority queue  : insertions are made in sequence, but while deleting element,
+   element with higher priority will be deleted first.
+
+After insertion or at the time insertion, sort the elements according to priority.
+
+---------------------------------------------------------------------------------------------------
+
+4. Deque -- double ended queue
+
+
+
+
+
+

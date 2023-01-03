@@ -1,0 +1,141 @@
+Stack :  
+--- linear data structure.
+--- Having one end open called top end.
+--- Only one element can be inserted or deleted at a time.
+--- Insertions and deletions are made from top end only.
+--- Works in LIFO (FILO) manner.
+--- Visualized vertically.
+--- has sequential access.
+--- dynamic in nature  --- no upper limit ---  we can add as many elements as we want.
+
+ADT :
+For e.g. stack of integers
+D  :  all integer values
+F  :
+    init() --- create()
+    push() --- insert 
+    pop() ---- delete
+    peak() --- displaying the topmost element
+    isEmpty()  
+    isFull() --- applicable to a static stack.
+
+A  : LIFO manner working
+     Insertion and deletion must be top end.
+
+
+Static stack : implementing stack using array
+
+1. init() : we wil set maximum size for a stack
+            top = -1.
+
+2. push() :
+   a) check whether stack is full or not.
+   b) If not, then increment top and place the new value at top index.
+
+3. pop() : 
+   a) check whether stack is empty or not.
+   b) If not, fetch / retrieve the top index value, and then decrement top.
+
+4. isEmpty() :
+   a) if top == -1 then stack is empty.
+
+5. isFull() :
+   a) if top reaches to size of array-1 then stack is full.
+
+------------------------------------------------------------------------------------
+
+Dynamic stack : Implementing a stack using SLL.
+
+1. init() : top reference (pointer) assigned to null.
+
+2. push() : mapped to the SLL operation - insert at front (insert at first position / insert at beginning).
+
+3. pop() : mapped to the SLL operation  - delete from front 
+
+4. isEmpty() : if top == null then stack is empty.
+
+------------------------------------------------------------------------------------
+
+Applications of stack :
+1. Recursion
+2. Reverse a string
+3. undo / redo
+4. paranthesis matching
+5. Expression conversions
+   3 ways to represent the expressions :
+   a) infix : operators between operands
+      For e.g. a+b*c/d
+   b) postfix -- reverse polish notation
+              -- operators after operands
+   c) prefix  -- polish notation
+              -- operator before operands
+      For e.g.
+     
+6. Expression evaluation 
+7. Backtracking
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
