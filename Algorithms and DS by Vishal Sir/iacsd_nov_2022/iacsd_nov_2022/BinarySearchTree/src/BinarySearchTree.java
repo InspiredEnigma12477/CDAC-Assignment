@@ -14,12 +14,13 @@ public class BinarySearchTree {
             return false;
         }
 
+        // Empty tree node assignment
         if(root == null) {
             root = newNode;
             return true;
         }
 
-
+        
         Node temp = root;
 
         while(true) {
@@ -189,23 +190,23 @@ public class BinarySearchTree {
                 del = del.getRight();
             }
             if(del == null) {
-                return false;
+                return false; // node not found in tree
             }
         }
-
+    
         while( true ) {
             //check if the del node is terminal
             if (del.getLeft() == null && del.getRight() == null) {
 
                 if (del == root) {
                     root = null;
-                    return true;
+                    return true; //single node tree
                 }
 
                 if (del == parent.getLeft()) {
-                    parent.setLeft(null);
+                    parent.setLeft(null);// del is a left child
                 } else {
-                    parent.setRight(null);
+                    parent.setRight(null);// del is a right child
                 }
                 return true;
             }
@@ -218,7 +219,7 @@ public class BinarySearchTree {
 
                 while(max.getRight() != null) {
                     parent = max;
-                    max = max.getRight();
+                    max = max.getRight(); 
                 }
 
                 int temp = del.getData();

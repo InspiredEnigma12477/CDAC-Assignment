@@ -172,11 +172,7 @@ public class Util {
         merge(arr, left, mid, mid + 1, right);
     }
 
-    public static void merge(
-            int[] arr,
-            int leftStart, int leftEnd,
-            int rightStart, int rightEnd
-    ) {
+    public static void merge(int[] arr, int leftStart, int leftEnd, int rightStart, int rightEnd) {
 
         int numElements = rightEnd - leftStart + 1;
         int[] res = new int[numElements];
@@ -201,7 +197,7 @@ public class Util {
             res[++resIndex] = arr[rightStart++];
         }
 
-        for(int i = 0; i < numElements; i++) {
+        for (int i = 0; i < numElements; i++) {
             arr[rightEnd] = res[resIndex];
             rightEnd--;
             resIndex--;
