@@ -1,0 +1,124 @@
+What Is Database?
+A database is a system which helps to organize, store, and retrieve large amounts of data easily.
+
+Relational Databases or RDBMS stores data in the form of rows and columns.
+
+What Is SQL?
+SQL is a standard language for accessing and manipulating databases.
+SQL can execute queries against a database.
+SQL can retrieve data from a database.
+SQL can insert records in a database.
+SQL can update records in a database.
+SQL can delete records from a database.
+
+Types of SQL
+Data Definition Language (DDL)
+Creating tables and other database objects, etc.
+
+Data Manipulation Language (DML)
+Inserting, Updating, Deleting the records
+
+Data Control Language (DCL)
+Granting privileges, revoking them
+
+Examples Of SQL
+1:Read All columns from emp table
+->SELECT * FROM emp;
+
+2:Read name,salary of all employees;
+->SELECT ename,sal from emp;
+3:Get all the details of employees working in department 10:
+->SELECT ename, sal, deptno FROM emp WHERE deptno = 10;
+
+4:Update 
+UPDATE emp SET sal = 18000
+WHERE empno = 100;
+
+5:Insert
+INSERT INTO emp(empno, ename, sal, deptno)
+VALUES(110, ‘Joy’, 20000, 20);
+
+6:Delete
+DELETE FROM emp
+WHERE empno = 102;
+
+
+What is JDBC?
+JDBC is a Java API to connect and execute the query with the database.
+ It is a part of JavaSE (Java Standard Edition).
+ JDBC API uses JDBC drivers to connect with the database.
+
+Driver is a program which allows the application to
+establish connection with the database by hiding
+complexity of handling network connection/sockets.
+
+Types Of Driver:
+
+1:JDBC-ODBC Bridge (Type 1)
+Suitable only for prototyping purposes.
+Limited to functionality of ODBC driver.
+Not suitable for higher volume of transactions.
+Inherits all the limitations of ODBC implementation.
+Slower in performance.
+
+2:Native-API partly Java Driver (Type 2)
+Written partly in Java & partly in native code.
+Some platform-specific code in addition to Java library.
+Uses native ‘C’ language lib calls for Conversion.
+
+3:Network Protocol driver (fully java driver) (Type 3)
+Uses DB independent protocol to communicate DB- requests to a server component.
+translates requests into a DB-specific protocol.
+Since client is independent of the actual DB, deployment is simpler & more flexible.
+
+4:Thin driver -Java Driver (Type 4)
+JDBC calls are directly converted to network protocol used by the DBMS server.
+driver usually comes only from DB-vendor.
+
+*Java Database Connectivity with 5 Steps
+There are 5 steps to connect any java application with the database using JDBC. These steps are as follows:
+Register the Driver class
+Create connection
+Create statement
+Execute queries
+Close connection
+
+
+The JDBC API provides the following interfaces and classes −
+
+DriverManager: This class manages a list of database drivers. Matches connection requests from the java application with the proper database driver using communication sub protocol. The first driver that recognizes a certain subprotocol under JDBC will be used to establish a database Connection.
+
+Driver: This interface handles the communications with the database server. You will interact directly with Driver objects very rarely. Instead, you use DriverManager objects, which manages objects of this type. It also abstracts the details associated with working with Driver objects.
+
+Connection: This interface with all methods for contacting a database. The connection object represents communication context, i.e., all communication with database is through connection object only.
+
+Statement: You use objects created from this interface to submit the SQL statements to the database. Some derived interfaces accept parameters in addition to executing stored procedures.
+
+ResultSet: These objects hold data retrieved from a database after you execute an SQL query using Statement objects. It acts as an iterator to allow you to move through its data.
+
+SQLException: This class handles any errors that occur in a database application.
+
+
+Why use PreparedStatement?
+Improves performance: The performance of the application will be faster if you use PreparedStatement interface because query is compiled only once.
+
+
+
+
+//load driver
+		Class.forName("com.mysql.jdbc.Driver");
+		System.out.println("driver loaded ");
+		// Establish db connection
+	Connection con=	 DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "root");
+		 System.out.println("connection done");
+		 //create statement object
+		 Statement stmt=con.createStatement();
+		 //Execute the query
+		 ResultSet rs=stmt.executeQuery("Select * from emp");
+		 
+		 while(rs.next())
+		 {
+			 System.out.println(rs.getInt(1));
+		 }
+		 
+		 con.close();

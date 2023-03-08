@@ -1,0 +1,29 @@
+Revise 
+JSP Using Java Beans
+Complete admin part
+
+Enter Hibernate
+
+
+Revise
+What is a java bean ? -- Helper class , not a dyn web component
+Server side attribute --created by WC --upon the trigger jsp:useBean
+Can be added under : page | request | session | application
+
+Why ?
+1. separation P.L n B.L
+P.L (view generation logic) : JSP
+B.L : java bean
+
+2. Reusability
+
+3. eg : register new customer
+i/p (req params) = clnt's conversational state :  name, email , password , reg amount(double) , reg date (java.sql.Date)
+In CustomerBean
+name, email , password : string
+regAmount :  double (string based req param --> double : will be auto. done by WC)
+regDate : String(Bean dev. will have convert string --> Date) 
+
+
+eg scenario : user login
+Layers --- JSP --- JB -- DAO (uses DBUtils) -- POJO --DB

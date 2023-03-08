@@ -1,0 +1,93 @@
+Regarding ID generators
+
+Each entity  must have a primary key, which you annotate on the class with the @Id annotation. Typically, the primary key will be a single field, though it can also be a composite of multiple fields .
+
+The placement of the @Id annotation determines the default access strategy that Hibernate will use for the mapping. If the annotation is applied to a field as shown below, then “field access” will be used.
+
+@Id
+private Integer employeeId;
+
+If, instead, the annotation is applied to the accessor for the field then property access will be used.
+
+@Id
+public Integer getEmployeeId()
+{
+  return employeeId;
+}
+
+Property access means that Hibernate will call the mutator/setter instead of actually setting the field directly, what it does in case of field access. This gives flexibility to alter the value of actual value set in id field if needed. Additionally, you can apply extra logic on setting of ‘id’ field in mutator for other fields as well.
+
+By default, the @Id annotation will not create a primary key generation strategy, which means that you, , need to determine what valid primary keys are, by setting them explicitly calling setter methods. 
+
+OR you can use @GeneratedValue annotation.
+
+@GeneratedValue annotation takes a pair of attributes: strategy and generator as below:
+
+@Id
+@GeneratedValue (strategy = GenerationType.SEQUENCE)
+private Integer employeeId;
+ 
+//OR a more complex use can be
+ 
+@Id
+@GeneratedValue(strategy=GenerationType.TABLE , generator="employee_generator")
+@TableGenerator(name="employee_generator",
+               table="pk_table",
+               pkColumnName="name",
+               valueColumnName="value",
+               allocationSize=100)
+private Integer employeeId;
+
+The strategy attribute must be a value from the javax.persistence.GeneratorType enumeration. If you do not specify a generator type, the default is AUTO. There are four different types of primary key generators on GeneratorType, as follows:
+
+AUTO: Hibernate decides which generator type to use, based on the database’s support for primary key generation.
+
+IDENTITY: The database is responsible for determining and assigning the next primary key.
+
+SEQUENCE: Some databases support a SEQUENCE column type. It uses @SequenceGenerator.
+
+TABLE: This type keeps a separate table with the primary key values. It uses @TableGenerator.
+
+
+
+
+For Mysql ---IDENTITY geenrator
+1. create table with id primary key auto_increment
+2. Then mark getId
+with @GeneratedValue(strategy=GenerationType.IDENTITY)
+
+
+
+For Mysql ---TABLE generator
+1. create table emp (
+id int primary key,name varchar(20));
+2.  Create a special table , as the src for ids
+table name can be anything.
+create table id_gen (gen_name varchar(60) primary key,gen_val int(20));
+3. In Emp class
+@TableGenerator(name="emp_gen",table="id_gen",pkColumnName="gen_name",valueColumnName="gen_val",allocationSize=100)
+@GeneratedValue(strategy=GenerationType.TABLE,generator="emp_gen")
+@Id
+public int getId() {
+ return id;
+}
+
+
+4. 
+Using custom id generator 
+
+1. Create your custom id generator class by imple. --org.hibernate.id.IdentifierGenerator
+2. Imple a method
+@Override
+	public Serializable generate(SharedSessionContractImplementor arg0, Object arg1) throws HibernateException {
+//ret custom id 
+	}
+3. In the domain class
+@GenericGenerator(name="emp_id_gen",strategy="com.app.idgenerators.CustomRandomIdGenerator")
+@GeneratedValue(generator="emp_id_gen")
+@Id
+public int getId() {
+		return id;
+}
+4. Test it with the test class 
+

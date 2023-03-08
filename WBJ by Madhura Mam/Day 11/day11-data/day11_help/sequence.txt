@@ -1,0 +1,615 @@
+Problems observed in the lab
+1. No def ctor found , or empty JSON array of emps ([{},{}])
+Root cause : lombok is not working
+If Lombok library is not working , then comment the annotations n use earlier approach
+How to test ?
+eg : In Employee POJO , if you have added lombok annotations , then try from some other class , if you can call the getter / setter
+This will be the confirmation test.
+-----------------------
+
+
+Revise REST concepts
+
+refer to : 
+Diag : web app vs web service
+Diag : Full Stack Development
+Readme : RestController vs MVC Controller n Annotations.txt
+
+Steps
+1. Create spring boot app : using spring boot starter project (choose packaging as JAR)
+2. Use same spring boot starters as earlier.
+Spring web , Mysql driver , Spring data JPA , Lombok , Spring Dev Tools,validation
+3. NO additional dependencies for view layer(i.e no jstl n no tomcat-embeded jasper  dependencies , in pom.xml
+
+4. Copy application.properties from earlier spring boot project
+(Do not add view resolver related properties)
+
+5. Build the layers in bottoms up manner, for the following objectives.
+
+Objective : Complete backend for Emp management front end
+
+1. Get All Employees : 
+2. Add Emp Details : 
+3. Delete Emp Details
+Better Practice : Instead of a plain string message , wrap it in the java object (ApiResponse) n send it to front end
+
+4. Update Emp details 
+4.1 Get Emp details By Id
+4.2 Update Emp details
+
+
+Test it with postman/swagger & then with React front end.
+
+password : do not serialize
+delete api response : ApiResponse DTO , instead of a string
+
+3. More Practice of Spring Data JPA
+(refer : regarding Spring Data JPA)
+Ref : https://docs.spring.io/spring-data/jpa/docs/current/reference/html/
+
+3.1 Inherited APIs (eg : findAll , findById,save, deleteAll,count ....)
+3.2 Derived Query methods(derived finder methods)
+
+Solve 
+1. Emp signin
+URL : http://host:port/employees/signin Method: POST
+Payload : email n password
+In Rest Controller : @PostMapping(....)
+public Employee autheticateEmp(@ReqBody LoginRequestDto dto)
+{
+}
+eg : Optional<Emp> findByEmailAndPassword(String em,String pass);
+Ret type Optional can be replaced by Emp (But not reco. in modern programming : since it involves null checking)
+
+
+
+2. Find all emps joined after a specific date and from specific department
+URL : http://host:port/employees/date/2020-1-1/dept/rnd , method =GET
+eg : List<Emp> findByJoinDateAfterAndDepartment(LocalDate dt,String dept)
+
+
+
+
+3. Lab work : Find Emps , drawing salary between a range
+
+4. Lab work : find all emps having lastname containing some keyword
+
+3.3 Custom Query Methods
+If you can't solve the requirement using inherited methods or finder methods , you can use custom query methods
+How  ?
+Can inject JPQL using @Query annotations n can pass named IN param using @Param .
+Simpler replacement of named IN param , will be positional IN params.
+Solve : Get emp complete names drawing salary > specific salary
+
+Project Tips : 
+
+1. If you see json response , you will see aadhar card : null , empty hobbies : []
+Currently for testing : set location : null 
+How to exclude null or absent values ?
+You can add at the POJO class level ,
+@JsonInclude(Include.NON_EMPTY)
+You can check other options also.
+
+2. How to control the property/field access during ser/de-serial
+@JsonProperty(access = Access.WRITE_ONLY) : property/field will be ignored during serialization
+@JsonProperty(access = Access.READ_ONLY) :  property/field will be ignored during de serialization
+
+2. Introduction to ResponseEntity
+o.s.http.ResponseEntity<T>  : generic class
+T : type of the response body
+Replace actual Resource(eg : User )  by ResponseEntity
+
+Standard design practice for back end : DO NOT directly send response body , instead wrap it in ResponseEntity
+
+o.s.http.ResponseEntity<T>
+Ctor : ResponseEntity(T body, HttpStatus status);
+
+OR Methods
+ResponseEntity.status(HttpStatus status).body(T body)
+
+Objective : Add ResponseEntity to UserController
+
+--------------------Pending ----------------------------
+
+
+5. REST Server side Validations
+(refer : templates under ready code & "regarding spring boot exc handling n validations.txt")
+5.1 Add Validation rules on Entity / DTO
+eg : first name : can't be blank .(min : 4 chars , max =20 chars)
+last name : can't be blank 
+valid email 
+valid strong password (alpha numeric, special character , min 5 max 20)
+eg : ((?=.*\\d)(?=.*[a-z])(?=.*[#@$*]).{5,20})
+reg amount in the range : 500 ---5000
+reg date must be in future
+Test it with postman client
+(Same annotations are used in Spring MVC standalone App , in P.L: presentation logic  validations)
+eg : @NotBlank , @NotNull,@Email, @Pattern,@Future ,@Range....
+
+
+
+5.2 Add @Valid , along with @RequestBody , in REST controller methods.
+
+5.3 Additionally , add @Validated on class(RestController) , for validating path var / request param.
+
+
+
+6. Any problems observed on the client side ? 
+
+YES : Since spring boot supplies a default exception handler , entire stack trace , along with exception details are sent to the front end.
+
+NOTE  : Validation failures CAN NOT be caught by controller method level exc handling(try-catch)
+B.L failures  CAN BE caught by controller method level exc handling(try-catch) --> but resulting into repeatative exc handling 
+
+Instead : 
+How to avoid both of these problems ?
+Solution : Add centralized ( global) exception handler
+Steps
+1. Create a separate class 
+2. Add cls level anno : @RestControllerAdvice
+To tell SC , following class is a common advice to : rest controllers , regarding exc handling (cross cutting concern=common task)
+
+3. For validation failures , triggered by  @Valid
+Add  method : handleMethodArgNotValidException (suggested naming pattern)
+Extract map of Field Errors --send it to the caller(front end) by wrapping it in the RespEntity.
+Exc class : MethodArgNotValidException
+Method --List<FieldError> getFieldErrors() 
+FieldError :  getField, getDefaultMessage
+	
+4. For ResourceNotFoundExc  or similar B.L exceptions : 
+Add method in global exc handler annotated with 
+@ExceptionHandler
+
+
+Instead of sending err mesg as a plain string , wrap it in Error response object n send it to the front end for simpler processing
+Use DTO pattern : Data Transfer object
+ApiResponse : message , timestamp
+
+Refer to readme : regarding spring boot exc handling n validations.txt
+
+Project Tip
+In order to automatically  convert Entity <-----> DTO , ther are multiple 3rd party libs.
+eg : MapStruct , ModelMapper ...
+
+1. Add model mapper dependency in pom.xml
+<!-- https://mvnrepository.com/artifact/org.modelmapper/modelmapper -->
+		<dependency>
+			<groupId>org.modelmapper</groupId>
+			<artifactId>modelmapper</artifactId>
+			<version>3.0.0</version>
+		</dependency>
+
+2. How to configure ModelMapper as a spring bean (so that it can be injected as a dependency in other spring beans ) ?
+Ans : Either use xml <bean> tag OR use
+@Bean annotated method , to ret ModelMapper instance to SC.
+
+
+@Bean //equvalent to <bean id ..../> in xml file
+	public ModelMapper mapper() {
+		ModelMapper modelMapper = new ModelMapper();
+		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+		return modelMapper;
+	}
+
+Enter  o.s.http.ResponseEntity<T>
+
+o.s.http.ResponseEntity<T>  : generic class
+T : type of the response body
+Replace actual Resource(eg : Emp/Topic/Product )  by ResponseEntity
+Standard design practice for back end : DO NOT directly send response body , instead wrap it in ResponseEntity
+o.s.http.ResponseEntity<T> : class representing entire HTTP response.
+Ctor : ResponseEntity(T body, HttpStatus status);
+OR Helper Methods
+ResponseEntity.status(HttpStatus stsCode).body(T body)
+ResponseEntity.ok(T body)
+
+
+
+3. Enter Spring Data JPA. Modify the DAO layer.
+(refer : regarding Spring Data JPA)
+eg : Emp e=empRepo.findById(100).orElseThrow(() -> new ResNotFoundExc("invalid emp id"));
+3.1 Inherited APIs (eg : findAll , findById,save, deleteAll,count ....)
+3.2 Derived Query methods
+eg : Optional<Employee> findByFirstNameOrLastName(String fName,String lastName)
+....
+3.3 Custom Query Methods
+Can inject JPQL using @Query annotations
+@Query("select p from Product p where p.productCategory.name=?1")
+List<Product> fetchProductsByCategoryName(String name);
+OR
+@Query("select p from Product p where p.productCategory.name=:nm")
+List<Product> fetchProductsByCategoryName(@Param(name="nm") String name);
+
+If you want to use (as a last resort in the project phase! : not reco) sql :
+@Query(value="select * from products where name=?1",nativeQuery=true)
+List<Product> fetchProductsByCategoryName(@Param(name="nm") String desc);
+
+
+
+
+1. Server side Validations
+(refer : templates under ready code & "regarding spring boot exc handling n validations.txt")
+
+Add Validation rules on Employee
+first name : can't be blank .(min : 4 chars , max =20 chars)
+last name : can't be blank 
+valid email 
+valid strong password 
+salary in the range : 10,000 --50,000
+join date must be in future
+Test it with postman client
+(Same annotations are used in Spring MVC standalone App , in P.L validations)
+
+@Valid
+@Validated
+
+2. Any problems observed on the client side ??????
+
+Solution : 
+1 Add try-catch in req handling methods n send suitable err resp in Response Entity
+
+OR (better soln)
+
+Centralized (global) exc handling
+HOW ?
+Create a class in the base pkg : annotated with @ControllerAdvice 
+Add @ExcHandler anno over exc handling methods
+
+
+2.5 
+Instead of sending err mesg as a plain string , wrap it in Error response object n send it to the front end for simpler processing
+Enter DTO pattern : data xfer object 
+
+
+Refer to readme : regarding spring boot exc handling n validations.txt
+----------------------Pending------------------------
+Spring boot magic explained : 
+Important components of a Spring Boot Application
+
+Below is the starting point of a Spring Boot Application
+
+@SpringBootApplication
+public class HelloSpringBootApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(HelloSpringBootApplication.class, args);
+	}
+
+}
+About : org.springframework.boot.SpringApplication
+It's Class  used to bootstrap and launch a Spring application from a Java main method. 
+
+By default class will perform the following steps to bootstrap the application
+1. Create an ApplicationContext instance (representing SC)
+2. Manages life cycle of spring beans
+
+
+@SpringBootApplication - This is where all the spring boot magic happens.
+It consists of following 3 annotations.
+
+1. @SpringBootConfiguration
+It  tells spring boot  that this class here can have several bean definitions. We can define various spring beans here and those beans will be available at run time .
+
+2. @EnableAutoConfiguration
+It tells spring boot to automatically configure the spring application based on the dependencies that it sees on the classpath.
+
+eg:
+If we have a MySql dependency in our pom.xml , Spring Boot will automatically create a data source,using the properties in application.properties file.  
+
+If we have spring web in pom.xml , then spring boot will automatically create the dispatcher servlet n other beans (HandlerMapping , ViewResolver)
+
+All the xml, all the java based configuration is now gone.It all comes for free thanks to spring boot to enable auto configuration annotation. 
+
+3. @ComponentScan (equivalent to xml tag : context:component-scan)
+
+So this  tells us that spring boot to  scan through the classes and see which all classes are marked with the stereotype annotations like @Component Or @Service @Repository and manage  these spring beans . Default base-pkg is the pkg in which main class is defined.
+Can be overridden by
+eg : 
+@ComponentScan(basePackages = "com")
+For scanning entities :  (equivalent to packagesToScan)
+@EntityScan(basePackages = "com.app.pojos")
+-----------------------------------
+
+2 way data binding
+
+
+
+
+
+
+
+
+
+
+
+
+
+3. Spring AOP : exam objective
+
+
+---------------------Pending -----------------------
+4. CMS backend
+(refer : "steps.png" under CMS)
+
+
+
+
+Model Mapper Maven
+<!-- https://mvnrepository.com/artifact/org.modelmapper/modelmapper -->
+<dependency>
+    <groupId>org.modelmapper</groupId>
+    <artifactId>modelmapper</artifactId>
+    <version>3.0.0</version>
+</dependency>
+
+
+
+7. Set up RestTemplate demo.
+refer to diag : RestTemplate demo.png
+
+REST Client using RestTemplate
+7.1 NetBanking REST Server
+(ready made code)
+Spring boot project : NetBankingRESTServer
+3.2 Employee App REST Server for React App & client to NetBanking
+3.3 Front end Postman (later add it in React app)
+
+Details
+2. Objective : Testing E-R with REST API + REST Client(RestTemplate)
+Test setup : Postman -- Emp Management API invoking REST Banking API
+
+Get Account summary for a bank customer.
+Resource : /accounts
+I/P : JSON containing Customer id(string) & password (DTO : LoginRequest)
+
+O/P : In case of success : LoginResponse (customer name , accts)
+or in case of invalid credentials : Send Error resp code : HTTP 401 (un authorized)
+
+Authenticate Bank Customer
+Method =POST (/accounts/signin)
+I/P : DTO LoginRequest (customer id , password)
+O/P : ResponseEntity<?> : wrap error message n HTTP 401 , otherwise list of accounts + customer name n sts code 200
+
+Understand concept of ResponseEntity<T> 
+(In a real project ,JWT will be sent back in a response by the server n here after in every request it will be sent by client in the auth header , as a Bearer Token)
+
+Layers :
+REST Controller --Service --Repository--POJO --DB
+Customer 1<------* BankAccount
+Customer : customer id(do not auto generate , use assigned id : just to show example) ,name, password 
+
+BankAccount : acct id (auto generation) AcctType(enum) ,balance + Customer owner
+
+For  Data Transfer : DTOs
+LoginRequest : customerId , password
+LoginResponse  : customer name & List<BankAccount> 
+
+How to make a REST call from one web app to another  ?
+Use : org.springframework.web.client.RestTemplate
+
+The RestTemplate class in Spring Framework is a synchronous HTTP client for making HTTP requests to consume RESTful web services. 
+
+It exposes a simple and easy-to-use template method API for sending an HTTP request and also handling the HTTP response. 
+
+The RestTemplate class also provides aliases for all supported HTTP request methods, such as GET, POST, PUT, PATCH , DELETE, and OPTIONS. 
+
+In a service layer : inject
+
+public class ClntService {
+private RestTemplate template;
+
+	@Autowired //autowire=constructor
+	public ClntService(RestTemplateBuilder builder) {
+		template = builder.build();
+	}
+
+
+}
+	// SpEL : spring expression language
+	@Value("${REST_AUTH_URL}")
+	private String authUrl;
+
+Use  Method of o.s.w.c.RestTemplate public <T> ResponseEntity<T>
+		  postForEntity(String url,@Nullable Object request, Class<T> responseType, Object... uriVariables)  throws RestClientException
+
+Req Object : LoginRequest		
+Resp Type : DTO : BankAccounts
+	
+-------------------------------------------------------------------------------------------------------------------
+Important Project Tips :
+1 Typically add : ManyToOne : lazy
+
+2. To control json data during serialization / de-serial
+2.1 Add @JsonIgnore : at field level
+2.2 @JsonIgnore on a property getter : to  ignore this property while serialization(marshalling)
+2.3 @JsonProperty  on a property setter if you don't want to  ignore this property while de serialization(un marshalling)
+
+3.To tell serilizer n de-serializer(java---> json , json ---> java), done auto by SC , using Jackson API
+to ignore the asso properties added in bi dir asso.
+Add : @JsonIgnoreProperties("name of the association property")
+--------------------
+Troubleshooting tips
+
+Additional Cleaning Instructions
+R Click on the project--Run As --Maven Clean
+Then Project clean
+Refresh
+
+Practice Assignments for lab exam preparation : refer to day21-data\day21-help\lab-exam-practice
+---------------------------------------
+1. Continue with Server side Validations n centralized exc handling
+(refer : templates under ready code & "regarding spring boot exc handling n validations.txt")
+
+1.1 Add Validation rules on Employee
+first name n last name : can't be blank .(min : 4 chars , max =20 chars)
+valid email 
+valid strong password 
+salary in the range : 20,000 --50,000
+join date must be in future
+Test it with postman client
+(Same annotations are used in Spring MVC App , in P.L validations)
+
+1.2 Add @Valid annotation along with @RequestBody.
+
+1.3 Add @Valid annotation along with @RequestParam or @PathVariable +
+Add @Validated on class level.
+
+1.4. Any problems observed on the client side ? : YES : since spring uses def. exc handler , entire stack track , along with exc details are sent to the front end.
+How to avoid  ?
+Solution : 
+Refer to readme : regarding spring boot exc handling n validations.txt
+ref eclipse project : day21-emp-backend
+
+
+2. Set up RestTemplate demo.
+refer to diag : RestTemplate demo.png
+
+REST Client using RestTemplate
+2.1 NetBanking REST Server
+(ready made code)
+Spring boot project : NetBankingRESTServer
+2.2 Employee App REST Server for React App & client to NetBanking
+2.3 Front end Postman (later add it in React app)
+
+Details
+2. Objective : Testing E-R with REST API + REST Client(RestTemplate)
+Test setup : Postman -- Emp Management API invoking REST Banking API
+
+Get Account summary for a bank customer.
+Resource : /accounts
+I/P : JSON containing Customer id(string) & password (DTO : LoginRequest)
+
+O/P : In case of success : LoginResponse (customer name , accts)
+or in case of invalid credentials : Send Error resp code : HTTP 401 (un authorized)
+
+Authenticate Bank Customer
+Method =POST (/accounts/signin)
+I/P : DTO LoginRequest (customer id , password)
+O/P : ResponseEntity<?> : wrap error message n HTTP 401 , otherwise list of accounts + customer name n sts code 200
+
+ 
+(In a real project ,JWT will be sent back in a response by the server n here after in every request it will be sent by client in the auth header , as a Bearer Token)
+
+Layers :
+REST Controller --Service --Repository--POJO --DB
+Customer 1<------* BankAccount
+Customer : customer id(do not auto generate , use assigned id : to set up such example) ,name, password 
+
+BankAccount : acct id (auto generation) AcctType(enum) ,balance + Customer owner
+
+For  Data Transfer : DTOs
+LoginRequest : customerId , password
+LoginResponse  : customer name & List<BankAccount> 
+
+How to make a REST call from one web app to another  ?
+Use : org.springframework.web.client.RestTemplate
+
+The RestTemplate class in Spring Framework is a synchronous HTTP client for making HTTP requests to consume RESTful web services. 
+
+It exposes a simple and easy-to-use template method API for sending an HTTP request and also handling the HTTP response. 
+
+The RestTemplate class also provides aliases for all supported HTTP request methods, such as GET, POST, PUT, PATCH , DELETE, and OPTIONS. 
+
+In a service layer : inject
+
+public class ClntService {
+private RestTemplate template;
+
+	@Autowired //autowire=constructor
+	public ClntService(RestTemplateBuilder builder) {
+		template = builder.build();
+	}
+
+
+}
+	// SpEL : spring expression language
+	@Value("${REST_AUTH_URL}")
+	private String authUrl;
+
+Use  Method of o.s.w.c.RestTemplate public <T> ResponseEntity<T>
+		  postForEntity(String url,@Nullable Object request, Class<T> responseType, Object... uriVariables)  throws RestClientException
+
+Req Object : LoginRequest		
+Resp Type : DTO : BankAccounts
+	
+-------------------------------------------------------------------------------------------------------------------
+3. Spring AOP : Exam objective
+eclipse project : spring-boot-aop
+
+
+4. Spring Security : Project Objective
+
+
+
+
+
+Important Project Tips :
+1 Typically add : ManyToOne : lazy
+
+2. To control json data during serialization / de-serial
+2.1 Add @JsonIgnore : at field level
+2.2 @JsonIgnore on a property getter : to  ignore this property while serialization(marshalling)
+2.3 @JsonProperty  on a property setter if you don't want to  ignore this property while de serialization(un marshalling)
+
+3.To tell serilizer n de-serializer(java---> json , json ---> java), done auto by SC , using Jackson API
+to ignore the asso properties added in bi dir asso.
+Add : @JsonIgnoreProperties("name of the association property")
+
+
+
+
+-----------------
+SC calls : property setters for de-serial(@ReqBody : post/put/patch ---un marshalling : json --> java)  n getters for serialization(@RespBody : get ---java---> json) i.e reads the val of the prop using getters , converts it to json n sends it. 
+
+
+eg : In Emp DTO 
+@JsonProperty(access = Access.WRITE_ONLY)
+private String password;
+so that password won't be serialized into json.
+
+@JsonProperty(access = Access.READ_ONLY)
+private String imagePath;
+On the contrary : imagepath(image name) will NOT be received from client --clnt will send multipart form data --from that image file name will be extracted n that will be stored in db --that will be serialized n sent to clnt
+
+-----------------
+List<FieldError> list = ex.getFieldErrors();
+		Map<String, String> map = list.stream()
+		.collect(Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage));
+		return new ResponseEntity<>(map, HttpStatus.BAD_REQUEST);
+	----------------------
+3. Add Option for User Registration. (Later)
+Creating an empty cart n associate it with user.
+Add hobbies from the front end.
+Observer n conclude.
+Problem : In case of bi-dir association , jackson will cause the recursion, during serialization(java--> json)
+
+Solution : How to tell SC using Jackson , to skip the properties
+Add field level annotation
+@JsonIgnoreProperties(name of the prop as it appears in the opposite side)
+More Details : 
+eg : User 1<----->1 Cart
+Problem : Infinite recursion (stack overflow !!!!!!!!!!!!!!)
+Cause : Jackson (converter) tries to serialize Cart object , during the ser. of User obj.
+AND
+Jackson (converter) tries to serialize User object , during the ser. of Cart obj.
+Soln : 
+In User entity, add 
+@JsonIgnorePropeties(value="cartOwner")
+private ShoppingCart cart;
+
+In ShoppingCart entity
+@JsonIgnorePropeties(value="cart")
+private User cartOwner;
+
+
+Same problem n solution for any bi-dir relationship.
+
+OR use DTO solution
+Project Tip
+As a standard design practice , do not expose entities directly to the REST client
+(i.e DO not return them from the RestController)
+Instead use DTO (data transfer object) , to separate entities from resources to be shared with the clnts.
+eg : Send User DTO as  resp , instead of User entity.
+
+
+

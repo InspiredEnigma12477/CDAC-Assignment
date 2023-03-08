@@ -1,0 +1,60 @@
+ Transactions & Locking
+1. Change tx isolation level --to REPEATABLE_READ
+OR 
+2 Use "select for update" Query
+Both of above approach applies a write lock
+
+Better approach --Optismistic Locking
+
+Problem : Lost Updates
+
+If two transactions are updating different columns of the same row, then there is no conflict. The second update blocks until the first transaction is committed and the final result reflects both update changes.
+
+If the two transactions want to change the same columns, the second transaction will overwrite the first one, therefore loosing the first transaction update.
+
+So an update is lost when a user overrides the current database state without realizing that someone else changed it between the moment of data loading and the moment the update occurs.
+
+JPA 2 supports both optimistic locking and pessimistic locking. Locking is essential to avoid update collisions resulting from simultaneous updates to the same data by two concurrent users. Locking in  JPA) is always at the database object level, i.e. each database object is locked separately.
+
+Optimistic locking is applied on transaction commit. Any database object that has to be updated or deleted is checked. An exception is thrown if it is found out that an update is being performed on an old version of a database object, for which another update has already been committed by another transaction.
+
+Optimistic locking should be the first choice for most applications, since compared to pessimistic locking it is easier to use and more efficient.
+
+In the rare cases in which update collision must be revealed earlier (before transaction commit) pessimistic locking can be used. When using pessimistic locking, database objects are locked during the transaction and lock conflicts, if they happen, are detected earlier.
+
+Optismistic Locking 
+Add @Version annotated property in hibernate POJO.(data type Integer)
+
+ The initial version of a new entity object (when it is stored in the database for the first time) is 0. In every transaction in which an entity object is modified its version number is automatically increased by one. 
+
+During commit , hibernate checks every database object that has to be updated or deleted, and compares the version number of that object in the database to the version number of the in-memory object being updated. The transaction fails and an OptimisticLockException is thrown if the version numbers do not match, indicating that the object has been modified by another user (using another transaction) since it was retrieved by the current updater.
+
+Sample Query after adding versioning 
+update 
+    item 
+set 
+    version=1, 
+    amount=10 
+where 
+    id='abcd1234' 
+and 
+    version=0
+
+
+Pessimistic Locking
+The main supported pessimistic lock modes are:
+
+PESSIMISTIC_READ - which represents a shared lock.
+PESSIMISTIC_WRITE - which represents an exclusive lock.
+
+Setting a Pessimistic Lock
+
+An entity object can be locked explicitly by the lock method:
+org.hibernate.Session API
+void lock(Object object,LockMode lockMode)
+
+Obtain the specified lock level upon the given object. This may be used to perform a version check (LockMode.READ) or to upgrade to a pessimistic lock (LockMode.PESSIMISTIC_WRITE)
+
+eg : 
+  sf.getCurrentSession().lock(employee, LockMode.PESSIMISTIC_WRITE);
+

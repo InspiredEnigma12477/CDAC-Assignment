@@ -1,0 +1,43 @@
+Today's topics
+
+JSP Basics
+
+
+Before that : Solve
+eg : remote web server IP address is  --ip1 
+In web app(/day6.1) --- /s1(is a servlet) ---
+Creates a  cookie  --- name --"clnt_info" , value --"details1234"  & sends it to a clnt.
+
+clnt IP adr--  ip2
+
+Q Will Clnt browser of ip2  send the cookies in request header ?
+
+1. clnt sends the URL --- http://ip3:8080/day6.1 : NO --since ip3 : different IP address
+2. clnt sends the URL --- http://ip1:8080/day2/.... : NO --since day2 is a different web app
+3. clnt sends the URL --- http://ip1:8080/day6.1/s2 : YES
+4. clnt sends the URL --- http://ip1:8080/day6.1/s10 : YES
+
+
+
+Default behaviour : cookies are by default sent to the SAME web app of origin
+Can it be modified by Cookie class methods? YES
+Which ones ?
+
+setPath : allows the cookie/s to be shared across multiple web apps hosted on the same server.
+setDomain : allows the cookie/s to be shared across multiple hosts from the same domain
+
+
+
+----------------------------Enter JSP------------------------
+
+
+What is a JSP ?
+Why ?
+Life cycle
+
+1. JSP basic syntax
+refer to "readme_jsp"
+
+
+2. solve JSP Assignment
+

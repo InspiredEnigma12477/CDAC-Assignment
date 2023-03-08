@@ -1,0 +1,57 @@
+1. Extract tomcat zip. (to a folder : having  writing permisssion)
+
+2. Switch workspace to a new one.
+Change fonts, confirm JRE settings.
+(Window -- preferences -- Installed JRE )
+JRE location should be pointing to JDK11 folder 
+Otherwise : edit the location.
+
+2.5 Open cmd prompt . Type path
+1st entry the the path must be : C:\Program Files\Java\jdk-11.0.7\bin
+(JDK 11 is required , any update version wil do )
+If it's not present , edit System environment variable path n make it as the 1st entry.
+
+
+
+3. Default perspective in Eclipse is Java EE.
+In case it's not showing  : Window ---> Open Perspective --> Other --Choose Java EE
+
+4. At the bottom of a page , You will find "servers" tab
+If not found : Window --Show View --Other --Servers
+
+5. How to add Tomcat server in eclipse ?
+Click on servers tab --Choose Apache Vendor --Expand --Choose Tomcat 9.0 --Next --Choose Tomcat Install Directory --Finish
+
+6. Start the server . Watch the console . It should be completely error free.
+
+7. How to create a dynamic web app ?
+Below File Tab : expand drop down list --choose dynamic web project --Supply name (eg : test_web) --Change dyn web module version from 4.0 to 3.1 --next --next --check the checkbox  --Deployment descriptor web.xml --finish.
+
+7.5 If you had some later JDK versions (JDK 16/17) , another help
+Below File Tab : expand drop down list --choose dynamic web project --Supply name (eg : test_web) --Change dyn web module version from 4.0 to 3.1
+--Modify --change the Java Facet to JDK 11
+ --next 
+--next --check the checkbox  --Deployment descriptor web.xml --finish.
+
+8. Open this project. R click on src/main/webapp --new --HTML --create index.html (all lowercase pls!)
+--finish. 
+Add welcome message.
+
+9. How to deploy this web app on tomcat server ?
+R click on the project --Run as --run on server --Ensure Tomcat is chosen -- finish.
+It will deploy the web app on server & also automatically launch internal web browser console.
+
+9.5 To replace it by external web browser(separate HTTP client)
+
+Window --Web Browser --Choose Firefox or Chrome
+
+10 From Client side browser : Enter URL
+http://localhost:8080/test_web
+(assuming name of web app is test_web)
+This should send a request to your web app & send back a welcome message as a response , which gets displayed on the browser.
+This completes request response loop & testing of web app deployed on the server.
+
+11. Create a separate java-apidocs folder.
+Store core java api docs under that.
+Extract javaee-api-8.0-javadoc.jar (using winrar or any extractor) 
+Store these J2EE docs under the same , for easy reference.

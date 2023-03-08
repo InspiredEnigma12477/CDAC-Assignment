@@ -1,0 +1,148 @@
+
+
+Today's Topics
+Revise JDBC Steps
+JDBC CRUD Application with layered architecture
+Java App ---DAO i/f & implementation Class --DBUtils -- POJO --DB
+Stored procedure/function
+Enter web prog in Java
+
+
+Revise
+
+What is JDBC ? : An API to connect to DB , query DB , perform DDL /DML operations
+
+Which packages ? java.sql ---class --DriverManager.getConnection(url,userName,pwd) ---actually fetches the db conn n rets to the caller. (FIXED connectivity)
+
+javax.sql --DataSource.getConnection() -- represents pooled out DB connection.
+
+Why JDBC ? :JDBC apps are :  Platform independent + DB inde.(partially: meaning if sql syntax changes from DB to DB , you have to make changes in the code)
+
+Other than SQL --JDBC Driver has to be replaced in DB specific manner
+
+What are DB specific config params -- 4
+1. JDBC Driver class
+eg : Class.forName("com.mysql.cj.jdbc.Driver") ---OPTIONAL
+2. DB URL
+eg : MySQL --- jdbc:mysql://localhost:3306/dac22?.....
+Oracle -- jdbc:oracle:thin:@localhost:1520:xe
+3 user name
+4 pwd
+
+Currently we are hard coding these details in : DBUtils , later to be added in config xml files.
+
+
+
+How JDBC offers partial DB independence ? : 
+1. JDBC Driver : connector (translator --2 way : java <---> DB )
+2. JDBC  API : java.sql ---consists of largely i/fs : eg : Connection,ST,PST,RST,CST... : specs
+Imple classes : JDBC JAR : provided by DB vendors or 3rd party vendors
+eg : MySQL : mysql connector . jar
+
+What is JDBC Driver ?  : connector
+
+Type IV JDBC Driver : pure java driver using vendor specific protocol
+side effect : changes will have to be made in DB URL , when you change the DB
+
+
+Generalized steps in JDBC 
+1. Add JDBC jar in run time cls path
+2. get fixed db conn. (D.M.getConn(url,name,pwd))
+3. create statement
+Statement <---- PST <---- CST
+4. exec methods
+execQuery , execUpdate,exec
+5. close all db resources.
+
+
+Layered DB application
+Tester(main class) ---DAL / DAO (i/f <----class) --DBUtils: to get fixed DB conn ---POJO/s(Model / Entity / Domain / DTO)---DB  (EIS layer)
+ORM
+Table ---POJO class
+Columns -- Properties (non static n non transient data members)
+rows --POJO
+
+JDBC based DAO impl class
+1. public n pkged class
+2. pkg : java.sql
+3. state : Connection , sts/psts/csts
+4. def ctor ---will be invoked exactly once by the layer abover(eg : Tester)
+one time jobs (init time jobs) 
+get the cn from DBUtils
+creats psts n csts n keep them rdy
+5. CRUD style method
+will be invoked by tester --multiple times (once per request)
+6. Clean UP style method 
+will be invoked once by the layer abover(eg : Tester) --exactly once @ app destroy time (ie closing app)
+---------------------------------------------------
+
+Objectives
+
+1. Insert new  emp details  in the DB
+Steps
+1.1 DB --no change
+1.2 POJO -- no change
+1.3 DBUtils -- no change
+1.4 DAO i/f --new method 
+String insertEmpDetails(Employee e) throws SE
+imple class
+1.5 Tester --- accept User i/ps --invoke DAO's method --display the result
+
+
+2. Update emp details ---salary n dept
+user i/p : sal incr , new dept , emp id
+Steps
+2.1 DB --no change
+2.2 POJO -- no change
+2.3 DBUtils -- no change
+2.4 DAO i/f --new method 
+String updateEmpDetails(sal incr , new dept , emp id) throws SE
+
+
+
+
+3. Remove emp details
+i/p : emp id
+
+
+Execute stored procedure : transfer funds
+Steps
+1. Stored proc/func exists in DB
+
+2. Create CST(CallableStatement) from DB connection. => pre-parsed , pre compiled statement
+API of Connection i/f
+public CST prepareCall(String sql) throws SQLExc.
+sql : proc : "{call procName(?,?,?,?....)}"
+sql : func : "{?=call funcName(?,?,?,?....)}"
+{} : esc sequence meant for JDBC driver , to translate invocation syntax into DB specific syntax
+
+3. Register OUT params => Informing JVM about JDBC data type (generic SQL type : DB independent )  of OUT param.
+API of  CST 
+public void registerOutParameter(int paramPos,int jdbcType) throws SQLException
+
+
+4. IN : set it's value : public void setType(int paramIndex,Type value) throws SE
+OUT :  public void registerOutParamter((int paramIndex,int jdbcType) throws SE
+IN OUT :set it's value + registerOutParamter
+
+5. Execute the proc/func
+public boolean execute() throws SQLException
+
+6. Retrieve the results stored in OUT param
+API of CST
+public Type getType(int paramIndex) throws SQLException
+
+------------------------------------
+Enter web programming in Java 
+1. Refer to readme Java EE
+2. Add web server (Tomcat) in your Java EE workspace.
+3. Create Java EE compliant web application in IDE (dynamic web project)
+4. Add home page (index.html) n test it.
+-----------------and ---------------------
+5. Enter Servlets.
+
+
+
+
+
+

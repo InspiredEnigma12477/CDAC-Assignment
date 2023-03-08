@@ -1,0 +1,11 @@
+create table books
+(id int(5) primary key auto_increment,title varchar(20) unique ,author varchar(20),price double(6,1));
+
+insert into books values(1,'bk1','abc',500);
+insert into books values (2,'bk2','abc',300);
+
+insert into books values(3,'bk3','abc1',690);
+insert into books values (4,'bk4','abc1',750);
+
+insert into books values(5,'bk5','abc',550);
+insert into books values (6,'bk6','abc',650);

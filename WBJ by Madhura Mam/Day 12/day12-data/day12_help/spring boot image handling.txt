@@ -1,0 +1,85 @@
+Spring Boot Image handling  : project objective
+
+Objective : Image upload n download --from server side folder
+
+Use multipart request 
+
+An HTTP multipart request is an HTTP request that HTTP clients construct to send files and data over to an HTTP Server. It is commonly used by browsers and HTTP clients to upload files to the server.
+
+org.springframework.web.multipart.MultipartFile => A representation of an uploaded file received in a multipart request.
+
+A representation of an uploaded file received in a multipart request.
+The file contents are either stored in memory or temporarily on disk. In either case, the user is responsible for copying file contents to a session-level or persistent store as and if desired. The temporary storage will be cleared at the end of request processing.
+
+Stpes 
+0. Add a property in Entity (n DTO) , to store the image path
+eg : private String imagePath;
+
+1. To upload a file to a server side folder add the property (any property name)
+file.upload.location=images --add in application.properties
+(This will be a folder relative to current project)
+
+#limiting max file size for upload
+spring.servlet.multipart.max-file-size=10MB
+spring.servlet.multipart.max-request-size=15MB
+
+2. File upload
+Create "images" folder , if not present
+2.1 Application class implements CommandLineRunner i/f n implement "run" method
+It will run exactly once @ spring boot app launching time
+OR 
+Create ImageHandlingService : as singleton n eager service bean
+n create "images" folder , if not present
+
+2.2 Create a rest controller
+Other emp details are already stored in DB. image  path has to be stored in the table n image should be uploaded in the "images" folder.
+
+i/p : emp id : path var
+MultipartFile : request param
+resp : Emp DTO (with image file name set) or Simply ApiResponse
+eg : Method : POST
+http://localhost:8080/api/employees/{empId}/images
+
+2.3 Image Handling Service 
+1. Create total path , using folder  location ,file separator , image file's original file name
+
+2. Copy multipart file into server side folder structure.
+API of java.nio.file.Files : helper class
+public static long copy​(InputStream in, Path target, CopyOption... options) throws IOException
+Copies all bytes from an input stream to a file returning no of bytes copied.
+
+3. Save  image path in Emp entity (to trigger update query) --setter
+
+4. Return Emp DTO OR ApiResponse DTO to the caller.(service --> controller --> JSON representation to clnt)
+
+5. Test it with postman
+
+
+
+3. Serving images (download) from server side folder.
+i/p : emp id
+
+Steps 
+3.1 In Controller 
+Method = GET
+Add "produces" in the annotation(@GetMapping): to include image MediaType : JPEG_VALUE , GIF_VALUE, PNG_VALUE
+eg : @GetMapping(value = "/{userId}/images", produces = { MediaType.IMAGE_GIF_VALUE, MediaType.IMAGE_JPEG_VALUE,MediaType.IMAGE_PNG_VALUE }) 
+
+
+3.2 In service layer
+1. get emp details from emp id
+2. Get  complete path of the image
+emp's getter
+3. API of java.nio.file.Files : helper class
+Method :
+public static byte[] readAllBytes​(Path path) throws IOException
+Reads all the bytes from a file. The method ensures that the file is closed when all bytes have been read or an I/O error, or other runtime exception, is thrown.
+
+For java.nio.file.Path : Paths.get(String first,String ... more)
+4. return contents of image file(byte[]) to the controller
+
+
+From controller , simply add it in ResponseEntity n send it to the clnt.
+4. For react frontend , use : in <img> : src as 
+Method : GET
+http://localhost:8080/api/employees/{empId}/image

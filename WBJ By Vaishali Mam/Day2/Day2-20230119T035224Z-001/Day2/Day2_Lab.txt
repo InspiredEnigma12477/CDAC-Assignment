@@ -1,0 +1,50 @@
+1. Create a new dynamic web project (check web.xml checkbox) : eg day2_lab
+
+1.1 Create a welcome page : index.html
+Add a link : to invoke the servlet (which will be deployed using @WebServlet annoatation)
+
+1.1 Request URL  sent from clnt --> server, after clicking of the link
+http://host:port/day2_lab/test1
+URI : /day2_lab/test1
+URL Pattern : /test1
+
+
+Create FirstServlet.java , override life cycle methods & trace the life cycle.
+Use @WebServlet annoatation
+Use lazy loading policy.
+
+1.2 Add another link in index.html : to invoke the servlet (which will be deployed using xml tags)
+
+Create SecondServlet.java , override life cycle methods & trace the life cycle.
+Do NOT Use @WebServlet annoatation , instead add xml tags in web.xml
+Use eager loading policy.
+
+-----------------------------------------
+What will happen ?
+
+1.3 Add / in anchor tag's href. Observe n conclude
+URL : http://localhsot:8080/test1
+Resp :HTTP 404
+
+1.4 Remove / from the url-pattern . Observe n conclude
+Obs : WC (Server side JVM) throws : IllegalArgumentException --- invalid URL pattern !!!!!!!!!!!!
+
+
+1.5 Give same url-pattern to 2 different servlets . Observe n conclude
+Obs : Web server simply DOES NOT start
+WC (Server side JVM) throws : IllegalArgumentException ---multiple servlets CAN NOT have SAME url-pattern
+
+
+
+
+1.6 Can one servlet be deployed under multiple url patterns -- YES 
+
+
+Common Troubleshooting Tips
+1. Stop web server
+2. R Click on Tomcat server --- add n remove --Remove All : This will un deploy all web apps from the server.
+3. R Click on Tomcat server --clean
+4. R Click on Tomcat server --clean tomcat work directory
+5. Start server (If it starts correctly => no server issues!)
+6. Clean Project n deploy the dynamic web project n test it.
+

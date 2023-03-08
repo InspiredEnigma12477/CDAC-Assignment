@@ -1,0 +1,41 @@
+Continue to Spring MVC n Hibernate Integration.
+1. Continue with the same project.
+(All the dependency JARS for spring n hibernate are already added in pom.xml)
+
+2. Copy database.properties n hibernate-persistence.xml from day6-data\day6_help\spring-hibernate-templates folder under <src>/<main>/<resources> i.e under the runtime class path.
+
+3. Edit database.properties , as per your DB settings
+
+4. Uncomment import statement from spring-servlet.xml (i.e import hibernatep-persistence.xml from spring-servlet.xml)
+
+5. Either create POJO from database table , or generate tables from POJO.
+
+6. Build the layers , in the bottoms up manner.
+(refer : day6-data\day6_help\diags\comparioson of layers JSP-JB vs Spring MVC.png)
+Controller---Service--DAO --POJO--DB.
+
+7. POJO layer no change . (Meaning @Entity + @Id annotated pojos for entities n @Embeddable annotated pojos for value types)
+
+8. Create DAO layer i/f , as usual.
+
+9. In DAO imple class 
+class level annotation --- @Repository
+Dependency : org.hibernate.SessionFactory --- @AutoWired
+
+9.1 CRUD methods
+Typically : get session from SF (getCurrentSession) --invoke session API (save/persist......./createQuery...) n return results tio the caller.
+
+10. Service layer i/f : add B.L method declarations
+Service layer implemetation class
+class level annotation --- @Service , @Transactional
+Dependency : DAO layer i/f --- @AutoWired
+
+11. Controller layer (req handling controller)
+class level annotation --- @Controller : mandatory
+optional class level annotation for the separation : @RequestMapping
+Dependency : Service layer i/f  --- @AutoWired
+
+11.1 Controller class contains : req handling methods (to be invoked by D.S)
+Mandatory method level annotation : @RequestMapping | @GetMapping | @PostMapping.....
+
+

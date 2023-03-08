@@ -1,0 +1,171 @@
+Today's Topics
+Revision
+1. Servlet - JDBC Integration
+2. Page Navigation
+3. Session Tracking
+
+ 
+
+
+What is Java EE/Jakarta EE ?
+Specifications for primary services required for building any enterprise app , coming from Oracle/Sun /Eclipse Foundation
+eg : Servlet , JSP, JavaBeans, Conn pooling , JPA , Java Mail , REST....
+
+Why J2EE 1.8/Java EE 8 /Jakarata EE 8 
+1. Supports different type of clnts (web clnt,java clnt,smart clnt)
+2. Supports J2EE server independence 
+3. Ready made imple of prim services is supplied auto.
+
+
+Who provides Specs of prim services in J2EE  / Java EE : Oracle/Sun /Eclipse Foundation
+Imple : Java EE server vendors
+
+Popular vendors & their products 
+(Apache : Tomcat / Tomee, Oracle --Glassfish , Jboss , weblogic....)
+
+Request response flow(Layers)
+URL --- http://www.abc.com:8080/day3.1
+
+Revise request response flow
+http : scheme (protocol) : appln layer protocol
+www.abc.com : resolved by DNS (mapping service based upon IP) : --IP layer : Host hosting web server
+8080 : port no : TCP (transport layer protocol : conn oriented , reliable) --web server (Tomcat)
+W.S delegates req handling to ---> WC
+
+What is WC ?
+
+WC : server side JVM. 
+Manages web apps. 
+Provides run time env for server side dynamic web comps(servlets, JSP,filter)
+
+1. Server side JVM residing within web server.
+Its run-time environment for dynamic web components(Servlet & JSP,Filter) . 
+Jobs ---
+1. Creating Http Request & Http response objects 
+2. Controlling life-cycle of dyn web comps (manages life cycle of servlet,JSP,Filters)
+3. Giving ready-made support for services --- Naming,security,Conn pooling .
+4. Handling concurrent request from multiple clients .
+5. Managing session tracking...
+
+
+6. What is web.xml? --- Deployment descriptor one per web appln
+created by -- developer(with help of IDE)
+who reads it -- Web Container(WC)
+when ---once at the web app deployment time
+what does it consist of --- deployment instructions --- welcome page, servlet deployment tags, sess config, sec config......
+Mandatory till Java EE 1.5 , optional later.
+
+
+
+J2EE compliant folder structure of dynamic web application
+refer to a diagram.
+
+
+7. Why servlets? --- To add dynamic nature to the web application
+
+What is a servlet ?
+-- Java class (with NO main method) -- represents dynamic web component - whose life cycle will be managed by WC(web container : server side JVM)
+no main method
+life cycle methods --- init,service,destroy
+
+
+Job list
+1. Request processing
+2. B.L 
+3. Dynamic response generation
+4. Data access logic(DAO class --managing DAO layer)
+5. Page navigation
+
+Servlet API details --refer to diag servlet-api.png
+
+Deployment of the servlet
+1. Via annotation
+eg : @WebServlet(value="/validate")
+public class LoginServlet extends H.S {....}
+Map : 
+key -- /validate
+value -- F.Q servlet cls name
+URL : http://host:port/day1.1/validate?....
+
+OR
+
+2. Using XML tags
+How to deploy a servlet w/o annotations --- via XML tags
+web.xml
+
+<servlet>
+ <servlet-name>abc</servlet-name>
+<servlet-class>pages.SecondServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+ <servlet-name>abc</servlet-name>
+ <url-pattern>/test2</url-pattern>
+</servlet-mapping>
+WC : map 
+key : /test2
+value  : pages.SecondServlet
+
+
+eg URL --http://host:port/test_web/hello
+
+At the time of web app deployment ---WC tries to populate map of url patterns , from XML tags (from web.xml). Later ---it  will check for @WebServlet annotation
+
+-----------------------------Revision over -----------------------------
+
+How to read request params sent from the clnt in the servlet ?
+
+javax.servlet.ServletRequest i/f methods
+1. public String getParameter(String paramName)
+
+2. public String[] getParameterValues(String paramName)
+
+Objective 3 : Accept different type of i/ps from user , in HTML form.Write a servlet to display request parameters.
+
+
+
+Objective 1 : Servlet --JDBC Integration
+0. JDBC JAR : <WEB-INF>/lib OR <tomcat> / lib
+Layers involved : Servlet --DAO (Uses DBUtils) --POJO -- DB
+
+Reference case study : CMS (content management system) 
+Design 
+1. Table : users
+2. POJO : User
+3. DBUtils : open fixed DB connection , close , get connection
+4. DAO : IUserDao , imple class
+
+6. welcome page : login.html(post) --> LoginServlet
+
+7. --> LoginServlet
+7.1 --init , destroy, doGet/doPost
+
+
+Centralized err handling in Servlets
+How ?
+@Override
+public void init() throws ServletException
+{
+try {
+  open connection
+  create dao inst
+} catch(Exception e)
+{
+//re throw the exception back to WC , so that WC doesn't continue to service.
+  throw new ServletException("err in init" +getClass(),e);
+}
+}
+
+
+API of javax.servlet.ServletException
+Constructor :
+public ServletException(String message,Throwable rootCause)
+
+
+Objective : 
+Complete login--logout flow in current app
+(login.html -- LoginServlet --successful login --redirect to TopicsPage -- display logged in user details from topics page --logout link --LogOutServlet)
+
+
+Page Navigation
+Client Pull
+

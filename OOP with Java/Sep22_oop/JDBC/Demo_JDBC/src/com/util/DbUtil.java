@@ -44,9 +44,9 @@ public static int insertBook(int bookid,String title,String author,double price)
 	
 	//insert,update,delete:Write operations on DB
 	//assign values to parameter
-	pstmt.setInt(1, bookid);//first parameter 
 	pstmt.setString(2, title);//second parameter
 	pstmt.setString(3, author);//third parameter
+	pstmt.setInt(1, bookid);//first parameter 
 	pstmt.setDouble(4, price);//first parameter 
 	int i=pstmt.executeUpdate();
 	

@@ -1,0 +1,11 @@
+Lab 4:
+
+Revise JDBC CRUD using servlet:try to create Voting assignment using servlet(ref:Day1_help\case study)
+
+Revise Server Pull : RequestDispatcher's forward scenario
+
+Revise Server Pull : RequestDispatcher's include scenario
+
+Revise ServletConfig , ServletContext
+
+Get familiar with JSP scripting elements n EL syntax.(use Day4_code folder)

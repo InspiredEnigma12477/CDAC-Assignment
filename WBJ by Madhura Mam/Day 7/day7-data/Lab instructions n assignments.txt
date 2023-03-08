@@ -1,0 +1,143 @@
+Day 1
+1. import day1.1 , as existing maven app , in your workspace.
+File --> import --Maven --Existing Maven project
+It will automatically download all hibernate JARs(dependencies)
+R Click on project --Maven -- Force Update project
+
+
+Revise
+1.1 Hibernate layers n architecture
+1.2 save API
+1.3 get API
+
+2. Fresh hands on
+Create a new Maven project :  day1_lab
+Objectives
+2.1 Create hibernate layers : utils , POJO , DAO n tester
+2.2 
+Employee : id (auto_increment : PK) , first name ,last name , department (enum : RND,FINANCE,MARKETING,HR,BILLING), salary, dob(LocalDate) ,isPermanent(boolean)
+Annotations
+@Entity , @Table, @Id, @GeneratedValue(strategy=GenerationType.IDENTITY)
+, @Column , @Enumerated, ....
+table : employees
+
+Link for reference (more details later) : https://www.digitalocean.com/community/tutorials/jpa-hibernate-annotations
+
+2.3 Add new employee
+at least add 5 records.
+
+3. Revise everything learnt so far.
+
+Day 2
+1. Add a tomcat web server to your new workspace.
+
+2. import "day2-data\day2_help\template projects\web_maven_hibernate" , in your workspace , as EXISTING MAVEN PROJECT
+(It will download additional plug-in from the net )
+
+Then we will start our combined lab session, in theory classroom.
+
+3.  Hands on
+Continue with day1_lab project (having SAME HibernateUtils, Emp pojo , DAO n tester).
+Add some more emp recs (using Add New Employee tester) --at least 6 records 
+,some permanent emps n some temp emps.
+
+Solve this
+3.1 List all employees from specific dept earning salary > specific salary
+
+3.2 List emp id , first name , last name , salary for all permanent emps
+
+3.3 Transfer emp to a new department n salary raise, having specified first name n last name
+
+3.4 Delete all temporary employees
+
+
+4.  Integrate hibernate in a web app
+We will solve 3.1 task , BUT in a web app.
+
+5. import day2.1 in your workspace.
+Edit hibernate.cfg.xml , as per your DB settings.
+
+Revise entire CRUD API , in a top down manner
+Testers to go through 
+5.1 GetUserDeatilsByUserId : for session.get API
+5.2  GetAllUsers : JPQL n create Query n Query API
+5.3 GetUserDeatilsByDateAndRole : JPQL n setting named IN params
+5.4 GetUserNamesByRole : JPQL , setting named IN params n projection with 1 column
+5.5 GetSelectedUseDetails : JPA constructor expression
+5.6 ChangePassword : select + update (Detached vs Persistent n understand auto dirt checking by hibernate)
+5.7 TestBulkUpdate : bulk updation (via single update query)
+5.8 DeleteUserDeatilsByUserId : single user deletion
+5.9 SaveImage : saving binary image data in DB
+5.10 RestoreImage : restoring binary image data from db n saving it in a new image file
+
+Day 3
+1. import day3.2 first.
+Edit hibernate.cfg.xml , as per your DB settings.
+
+1.1 Revise one-many bi dir association
+1.2 Continue with helper methods n mem diagrams
+1.3 cascading
+1.4 orphan removal
+1.5 fetch type
+
+2. Continue with web app integration with hibernate n test it.
+
+3. import day3.1 now
+Edit hibernate.cfg.xml , as per your DB settings.
+Revise
+3.1 save vs persist vs saveOrUpdate vs merge
+3.2 get vs load
+
+Day 4 
+NO labs. Simply revise
+
+Day 5
+1. Copy  "day5-data\day5_help\spring-help\template project for spring\test_spring" project in your workspace folder
+
+2. import this project as Existing Maven Project --Force update Maven project
+This should download the dependencies , for spring
+
+3. In the meantime , copy earlier hibernate project in day5.1_lab
+(Keep this diagram open :  "day4-data\day4_help\Alternate Student management system E-R diagram.png")
+Solve 
+3.1 Launch new course
+i/p : all course i/ps (title , start date ,end date , fees ,capacity)
+o/p : status message (success or failure)
+3.2 Student application for the course
+i/p : course id n student details : name n email
+What should in DB : student record inserted in students table
+child rec added in admissions table : 
+with id : auto generated 
+applied date set as current date ,
+result date : not yet set,
+course id n student id : FKs assigned properly
+status : APPLIED
+
+4. After spring dependencies are downloaded , revise basic spring bean life cycle , along with setter based D.I
+
+
+Day 6
+1. Please complete the revision of Spring Core Container , D.I n spring bean life cycle
+import these projects
+1.1 import day5.2 : for understanding spring bean life cycle + setter based D.I
+1.2 import day6.1 : Constructor based D.I
+1.3 import day6.2 : Factory method based D.I
+1.3 import day6.3 : Auto Wiring byName
+1.4 import day6.4 : Auto Wiring byType
+1.5 import day6.5 : Auto Wiring constructor
+1.6 import day6.6 : a hybrid approach (less XML + majority annotations)
+1.7 import day6.7 : java configuration class n annotations
+
+
+Day 7
+1. Copy n import "day7-data\day7_help\templates\template for maven based spring web MVC app\spring_mvc_template" , as existing Maven App in your workspace
+
+This only contains spring n hiberntae dependency JARs.
+Nothing else !
+1.1 Test Spring MVC Flow --to deliver the index page using Spring , displaying changing time stamp.
+(Will be using Model map here.)
+Request URL : http://host:port/spring_mvc_lab
+Resposne : Welcome message displaying changing time stamp
+
+1.2 Integrate it with hibernate : to display product list under a specific chose category name.
+

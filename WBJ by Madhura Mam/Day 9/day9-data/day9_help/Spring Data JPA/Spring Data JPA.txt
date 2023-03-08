@@ -1,0 +1,102 @@
+The relationship between Spring Data JPA, JPA, and Hibernate/EclipseLink/Kodo n /JDBC
+
+JPA is a part of Java EE/Jakarta EE specification that defines an API for ORM and for managing persistent objects. Hibernate and EclipseLink are  popular implementations of this specification. 
+
+Spring Data JPA adds a layer on top of JPA. That means it uses all features defined by the JPA specification, especially the entity and association mappings, the entity lifecycle management, and JPA’s query capabilities. On top of that, Spring Data JPA adds its own features like a no-code implementation of the repository pattern and the creation of database queries from method names.
+
+
+If the JPA specification and its implementations provide most of the features that you use with Spring Data JPA, do you really need the additional layer? Can’t you just use the Hibernate directly ?
+
+You can, of course, do that. That’s what a lot of Java  applications do. Spring ORM provides a good integration for JPA (eg : Spring native Hibernate Integration  or Spring JPA )
+
+But the Spring Data team took the extra step to make your job a little bit easier. The additional layer on top of JPA enables them to integrate JPA into the Spring stack easily.
+ They also provide a lot of functionality that you otherwise would need to implement yourself.
+
+Why Spring Data JPA
+
+1.  No-code Repositories
+The repository pattern is one of the most popular persistence-related patterns. It hides the DB specific implementation details and enables you to implement your business logic with  higher abstraction level.
+
+eg : For Author Entity
+How ?
+to persist, update and remove one or multiple Author entities,
+to find one or more Authors by their primary keys,
+to count, get and remove all Authors and
+to check if an Author with a given primary key exists.
+
+All you need to do is : 
+ 
+public interface AuthorRepository extends JpaRepository<Author, Integer> {}
+
+2. Reduced boilerplate code
+To make it even easier, Spring Data JPA provides a default implementation for each method defined by one of its repository interfaces. You don't need to implement these operations. 
+
+3. Generated queries
+Another cool feature of Spring Data JPA is the generation of database queries based on method names.(finder method pattern)  
+
+eg : Write a method that gets a Book entity with a given title. Internally, Spring generates a JPQL query based on the method name, sets the provided method parameters as bind parameter values, executes the query and returns the result.
+//JpaRepository<T,ID> 
+//T : entity type
+//ID : Data type of id property(PK)
+public interface BookRepository extends JpaRepository<Book, Integer> {
+     
+    Optional<Book> findByTitle(String title123);
+}
+Assumption : title : property of Book POJO
+
+
+Using Spring Data JPA with Spring Boot
+
+You only need to add the spring-boot-starter-data-jpa  and your JDBC driver to your maven build. The Spring Boot Starter includes all required dependencies and activates the default configuration.
+Add DB config properties in application.properties file
+
+By default, Spring Boot expects that all repositories are located in a sub-packages of the class annotated with @SpringBootApplication. 
+If your application doesn’t follow this default, you need to configure the packages of your repositories using an @EnableJpaRepositories annotation.
+
+Repositories(API) in Spring Data JPA
+package : o.s.data.repository
+CrudRepository
+PagingAndSortingRepository
+JpaRepository
+The CrudRepository interface defines a repository that offers standard create, read, update and delete operations. 
+The PagingAndSortingRepository extends the CrudRepository and adds findAll methods that enable you to sort the result and to retrieve it in a paginated way. 
+The JpaRepository adds JPA-specific methods, like flush() to trigger a flush on the persistence context or findAll(Example<S> example) to find entities 
+
+Defining an entity-specific repository
+eg : 
+Book entity is a normal JPA entity with a generated primary key of type Long, a title and a many-to-many association to the Author entity.
+
+@Entity
+@Table(name="books")
+public class Book {
+ 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+ 
+    @Version
+    private int version; //for optimistic locking
+ 
+    private String title;
+ 
+    @ManyToMany
+    @JoinTable(name = "book_author", 
+                joinColumns = { @JoinColumn(name = "fk_book") }, 
+                inverseJoinColumns = { @JoinColumn(name = "fk_author") })
+    private Set<Author> authors = new HashSet<>();
+     
+    ...
+}
+If you want to define a JPA repository for this entity, you need to extend Spring Data JpaRepository interface and type it to Book and Long. 
+
+public interface BookRepository extends JpaRepository<Book, Long> {
+     
+    Book findByTitle(String title);
+}
+
+Working with Repositories
+
+After you defined your repository interface, you can use the @Autowired annotation to inject it into your service implementation. Spring Data will then provide you with a proxy implementation of your repository interface. This proxy provides default implementations for all methods defined in the interface. 
+
+For More API Details
+refer " regarding Spring Data JPA"

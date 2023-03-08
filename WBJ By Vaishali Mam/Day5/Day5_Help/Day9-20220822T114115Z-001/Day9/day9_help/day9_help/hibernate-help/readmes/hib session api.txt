@@ -1,0 +1,117 @@
+Hibernate API
+
+0. SessionFactory API
+getCurrentSession vs openSession
+
+public Session openSession() throws HibernateExc
+opens new session from SF,which has to be explicitely closed by prog.
+
+public Session getCurrentSession() throws HibernateExc
+Opens new session , if one doesn't exist , otherwise continues with the exisitng one.
+Gets automatically closed upon Tx boundary or thread over(since current session is bound to current thread --mentioned in hibernate.cfg.xml property ---current_session_context_class ---thread)
+
+
+1. Testing core api
+persist --- 
+public void persist(Object transientRef)
+
+if u give some non-null id (existing or non-existing) while calling persist(ref) --gives exc
+org.hibernate.PersistentObjectException: detached entity passed to persist: 
+why its taken as detached  ? ---non null id.
+
+2. 
+public Serializable save(Object ref)
+save --- if u give some non-null id(existing or non-existing) while calling save(ref) --doesn't give any exc.
+Ignores ur passed id & creates its own id & inserts a row.
+
+3. saveOrUpdate
+public void saveOrUpdate(Object ref)
+--either inserts/updates or throws exc.
+null id -- fires insert (works as save)
+non-null BUT existing id -- fires update (works as update)
+non-null BUT non existing id -- throws StaleStateException --to indicate that  we are trying to delete or update a row that does not exist.
+
+3.5 
+merge
+public Object merge(Object ref)
+I/P -- either transient or detached POJO ref.
+O/P --Rets PERSISTENT POJO ref.
+
+null id -- fires insert (works as save)
+non-null BUT existing id -- fires update (select , update)
+non-null BUT non existing id -- no exc thrown --Ignores ur passed id & creates its own id & inserts a row.(select,insert)
+
+
+4. get vs load
+& LazyInitilalizationException.
+
+
+5. update
+Session API
+public void update(Object object)
+Update the persistent instance with the identifier of the given detached instance.
+I/P --detached POJO containing updated state.
+Same POJO becomes persistent.
+ 
+Exception associated : 
+1. org.hibernate.TransientObjectException: The given object has a null identifier:
+i.e while calling update if u give null id. (transient ----X ---persistent via update)
+
+2. org.hibernate.StaleStateException --to indicate that  we are trying to delete or update a row that does not exist.
+3.
+org.hibernate.NonUniqueObjectException: a different object with the same identifier value was already associated with the session
+
+
+6. public Object merge(Object ref)
+Can Transition from transient -->persistent & detached --->persistent.
+Regarding Hibernate merge
+1. The state of a transient or detached instance may also be made persistent as a new persistent instance by calling merge().
+2. API of Session
+Object merge(Object object)
+3.
+Copies the state of the given object(can be passed as transient or detached) onto the persistent object with the same identifier. 
+3.If there is no persistent instance currently associated with the session, it will be loaded. 
+4.Return the persistent instance. If the given instance is unsaved, save a copy of and return it as a newly persistent instance. The given instance does not become associated with the session.
+5. will not throw NonUniqueObjectException --Even If there is already persistence instance with same id in session.
+
+
+7.public void evict(Object persistentPojoRef)
+
+It detaches a particular persistent object 
+ from the session level cache(L1 cache)
+(Remove this instance from the session cache. Changes to the instance will not be synchronized with the database. )
+
+8. 
+void clear() 
+
+When clear() is called on session object all  the objects associated with the session object(L1 cache) become detached.
+ But Databse Connection is not returned to connection pool.
+(Completely clears the session. Evicts all loaded instances and cancel all pending saves, updates and deletions)
+
+9. void close()
+  
+When close() is called on session object all 
+the persistent objects associated with the session object become detached(l1 cache is cleared) and also closes the  Database Connection.
+
+
+10. void flush()
+
+When the object is in persistent state , whatever changes we made to the object 
+state will be reflected in the databse only at the end of transaction.
+
+BUT If we want to reflect the changes before the end of transaction 
+(i.e before commiting the transaction ) 
+ call the flush method.
+(Flushing is the process of synchronizing the underlying DB state with persistable state of session cache )
+
+11. boolean contains(Object ref)
+
+The method indicates whether the object is 
+associated with session or not.(i.e is it a part of l1 cache ?)
+
+12.
+void refresh(Object ref) -- ref --persistent or detached
+
+This method is used to get the latest  data from database and make 
+corresponding modifications to the persistent object state.
+(Re-reads the state of the given instance from the underlying database

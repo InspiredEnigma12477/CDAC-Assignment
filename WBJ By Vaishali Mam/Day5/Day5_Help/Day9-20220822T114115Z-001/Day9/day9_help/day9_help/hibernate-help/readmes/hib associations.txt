@@ -1,0 +1,75 @@
+The two rules, for bidirectional one-to-one associations
+
+1 The @JoinColumn annotation goes on the mapping of the entity that is mapped to
+the table containing the join column, or the owner of the relationship. This might
+be on either side of the association.
+
+2 The mappedBy element should be specified in the @OneToOne annotation in the
+entity that does not define a join column, or the inverse side of the relationship.
+Illegal to  have a bidirectional association that had mappedBy on both sides.
+Incorrect not have it on either side. 
+Hibernate will assume  each side was the owner and each will have a join column.
+----------------
+
+When an entity is associated with a Collection of other entities, it is in form of a one-to-many mapping. 
+When a relationship is bidirectional, there are actually two mappings, one for each direction.
+A bidirectional one-to-many relationship always implies a many-to-one mapping back to the source.
+eg : Course & Students
+
+In this ,  there is a one-to-many mapping from Course -----> Student
+and a many-to-one mapping from Student -----> Course.
+
+Which table must have a foreign key ?
+
+When a Course entity has an  number of Student entities stored in its collection, there is no definite  way to store those references in the database table.
+Instead Student table MUST  have foreign keys back to the Course
+So the one-to-many association  is almost always bidirectional and never the owning side.
+
+In Course entity u need to map the Students with  @OneToMany annotation.
+This doesn't have foreign key , so its an inverse side of relationship.
+Since this is the inverse side of the relationship, MUST include the mappedBy attribute.
+eg : In Course Entity
+
+mappedBy -- must refer to the prop name in the associated table --to specify ownership of the asso.
+@OneToMany(cascade = CascadeType.ALL,mappedBy = "course")
+students getter. (getStudents)
+
+ ---mappedBy tells hibernate that instead of having a separate join table --map students  by course i.e course = name of the property appearing in Student class , anno by @ManyToOne
+
+In Student Entity
+@ManyToOne
+@JoinColumn(name = "course_id")
+getter for course
+
+Rules 
+1. The many-to-one side is the owning side, so the join column is defined on that
+side.
+2. The one-to-many mapping is the inverse side, so the mappedBy element must be
+used.
+
+---------------------------------
+Collection of 3 types --- entities , embeddables & basic types.
+
+In Course  1<----->n Student 
+the Course  entity has a collection of Student instances.
+
+It is called a multivalued relationship.
+
+BUT  collections of embeddable and basic types are not relationships; they are simply collections of elements .
+
+They are  called element collections. 
+
+Relationships define associations between independent entities , whereas element
+collections contain objects that are dependent upon the referencing entity, and can be retrieved only through the entity that contains them.
+
+Annotation Used -- @ElementCollection --mandatory
+BUT then hibernate creates its own table to store these embeddables
+If u want to name the table , optional anno is @CollectionTable
+
+
+@ElementCollection
+@CollectionTable(name = "table_name", joinColumns = @JoinColumn(name = "join_col_name"))
+Followed by getter of embeddables or basic types.
+
+	
+

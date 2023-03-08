@@ -1,0 +1,51 @@
+Understanding hibernate-persistence.xml & tx management
+1. Supply the location of DB property file .
+<context:property-placeholder 
+location="classpath:/database.properties" />
+2.Configure a spring bean , to create Apache supplied connection pool.
+I/F --javax.sql.DataSource (represents Connection pool)
+Imple class --Apache supplied --org.apache.commons.dbcp2.BasicDataSource
+Inject CP properties via setter Based D.I
+
+3. Configure SessionFactory bean , supplied by Spring.
+i/f --org.hibernate.SessionFactory (hibernate supplied)
+SF provider -- o.s.orm.hibernate5.LocalSessionFactoryBean
+Inject SF properties via setter Based D.I
+eg : packgesToScan, show_sql , hbm2ddl.auto
+Inject the ref of CP bean into SF
+
+4. Configure spring supplied tx manager bean , to automate tx management(using @Transactional)
+I/F : o.s.transaction.PlatformTransactionManager
+Implementation class --o.s.orm.hibernate5.HibernateTransactionManager
+
+5. Enable annotation based tx supprt
+<tx:annotationDriven/>
+4. Understanding Transaction Management in Spring
+
+How to automate Tx management in spring?
+1. Add spring supplied tx manager bean in config file
+<bean id="transactionManager" 		class="org.springframework.orm.hibernate5.HibernateTransactionManager"
+p:sessionFactory-ref="sessionFactory">
+</bean>
+2.  Enable tx annotation support
+	<tx:annotation-driven />
+
+3. Use @Transactional annotation typically in Service or DAO Layer.
+
+4. How to customize tx management -- using @Transactional attributes
+4.1 timeout
+eg : @Transactional(timeout=10)
+service/dao layer method/class
+4.2 readOnly -- 
+def value --false in non spring -boot apps
+def value=true in spring boot apps
+eg : @Transactional(readOnly=true)
+4.3 
+@Transactional(rollbackFor = IOException.class, noRollbackFor = RuntimeException.class)
+public void doSomething(...)
+
+4.4 Tx propagation level
+
+4.5 Tx isolation level
+
+

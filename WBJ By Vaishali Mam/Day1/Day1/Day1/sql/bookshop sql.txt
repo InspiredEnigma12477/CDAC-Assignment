@@ -1,0 +1,67 @@
+#Book Shop SQL
+#drop table order_lines,bookshop_orders,customers,books;
+# id | name  | email  | password | reg_amt | reg_date   |  | role
+
+create table customers (
+id int primary key auto_increment,
+name varchar(20),
+email varchar(20) unique,
+password varchar(20),
+reg_amt double,
+reg_date date,
+role varchar(10));
+
+#customers table data
+insert into customers values(1,'rama','rama@gmail.com','1234',1500,'2017-1-23','admin');
+
+insert into customers values(2,'Kiran','kir@gmail.com','123',1200,'2018-5-29','customer');
+
+insert into customers values(3,'Shekhar','shek@gmail.com','1235',1800,'2016-3-4','customer');
+
+insert into customers values(4,'Riya','riya@gmail.com','4235',1700,'2017-3-4','customer');
+
+insert into customers values(5,'Raj','raj@gmail.com','4535',1900,'2019-3-4','customer');
+
+#books table data
+
+create table books
+(id int(5) primary key auto_increment,title varchar(20) unique ,author varchar(20),category varchar(20),price double(6,1));
+insert into books values(1,'bk1','abc','java_se',500);
+insert into books values (2,'bk2','abc','java_se',300);
+
+insert into books values(3,'bk3','abc1','java_ee',690);
+insert into books values (4,'bk4','abc1','java_ee',750);
+
+insert into books values(5,'bk5','abc','angular',550);
+insert into books values (6,'bk6','abc','angular',650);
+
+insert into books values(7,'bk7','abc2','react',570);
+insert into books values (8,'bk8','abc2','react',680);
+insert into dac_books values(9,'bk9','abc1','react',670);
+insert into dac_books values (10,'bk10','abc1','react',690);
+
+
+//bookshop_orders : order_id | order_date | status  | customer_id
+
+create table bookshop_orders (
+order_id int primary key auto_increment,
+order_date date,
+status varchar(20),
+customer_id int,constraint fk_customers
+    	  foreign key (customer_id)
+    	  references customers(id));
+
+//order_lines : order_line_id | quantity | price | order_id | book_id
+
+create table order_lines (
+order_line_id int primary key auto_increment,
+quantity int,
+price double,
+order_id int,constraint fk_orders
+    	  foreign key (order_id)
+    	  references bookshop_orders(order_id),
+book_id int,constraint fk_books
+    	  foreign key (book_id)
+    	  references books(id)
+
+);

@@ -1,0 +1,181 @@
+Today's topics
+
+
+Enter Hibernate
+Hibernate Architecture
+CRUD operations in Hibernate
+Persistence Context (L1 cache) working
+
+
+1. What is Hibernate?
+Refer to readme
+
+Complete solution to manage automatic persistence in DB in Java.
+ORM tool
+JPA implementor
+JPA : Java Persistence API --- Java EE / Jakarata EE specs (javax.persistence)
+Hibernate : JPA implementor
+(DB Journey in Java ---1. JDBC 2. Hibernate (native hibernate) 3. JPA 4. Spring Data JPA
+
+Hibernate :auto persistence provider
+
+Other persistence providers : iBatis,Kodo, EclipseLink,TopLink,JDO
+
+Spring Boot frmwork : default persistence provider = Hibernate
+
+Open source framework : founded by Gavin King
+
+Intermediate layer between Java app(standalone desk top based / web app ) n DB
+
+
+Why Hibernate ? (refer to readme)
+1. open source n light weight
+2. supports cache (L1 , L2 , query cache) : faster performance
+3. auto table creation.
+4. simplifies join queries
+5. 100 % DB independent (HQL/JPQL ---Hibernate : DB dialect -- converts DB independent queries in DB specific syntax)
+Hibernate 5.x onwards : no need to specifiy DB dialect property in config file (hibernate.cfg.xml : run time classpath)
+
+6. Hibernate developer doesn't have 
+ to go to DB level , DB ,table ,cols , rows
+ sql
+ set up the db conn , prepare stmts (st/pst/cst)
+ exec queries : process RST : convert it into pojo / collection of POJOs
+All of above will be automated by Hibernate
+
+7. JDBC : fixed db conn.(new separate conn per call to DriverManager.getConnection)
+Hibernate creates :internal connection pool => collection of DB connections
+when : hibernate framework booting time
+at the time of creation of singleton SessionFactory(SF)
+at the time confgure() -- hibernate.cfg.xml(location : by default run time class path)  is parsed : 
+DB config details -- drvr class , db url , user name , pwd
+hibernate.connection.pool_size= 10 (max size)
+
+In DAO layer : When you invoke , open session n begin tx : db conn is pooled out -- wrapped in Session instance n reted to caller.
+try
+CRUD work (save/get/JPQL/update/delete...)
+end of try --commit
+catch --RunTimeExc --rollback
+finally : session .close ---pooled out db cn simply rets to the pool : so that the same conn can be REUSED for some other request.
+
+8.Solves the important issue of  Impedance mismatch in DBMS
+Object world (java objs in heap , inheritance , association , polymorphism) ----- RDBMS (table , row cols ,E-R,FKs,join tables...)
+
+9. Exception translation mechanism
+Hibernate translates checked SQL excs --un checked hibernate excs (org.hibernate.HibernateException) : so that prog is not forced to handle the same. 
+
+& many more advantages...
+
+Hibernate architecture
+refer to a diagram
+
+Important Blocks 
+1.org.hibernate.Session : interface (imple classes : hibernate core jar)
+Represents : Main runtime i/f for prog interaction with hibernate
+Supplies CRUD APIs(eg : save, persist, get,load, createQuery,update,delete....)
+Represents : wrapper around pooled out db connection. 
+It has INHERENTLY L1 cache(persistence ctx)  associated with it.
+DAO layer creates session instance as per demand(one per request for CRUD operation)
+light weight , thread un safe object
+NO NEED for accessing the session in synchronized manner : since different thrd representing different clnt requests , will have their own session object
+
+2. org.hibernate.SessionFactory : interface (imple classes : hibernate core jar)
+JOB : to provide session objects(openSession / getCurrentSession)
+singleton instance per DB / application
+immutable , inherently thread safe
+Represents : DB sepecific config , including connection pool.
+It has L2 cache associated with it : MUST be configured explcitly
+
+3. Configuration : org.hibernate.cfg.Configuration class.
+Provider of SF
+
+4. Additional APIs
+, Transaction,Query,CriteriaQuery ...
+
+
+5. hibernate.cfg.xml : centralized configuration file , to create SessionFactory(i.e bootstrapping hibernate framework)
+
+Important property : 
+hibernate.hbm2ddl.auto=update
+Chks if table is not yet created for a POJO : create a new table.
+BUT if table alrdy exists : continues with the existing table.
+
+5.5 HibernateUtils --- to create singleton immutable SF instance
+6.
+
+POJO Annotations 
+
+Package : javax.persistence
+@Entity : Mandatory : cls level
+@Id : Mandatory : field level or property (getter) : PK
+
+Optional annotation for further customization : 
+
+@Table(name="tbl_name) : to specify table name n more
+
+@GeneratedValue : to tell hibernate to auto generate ids
+auto / identity(auto incr : Mysql) / table / sequence(oracle)
+eg : @Id => PK 
+@GeneratedValue(strategy=GenarationType.IDENTITY) => auto increment
+
+@Column(name,unique,nullable,insertable,updatable,length,columnDefinition="double(8,2)") : for specifying col details
+
+@Transient : Skipped from persistence(no col will be generated in DB table)
+
+@Temporal : java.util.Date , Calendar , GregorianCalendar
+
+LocalDate(date) ,LocalTime(time) ,  LocalDateTime (timestamp/datetime) : no temporal anno.
+
+@Lob : BLOB(byte[])  n CLOB(char[]) : saving / restoring large bin /char data to/from DB
+
+@Enumerated (EnumType.STRING): enum (def : ordinal : int)
+
+
+ Add <mapping class="F.Q POJO class name"/> in hibernate.cfg.xml
+
+
+7. Create DAO i/f & write its implementation class 
+Hibernate  based DAO impl class
+
+7.1 No data members ,constructor , cleanup
+7.2 Directly add CRUD methods.
+
+Steps in CRUD methods
+1. Get hib session from SF
+API of org.hibernate.SessionFactory
+public Session openSession() throws HibernateException
+OR
+public Session getCurrentSession() throws HibernateException
+
+2. Begin a Transaction
+API of Session
+public Transaction beginTransaction()throws HibernateException
+
+3. try {
+  perform CRUD using Session API (eg : save/get/persist/update/delete/JPQL...)
+  commit the tx.
+   } catch(RuntimeException e)
+   {
+      roll back tx.
+      re throw the exc to caller
+   } finally {
+      close session --destroys L1 cache , pooled out db cn rets to the pool.
+   }
+
+
+4 Refer to Hibernate Session API 
+(hibernate api-docs & readme : hibernate session api)
+
+5. Create main(..) based Tester & test the application.
+
+Which of the following layers are currently hibernate specific(native hibernate) ?
+
+DAO : org.hibernate.SF , Session, Transaction,Query... : hibernate specific
+POJO : javax.persistence : annotations => hibernate  inde. (JPA compliant)
+Utils : Configuration , org.hibernate.SF => hibernate specific
+
+
+6. Add a breakpoint before commit , observe n conclude.
+
+7. Replace openSession by getCurrentSession
+Observe the differences.

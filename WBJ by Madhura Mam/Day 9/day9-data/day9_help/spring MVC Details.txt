@@ -1,0 +1,162 @@
+1. What is a model attribute?
+It's the attribute(server side entry=k n value pair) : String , Object
+Purpose : to store the results of B.L
+Who creates  ---Request handling Controller(Prog)
+Who sends it to whom : Controller ---> D.S
+After D.S gets actual view name from V.R : 
+D.S chks : are there any model attrs : 
+Yes : D.S saves model attrs under Request scope & then forwards the clnt to view layer .
+NO : D.S forwards the clnt to view layer .
+How to access these model attrs from JSP ?
+${requestScope.attrName}
+
+What are different ways for Controller to add model attrs ?
+1. Via  is o.s.w.s.ModelAndView?
+
+o.s.w.s.ModelAndView : class => holder for model attrs + logical view name
+
+ModelAndView(String viewName,String modelAttrName,Object modelAttrVal)
+eg : what can be valid ret type of req handling method
+String  OR ModelAndView
+
+
+2.Is there any Simpler way to add Model Attributes ?
+
+Use  o.s.ui.Model : i/f ---holder (Map) of model attributes
+How do u add model attributes ?
+public Model addAttribute(String modelAttrName,Object modelAttrVal)
+eg : How to add 2 model attrs? : method chaining
+
+	
+Who will supply empty Model map ?  : SC
+IoC : DI
+How to tell SC that request handling method needs  a model map ? :Simply  add it as the arg of req handling method
+When controller rets string : logical view name (controller impl. rets all model map)
+
+
+
+3. How to hide index.jsp under WEB-INF (i.e how to ensure that index page is served to client via D.S)
+Add HomePageController to serve index.jsp
+
+
+4. Handling request parameters in Controller ?
+eg : @RequestParam("price") double productPrice
+SC : double productPrice =Double.parseDouble(request.getParameter("price"))
+Reco : Match req param names with method arg names.
+URL : http://localhost:8080/day13.1/test/product?nm=pen&qty=10&price=40.5&manuDate=2020-1-1
+SC : def date time format : mon/day/year
+
+
+Problem : HTTP 400 : Bad request => some request data coming from client is invalid
+Def dat format : mon/day/yr
+How to tell SC : about exact Date time format : annotation.
+
+
+5. What's the meaning of HTTP status 400 : Bad Client Error
+Typically it represents some request parameter conversion error.
+
+Default date format used by SC : MM/dd/yyyy
+In order to change it use : @DateTimeFormat annotation.
+
+
+eg : @RequestParam("exp_date") @DateTimeFormat(pattern="yyyy-MM-dd")  Date expDate
+SC invokes : SimpleDateFormat sdf=new SDF("yyyy-MM-dd");
+Date expDate=sdf.parse(request.getParameter("exp_date"));
+
+
+
+6. PRG pattern(Post-redirect-get pattern)
+--- to avoid multiple submission issue in a web app.
+Replace forward view(server pull) by redirect view (clnt pull) --a.k.a double submit guard.
+
+How to replace default forward view by redirect view in spring MVC ?
+Ans -- use redirect keyword.
+eg : return "redirect:/customer/topics";
+Internals 
+D.S skips the V.R & sends temp redirect response to the clnt browser.
+How ?
+D.S invokes --- response.sendRedirec(response.encodeRedirectURL("/customer/topics");
+So clnt browser will send a next request ---with method=GET
+URL --
+http://host:port/spring_mvc/customer/topics
+
+
+7. How to remember user details till logout?
+Ans : add them as attributes  in session scope.
+How to access HttpSession in Spring?
+Using D.I
+How  -- Simply add HttpSession as method argument of request handling method.
+
+
+8. How to remember the details(attributes) till ONLY  the next request  ?(typically required in PRG --redirect view)
+Ans -- Add the attributes under flash scope.
+(They will be visible till the next request from the same clnt)
+How to add ?
+Use i/f -- o.s.w.s.mvc.support.RedirectAttributes (sub i/f of o.s.ui.Model)
+Method
+public RedirectAttributes addFlashAttribute(String attrName,Object value)
+
+How to access them in view layer in the next request?
+via request scope attributes.
+
+
+eg : In case of successful login --save user details under session scope(till user log out) & retain status mesg only till the next request.
+In case of invalid login --save status under request scope.
+
+
+9. How to take care of links(href)/form actions + add URL rewriting support ?
+1. Import spring supplied JSP tag lib.
+(via taglib directive)
+prefix ="spring"
+
+2.  Use the tag.
+<a href="<spring:url value='/user/logout'/>">Log Out</a>
+ / --- root of curnt web app.
+
+
+What will be the URL if cookies are enabled ?
+http://host:port/spring_mvc/user/logout
+
+What will be the URL if cookies are disabled ?
+http://host:port/spring_mvc/user/logout;jsessionid=egD5462754
+
+OR form action example
+<spring:url var="url" value='/admin/list'/>
+eg : <form action="${var}"> 
+form inputs
+</form>
+
+10. How to auto navigate the clnt to home page after logging out after some dly ?
+Ans : By setting refresh header of HTTP response.
+
+API of HttpServletResponse
+public void setHeader(String name,String value)
+
+name --- refresh
+value --- 10;url=any url you want to redirect to (eg : home page url (root of web app))
+10 : delay in seconds
+
+How to get the root of curnt web app ?
+API of HttpServletRequest
+String getContextPath()
+
+
+11. OSIV (Open Session in View : anti pattern => not a recommended practice!)
+In app properties : 
+Default value of : spring.jpa.open-in-view=true
+(Implying hibernate session will be kept open in the view layer)
+May result in bad performance : since the DB connection won't return to the DB cn pool , till the resp is rendered to the clnt (scalability will be affected!)
+Good programming practice : disable it !
+spring.jpa.open-in-view=false
+
+
+
+
+
+
+
+
+
+
+
+

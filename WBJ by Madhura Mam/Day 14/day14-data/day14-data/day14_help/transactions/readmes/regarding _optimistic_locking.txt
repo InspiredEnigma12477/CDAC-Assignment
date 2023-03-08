@@ -1,0 +1,13 @@
+Optimistic Locking
+When we talk about locking we are often referring to optimistic locking. The optimistic locking model
+subscribes to the philosophy that there is a good chance that the transaction in which changes are made
+to an entity will be the only one that actually changes the entity during that interval. This translates into
+the decision to not acquire a lock on the entity until the change is actually made to the database, usually
+at the end of the transaction.
+When the data actually does get sent to the database to get updated at flush time or at the end of the
+transaction, the entity lock is acquired and a check is made on the data in the database. The flushing
+transaction must see whether any other transaction has committed a change to the entity in the
+intervening time since this transaction read it in and changed it. If a change occurred, it means that the
+flushing transaction has data that does not include those changes and should not write its own changes
+to the database lest it overwrite the changes from the intervening transaction. At this stage, it must roll
+back the transaction and throw a special exception called OptimisticLockException.

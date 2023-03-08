@@ -1,0 +1,57 @@
+Steps
+
+1. File --New --Spring starter project -- add project name , group id ,artifact id ,pkg names , keep packaging as WAR for Spring MVC web application.
+
+
+2. Add dependencies 
+web -- web 
+sql -- Spring Data JPA, MYSQL
+dev -- DevTools
+Lombok
+validation
+
+
+3. Copy the entries from supplied application.properties & edit DB configuration.
+
+
+4.For Spring MVC (with JSP view layer demo) using spring boot project
+
+Add following  dependencies ONLY for Spring MVC with JSP as View Layer in pom.xml
+
+	<!-- Additional dependencies for Spring MVC -->
+		<dependency>
+			<groupId>org.apache.tomcat.embed</groupId>
+			<artifactId>tomcat-embed-jasper</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+		</dependency>
+
+
+5. Create under src/main  : /webapp/WEB-INF/views   folder
+
+6. R Click on the spring boot project --Run As --Spring Boot App 
+
+7. Port earlier spring MVC app , observe the problems.
+& fix it.
+Any problems : Yes 
+
+org.hibernate.HibernateException: No CurrentSessionContext configured!
+
+Solution : Replace hibernate's native API (org.hibernate) by JPA
+(refer : "day8-data\day8_help\spring boot\diagrams\jpa-entitymgr-session-layers.png")
+
+In DAO layer : replace native hibernate API by JPA
+i.e instead of auto wiring SF in DAO layer : inject JPA' EntityManager directly in DAO.
+
+How ?
+@PersistenceContext  
+//OR can continue to use @AutoWired : spring supplied annotation
+private EntityManager mgr;
+//uses def persistence unit , created auto by spring boot using db setting added //in application.properties file , 1 per app / DB
+
+Use directly EntityManager API (refer : )
+
+8. Test Entire application.

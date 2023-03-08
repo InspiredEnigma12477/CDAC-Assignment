@@ -1,0 +1,23 @@
+create table accounts(id int auto_increment primary key ,name varchar(20),type varchar(10),bal double);
+insert into accounts (name,type,bal) values ('aa','sav',1500);
+insert into accounts (name,type,bal) values ('bb','sav',2500);
+
+#stored procedure
+
+ drop procedure transfer_funds;
+
+DELIMITER $$
+create   procedure transfer_funds(
+ in sid int ,
+ in did int,
+ in amt double ,
+ out sbal double,
+ out dbal double 
+) 
+begin
+update accounts set bal=bal-amt where id=sid;
+update accounts set bal=bal+amt where id=did;
+select bal into sbal from accounts where id=sid;
+select bal into dbal from accounts where id=did;
+end$$
+ DELIMITER ;

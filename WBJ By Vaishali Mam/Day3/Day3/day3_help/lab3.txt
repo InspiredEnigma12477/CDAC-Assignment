@@ -1,0 +1,41 @@
+Day 3
+1. import day3.1 , to revise 
+1.1 Servlet JDBC integration
+1.2 Page Navigation
+Clicking on a button/link : Client Pull I
+Redirect scenario : Client Pull II
+(refer to diagrams , readmes n code sample)
+
+2. import day3.2 , to revise
+Cookie based session tracking
+(Test it with cookies enabled n later disabled)
+
+MUST use "inspect" option in the browser , to trace request n response flow.
+
+Hands on
+1. Complete topics page
+(dynamic form generation)
+
+2. Complete DAO layer for entire case study (customer part)
+2.1 Display all available tutorial names , under selected topic , sorted as per visits , in desc order.
+i/p : topic id
+o/p : List<String>containing  tutorial names only.
+
+Hint : 
+ITutorialDao
+List<String> getAllTutorialNamesByTopic(int topicId) throws SE;
+
+
+2.2 Display selected  tutorial details by name
+i/p : tutorial name 
+o/p : tutorial details (Tutorial)
+Hint : 
+ITutorialDao
+Tutorial getTutorialDetailsByName(String tutName) throws SE;
+
+2.3 Update visits 
+i/p tutorial name
+o/p A message indicating updated visit count or error mesg
+Hint : 
+ITutorialDao
+String updateVisits(String tutName) throws SQLException;

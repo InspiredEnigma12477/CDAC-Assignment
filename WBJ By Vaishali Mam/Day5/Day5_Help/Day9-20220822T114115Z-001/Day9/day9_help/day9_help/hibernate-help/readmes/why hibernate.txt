@@ -1,0 +1,38 @@
+There are many advantages of Hibernate Framework over JDBC
+
+1) Opensource , Lightweight  : Hibernate framework is opensource & lightweight.
+2) Fast performance: The performance of hibernate framework is fast because cache is internally used in hibernate framework. There are two types of cache in hibernate framework first level cache and second level cache. First level cache is enabled by default.
+Third type of cache is --query level cache.(not implicitely enabled)
+
+3) Database Independent query: HQL (Hibernate Query Language) / JPQL (Java persistence query language) is the object-oriented version of SQL. It generates the database independent queries. So you don't need to write database specific queries. Before Hibernate, If database is changed for the project, we need to change the SQL query as well that leads to the maintenance problem.
+
+4) Automatic table creation: Hibernate framework provides the facility to create the tables of the database automatically. So there is no need to create tables in the database manually.
+
+5) Simplifies complex join: To fetch data form multiple tables is easy in hibernate framework.
+eg : To display the course names ordered by desc no of participants (many-to-many)
+select c.name from dac_courses c inner join course_studs cs on c.id = cs.
+c_id inner join dac_students s on cs.s_id = s.stud_id group by c.id order by count(*) desc;
+ JPQL -- select c from Course c join fetch c.students group by c.id order by count(*) desc
+
+6) Provides query statistics and database status: Hibernate supports Query cache and provide statistics about query and database status.
+
+7. Hibernate translates checked SQLException to un checked org.hibernate.HibernateException(super cls of all hibernate related errs)
+---so that prog doesn't have to handle excs.
+----------------------
+Advantages of hibernates:
+
+1. Hibernate supports Inheritance, Associations, Collections.
+2. In hibernate if we save the derived class object,  then its base class object will also be stored into the database, it means hibernate supporting inheritance
+3. Hibernate supports relationships like One-To-Many,One-To-One, Many-To-Many-to-Many, Many-To-One
+4. This will also supports collections like List,Set,Map (Only new collections)
+5. In jdbc all exceptions are checked exceptions, so we must write code in try, catch and throws, but in hibernate we only have Un-checked exceptions, so no need to write try, catch, or no need to write throws.  Actually in hibernate we have the translator which converts checked to Un-checked ;)
+6. Hibernate has capability to generate primary keys automatically while we are storing the records into database
+7. Hibernate has its own query language, i.e hibernate query language which is database independent
+So if we change the database, then also our application will works as HQL is database independent
+HQL contains database independent commands
+8. While we are inserting any record, if we dont have any particular table in the database, JDBC will rises an error like View not exist, and throws exception, but in case of hibernate, if it not found any table in the database this will create the table for us ;)
+9. Hibernate supports caching mechanism by this, the number of round trips between an application and the database will be reduced, by using this caching technique an application performance will be increased automatically.
+Hibernate supports annotations, apart from XML
+10. Hibernate provided Dialect classes, so we no need to write sql queries in hibernate, instead we use the methods provided by that API.
+11. Getting pagination in hibernate is quite simple.
+ 

@@ -1,0 +1,159 @@
+Lab status
+
+Revise Spring introduction
+Spring Container(SC) API
+Spring Beans life cycle
+Discuss different ways of D.I(modes of wiring)
+Enter annotations based configuration
+Java config based instructions (no xml) 
+Enter MVC : A design pattern
+Spring MVC
+
+Revision
+Why Spring ?
+Simplifies overall dev.
+reduces boilerplate code
+supports integration --ORM , JDBC , MVC, RESTful , Java mail...
++
+It allows you to develop an enterprise app , in completely loosely coupled manner
+
+What is it ?
+It's container +modular n extensive , min intrusive  framework
+
+What is IoC? 
+
+Instead of dependent objs managing their dependencies , the control of managing the dependencies lies with SC
+eg : UserController : 
+dep : @AutoWired
+private UserService service; //field level D.I
+
+
+
+What is D.I? : Making the dependencies available to dep. objs @ run time (dynamic) by SC 
+
+eg : dependent obj : ATMImpl 
+dep : Transport layer (i/f) <----- TestTransport,......
+No tight coupling !
+
+XML based config
+
+What are 3 different ways of supplying metadata instrs to SC
+1. pure xml (legacy!)
+2. Hybrid approach (lesser xml + majority annotations)
+3. Java config class + annotations
+
+
+1.Pure XML based approach(legacy)
+<bean> tag attributes
+id : unique bean id
+class : F.Q bean class name
+scope : 
+Java SE : singleton | prototype
+def scope : 
+prototype : => SC creates a separate  instance of the bean : as per demand i.e getBean)
+lazy-init : def value =false (applicable to ONLY singleton beans)
+
+init-method : name of custom init method
+pattern : public void anyName() throws Exc {....}
+Will be invoked for singleton as well as prototype beans
+
+destroy-method : name of custom destroy  method : SC invokes it just before GC
+pattern : public void anyName() throws Exc {....}
+Will be invoked only for  singleton beans
+
+
+How to launch SC in a standalone application ?
+
+Understand SC API (refer to a diagram)
+API 
+How to get ready to use spring beans from SC ?
+API of BeanFactory
+public <T> T getBean(String beanId,Class<T> beanClass) throws BeansException
+T : type of the spring bean 
+
+Understand Spring bean life cycle (refer to a diagram)
+
+Different Modes of Wiring (D.I.) : (refer to a diagram)
+
+
+2. Hybrid Approach (reduced XML , reduced Java code  n majority annotations)
+(refer to readme : "spring sequence for annotations")
+
+eg : UserController : dependency : UserService : i/f  , (UserServiceImpl) : impl class
+
+@AutoWired //=> autowire=byType
+private UserService myUserService;
+What if : SC comes across multiple matches : SC throws : NoUniqueBeanDefinitionException
+What if : SC doesn't find even a single match : SC throws NOBeandefFoundExc
+
+
+eg : UserController : dependency : UserService : i/f  , (UserServiceImpl) : impl class
+@AutoWired (required=false) //=> autowire=byType
+private UserService myUserService;
+What if : SC comes across multiple matches : SC throws : NOUnqBeandefexc
+What if : SC doesn't find even a single match : SC DOES NOT throw NOBeandefFoundExc
+Business logic failure : NPExc
+
+
+
+11. 
+eg : UserController : dependency : UserService : i/f  , (UserServiceImpl) : impl class
+@AutoWired 
+@Qualifier("abc") //=> autowire=byName
+private UserService myUserService;
+What if : SC comes across exactly 1 match : D.I succeeds !
+What if : SC comes across multiple matches : SC throws : NOUnqBeandefexc
+What if : SC doesn't find even a single match : SC DOES NOT throw NOBeandefFoundExc
+
+OR
+
+@Resource(name="abc") //=> autowire=byName (Java EE annotation)
+private UserService myUserService;
+
+
+
+3. Modern way of supplying meta data instructions to SC 
+Java Config class/es + annotations
+3.1 How to tell SC , following class containg java config 
+@Configuration : class level mandatory annotation (It will auto enable anno support)
+(equivalent to context:annotation-config)
+
+3.2 <context:component-scan.../>
+@ComponentScan(String[] basePkgNames)
+
+3.3 To configure Java objects as spring beans --one way is supplying annos : eg --@Component,@Controller,@Service.....
+OR
+@Bean =><bean id ,class ...../>
+
+3.4 Instead of starting xml based SC , use 
+BeanFactory <---- ApplicationContext <---- AnnotationConfigApplicationContext ,
+ to boot SC using java config class + annotations
+
+
+
+------------------------------------
+What is MVC ?
+Model-View-Controller --Standard design pattern , meant for separation of concerns(=tasks=responsibilities)
+
+Model -- Java Bean (conversational state holder + B.L supplier) & POJOs
+
+View layer --JSP , Thymeleaf/velocity/Angular/React/Vue
+Represents UI / presentation logic  (processing requests & generating response)
+
+Controller -- Typically a servlet(used in Spring MVC ) or a filter(used in Struts 2 framework)
+Manages navigation & beans.
+
+Front Controller -- A design pattern -- which ensures ANY request coming from ANY client , for this web app , will be intercepted by a common gate keeper(or a centralized dispatcher)
+It will dispatch clnt request to further components , based upon nature of the req.
+
+MVC flow (without spring)
+
+refer : MVC diagrams , MVC Details
+mvc-overview.png
+
+ 
+Implementation using servlet / JSP & JavaBean  --Shared as a readymade demo.
+Refer to : eclipse projects\mvc_hibernate_demo
+Flow  diagram : mvc-flow.png
+
+

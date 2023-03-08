@@ -1,0 +1,90 @@
+1.Each incoming request passes  through security filter  chain for authentication and authorization process. 
+eg : UsernamePasswordAuthenticationFilter.
+OR If the incoming request contains the authorization header "Basic base-64 encoded credentials"  , this request goes through the chains of filters until it reaches BasicAuthenticationFilter.
+
+What is the overall job of this filter?
+
+Processes a HTTP request's Basic authorization header, putting the result into the SecurityContextHolder
+
+
+
+2. AuthenticationToken is created based on User Credentials
+For the user login, once the authentication request reaches the authentication filter, it will extract the username and password from the request payload. Spring security will create an Authentication object based on the username and password. 
+
+UsernamePasswordAuthenticationToken authentication
+ = new UsernamePasswordAuthenticationToken(username, password);
+ 
+
+3. Authentication filter delegates the request to Authentication Manager.
+
+Authentication Manager is the core for the Spring security authentication process. 
+
+public interface AuthenticationManager {
+    Authentication authenticate(Authentication authentication) throws AuthenticationException;
+}
+
+4. This interface is implemented by ProviderManager class.
+
+ProviderManager has no idea about which auth provider will support the current authentication.
+So it iterates through the list of AuthenticationProviders  n calls supports() method 
+
+5. AuthenticationProviders
+The AuthenticationProvider are responsible to process the request and perform a specific authentication. It provides a mechanism for getting the user details with which we can perform authentication. 
+
+public interface AuthenticationProvider {
+ 
+    Authentication authenticate(Authentication authentication) throws AuthenticationException;
+    boolean supports(Class<?> authentication);
+}
+eg of implementation classes : 
+DaoAuthenticationProvider.
+RememberMeAuthenticationProvider
+LdapAuthenticationProvider
+...
+
+You can also supply the custom authentication provider.
+ 
+
+6. Typically used AuthenticationProvider  is  : DaoAuthenticationProvider
+It depends upon 
+1. UserDetailsService
+2. PasswordEncoder
+
+6.1 Spring Security UserDetailsService
+
+DaoAuthenticationProvider  needs UserDetailsService to get the user details stored in the database by username 
+
+package org.springframework.security.core.userdetails;
+
+public interface UserDetailsService {
+    UserDetails loadUserByUsername(String userName/email) throws UsernameNotFoundException;
+}
+
+6.2 In case of in memory based user details , UserDetailsService is implemented by InMemoryUserDetailsManager
+So you can configure this as a spring bean (@Bean) in your spring sec configuration file
+
+BUT in practical scenario , we use DB based credentials.
+
+In that case , we will implement UserDetailsService to provide User Details
+
+ 
+
+7. Authentication and Authentication Exception
+During the authentication process, if the user authentication is successful, AuthenticationProvider  will send a fully initialized Authentication object back. 
+
+For failed authentication, AuthenticationException will be thrown, filter will send the response to the client HTTP 401 
+For failed authorization , filter will send the response to the client HTTP 403 (forbidden) 
+
+Oherwise a  fully populated authentication object carries the following details:
+
+User credentials.
+List of granted authorities (for authorization).
+Authentication flag : set to true
+ 
+
+8. Setting Authentication SecurityContext
+The last step in the successful authentication is setting up the authentication object in the SecurityContext. It wraps the SecurityContext in the SecurityContextHolder. 
+
+9. The request is then delegated further to DispatcherServlet n continues with the usual flow.
+
+

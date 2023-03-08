@@ -1,0 +1,369 @@
+Revise Annotation in Hibernate inheritance
+Revise Bi dir association between Category n Product
+Confirm cascade on delete
+orphan removal
+Revisit LazyInitializationException n discuss solutions
+one-one 
+many-many
+value types(components) in hibernate
+
+
+Revise
+
+
+Technical terms : parent/child , one side/many , inverse side/owning
+Choose
+
+Category : parent , one , inverse
+
+Product : child , many , owning
+
+0. Which extra fields to add to set up a bi dir assocation between above entities ?
+Category 1<---->* Product
+
+Category : id , name , desc +
+private List<Product> products=new AL<>();
+
+Product : id ,name ,price... +
+private Category productCategory;
+
+
+
+1.What will happen if you don't add any asso. mapping annotations?
+org.hibernate.MappingException
+
+Soln : 
+
+
+2. Which annotation in Category entity , for below field ?
+@OneToMany
+private List<Product> products = new ArrayList<>();
+
+3. Which annotations in Product entity , for below field ?
+@ManyToOne
+private Category productCategory;
+
+4. After adding @ManyToOne n @OneToMany , any problem noticed ? 
+Association table (extra) was created!
+
+Why ?  : Did not yet specify to hib. about the owning side
+Solution ? mappedBy
+
+When is adding "mappedBy"  mandatory ?  in bi dir asso.
+
+Where it appears ? inverse
+
+What should be it's value ? name of the mapping field , which appears in the owning side
+
+@OneToMany(mappedBy="productCategory")
+private List<Product> products = new ArrayList<>();
+
+
+@ManyToOne
+private Category productCategory;
+
+
+5. Revise 
+Add Product to the category , along with helper methods to establish bi dir link
+i/p : category id , product details (name,price,desc) : Product instance
+steps in DAO :
+5.1 get category instance from it's id (session.get)
+5.2 null chking --if not null --> 
+session.persist(product); --inserts a rec BUT FK : null
+Soln : Establish bi dir link --in POJO layer
+
+In Category :
+public void addProduct(Product p)
+{
+   products.add(p);
+   p.setProductCategory(this);
+}
+
+Invoke : category.addProduct(newProduct);
+session.persist(product);
+
+
+6. Who has decided the name of FK column ? Hibernate
+Any annotation for it's customization ? @JoinColumn
+eg :
+@ManyToOne
+@JoinColumn(name="category_id")
+private Category productCategory;
+
+
+7. Revise cascading
+cascade : property of Mapping annotation -- CascadeType[]
+def value : {} => no cascading!
+eg : 
+@OneToMany(mappedBy="productCategory",cascade=CascadeType.ALL)
+private List<Product> products = new ArrayList<>();
+AddNewCategoryWithProducts.java
+After adding cascade : session.persist(category)--commit
+
+8.. Remove a category
+i/p : category name
+Confirm cascading
+
+Steps 
+8.1 get category from it's name -- JPQL --getSingleResult --> no exc --> category : 
+PERSISTENT
+8.2 session.delete(category);//category : REMOVED
+8.3commit
+
+-----------------------------
+
+1. Remove a product from a Category
+i/p : category id , product id
+steps :
+get category dtls : get
+get product dtls : get
+null chking -- not null
+Write n use another helper method : removeProduct
+
+Any problem noticed  : YES , FK value is null BUT child rec is NOT deleted
+Solution : set orphanRemoval=true
+eg : @OneToMany(mappedBy="productCategory",cascade=CascadeType.ALL,orphanRemoval=true)
+private List<Product> products = new ArrayList<>();
+
+orphanRemoval=true => To tell hibernate , to remove all the orphan recs from the child table , whenever it's removed from the relationship (using helper method)
+
+
+
+2. Display category details
+ i/p : category name
+
+3. Display category n product details
+i/p : category name
+
+IMPORTANT 
+If you try to access many side (eg : products) , after select query on the one side (eg : Category) : 
+Any problem noticed  : org.hibernate.LazyInitializationException
+Cause : Any time you are trying to access un-fetched data , in a detached mode(i.e outside session scope) , hibernate throws the exc.
+
+WHY ?
+
+Hibernate follows default fetching policies for different types of associations
+one-to-one : EAGER
+one-to-many : LAZY
+many-to-one : EAGER
+many-to-many : LAZY
+
+
+one-to-many : LAZY
+Meaning : If you try to fetch details of one side(eg : Category) , will it fetch auto details of many side(i.e : Product) ?
+NO (i.e select query will be fired only on categories table)
+Why ? : for performance 
+
+un fetched data : i.e product list in  Category obj : represented by : uninitialized proxy (substitution) : collection of proxies
+proxy => un fetched data from DB
+
+
+
+Solutions
+1. Change the fetching policy of hibernate for one-to-many to : EAGER
+eg : 
+eg : @OneToMany(mappedBy="productCategory",cascade=CascadeType.ALL,orphanRemoval=true,fetch=FetchType.EAGER)
+private List<Product> products = new ArrayList<>();
+
+
+Is it recommneded soln ? 
+
+ NO (since even if you just want to access one side details , hib will fire query on many side) --will lead to worst performance.
+Use case : when the size of many is small !
+(eg : BankCustomer ---> BankAccount)
+
+OR
+
+2. Better Solution
+
+Solution : Access the size of the collection within session scope : soln will be applied in DAO layer
+
+Dis Adv : Hibernate fires multiple queries to get the complete details
+
+OR
+
+3. How to fetch the complete details , in a single join query ? (also a solution to select n+1 issue)
+Using "join fetch" keyword in JPQL
+String jpql = "select c from Category c join fetch c.products where c.category=:nm"
+--inner join
+
+String jpql = "select c from Category c left outer join fetch c.products where c.category=:nm"
+--left outer join
+
+
+1. Create new User entity
+userId, first name , last name, email ,password , role,dob
+(ready code)
+Register New User (along with the cart!)
+i/p user details
+ first name , last name, email ,password , role,dob
+o/p message indicating success or failure 
+
+
+2. In eShop scenario, a shopping cart can be created upon successful user registration
+
+What will be the relationship between User n Cart ??? : one to one : bi dir
+
+User  1<----->1 ShoppingCart
+
+
+ShoppingCart Entity extends BaseEntity
+state : totalItems,totalCartPrice,createdOn,updatedOn,
+Additional annotations : @CreationTimestamp @UpdateTimestamp
+
+How to establish bi-dir one-to-one relationship between User  1<---->1 ShoppingCart
+
+First identify
+one, parent/child owning/inverse
+
+User : 
+ShoppingCart : 
+
+Which additional properties ?
+In User class :
+
+private ShoppingCart cart;
+
+In ShoppingCart
+...+
+
+private user cartOwner;
+
+
+Add <mapping> entry n run TestHibernate , check if the tables are created properly ?
+If you don't add any info regarding owning n inverse side
+Hibernate simply creates FKs in both sides
+Soln : add mappedBy in the inverse side (eg : User)
+
+
+10. What will be the relationship between Cart n Product?
+
+Can 1 cart contain multiple products ?? 
+Can 1 product be added to multiple carts for different customers ?? 
+
+So it's many-to-many
+What will happen if you use @ManyToMany annotation ?
+(Try it out !)
+
+Cart *--->* Product
+
+Recommended type of the collection for many-many : Set <--- HashSet
+Override : hashCode  equals methods to follow the contract (Equal objs MUST produce the SAME hashcode n Un-equal objs should produce distinct hash code)
+
+Tip : For many-to-many , without extra columns --Use @ManyToMany , along with @JoinTable 
+This will result in --additional link table , having 2 columns --FKs --referencing PKs
+
+Is it suitable if you want to maintain additional columns ?  : quantity n total_price 
+
+
+Solution : Create a separate entity CartItem (representing DB table)
+What will the columns  ? id (PK), quantity , total_price, cart_id(FK) , product_id(FK)
+Which properties : quantity , totalPrice , cart , product
+
+Establish following relationships , using the annotations
+
+	ShoppingCart 1<----->* CartItem
+	
+	CartItem 1----->1 Product
+
+Solve : How to fetch all the cart items for a particular user ?
+i/p : user id
+jpql = select u from User u join fetch u.cart c join fetch c.cartItems where u.id=:id"
+
+-------------------------------
+
+10. Enter value types
+Customer HAS-A Adhar Card
+Customer HAS-A Card (can have multiple credit/debit cards)
+
+7. Enter value types
+User HAS-A Adhar Card
+
+7.1 User : entity : @Entity n @Id
+Adhar Card : embeddable : @Embeddable
+field : cardNo , date , loc
+
+7.2 : User HAS-A hobbies
+(collection of basic types)
+Annotations : @ElementCollection n @CollectionTable
+
+
+7.3 Customer HAS-A Card (can have multiple credit/debit cards)
+(collection of embeddables)
+Annotations : @ElementCollection n @CollectionTable
+
+
+
+
+
+
+
+------------------------------------------
+
+
+5.  Establish a Bi dir one-one relationship between User n Address
+(refer to ready code)
+
+Address 
+state : adr line 1 , adr line 2 , city , state ,country ,zip code
+
+
+How to establish bi-dir one-to-one relationship between User  1<---->1 Address
+
+First identify
+one, parent/child owning/inverse
+
+User : one , parent , inverse
+Address  : one , child , owning
+
+Which additional properties ?
+//inverse side
+In User class : ...... +
+@OneToOne(mappedBy="user",cascade=CascadeType.ALL,orphanRemoval=true)
+private Address myAddress;
+
+In Address
+.... +
+ 
+@OneToOne
+@JoinColumn(name="user_id")
+private User user;
+
+
+
+Which annotations ? : @OneToOne
+
+
+Add <mapping> entry n run TestHibernate , check if the tables are created properly ?
+
+
+6. Establish many-many relationship between Product n Brand ?
+Product *<---->* Brand
+(refer to ready code)
+
+Product : many , parent , owning : the side where you declare the mapping info
+Brand : many , parent , inverse
+link table (asso table / pivot table) : child
+cols : 2 composite PK --- product_id , brand_id
+
+
+Optional exercise : many to many association with additional cols
+Student Admission
+students
+courses
+admissions -- id , student id , course id , admission date , status
+
+
+
+
+
+
+
+------------------------------------------
+Good Articles/Books to refer to JPA Association Mapping
+1. e Book(already shared in hibernate_help) : "hibernate-help\hibernate books\Pro JPA 2 in Java EE 8, 3rd Edition.pdf"
+2. link : https://howtodoinjava.com/hibernate/how-to-define-association-mappings-between-hibernate-entities/
+3. https://thorben-janssen.com/ultimate-guide-association-mappings-jpa-hibernate/
+
+
+Additional hibernate annotations : @CreationTimestamp @UpdateTimestamp

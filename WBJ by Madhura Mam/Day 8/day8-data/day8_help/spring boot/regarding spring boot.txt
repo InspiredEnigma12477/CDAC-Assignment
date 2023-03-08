@@ -1,0 +1,125 @@
+Problems with traditional/legacy spring framework
+
+We use different modules from spring such as core module, to do dependency injection.The MVC module to develop the web layer for our application or even the restful web services layer.And then the DAO layer where we use the spring JDBC/ORM which makes our life easy to develop a data access layer for our application. When we are using ORM tools like Hibernate, we can use spring data JPA and we use these modules and more that are valuable from Spring.
+
+Initially we used XML based configuration or annotations based configuration,This configuration can get difficult and hard to maintain over time.And also we need to make sure that each of these modules is available for our application by defining all the dependencies in the Maven pom xml.And at runtime we have to be sure that these versions of various Modules that we use are compatible with each other.But it's our responsibility to do all that, and once we have all that in place we will build our application and will have to deploy to an external web container to test it .
+
+Spring boot will automate all this for us.
+
+ What are Spring Boot Features ?
+
+1. The first of those super cool features is auto configuration - Spring Boot automatically configures everything that is required for our application. We don't have to use XML or  Java configuration anymore.
+
+For example if you are using Spring MVC or the web to develop a web application or a restful web service application spring boot will automatically configure the dispatcher servlet and does all the request mapping for us. We don't have to use any xml or annotation based configuration to configure this servlet.
+
+Similarly if you are using spring data or object relational mapping while working with tools like Hibernate to perform database crud we no longer have to configure the data source or even the transaction manager. Spring boot will automatically configure these for our application.
+
+2. The next super cool feature is spring boot starters .With the spring boot starters spring boot takes the problem off module availability we need. Before Spring Boot we had to make sure that a particular library required for our project is available and also the versions of different libraries are compatible.But we don't have to do that anymore thanks to spring boot starters every spring boot project will have a parent project.This project has all the version information of various libraries that we will be using in our project so we need not worry about version compatibility. The spring developers have already done it for us and put all that information into this spring boot starter parent .
+
+Secondly we have starters for different types of projects if we are developing a web project then we simply need to include the starter web . We don't have to include any other libraries or dependencies. Spring boot will automatically pull all the other libraries that are required because this project here or this or dependency transitively depends on other libraries that are required. Maven will automatically pull those libraries. The spring boot developers have given us starter dependencies which when we use in our projects will not have the Modular availability problem and the version compatibility problem.
+
+
+
+Another example is the spring boot starter data jpa .When you want to work with Hibernate you simply include the single dependency in your maven pom xml and all the other libraries will be pulled accordingly. And also the correct versions of those libraries will be included because all that version information is available in this spring boot starter parent which is a parent for every spring boot project.
+
+3. The third super cool feature we don't have to worry about deploying our applications to external container spring boot comes with an embedded servlet container and these containers.
+
+By default it is Tomcat but you can also use Jetty and undertow or any other external server. So no longer external deployment you can simply right click on your project and run it and your application will be launched on its embedded Tomcat server by default.
+
+
+
+4. Last and very important spring boot gives us a lot of health checks of our application for free through the spring boot actuators.We can use different types of health checks that come for free and we can use these even on production when our application is running. These can be activated easily and will display all the auto configuration reports and everything that is automatically configured for our application.
+
+What is Spring Boot 
+=Spring Framework + Embedded web server (Tomcat) -(complex config setting / complex dependency management in pom.xml)
+
+
+
+Important components of a Spring Boot Application
+
+Below is the starting point of a Spring Boot Application
+
+@SpringBootApplication
+public class HelloSpringBootApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(HelloSpringBootApplication.class, args);
+	}
+
+}
+About : org.springframework.boot.SpringApplication
+It's Class  used to bootstrap and launch a Spring application from a Java main method. 
+
+By default class will perform the following steps to bootstrap the application
+1. Create an ApplicationContext instance (representing SC)
+2. Manages life cycle of spring beans
+3. Launches the embedded Tomcat Container
+
+
+@SpringBootApplication - This is where all the spring boot magic happens.
+It consists of following 3 annotations.
+
+1. @SpringBootConfiguration
+It  tells spring boot  that this class here can have several bean definitions(@Bean annotation configured methods , equivalent to <bean> tag in xml based configuration)
+We can define various spring beans here and those beans will be available at run time .
+
+2. @EnableAutoConfiguration
+It tells spring boot to automatically configure the spring application based on the dependencies that it sees on the classpath.
+
+eg:
+If we have a MySql dependency in our pom.xml , Spring Boot will automatically create a data source,using the properties in application.properties file.  
+
+If we have spring web in pom.xml , then spring boot will automatically create the dispatcher servlet n other beans (HandlerMapping , ViewResolver)
+
+All the xml, all the java based configuration is now gone.It all comes for free thanks to spring boot to enable auto configuration annotation. 
+
+3. @ComponentScan (equivalent to xml tag : context:component-scan)
+
+So this  tells us that spring boot to  scan through the classes and see which all classes are marked with the stereotype annotations like @Component Or @Service @Repository and manage  these spring beans . Default base-pkg is the pkg in which main class is defined.
+Can be overridden by
+eg : 
+@ComponentScan(basePackages = "com")
+For scanning entities :  (equivalent to packagesToScan)
+@EntityScan(basePackages = "com.app.pojos")
+
+
+Below is the starting point of a Spring Boot Application
+
+@SpringBootApplication
+
+public class HellospringbootApplication { p.s.v.m(...) {...}}
+
+@SpringBootApplication - This is where all the spring boot magic happens.
+
+The SpringBootApplication is a key annotation which is a top level annotation which contains several other annotations on it.
+
+@SpringBootConfiguration
+
+@EnableAutoConfiguration
+
+@ComponentScan
+
+
+The first one @SpringBootConfiguration tells spring boot or the container that this class here can have several bean definitions. We can define various spring beans here and those beans will be available at run time so you define a method here .
+
+The second annotation @EnableAutoConfiguration is a very important annotation at enable Auto configuration.This annotation tells spring boot to automatically configure the spring application based on the dependencies that it sees on the classpath.
+
+eg:
+If we have a MySql dependency in our pom.xml as automatically Spring Boot will create a data source. We will also provide other information like username password etc. but spring boot will scan through all these dependencies and it will automatically configure the data source required for us.
+
+Another example is spring web, If we have spring web in your dependencies.
+
+Then spring boot will automatically create the dispatcher servlet on all that configuration file you for free.
+
+All the xml, all the java based configuration is now gone. We as developers need not do all that configuration it all comes for free thanks to spring boots to enable auto configuration annotation. 
+
+@ComponentScan
+So this  tells us that spring boot or spring should scan through the classes and see which all classes are marked with the stereotype annotations like @Component Or @Service @Repository and manage  these spring beans . Default base-pkg is the pkg in which main class is defined.
+Can be overridden by
+eg : 
+@ComponentScan(basePackages = "com")
+For scanning entities : 
+@EntityScan(basePackages = "com.app.pojos")
+
+
+

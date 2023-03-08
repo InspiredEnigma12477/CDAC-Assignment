@@ -1,0 +1,21 @@
+Steps for Spring based Java SE application
+
+0. In eclipse , change perspective to Java
+1. Create Java project
+2. Create User lib --containing spring/hibernate/jdbc drvr/REST.... JARs.(from day11-data\day11-help\spring-help\spring-hibernate-rest-jars)
+
+DON'T use earlier created hibernate lib.
+
+
+3. Add user lib in build path.(R click --build path --confgure build path--add user lib --only spring_all)
+
+3.5 Copy dependent & dependency packages (containing spring beans) from day11_help/spring-help/rdy code.
+
+4. Create new src folder --<resources> & create spring bean config xml file.
+R click on src --new src folder --resources
+R click on resource --new --spring bean configuration file --spring-config.xml
+5. Choose  namespace beans
+6. Configure dependency n dependent beans (as discussed)
+7. Create a tester application , to start Spring container & run this as java application , to confirm spring in core java.
+
+

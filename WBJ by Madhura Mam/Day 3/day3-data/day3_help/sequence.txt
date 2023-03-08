@@ -1,0 +1,295 @@
+Problem n suggested solutions
+
+
+Dependency JARs not getting downloaded.
+Solution
+R click on the project -- Run As --Maven Install
+OR 
+If earlier solution did not work 
+Delete <repository> under .m2 from user's home directory. 
+Re start IDE , it will build the repo again.
+
+In case of red cross(error) , errors BUT web project working 
+Apply cleaning up instructions
+Project --clean
+R click on the project --validate
+-----------------------------
+Revise
+POJO states : transient , persistent , detached , removed
+Session API : save , get , JPQL , createQuery , setParameter, getResultList,getSingleResult
+persistent vs detached
+
+
+Continue with Session API 
+
+
+(refer to : "hibernate session api.txt")
+
+Objectives
+
+1. save vs persist vs saveOrUpdate vs merge
+currently save vs persist
+
+2 Session API 
+get vs load
+
+IMPORTANT 
+When will hibernate throw org.hibernate.LazyInitializationException ?
+If you are trying to access un fetched data from DB , outside the session scope(i.e when entity is in the DETACHED state) , exc is raised.
+
+un fetched data from DB => un initialized proxy
+Who creates this proxy : Hibernate
+When : dynamically (@ run time)
+How : Hibernate uses helper libs (eg CGLIB,Byte Buddy...) to create sub class of the entity class
+=> Proxy class
+
+How to un proxy (i.e how to get inited proxy from the load)
+Simply invoke any non PK(non ID) getter --from within session scope.
+
+What will session.load(...) ret ?
+Always rets a proxy, in this case inited proxy
+Will not cause any exc : in case of valid id.
+Throws ObjectNotFoundException : in case of invalid id.
+
+
+3. Handling E-R  in Hibernate
+Suggestion : Use new database for this.
+
+one-one
+one-many
+many-one
+many-many
+
+In a Typical eCommerce Scenario : 
+Admin Role
+Add A Category
+Add Products under the Category
+Update Category
+Update Product
+Delete Category 
+Delete Product
+Update order status (after the payment succeeds)
+
+Customer Role
+View Categories
+View All Products
+View Products By Category
+Add to Cart
+View Cart
+Remove Product from Cart
+Place Order --Supply Delivery Address
+
+
+Objective : one-to-many bi dir assocation between Category 1<----->* Product
+Tables  involved : 
+
+1. categories  :category id(PK) ,  categoryName ,description
+2. products:  product_id(PK), name,price,description,inStock  + category_id(FK --> references category id from categories)
+
+In DB , there is no concept of the directionality, BUT in Object world it exists. 
+
+Example of  a uni dir relatioship
+(Category   1 ---->* Product)
+
+Meaning : You will be able to access , Product details from Category BUT not vice versa
+
+Example of a  bi-dir relationship 
+Category   1<----->* Product
+
+You will be able to access , Product details from Category BUT and vice versa
+
+Continue with the example of bi dir relationship
+
+JPA inheritance 
+1.javax.persistence.MappedSuperclass
+Class level annotation , to be added on abstract or concrete super class
+Hibernate will NOT generate any table for it.
+One can add all common fields in this class
+All other entities can extend n inherit from the common super class
+
+
+Technical terms : parent/child , one side/many , inverse side/owning
+owning side of the asso -- side which contains the FK 
+non owning(inverse) side of the asso -- side which DOES NOT conatain the FK 
+
+Category : one,parent,inverse
+
+Product : many,child,owning
+
+
+products:  product_id(PK), name,price,description,inStock  + category_id(FK --> references category id from categories)
+1. Product Entity : id, name,price,desc,inStock +
+private Category productCategory;
+
+categories  :category id(PK) ,  categoryName ,description
+2. Category : id,  categoryName ,description +
+private List<Product> products=new ArrayList<>();//as per Gavin King's suggestion : DO NOT keep collection based null
+
+
+Problems n solutions
+
+1.What will happen if you don't add any association mapping annotations?
+Observation : Hibernate throws org.hibernate.MappingException
+Why ? It CAN NOT figure out the mapping between the entities.
+Solution : Add correct mapping annotations
+
+JPA Annotations
+@OneToOne
+@ManyToOne
+@OneToMany
+@ManyToMany
+
+2. After adding @ManyToOne n @OneToMany , no MappingException.
+BUT how many tables were created by hibernate ? 3 
+
+Is the link table  really required for establishing one to many bi dir asso ?  NO
+Simpler way : FK mapping
+
+3. Reason behind additional table : Hib. can't identify about owning n inverse side
+Solution : In a bi dir asso , add mappedBy : property of @OneToMany 
+which side should it appear : inverse(eg : Category)
+value of mappedBy = Name of the asso property , as it appears in the owning side
+eg : productCategory in Product class
+(refer : "mappedBy-1.jpg")
+
+What will happen if you don't add mappedBy element ? 
+
+Why ? 
+
+When adding "mappedBy"  mandatory ? 
+
+Where it appears ? 
+
+What should be it's value ?
+
+eg : 
+.....
+private List<Product> products=new ArrayList<>();
+
+
+Product POJO  .... 
+....
+ private Category productCategory;
+
+In default ,  case who will decide the name of FK col ? Hibernate
+
+How to customize it ?
+
+@ManyToOne
+@JoinColumn(name="category_id")
+private Category productCategory;
+
+
+Solve 
+1. Add a new category
+i/p : category name , description
+
+2. Add Product to the category
+i/p : category id , product details (name,price,desc) : Product instance
+
+2.1 (understand bi-dir relationship)
+2.2 Helper methods
+
+-----------------Pending-------------------------
+
+3. Can you add a new category with products ? Yes
+Steps 
+w/o cascading : Confirm it in the lab !
+establish asso.
+save category 
+save products
+
+With Cascading : 
+Add a property cascade in @OneToMany annotation to support cascading of the changes from parent --> child entity.
+Steps :
+establish asso.
+ONLY save category
+
+
+4. Remove a category
+i/p : category name
+Confirm cascading
+Objective : String deleteCategory(String categoryName);
+jpql : select c from Category c where c.categoryName=:nm
+getSingleResult --->no exc --> session.delete(category)
+
+
+5. Remove a product from a Category
+i/p : category id , product id
+
+Steps
+get category n product from it's id : session.get
+null chking --not null 
+cat.removeProduct(p);//helper method
+
+
+Any problem noticed  ? YES , hib simply de linked the entities (i.e FK : null) , BUT child rec wasn't deleted
+Solution : add new property to @OneToMany : orphanRemoval=true
+
+
+5. Display category details
+ i/p : category name
+
+6. Display category n product details
+i/p : category name
+IMPORTANT 
+Any problem noticed  : org.hibernate.LazyInitializationException
+Cause : Any time you are trying to access un-fetched data , in a detached mode(i.e outside session scope) , hib throws the exc.
+
+WHY ?
+
+Hibernate follows default fetching policies for different types of associations
+one-to-one : EAGER
+one-to-many : LAZY
+many-to-one : EAGER
+many-to-many : LAZY
+
+
+one-to-many : LAZY
+Meaning : If you try to fetch details of one side(eg : Category) , will it fetch auto details of many side(i.e : Product) ?
+NO (i.e select query will be fired only on categories table)
+Why ? : for performance 
+
+When will hibernate throw LazyInitializationException ?
+Any time you are trying to access un-fetched data from DB , in a detached manner(outside the session scope)
+cases : one-to-many
+many-many
+session's load
+
+un fetched data : i.e product list in  Category obj : represented by : proxy (substitution) : collection of proxies
+proxy => un fetched data from DB
+
+
+
+Solutions
+1. Change the fetching policy of hibernate for one-to-many to : EAGER
+eg : 
+
+Is it recommneded soln ? 
+
+ NO (since even if you just want to access one side details , hib will fire query on many side) --will lead to worst performance.
+Use case : when the size of many is small !
+(eg : BankCustomer ---> BankAccount)
+
+
+2. Better Solution
+
+Solution : Access the size of the collection within session scope : soln will be applied in DAO layer
+
+Dis Adv : Hibernate fires multiple queries to get the complete details
+
+
+3. How to fetch the complete details , in a single join query ?
+Using "join fetch" keyword in JPQL
+String jpql = "select c from Category c join fetch c.products where c.category=:nm"
+--inner join
+
+String jpql = "select c from Category c left outer join fetch c.products where c.category=:nm"
+--left outer join
+
+
+------------------------------------------
+Good Articles/Books to refer to JPA Association Mapping
+1. e Book(already shared in hibernate_help) : "hibernate-help\hibernate books\Pro JPA 2 in Java EE 8, 3rd Edition.pdf"
+2. link : https://howtodoinjava.com/hibernate/how-to-define-association-mappings-between-hibernate-entities/
+3. https://thorben-janssen.com/ultimate-guide-association-mappings-jpa-hibernate/

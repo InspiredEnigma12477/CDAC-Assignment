@@ -1,0 +1,65 @@
+1. If there multiple request params(use case -- register/update) --- bind POJO directly to a form.(2 way form binding technique)
+How ?
+1.1 For  loading the form (in showForm method of the controller)  , bind empty POJO (using def constr) in model map 
+How  ? 
+Explicit --add Model as dependency & u add
+map.addAttribute(nm,val)
+OR better way 
+implicit -- add POJO as a dependency
+eg : User registration
+@GetMapping("/reg")
+public String showForm(User u) {...}
+
+What will SC do ?
+SC --- User u=new User();
+chks --- Are there any req params coming from client ? --- typically --no --- only getters will be called --
+adds pojo as model attr (in Model map)
+map.addAttribute("user",new User());
+
+1.2 In form (view ---jsp)  -use spring form tags along with modelAttribute
+Steps
+1. import spring supplied form tag lib
+2. Specify the name of modelAttribute under which form data will be exposed.(name of model attr mentioned in the controller)
+<s:form method="post" modelAttribute="user">
+  <s:input path="email"/>.....
+</s:form>
+
+
+1.3 Upon form submission (clnt pull I)
+clnt sends a new req --- containing req params
+@PostMapping("/reg")
+public String processForm(User u,RedirectAttributes flashMap,HttpSession hs) {
+//SC calls
+User u=new User();
+SC invokes MATCHING (req param names --POJO prop setters)
+setters. -- conversational state is transferred to Controller.
+adds pojo as model attr (in Model map)
+map.addAttribute("user",u)
+Thus you get a populated POJO directly in controller w/o calling <jsp:setProperty> & w/o using any java bean.
+
+
+Spring form tags
+1. <form:input path="name" />
+
+2. <form:input type="email" path="email" />
+
+3. <form:password path="password" />
+
+4. <form:textarea path="notes" rows="3" cols="20"/>
+
+5. <form:checkboxes items="${languages}" path="favouriteLanguage" />
+
+6. Male: <form:radiobutton path="sex" value="M"/>
+Female: <form:radiobutton path="sex" value="F"/>
+
+7. <form:radiobuttons items="${jobItem}" path="job" />
+
+8. 
+<form:select path="book">
+    <form:option value="-" label="--Please Select--"/>
+    <form:options items="${books}" />
+</form:select>
+
+9. <form:hidden path="id" value="12345" />
+
+10. <form:errors path="name" cssClass="error" />

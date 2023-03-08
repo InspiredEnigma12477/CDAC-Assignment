@@ -1,0 +1,32 @@
+1. Thin clnt sends  request along with rq. params.(*.htm)
+
+2. First it reaches Spring’s DispatcherServlet which acts like 
+front controller  in MVC model II . It  is a common web-application pattern where a single servlet delegates responsibility for a request to other components of an application to perform the actual processing. 
+
+3. The DispatcherServlet’s job is to send the request on to a Spring MVC controller(prog supplied)
+
+4. As typical appln may have several  controllers, DispatcherServlet  consults Handler mapping  to select controller. 
+
+5. The Handler mapping will choose a controller based on rq. URL.
+
+6. Req thus reaches the controller. Controller may use one or more service layer objs for exec of B.L
+
+The result of B.L needs to be carried back to the user and displayed in the browser. This info. is the model. It has to be sent to JSP(or any other view template) for converting it to HTML like format. 
+
+7. So the controller will  package up the model data and the
+name of a view into a ModelAndView object. It rets the request+ ModelAndView back to the DispatcherServlet. (M&V 
+doesn’t carry a reference to the actual JSP but only carries a logical result name that will be used to look up the actual view that will produce the resulting HTML. 
+
+8. DispatcherServlet now consults a view resolver to  find the actual JSP.  &  delivers the model data to view JSP
+
+9. The view will use the model data to render a page that will be sent as dyn resp back to the clnt browser.
+object.
+
+
+The ViewResolver provides a mapping between view names and actual views.
+
+UrlBasedViewResolver Simple implementation of the ViewResolver interface that
+effects the direct resolution of logical view names to URLs, without
+an explicit mapping definition. This is appropriate if your logical
+names match the names of your view resources in a straightforward
+manner, without the need for arbitrary mappings.

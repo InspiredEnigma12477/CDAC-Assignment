@@ -1,0 +1,57 @@
+Page Navigation Techniques
+Page Navigation=Taking user from 1 page to another page.
+
+2 Ways
+1. Client Pull
+Taking the client to the next page in the NEXT request (coming all the way from client)
+1.1 User takes some action --eg : clicking on a button or link & then client browser generates new URL to take user to the next page.
+
+1.2 Redirect Scenario
+User doesn't take any action. Client browser automatically generates new URL to take user to the next page.(next page can be from same web appln , or diff web appln on same server or any web page on any srvr)
+
+API of HttpServletResponse i/f
+public void sendRedirect(String redirectURL) throws IOException
+eg : For redirecting client from Servlet1 (/s1) to Servlet2 (/s2) , use
+response.sendRedirect("s2");
+
+If the response already has been committed(pw flushed or closed) , this method throws(WC) an IllegalStateException.(since WC can't redirect the client after response is already committed)
+
+
+2. Server Pull.
+Taking the client to the next page in the SAME request.
+Also known as resource chaining or request dispatching technique.
+Client sends the request to the servlet / JSP. Same request can be chained to the next page for further servicing of the request.
+
+
+Steps
+1. Create Request Dispatcher object for wrapping the next page(resource --can be static or dynamic) 
+API of ServletRequest
+javax.servlet.RequestDispatcher getRequestDispatcher(String path)
+
+2.Forward scenario
+API of RequestDispatcher
+public void forward(ServletRequest rq,ServletResponse rs)
+
+This method allows one servlet to do initial processing of a request and another resource to generate the response. (i.e division of responsibility)
+
+Uncommitted output in the response buffer is automatically cleared before the forward. 
+
+If the response already has been committed(pw flushed or closed) , this method throws an IllegalStateException.
+
+Limitation --only last page in the chain can generate dynamic response.
+
+3. Include scenario
+API of RequestDispatcher
+public void include(ServletRequest rq,ServletResponse rs)
+
+Includes the content of a resource @run time (servlet, JSP page, HTML file) in the response. --  server-side includes. 
+
+Limitation -- The included servlet/JSP cannot change the response status code or set headers; any attempt to make a change is ignored. 
+
+
+
+
+
+
+
+

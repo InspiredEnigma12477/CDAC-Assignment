@@ -1,0 +1,78 @@
+Enter hybrid approach
+
+Hybrid approach(Reduced xml, reduced java code + majority annotations)
+
+Steps in Spring programming using annotations
+
+0. To enable annotation support -- add context namespace & add the following
+<context:annotation-config/> --- To tell SC --to enable annotation support(eg --- AutoWired,PostConstruct,Predestroy,.....)
+
+0.5 --- How to specify location(base pkg) of spring beans to SC?
+<context:component-scan base-package="comma sep list of pkgs"/>---
+SC starts searching(scanning)  in specified pkgs (including sub-pkgs) ---for classes anno with stereotype annotations --- @Component,@Service,@Repository,@Controller,@RestController,@ControllerAdvice...
+
+
+Basic class level annotations meant for  SC
+Super type 
+@Component --- spring bean class
+sub - type annotations
+@Controller --- In Web MVC scenario -- for request handling.
+@Service --- Service layer (B.L) 
+@Repository --- DAO layer
+@RestController -- RESTful web service provider
+@ControllerAdvice -- global exc handler for all controllers
+@RestControllerAdvice -- -- global exc handler for all rest controllers
+
+
+
+1. @Component --- <bean id , class> --- SC interprets it & starts bean life-cycle.
+eg --- 
+package beans;
+@Component("abc")
+public class MyBean {...}
+xml --- <bean id="abc" class="beans.MyBean"/>
+OR
+@Component
+public class MyBean {...}
+xml --- <bean id="myBean" class="beans.MyBean"/>
+
+2. @Controller -- spring web MVC req handling controller
+3. @Repository --- DAO layer class
+4. @Service --- for service layer beans(B.L) .
+5. @Scope(value="singleton|prototype|request|session")--- class level annotaion --- in xml via scope attribute.
+6. @Lazy(true|false) ----class level anno -- lazy-init attribute
+7. @PostConstruct ---method level anno - init-method ---method level
+8. @PreDestroy ---method level anno-- destroy-method --- method level
+9. @Required(true|false) --- setter method or paramed constr  ---tells SC if depenency is mandatory or optional-- def=true
+10. @AutoWired ---setter method or parameterized constr or any method or  field level 
+eg --- TestTransport implements Transport {...}
+ autowire="byType"
+eg  -- field level annotation ---in ATMImpl bean (dependent)
+@AutoWired //autowire=byType , mandatory by default (required=true)
+private Transport myTransport;
+Meaning -- no parameterised constr, no setter , no xml containing bean definition is required.
+SC --- chks for any bean of Transport by type & injects it in ATMImpl
+What if : SC comes across multiple matches : SC throws NoUniqueBeanDefinitionException
+What if : SC doesn't find even a single match : SC throws UnSatisfiedDependencyException
+
+11. @AutoWired//(required=true)
+@Qualifier("test")
+private Transport myTransport; ---- =>autowire="byName"
+---spring supplied anno.
+SC searches for a bean with id="test"
+ 
+Single Match found : NO excs , field level D.I succeds!
+Match not found : SC throws exception (UnSatisfiedDependencyException : NoBeanDefFoundExc)
+Multiple Matches Found : Ambiguity => SC throws NoUniqueBeanDefinitionException
+
+
+OR
+@Resource(name="soap")
+private Transport myTransport; ---- autowire="byName"
+
+--J2EE supplied via javax.annotation
+
+
+SpEL --- spring expression language
+dynamic expression languge ---spring(3.x) supplied -- to evaluate expressions dynamically.
+#{SpEL expression} --- similar to  JSP EL --- SpEL allows --- getters,setters,constr invocation, static & non-static method invocations.

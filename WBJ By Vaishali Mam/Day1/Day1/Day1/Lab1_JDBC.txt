@@ -1,0 +1,25 @@
+1:Create JDBC CRUD operation for Bank Application.
+
+Create Menu Driven Program for BankApplication:Use Data Access Layers
+
+1:Show all Accounts
+2:Add New Account
+3:Update/Edit Account
+4:Delete Account
+5:Deposite for specific account
+6:Withdraw for specific account
+7:Transfer Money from one account to Other Account(use stored procedure)
+
+2:If time remain go for additional task
+
+Refer to -- day1_help\web server help\Updated steps in tomcat.txt
+Ensure 
+Apache Tomcat 9.0.36 is added n running fine in your IDE (advanced Java workspace)
+
+Create a new dynamic web project (: demo_web_lab , as per the steps) n test HTML content , using chrome browser.
+Stop web server(Tomcat)
+
+
+
+
+ 

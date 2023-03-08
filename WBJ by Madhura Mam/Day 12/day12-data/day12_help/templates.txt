@@ -1,0 +1,15 @@
+	@NotBlank
+	@Length(min=5,max=10)
+	@Email
+	private String email;
+	@NotBlank
+	@Pattern(regexp="((?=.*\\d)(?=.*[a-z])(?=.*[#@$*]).{5,20})")
+	private String password;
+	@NotNull
+	@Range(min=200,max=2000)
+	private double regAmt;
+	@NotNull
+     @Future
+	@DateTimeFormat(pattern="dd-MMM-yyyy")
+	private LocalDate regDate;
+	

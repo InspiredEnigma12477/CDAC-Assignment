@@ -1,0 +1,274 @@
+Read this 
+@Component n it's subtypes are Preferable for component scanning and automatic wiring.
+
+When should you use @Bean?
+
+Sometimes automatic configuration is not an option. 
+
+When? 
+
+Imagine that you want to wire components from 3rd-party libraries , eg : PasswordEncoder in SpringSecurity or ModelMapper, ViewResolver  (you don't have the source code so you can't annotate its classes with @Component), so automatic configuration is not possible.
+
+The @Bean , method level annotation returns an object that spring should register as bean in application context. 
+The body of the method should create the instance n ret it to the caller (SC) , for it's auto management as a spring bean.
+-------------------------
+
+1. Revise with diagram : Full Stack Overview
+2. Revise  ResponseEntity
+
+o.s.http.ResponseEntity<T>  : generic class
+T : type of the response body
+Replace actual Resource(eg : User )  by ResponseEntity
+
+Standard design practice for back end : DO NOT directly send response body , instead wrap it in ResponseEntity
+
+o.s.http.ResponseEntity<T>
+Ctor : ResponseEntity(T body, HttpStatus status);
+
+OR Methods
+ResponseEntity.status(HttpStatus status).body(T body)
+
+Objective : Modify signin endpoint 
+In case of successful signin : REST server should ret Resp packet with : SC 200 n Emp details(id , firstname,lastname , salary) in resp body.
+
+In case of failure : Client SHOULD NOT see the error stack trace 
+INSTEAD
+REST server should ret Resp packet with : SC 404 n resp body containing : DTO 
+with time stamp n err mesg (Hint : Use ApiResponse DTO)
+
+Project Tip
+In order to automatically  convert Entity <-----> DTO , ther are multiple 3rd party libs.
+eg : MapStruct , ModelMapper ...
+
+1. Add model mapper dependency in pom.xml
+<!-- https://mvnrepository.com/artifact/org.modelmapper/modelmapper -->
+		<dependency>
+			<groupId>org.modelmapper</groupId>
+			<artifactId>modelmapper</artifactId>
+			<version>3.0.0</version>
+		</dependency>
+
+2. How to configure ModelMapper as a spring bean (so that it can be injected as a dependency in other spring beans ) ?
+Ans : Either use xml <bean> tag OR use
+@Bean annotated method , to ret ModelMapper instance to SC.
+
+
+@Bean //equvalent to <bean id ..../> in xml file
+	public ModelMapper mapper() {
+		ModelMapper modelMapper = new ModelMapper();
+		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+		return modelMapper;
+	}
+
+3. What will happen (Test this !)
+3.1 For adding emp (POST)
+in the JSON payload : send empty payload
+Observe n conclude -- Sql Exc --- constraint violation exc from DB layer --NOT DESIRABLE!!!!
+
+3.2 Add only password
+Observe n conclude --no exc -- null values inserted in DB !!!!!!!!!!
+Any problem n any solution ?
+
+4. Enter :  REST Server side Validations
+(refer : templates.txt & "regarding spring boot exc handling n validations.txt")
+4.1 Add Validation rules on incoming payload (req param / path var / Entity / DTO)
+HOW : By adding validation realted annotations
+
+eg : first name : can't be blank .(min : 4 chars , max =20 chars)
+last name : can't be blank 
+valid email 
+valid strong password (alpha numeric, special character , min 5 max 20)
+eg : ((?=.*\\d)(?=.*[a-z])(?=.*[#@$*]).{5,20})
+reg amount in the range : 500 ---5000
+reg date must be in future
+Test it with postman client
+(Same annotations are used in Spring MVC standalone App , in P.L: presentation logic  validations)
+eg : @NotBlank , @NotNull,@Email, @Pattern,@Future ,@Range....
+
+
+4.2 Add @Valid , along with @RequestBody , in REST controller methods.
+
+4.3 Additionally , add @Validated on class(RestController) , for validating path var / request param.
+
+
+
+
+5. Any problems observed on the client side ? 
+If you don't handle validations related exc (eg : for @Valid -- MethodArgumentNotValidException...) --spring boot supplies default exception handler.
+
+YES : Since spring boot supplies a default exception handler , entire stack trace , along with exception details are sent to the front end.
+
+NOTE  : Validation failures CAN NOT be caught by controller method level exc handling using try-catch
+B.L failures  CAN BE caught by controller method level exc handling(try-catch) --> but resulting into repeatative exc handling 
+
+Instead : 
+How to avoid both of these problems ?
+Solution : Add centralized ( global) exception handler
+
+Why ?
+A good REST API should handle the exceptions properly and send the proper response to the user. The user should not be rendered with any unhandled exception. A REST API developer will have two requirements related to error handling.
+
+1. Centralized place(class)  for Error handling
+2. Similar Error Response body with a proper HTTP status code across all API endpoints
+
+Class level annotation : 
+@RestControllerAdvice is the combination of both @ControllerAdvice and @ResponseBody
+
+The @ControllerAdvice annotation was first introduced in Spring 3.2.
+
+We can use the @ControllerAdvice annotation for handling exceptions in the RESTful Services but we need to add @ResponseBody separately.
+
+The differences between @RestControllerAdvice and @ControllerAdvice is :
+
+@RestControllerAdvice = @ControllerAdvice + @ResponseBody. - we can use it in REST web services.
+
+@ControllerAdvice - We can use in both MVC and Rest web services, BUT you need to provide the @ResponseBody if we use this in Restful web services.
+
+
+Steps
+1. Create a separate class annotated with  @RestControllerAdvice
+To tell SC , following class is a common advice to :  rest controller --regarding exc handling (cross cutting concern=common task)
+
+3. For validation failures , triggered by  @Valid annotation
+Exception to handle : MethodArgumentNotValidException 
+Extract map of Field Errors --send it to the caller(front end) by wrapping it in the RespEntity.
+Exc class : MethodArgNotValidException
+It's super class : BindException has : Method --List<FieldError> getFieldErrors() .
+FieldError :  getField, getDefaultMessage
+
+eg : @ExceptionHandler(MethodArgumentNotValidException.class)
+public ResponseEntity<?> handleMethodArgumentNotValidException(MethodArgumentNotValidException e)
+{....}
+	
+4. For ResourceNotFoundException  or similar B.L exceptions : 
+Add method in global exc handler annotated with 
+@ExceptionHandler
+
+
+Instead of sending err mesg as a plain string , wrap it in Error response object n send it to the front end for simpler processing
+Use DTO pattern : Data Transfer object
+ApiResponse : message , timestamp
+
+Refer to readme : regarding spring boot exc handling n validations.txt
+
+
+5. Image Handling
+Refer : readme
+
+6. Spring Security
+Refer : 
+
+
+
+
+
+
+
+
+-------------------------
+Project Tip
+3. Add Option for User Registration. 
+Creating an empty cart n associate it with user.
+Add hobbies from the front end.
+Observer n conclude.
+Problem : In case of bi-dir association , jackson will cause the recursion, during serialization(java--> json)
+
+Solution : How to tell SC using Jackson , to skip the properties
+Add field level annotation
+@JsonIgnoreProperties(name of the prop as it appears in the opposite side)
+More Details : 
+eg : User 1<----->1 Cart
+Problem : Infinite recursion (stack overflow !!!!!!!!!!!!!!)
+Cause : Jackson (converter) tries to serialize Cart object , during the ser. of User obj.
+AND
+Jackson (converter) tries to serialize User object , during the ser. of Cart obj.
+Soln : 
+In User entity, add 
+@JsonIgnorePropeties(value="cartOwner")
+private ShoppingCart cart;
+
+In ShoppingCart entity
+@JsonIgnorePropeties(value="cart")
+private User cartOwner;
+
+
+Same problem n solution for any bi-dir relationship.
+
+OR use DTO solution
+Project Tip
+As a standard design practice , do not expose entities directly to the REST client
+(i.e DO not return them from the RestController)
+Instead use DTO (data transfer object) , to separate entities from resources to be shared with the clnts.
+eg : Send User DTO as  resp , instead of User entity.
+
+
+
+
+
+Enter Spring security
+Understand spring security architecture
+(refer to spring security help)
+2.1 Servlet Filters overview (filter help)
+2.2 servletfilter-1 , servletfilter-2
+2.3 spring security architecture diagram
+2.4 detailed-flow diagram 
+(readme : Spring security flow)
+
+Draw a detailed diagram(Refer : "day12_help\spring security\latest\Spring Security Architecture.png"
+
+2.4 Continue to in mem based authentication
+2.5 Replace it by DB based authentication
+
+Copy User entity from ready code
+
+
+(refer : Regarding Spring Security)
+2.6 Write Service Layer tests for adding user records
+@SpringBootTest 
+
+ DAO layer tests
+Class level annotations over Test class
+@DataJpaTest
+@AutoConfigureTestDatabase(replace = Replace.NONE)
+=> DO NOT replace the actual DB by any test db.
+If you need to disable the rollback @ end of the test case , add 
+@RollBack(false) : over the test method
+
+eg : find out users by specific role
+find out users by reg date between start date n end date
+
+
+
+
+
+4. Spring Data JPA more practice
+Add 3 data members : regDate , regAmount , desc (about user)
+DML : 
+update users_tbl set description='common desc' , reg_amount=500 ,reg_date='2020-1-1' where id < 5;
+update users_tbl set description='some other desc' , reg_amount=700 ,reg_date='2020-11-21' where id >= 5'
+(Finder methods , Custom Query Methods)
+Solve n Test it with DAO layer Tests (Later test it with service layer tests)
+4.1 Find the users by last name (add multiple users with same last name n test)
+eg : UserRepository
+4.2 Find the user by specific email n password (authentication)
+4.3 Find users with reg amounts between start value n end value
+4.4 Find users registered after a particular date , sorted as per their reg amount
+4.5 Find users whose description contains a keyword.
+
+Custom query
+Get first name n last names of all users under a specific role , paying reg amount > specified amount
+
+
+--------------------
+Links
+1. https://www.javainuse.com/devOps/docker/docker-jar
+2. https://repo1.maven.org/maven2/org/springframework/spring-core/5.3.25/
+3. https://repo1.maven.org/maven2/org/springframework/boot/spring-boot/2.7.8/
+4. https://repo1.maven.org/maven2/org/springframework/data/spring-data-jpa/2.7.7/
+5. https://spring.io/projects/spring-data-jpa#learn
+6. https://docs.spring.io/spring-data/jpa/docs/2.7.7/reference/html/
+
+
+
+
+

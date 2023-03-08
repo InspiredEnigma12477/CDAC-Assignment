@@ -1,0 +1,76 @@
+Objective : Invoking one REST API from another REST API
+URL : http://host:port/api/employees/{empId}/accounts/{acctNo}
+
+Resource : employees
+Sub Resource : accounts
+
+
+1.1 NetBanking REST Server
+Ready made Spring boot project : NetBankingRESTServer
+
+DML
+insert into bank_customers values('hdfc-00001','Rama','12345');
+insert into bank_accounts values(default,0,'SAVING',234567,'hdfc-00001');
+insert into bank_accounts values(default,0,'CURRENT',24567,'hdfc-00001');
+
+REST API : /bank/accounts/{acctNo}
+
+
+1.2 Employee App REST Server for React App & client to NetBanking
+1.3 Front end Postman (later add it in React app)
+
+Details
+2. Objective : Testing E-R with REST API + REST Client(RestTemplate)
+Test setup : Postman -- Emp Management API invoking REST Banking API
+
+Get Account summary for a bank customer.
+Resource : /accounts
+I/P : acct no
+
+O/P : In case of success : Account DTO
+or in case of invalid credentials : Send Error resp code : HTTP 404 (not found)
+
+Get acct details
+Method =GET (/bank/accounts/{acctNo})
+
+
+Layers :
+REST Controller --Service --Repository--POJO --DB
+Customer 1<------* BankAccount
+Customer : customer id(eg of assigned id here) ,name, password 
+
+BankAccount : acct id (auto generation) AcctType(enum) ,balance + Customer owner
+
+For  Data Transfer : DTOs
+LoginRequest : customerId , password
+LoginResponse  : customer name & List<BankAccount> 
+
+How to make a REST call from one web app to another  ?
+Use : org.springframework.web.client.RestTemplate
+
+The RestTemplate class in Spring Framework is a synchronous HTTP client for making HTTP requests to consume RESTful web services. 
+
+It exposes a simple and easy-to-use template method API for sending an HTTP request and also handling the HTTP response. 
+
+The RestTemplate class also provides aliases for all supported HTTP request methods, such as GET, POST, PUT, PATCH , DELETE, and OPTIONS. 
+
+In a service layer : inject
+
+public class ClntService {
+private RestTemplate template;
+
+	@Autowired //autowire=constructor
+	public ClntService(RestTemplateBuilder builder) {
+		template = builder.build();
+	}
+
+
+}
+	// SpEL : spring expression language
+	@Value("${REST_GET_URL}")
+	private String authUrl;
+
+Use  Method of o.s.w.c.RestTemplate public <T> ResponseEntity<T>
+1. public <T> ResponseEntity<T> getForEntity(String url,Class<T> responseType,Object... uriVariables) throws RestClientException
+
+2. public <T> ResponseEntity<T> postForEntity(String url,@Nullable Object request, Class<T> responseType, Object... uriVariables)  throws RestClientException

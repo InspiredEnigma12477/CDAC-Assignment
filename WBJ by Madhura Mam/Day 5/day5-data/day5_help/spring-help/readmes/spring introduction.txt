@@ -1,0 +1,51 @@
+Why Spring 
+It simplifies development of enterprise applications. It's one-stop-shop.
+Excellent for integration with existing frameworks.
+Reduces boiler-plate code.
+Allows to build applications using loose coupling achieved via IoC(Inversion of control) & AOP(aspect oriented programming)
+
+What is it ?
+It is a container + framework.
+
+Why Container 
+It manages the life cycle of spring beans (eg : controller/rest controller , dao,service)
+spring bean : java object whose life cycle is managed by spring container(SC)
+
+Why Framework ?
+It provides readymade implementation of patterns & helps in building enterprise applications.
+
+It is the most popular application development framework for enterprise Java. It is used to create high performant, easily testable, and reusable code.
+
+Spring framework is an open source Java platform. 
+Founder is  Rod Johnson and was first released under the Apache  license in June 2003.
+Currently hosted on Pivotal/VMware
+
+Why Spring 
+
+1. Spring is lightweight .The basic version of Spring framework is around 2MB.
+
+2. It supports in developing any Java application, but there are extensions(web MVC)  for building web applications on top of the Java EE platform. 
+
+3. It helps programmers  to make J2EE development easier to use and promotes good programming practices by enabling a POJO-based programming model.
+4. Excellent n easy testing support.(Thanks to D.I)
+
+5. Supports smooth integration with ORM
+
+6. Easy integration with web MVC applications including web sockets 
+(for async communication between server & client)
+Spring's web framework is a  web MVC framework, which is a great alternative to web frameworks such as Struts 
+
+7. It is organized in a modular fashion. Even though it's extensive , you have to worry only about the those modules that you need  and ignore the rest.
+
+8. Spring does not re-invent the wheel, instead it makes use of already existing frameworks like Hibernate , making its integration easier.
+
+9. It translates technology-specific exceptions (thrown by JDBC, Hibernate, or JDO, for example) into consistent, unchecked exceptions.
+
+10. 
+It provides a consistent transaction management interface that can support  a local transaction (using a single database) as well as  global transactions (using JTA over multiple databases).
+
+Main winning feature of Spring is : loose coupling between the modules.
+
+How does it achieve loose coupling ?
+1. IoC -- IoC is achieved using Dependency Injection(D.I)
+2. Aspect Oriented Programming(AOP)

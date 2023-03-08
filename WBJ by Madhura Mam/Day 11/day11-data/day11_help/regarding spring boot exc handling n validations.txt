@@ -1,0 +1,75 @@
+1.Objective  Add P.L Validations supplied in back end
+
+Steps
+1.1 We Have already added , validation dependency in Spring boot project.
+
+1.2  Identify validation rules , add these annotations on POJO properties.
+eg : @NotBlank, @Pattern, @Min, @Max...
+Imported form javax.validation , org.hibernate.validator
+(refer to templates.txt under <ready code>)
+
+1.3 For validating RequestBody : add @Valid annotation in addition to @RequestBody
+SC performs un marshalling + validation
+
+1.4 Comment ControllerAdvice
+
+1.5 Invoke REST end point (post)
+URL : http://localhost:8080/emps/
+raw json body : 
+{
+    
+    "name": "Sheela",
+    "salary": 6000.0,
+    "dob": "1995-01-01",
+    "designation": "sd",
+    "deptId": 20,
+   
+}
+
+Observation : HTTP status 400 , BUT entire error stack trace sent to clnt.
+Exception : MethodArgumentNotValidException
+
+Better option : 
+For handling Spring MVC validation errors : extend exception handler class from ResponseEntityExceptionHandler & override
+protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,HttpHeaders headers,HttpStatus status,WebRequest request)
+
+
+3. For Path Variables/request params : @Validated , at class level on controller class.
+Exception raised : ConstraintViolationException
+
+4. Any remaining exceptions , handle it by a common handler method. 
+
+
+
+
+Objective 2. : Adding global / centralized exception handler
+Problem : Access REST end point : http://localhost:8080/emps/123
+(i.e non existing emp id)
+Observation : Complete error stack on front end .
+Can be avoided by catching the exception in RestController , but then will have to supply multiple repeatative exc handling code.
+
+How to add global(centralized) exception handler ?
+Using 2 Annotations 
+
+ @ControllerAdvice & @ExceptionHandler
+
+@ControllerAdvice is a specialization of the @Component annotation which allows to handle exceptions across the whole application in one global handling component. 
+
+It's  interceptor of exceptions thrown by methods annotated with @RequestMapping and similar(eg : @GetMapping,@PostMapping....)
+
+Add  in this class , @ExceptionHandler methods to be shared across multiple @Controller classes.
+
+Typically extend this global exc handler by ResponseEntityExceptionHandler
+
+What is it ?
+A convenient base class for @ControllerAdvice classes  to provide centralized exception handling across all @RequestMapping methods through @ExceptionHandler methods.
+This base class provides an @ExceptionHandler method for handling internal Spring MVC exceptions. This method returns a ResponseEntity for writing to the response with a message converter,
+
+@ExceptionHandler : method level annotation.
+
+Steps :
+1. Create a class that extends from ResponseEntityExceptionHandler
+2. Add class level annotation @ControllerAdvice
+3. Add @ExceptionHandler methods , to handle different type of exceptions.
+
+

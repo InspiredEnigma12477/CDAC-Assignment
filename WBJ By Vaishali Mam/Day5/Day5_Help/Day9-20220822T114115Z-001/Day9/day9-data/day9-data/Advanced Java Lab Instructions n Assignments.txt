@@ -1,0 +1,271 @@
+Day 1 (28/5/2022)
+1. Revise JDBC 
+2. Go through the readmes -- 
+
+
+Day 2 (30/5/2022)
+1. import day2.1 , in your eclipse (new workspace). Fix build path n change user name n password in DBUtils.
+1.1 Revise CRUD application with employee.
+1.2 Revise invocation n execution of stored procedure.
+
+2. Follow the steps 
+2.1 core java help : day1_help \installation instructions
+Ensure that you are working with JDK 11 n STS 3.9.18
+
+2.2 Refer to -- day2-data\day2_help\web server help\Updated steps in tomcat.txt
+Ensure 
+Apache Tomcat 9.0.36 is added n running fine in your IDE (advanced Java workspace)
+Create a new dynamic web project (: day2_web_lab , as per the steps) n test HTML content , using chrome browser.
+Stop web server(Tomcat)
+
+Hands on
+
+3. Refer to day2-data\day2_help\case studies\topic-tutorials.png
+
+3.1 Refer to day1-data\day1_help\jdbc help\sql\topics-tutorials.txt"
+Copy DDL n DML for : users , topics n tutorials table.
+
+3.2 
+Solve 
+Create new java project : day2_assignment .
+Add my sql connector in build path.
+
+Layered app 
+Tester ---DAO --- DBUtils (openCn , getCn , closeCn) --POJO/s --DB 
+
+Solve  
+1. User Login
+i/p : email ,password
+o/p :Return User details in case of successful login or an error  message, in case of invalid login.
+
+Hint :  IUserDao : i/f
+User authenticateUser(String email,String pwd) throws SQLException
+Steps
+1. Table -- users
+2. POJO cls -- User
+properties --id | name    | email          | password | reg_amt | reg_date   | role 
+Def ctor , all getters n setters , toString
+
+2.5 DBUtils ---openCn , closeCn , getCn
+
+3. DAO :
+3.1 IUserDao : i/f
+User authenticateUser(String email,String pwd) throws SQLException
+In case of successful login --ret User object , populated with use details lifted from DB
+o.w --null
+3.2 UserDaoImpl
+state --conn , pst1 
+def ctor ---getCn , pst1=.....
+cleanUp -- close psts
+CRUD : set IN params , execQuery --RST --if(rst.next()) --- ret user details else ret null
+
+4. Tester
+init --sc, openCn, create dao
+service --call CRUD method
+destroy --cleanUP Dao , close cn
+
+
+
+2. Change password
+i/p : email ,password , new password
+o/p : A message indicating success or failure.
+
+Hint :  IUserDao : i/f
+String changePassword(email ,password , new password) throws SQLException
+
+3. Get all available topics.
+Hint : ITopicDao
+List<Topic> getAllTopics() throws SE.
+
+Day 3
+Please follow this exact sequence in today's lab , for complete revision n clarity.
+
+Refer to today's sequence.txt , diagrams , readmes for better understanding n revise.
+
+NOTE : Use web browser's inspect option , to trace request response flow.
+
+Steps
+1. Create a new dynamic web project (check web.xml checkbox) : eg day3_lab
+
+1.1 Create a welcome page : index.html
+Add a link : to invoke the servlet (which will be deployed using @WebServlet annoatation)
+
+1.1 Request URL  sent from clnt --> server, after clicking of the link
+http://host:port/day3_lab/test1
+URI : /day3_lab/test1
+URL Pattern : /test1
+
+
+Create FirstServlet.java , override life cycle methods & trace the life cycle.
+Use @WebServlet annoatation
+Use lazy loading policy.
+
+1.2 Add another link in index.html : to invoke the servlet (which will be deployed using xml tags)
+
+Create SecondServlet.java , override life cycle methods & trace the life cycle.
+Do NOT Use @WebServlet annoatation , instead add xml tags in web.xml
+Use eager loading policy.
+
+-----------------------------------------
+What will happen ?
+
+1.3 Add / in anchor tag's href. Observe n conclude
+URL : http://localhsot:8080/test1
+Resp :HTTP 404
+
+1.4 Remove / from the url-pattern . Observe n conclude
+Obs : WC (Server side JVM) throws : IllegalArgumentException --- invalid URL pattern !!!!!!!!!!!!
+
+
+1.5 Give same url-pattern to 2 different servlets . Observe n conclude
+Obs : Web server simply DOES NOT start
+WC (Server side JVM) throws : IllegalArgumentException ---multiple servlets CAN NOT have SAME url-pattern
+
+
+
+
+1.6 Can one servlet be deployed under multiple url patterns -- YES 
+
+
+Common Troubleshooting Tips
+1. Stop web server
+2. R Click on Tomcat server --- add n remove --Remove All : This will un deploy all web apps from the server.
+3. R Click on Tomcat server --clean
+4. R Click on Tomcat server --clean tomcat work directory
+5. Start server (If it starts correctly => no server issues!)
+6. Clean Project n deploy the dynamic web project n test it.
+7. After deploying the project , if you are getting HTTP 404 , on the client side --check if you have added a welcome page correctly under the root of web app(i.e under src/main/webapp)
+
+
+1.7 Add a new link in index.html : for User Login
+Copy login.html from day3-data\day3_help\HTML pages\login.html under src\main\webapp(i.e context root of the web application)
+Write a LoginServlet 
+override init , do???? n destroy 
+Perform user authentication.
+
+
+Day 4
+1. import day4.1 , to revise 
+1.1 Servlet JDBC integration
+1.2 Page Navigation
+Clicking on a button/link : Client Pull I
+Redirect scenario : Client Pull II
+(refer to diagrams , readmes n code sample)
+
+2. import day4.2 , to revise
+Cookie based session tracking
+(Test it with cookies enabled n later disabled)
+
+MUST use "inspect" option in the browser , to trace request n response flow.
+
+Revision
+1. Req : http://host:port/day4.2
+Resp : login form.
+
+2. After submitting form (CP I)
+http://host:port/day4.2/validate
+@ dep time --WC --cls loading --instance --init ---db cn n psts
+@ req processing time --HttpSrvlet's  public service ---> protected service ---> doPost --> 
+ in case of invalid login : resp ---retry link
+in case of valid login ---resp --- temp redirect resp (SC 302 | Location , Set-Cookie | Body : empty)
+web browser : chks cookies accepted or blocked from web site --blocked --- cookie/s won't be stored.
+=> session tracking fails !!!!!!!!!!!!!!
+accepted --- cookie age --def age =-1 => cookie will be stored browser's cache
+
+3. in case of valid login -- Web browser generated next request
+URL -- http://host:port/day4.2/topics
+Method -- GET 
+Header --cookie --user_details : value
+WC ---> HttpSrvlet's  public service ---> protected service ---> doGet : TopicsServlet
+--> retrived user details from cookie --sent it in the resp.
+
+4. After choosing the topic , 
+http://localhost:8080/day4_lab/tutorials?topic_id=1
+
+
+Hands on
+1. Complete topics page
+(dynamic form generation)
+
+2. Complete DAO layer for entire case study (customer part)
+2.1 Display all available tutorial names , under selected topic , sorted as per visits , in desc order.
+i/p : topic id
+o/p : List<String>containing  tutorial names only.
+
+Hint : 
+ITutorialDao
+List<String> getAllTutorialNamesByTopic(int topicId) throws SE;
+
+
+2.2 Get selected  tutorial details by name
+i/p : tutorial name 
+o/p : tutorial details (Tutorial)
+Hint : 
+ITutorialDao
+Tutorial getTutorialDetailsByName(String tutName) throws SE;
+
+2.3 Update visits (incr by 1)
+i/p tutorial name
+o/p A message indicating updated visit count or error mesg
+Hint : 
+ITutorialDao
+String updateVisits(String tutName) throws SQLException;
+
+Day 5
+
+1. import day5_cms in your workspace. Edit DB user name , pwd n db name if needed.
+Trace n revise entire flow as explained in the theory session.
+
+
+Day 6
+1. import day6.1 , in your workspace. Edit DB user name , pwd n db name if needed.
+Revise Server Pull : RequestDispatcher's forward scenario
+
+2. import day6.2 , in your workspace. Edit DB user name , pwd n db name if needed.
+Revise Server Pull : RequestDispatcher's include scenario
+
+3. import day6_cms , in your workspace. Edit DB user name , pwd n db name from web.xml file.
+Revise ServletConfig , ServletContext n web app listeners
+
+4. Check day6-data\day6_help\demo of config_vs_ctx\config_vs_ctx : project to understand config vs context
+
+5. Try to complete , voting application : voter role part.
+
+
+Day 7
+Please follow exactly same sequence in the lab
+
+1. import day7.1 in your workspace n revise basics of JSP , by tracing all the links from index.jsp
+Get familiar with JSP scripting elements n EL syntax.
+
+2. Do complete , voting application : voter role part , with the help of lab faculty
+Pls arrange a poll n submit it on Monday morning 
+Poll Question : Have you completed Voting assignment in servlets , for voter role ?
+
+3. If time permits , solve this OPTIONAL JSP assignment
+refer : day7-data\JSP Assignment.png
+
+Day 8
+1. import to day7_assgn , for solution of day7's : OPTIONAL JSP assignment
+(just refer to index.jsp n trace)
+
+2. import day8.1 for
+(just refer to index.jsp n trace)
+2.1 URL rewriting
+2.2 Error Page handling
+2.3 include directive
+2.5 RD related actions
+
+3. import day8.2 , edit DBUtils , as per your DB settings
+Revise JavaBean : UserBean
+
+Day 9
+1. import day9.1 , edit DBUtils , as per your DB settings
+Trace complete flow from JSP to DB , starting from login.jsp ---till logout.jsp
+(go through java beans n JSP actions carefully)
+
+2. We will discuss hands on later.
+2.1 Either continue with customer flow in CMS
+OR
+2.2
+Port online voting assignment in JSP using JavaBeans

@@ -1,0 +1,87 @@
+1. Run spring-boot-aop demo 
+Confirm invalid login
+Confirm valid admin login n valid customer login
+
+How will you solve this ?
+1. Log all the calls made to the  Service Layer
+2. Log all the exceptions raised in service layer
+3. In case of successful ret from service layer , log ret values
+4. Measure the time required for the request processing.
+
+
+
+Enter Spring Boot AOP (mainly exam objective)
+
+Before AOP : 
+
+Regarding logging framework in Java
+
+Spring Boot being extremely  helpful framework , it allows us to forget about the majority of the configuration settings, many of which it opinionatedly auto-tunes.
+
+In the case of logging, we don't have to explicitly import it's starter , since a starter, like our spring-boot-starter-web, depends on spring-boot-starter-logging, which already pulls in spring-jcl for us.
+
+(Jakarta Commons Logging API (JCL) is the only mandatory external dependency for Spring w/o boot)
+
+When using starters, Logback is used for logging by default.
+
+eg : different logging levels
+Add one field in the Controller class :
+Logger logger = LoggerFactory.getLogger(LoggingController.class);
+OR use Lombok annotation
+@Slf4j : at the class level -- It will auto inject a Logger in the field : log
+
+eg : 
+@RestController
+public class LoggingController {
+
+    Logger logger = LoggerFactory.getLogger(LoggingController.class);
+
+    @RequestMapping("/")
+    public String index() {
+//it's in asc manner : logging levels
+        logger.trace("A TRACE Message");
+        logger.debug("A DEBUG Message");
+        logger.info("An INFO Message");
+        logger.warn("A WARN Message");
+        logger.error("An ERROR Message");
+
+        return "Testing logging here....";
+    }
+}
+
+Default setting in application.properties file : 
+logging.level.root=INFO 
+eg : logging.level.org.springframework.orm.hibernate5=DEBUG
+logging.level.com.app.service=DEBUG
+
+
+
+Enter AOP
+
+AOP Basics : readme
+
+ref project : spring-boot-aop
+
+
+2. Microservices demo.
+Ref : diagram
+Eclipse projects : NetBanking Rest Server n it's client
+
+3. Spring boot internals
+Exam n Interview objective
+
+
+4. Content Management System (For E-R)
+Shared PK
+Ref : "day14_help\eclipse projects\hibernate_ER"
+
+composite PK
+
+
+5. JPA inheritance
+ref : "day14_help\hibnernate_inheritance\eclipse-projects\spring-boot-hib-inheritance2"
+
+6. Spring Boot Thymeleaf
+
+7. Transaction Management
+Including optimistic locking demo

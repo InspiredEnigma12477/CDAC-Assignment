@@ -1,0 +1,11 @@
+Hibernate property -- hibernate.hbm2ddl.auto
+
+The hibernate.hbm2ddl.auto configuration property is used to customize the Hibernate database schema generation process, and it can take the following values:
+
+none – This option disables the hbm2ddl.auto tool, so Hibernate is not going to take any action for managing the underlying database schema.
+create-only – This option instructs Hibernate to generate the database schema from the entity model.
+drop – This option instructs Hibernate to drop the database schema using the entity model as a reference for the DDL DROP statements.
+create – This option instructs Hibernate to drop the database schema and recreate it afterward using the entity model as a reference.
+create-drop – This option instructs Hibernate to drop the database schema and recreate it afterward using the entity model as a reference. And, upon closing the JPA EntityManagerFactory or the Hibernate SessionFactory, the database schema will be dropped again.
+validate – This option instructs Hibernate to validate the underlying database schema against the entity mappings.
+update – This option instructs Hibernate to update the database schema by comparing the existing schema with the entity mappings and generate the appropriate schema migration scripts.

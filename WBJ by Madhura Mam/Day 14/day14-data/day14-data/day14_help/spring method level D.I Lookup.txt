@@ -1,0 +1,131 @@
+Spring's method-level dependency injection support, via the @Lookup annotation.
+
+2. Why @Lookup?
+A method annotated with @Lookup tells Spring to return an instance of the method's return type when we invoke it.
+
+Essentially, Spring will override our annotated method and use our method's return type and parameters as arguments to BeanFactory#getBean.
+
+@Lookup is useful for:
+
+Injecting a prototype-scoped bean into a singleton bean (similar to Provider)
+Injecting dependencies procedurally
+Note also that @Lookup is the Java equivalent of the XML element lookup-method.
+
+
+3. Using @Lookup
+3.1. Injecting prototype-scoped Bean Into a Singleton Bean
+If we happen to decide to have a prototype Spring bean, then we are almost immediately faced with the problem of how will our singleton Spring beans access these prototype Spring beans?
+
+Now, Provider is certainly one way, though @Lookup is more versatile in some respects.
+
+First, let's create a prototype bean that we will later inject into a singleton bean:
+
+@Component
+@Scope("prototype")
+public class SchoolNotification {
+    // ... prototype-scoped state
+}
+And if we create a singleton bean that uses @Lookup:
+
+@Component
+public class StudentServices {
+
+    // ... member variables, etc.
+
+    @Lookup
+    public SchoolNotification getNotification() {
+        return null;
+    }
+
+    // ... getters and setters
+}
+Using @Lookup, we can get an instance of SchoolNotification through our singleton bean:
+
+
+@Test
+public void whenLookupMethodCalled_thenNewInstanceReturned() {
+    // ... initialize context
+    StudentServices first = this.context.getBean(StudentServices.class);
+    StudentServices second = this.context.getBean(StudentServices.class);
+       
+    assertEquals(first, second); 
+    assertNotEquals(first.getNotification(), second.getNotification()); 
+}
+Note that in StudentServices, we left the getNotification method as a stub.
+
+This is because Spring overrides the method with a call to beanFactory.getBean(StudentNotification.class), so we can leave it empty.
+
+3.2. Injecting Dependencies Procedurally
+Still more powerful, though, is that @Lookup allows us to inject a dependency procedurally, something that we cannot do with Provider.
+
+Let's enhance StudentNotification with some state:
+
+@Component
+@Scope("prototype")
+public class SchoolNotification {
+    @Autowired Grader grader;
+
+    private String name;
+    private Collection<Integer> marks;
+
+    public SchoolNotification(String name) {
+        // ... set fields
+    }
+
+    // ... getters and setters
+
+    public String addMark(Integer mark) {
+        this.marks.add(mark);
+        return this.grader.grade(this.marks);
+    }
+}
+Now, it is dependent on some Spring context and also additional context that we will provide procedurally.
+
+
+AD
+We can then add a method to StudentServices that takes student data and persists it:
+
+public abstract class StudentServices {
+ 
+    private Map<String, SchoolNotification> notes = new HashMap<>();
+ 
+    @Lookup
+    protected abstract SchoolNotification getNotification(String name);
+
+    public String appendMark(String name, Integer mark) {
+        SchoolNotification notification
+          = notes.computeIfAbsent(name, exists -> getNotification(name)));
+        return notification.addMark(mark);
+    }
+}
+At runtime, Spring will implement the method in the same way, with a couple of additional tricks.
+
+First, note that it can call a complex constructor as well as inject other Spring beans, allowing us to treat SchoolNotification a bit more like a Spring-aware method.
+
+It does this by implementing getSchoolNotification with a call to beanFactory.getBean(SchoolNotification.class, name).
+
+Second, we can sometimes make the @Lookup-annotated method abstract, like the above example.
+
+Using abstract is a bit nicer-looking than a stub, but we can only use it when we don't component-scan or @Bean-manage the surrounding bean:
+
+@Test
+public void whenAbstractGetterMethodInjects_thenNewInstanceReturned() {
+    // ... initialize context
+
+    StudentServices services = context.getBean(StudentServices.class);    
+    assertEquals("PASS", services.appendMark("Alex", 89));
+    assertEquals("FAIL", services.appendMark("Bethany", 78));
+    assertEquals("PASS", services.appendMark("Claire", 96));
+}
+With this setup, we can add Spring dependencies as well as method dependencies to SchoolNotification.
+
+4. Limitations
+Despite @Lookup‘s versatility, there are a few notable limitations:
+
+
+@Lookup-annotated methods, like getNotification, must be concrete when the surrounding class, like Student, is component-scanned. This is because component scanning skips abstract beans.
+@Lookup-annotated methods won't work at all when the surrounding class is @Bean-managed.
+In those circumstances, if we need to inject a prototype bean into a singleton, we can look to Provider as an alternative.
+
+5. Conclusion
+In this quick article, we learned how and when to use Spring's @Lookup annotation, including how to use it to inject prototype-scoped beans into singleton beans and how to use it to inject dependencies procedurally.

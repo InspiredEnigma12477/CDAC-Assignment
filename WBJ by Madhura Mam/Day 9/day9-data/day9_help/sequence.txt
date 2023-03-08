@@ -1,0 +1,11 @@
+1. Revise Spring MVC flow , with Spring boot.
+
+2. Continue with the case study 
+"day9-data\day9_help\practice-assignments\spring hibernate MVC assignment Admin Part.png"
+Refer : "day9-data\day9_help\spring MVC Details.txt"
+
+2.1 Redirect view
+2.2 HttpSession as a dependency injected in request handling method argument
+2.3 <spring:url>
+2.4 path variable
+2.5 OSIV

@@ -1,0 +1,9 @@
+Hibernate property -- hibernate.hbm2ddl.auto
+hibernate.hbm2ddl.auto Automatically validates or exports DDL to the database when the SessionFactory is created. 
+
+Possible options are 
+
+validate: validate the schema, makes no changes to the database.
+update: update the schema(creates new one if none exists, other continues with existing one)
+create: creates the schema, destroying previous data.
+create-drop: drop the schema when the SessionFactory is closed explicitly, typically when the application is stopped.

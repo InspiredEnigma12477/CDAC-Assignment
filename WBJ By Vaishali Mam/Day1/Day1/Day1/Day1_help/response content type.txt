@@ -1,0 +1,21 @@
+Content Type
+
+Content Type is also known as MIME (Multipurpose internet Mail Extension) Type. It is a HTTP header that provides the description about what are you sending to the browser.
+
+MIME is an internet standard that is used for extending the limited capabilities of email by allowing the insertion of sounds, images and text in a message.
+
+List of Content Types
+
+There are many content types. The commonly used content types are given below:
+
+text/html
+text/plain
+application/msword
+
+application/jar
+application/pdf
+mages/jpeg
+images/png
+images/gif
+audio/mp3
+video/mp4

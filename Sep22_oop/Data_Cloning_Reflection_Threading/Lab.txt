@@ -1,0 +1,11 @@
+Revise All Theory Session Demo:
+
+
+1:Create ITC application for BankApplication
+As disscused in session.
+
+2:Create Java application for cloning.
+Create shallow or Deep cloning
+
+3:Create jar files and use reflection for getting metadata...
+accept method name from user and invoke method dynamically.

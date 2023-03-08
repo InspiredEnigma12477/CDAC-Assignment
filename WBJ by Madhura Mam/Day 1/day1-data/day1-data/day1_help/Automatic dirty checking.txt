@@ -1,0 +1,20 @@
+Hibernate's   Automatic Dirty checking
+
+The process of automatically updating the database with the changes to the persistent object when the session is flushed(@ commit)  is known as automatic dirty checking.
+ 
+An object(POJO) enters persistent state when any one of the following happens:
+
+When the code invokes session.save, session.persist or session.saveorUpdate or session.merge
+OR
+When the code invokes session.load or session.get
+OR
+Result of JPQL
+
+Any changes to a persistent object are automatically saved to the database when the session in flushed. 
+
+Flushing is the process of synchronizing the underlying database with the objects in the session's L1 cache.
+
+Even though there is a session.flush method available but you generally don’t need to invoke it explicitly. 
+
+A session gets flushed when the transaction is commited. 
+

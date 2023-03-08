@@ -1,0 +1,33 @@
+How does spring security works internally?
+
+
+Spring security is enabled automatically ,  by just adding the spring security starter jar. But, what happens internally and how does it make our application secure? 
+
+
+Common Terms 
+
+Principal: Currently logged in user.
+Authentication: Confirming truth of credentials.
+Authorisation: Defines access policy for the Principal.
+GrantedAuthority: Permission granted to the principal.
+AuthenticationManager (i/f): Controller in the authentication process. Authenticates user details via authenticate() method.
+
+AuthenticationManager i/f implemented by : ProviderManager class .
+Diagram : detailed flow .png
+It Iterates an Authentication request through a list of AuthenticationProviders.
+AuthenticationProviders are usually tried in order until one provides a non-null response. A non-null response indicates the provider had authority to decide on the authentication request and no further providers are tried.
+
+AuthenticationProvider: Interface that maps to a data store that stores your data.
+Authentication Object: Object that is created upon authentication. It holds the login credentials. It is an internal spring security interface.
+UserDetails: Data object that contains the user credentials but also the role of that user.
+UserDetailsService: Collects the user credentials, authorities (roles) and build an UserDetails object.
+
+The Spring Security Architecture
+
+When we add the spring security starter jar, it internally adds Filter to the application. A Filter is an object that is invoked at pre-processing and post-processing of a request. It can manipulate a request or even can stop it from reaching a servlet. There are multiple filters in spring security out of which one is the Authentication Filter, which initiates the process of authentication.
+
+Once the request passes through the authentication filter, the credentials of the user are stored in the Authentication object. Now, what actually is responsible for authentication is AuthenticationProvider (Interface that has method authenticate()). A spring app can have multiple authentication providers, one may be using Dao based , JWT based , OAuth,  LDAP ... To manage all of them, there is an AuthenticationManager.
+
+The authentication manager finds the appropriate authentication provider by calling the supports() method of each authentication provider. The supports() method returns a boolean value. If true is returned, then the authentication manager calls its authenticate() method.
+
+After the credentials are passed to the authentication provider, it looks for the existing user in the system by UserDetailsService. It returns a UserDetails instance which the authentication provider verifies and authenticates. If success, the Authentication object is returned with the Principal and Authorities otherwise AuthenticationException is thrown.

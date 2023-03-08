@@ -1,0 +1,54 @@
+Expression Language implicit variables(case sensitive)
+
+1. pageContext : PageContext object (javax.servlet.jsp.PageContext) asso. 
+    with current page. 
+2. pageScope - a Map that contains  page-scoped attribute names and  their 
+    values.
+3. requestScope - a Map that contains request-scoped attribute names and  their
+    values.
+4. sessionScope - a Map that contains session-scoped attribute names and their 
+    values.
+5. applicationScope - a Map that contains application-scoped attribute names 
+    and their values.
+6. param - a Map that contains rq. parameter names to a single String parameter
+   value (obtained by calling ServletRequest.getParameter(String name)).
+7. paramValues - a Map that contains rq. param name to a String[] of all values
+   for that parameter (similar to calling ServletRequest.getParameterValues(name)
+8.  initParam - a Map that contains context initialization parameter names and their 
+String value (obtained by calling ServletContext.getInitParameter(String name)).
+eg : ${initParam.db_drvr}
+
+9. cookie : Map.Entry of cookies. (entrySet of cookies)
+eg : ${cookie.cookiename.value} 
+
+key ---cookie name
+value ---javax.servlet.http.Cookie
+
+
+${cookie.JSESSIONID.value}
+---cookie.get("JSESSIOIND").getValue()
+ 
+
+10. To retrieve err details from Error handling page.
+ ERR causing URI :  ${pageContext.errorData.requestURI }
+ ERR code :  ${pageContext.errorData.statusCode}
+ ERR Mesg :  ${pageContext.exception.message } 
+ Throwable : ${pageContext.errorData.throwable}
+ Throwable Root cause: ${pageContext.errorData.throwable.cause}
+
+
+eg : 
+<c:set var="abc" scope="session" value="Hello User...."/>
+${sessionScope.abc}
+
+
+
+
+
+
+
+
+
+
+
+

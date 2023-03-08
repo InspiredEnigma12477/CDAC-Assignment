@@ -1,0 +1,19 @@
+Why HttpServlet classs is declared as abstract class BUT with 100 % concrete functionality ?
+
+
+It is abstract because the implementations of key servicing methods have to be provided by (e.g. overridden by) servlet developer. Since it's abstract , it's instance can't be created.
+
+A subclass of HttpServlet must override at least one method, usually one of these:
+
+doGet, if the servlet supports HTTP GET requests
+doPost, for HTTP POST requests
+doPut, for HTTP PUT requests
+doDelete, for HTTP DELETE requests
+init and destroy, to manage resources that are held for the life of the servlet
+
+If you extend the class without overriding any methods, you will get a useless servlet; i.e. it will  give an error response for all requests.(HTTP 405 : Method not implemented) .  So , if the class was not abstract, then any direct instance of HttpServlet would be useless.
+
+So the reason for making the HttpServlet class abstract is to prevent a  programming error.
+
+As a servlet developer , you can choose to override the functionality of your requirement (eg : doPost)
+& ignore other methods. 

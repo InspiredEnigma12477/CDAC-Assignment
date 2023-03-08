@@ -1,0 +1,10 @@
+Common Troubleshooting Tips
+1. Stop web server
+2. R Click on Tomcat server --- add n remove --Remove All : This will un deploy all web apps from the server.
+3. R Click on Tomcat server --clean
+4. R Click on Tomcat server --clean tomcat work directory
+5. Start server (If it starts correctly => no server issues!)
+6. Clean Project n deploy the dynamic web project n test it.
+7. After deploying the project , if you are getting HTTP 404 , on the client side --check if you have added a welcome page correctly under the root of web app(i.e under src/main/webapp)
+
+

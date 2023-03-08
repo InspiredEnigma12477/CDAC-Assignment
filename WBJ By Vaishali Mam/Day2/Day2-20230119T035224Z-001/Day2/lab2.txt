@@ -1,0 +1,10 @@
+Create Customer Management  Application for XYZ .
+
+Do following operations
+1:Create New User
+2:Update User
+3:Delete User
+4:Login:Validate User
+
+Create This application using Servlet.
+

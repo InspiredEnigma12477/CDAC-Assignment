@@ -1,0 +1,185 @@
+Spring 5.X DB  Transactions 
+
+Required JARS ---org.springframework.transaction & aop jars
+
+Basics
+Benefits of Spring Transaction Management
+
+    * Very easy to use, does not require any underlying transaction API knowledge
+    * Your transaction management code will be independent of the transaction technology
+    * Both annotation- and XML-based configuration
+    * It does not require to run on an app server - no app server needed
+
+
+What is a Transaction?
+A Transaction is a unit of work performed on the database and treated in a reliable way independent of other transaction. In database transaction processing ACID property refers to the Atomicity, Consistency, Isolation, Durability respectively.
+
+Atomicity- This property says that all the changes to the data is performed as if they form single operation. For example suppose in a bank application if a fund transfer from one account to another account the atomicity property ensures that is a debit is made successfully in one account the corresponding credit would be made in other account.
+
+Consistency- The consistency property of transaction says that the data remains in the consistence state when the transaction starts and ends. for example suppose in the same bank account, the fund transfer from one account to another account, the consistency property ensures that the total value(sum of both account ) value remains the same after the transaction ends.
+
+Isolation- This property says that, the intermediate state of transaction are hidden/ invisible to another transaction process. 
+
+Durability- The Durability says that when the transaction is completed successfully, the changes to the data  persist and are not un-done, even in the event of system failure.A transaction is not considered durable until it commits. A system failure entails a database recovery, which includes a rollback procedure for all uncommitted transactions, ultimately leaving the database in a consistent state.
+
+Transaction Handling 
+
+Now, in Java you can handle transactions with plain SQL, with plain JDBC (a bit higher level), using Hibernate (or any other ORM library), or on an even higher level - with EJB or, finally, Spring!
+
+EJBs require an application server, but spring based JDBC / JPA  application doesn't.
+
+Ways of Transaction Handling
+Programmatic vs. Declarative
+
+Spring offers two ways of handling transactions: programmatic and declarative. If you are familiar with EJB transaction handling, this corresponds to bean-managed and container-managed transaction management.
+
+Programmatic means you have transaction management code surrounding your business code. That gives you extreme flexibility, but is difficult to maintain and too much of boilerplate code.
+
+Declarative means you separate transaction management from the business code. You only use annotations or XML based configuration.
+
+As a summary
+
+    * programmatic management is more flexible during development time but less flexible during application life
+    * declarative management is less flexible during development time but more flexible during application life
+
+Global transactions Vs Local Transactions
+
+Global transactions enable you to work with multiple transactional resources, typically multiple relational databases . The application server manages global transactions through the JTA. (complex to use through UserTransaction object)
+
+Local Transactions
+Local transactions are resource-specific, such as a transaction associated with a JDBC connection. Local transactions may be easier to use, but have significant disadvantages as they cannot work across multiple transactional resources.
+
+
+Spring's solution
+Spring resolves the disadvantages of global and local transactions. It enables application developers to use a consistent programming model in any environment. You write your code once, and it can benefit from different transaction management strategies in different environments. It supports both declarative and programmatic transaction management. Most users prefer declarative transaction management.
+
+API details
+1. The key to the Spring transaction abstraction is the concept of a transaction strategy. 
+
+Its the central interface in Spring's transaction infrastructure.
+
+ A transaction strategy is defined by the org.springframework.transaction.TransactionManager <----extended by : PlatformTransactionManager  <----
+  implemented by HibernateTxManager / JpaTxManager classes.
+
+Our applications  work with declarative transaction demarcation through AOP,using @Transactional .
+
+Method :  TransactionStatus getTransaction(TransactionDefinition td) throws TransactionExc
+
+Refer : TransactionDefinition i/f 
+
+TransactionException --- As in  Spring's philosophy, the TransactionException that is thrown by any of the PlatformTransactionManager interface's methods ,  is unchecked  Transaction infrastructure failures are generally  fatal , managed by spring Tx frmwork & developer is NOT forced to handle this.
+
+The TransactionDefinition interface specifies:
+i.e @Transactional annotation supports 5 parameters.
+
+ Isolation: The degree to which this transaction is isolated from the work of other transactions. 
+Concurrent transactions cause problems that might be difficult to investigate.
+
+    1. Lost update - if two concurrent transactions are updating different columns of the same row, then there is no conflict. The second update blocks until the first transaction is committed and the final result reflects both update changes.
+
+BUT if the two transactions want to change the same columns, the second transaction will overwrite the first one, therefore loosing the first transaction update.
+
+
+    2. Dirty read - reading changes that are not yet committed
+    3.  Unrepeatable read - a transactions reads twice the same row, getting different data each time
+    4. Phantom read - similar to the previous one, except that the number of rows changed
+
+
+Now, the perfect solution to these problems is maximum isolation, but in reality this would cost too much resources and could lead to deadlocks. So, instead, you will set one of five isolation levels (where the fifth one is actually the maximum isolation level):
+
+
+Supported levels
+ISOLATION_DEFAULT -- Use the default isolation level of the underlying datastore.
+
+ISOLATION_READ_UNCOMMITTED --- Indicates that dirty reads, non-repeatable reads and phantom reads can occur.
+
+ISOLATION_READ_COMMITTED --- Indicates that dirty reads are prevented; non-repeatable reads and phantom reads can occur.
+
+ISOLATION_REPEATABLE_READ -- Indicates that dirty reads and non-repeatable reads are prevented; phantom reads can occur.
+
+ISOLATION_SERIALIZABLE -- Indicates that dirty reads, non-repeatable reads and phantom reads are prevented.
+
+
+ Transaction Propagation
+
+Whenever a one transactional method calls other transactional mehod(NOT from the Same class) , a decision is made - what to do with the transaction. Create a new one? Use an existing one if it exists, otherwise create a new one? Use an existing one only if it exists, otherwise fail?
+eg :
+UserController : 
+@AutoWired
+private UserService userService;
+
+@Transactional(propagation=Propagation.REQUIRED) //tx1
+request handling method : placeOrder(...) {
+userService method is invoked.
+}
+
+In UserService : @Transactional
+DAO : dependency
++ OrderService : @Transactional(propagation=Propagation.REQUIRED) : doPayment //tx1
+
+
+
+
+Supported behaviors ---
+
+MANDATORY --Supports a current transaction; throws an exception if no current transaction exists.
+
+REQUIRED -- default behavior.
+          Supports a current transaction; creates a new one if none exists.
+
+
+NESTED ---Executes within a nested transaction if a current transaction exists, otherwise same as REQUIRED 
+
+SUPPORTS
+          Supports a current transaction; executes non-transactionally if none exists.
+
+REQUIRES_NEW
+          Creates a new transaction, suspending the current transaction if one exists.
+
+
+NEVER
+          Does not support a current transaction; throws an exception if a current transaction exists.
+
+NOT_SUPPORTED
+          Does not support a current transaction;  always executes non-transactionally.
+
+
+ Timeout: in seconds .How long this transaction runs before timing out and being rolled back automatically by the underlying transaction infrastructure.
+Default value = -1 , indefinite w/o time out
+Otherwise specify value 
+eg 
+@Transactional(timeout=100)
+
+
+ Read-only status: A read-only transaction can be used when your code reads but does not modify data.
+Read-only transactions can be a useful optimization in some cases, such as when you are using Hibernate.
+eg -- @Transactional(readOnly = true)
+default is false.
+
+Rollback behavior
+With Spring transaction management the default behavior for automatic rollback is this: Only unchecked exceptions cause a rollback. Unchecked exceptions are RuntimeExceptions and Errors.
+But can be changed.
+eg --
+@Transactional(rollbackFor = IOException.class, noRollbackFor = RuntimeException.class)
+public void doSomething(...)
+
+
+-------------------Earlier Implementation : Given only for historical background-----------------
+
+Implementation steps & concept for annotation based declarative transaction management.
+1. For plain JDBC implementations of PlatformTransactionManager --- use DataSourceTransactionManager --- implementation class for a single JDBC DataSource. 
+
+2. Declare the same in spring configuration xml file.
+eg --
+<!-- tx manager bean -->
+<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
+p:dataSource-ref="dataSource">
+</bean>
+
+3. To enable annotated transaction support , add transaction namespace(tx) & add following
+<tx:annotation-driven transaction-manager="transactionManager" />
+Note : can even skip attribute transaction-manager, if id of Tx Mgr bean is transactionManager
+
+This completes configuration steps
+
+4. In service layer beans (typically annotated with @Service) , add method level annotation @Transactional along with suitable properties.

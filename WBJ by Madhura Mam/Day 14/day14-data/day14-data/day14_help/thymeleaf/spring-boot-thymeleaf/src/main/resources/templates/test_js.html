@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Add CSS and JS to Thymeleaf</title>
+<link th:href="@{/css/main.css}" rel="stylesheet" />
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+	crossorigin="anonymous">
+<script type="text/javascript" th:src="@{/js/demo.js}"></script>
+
+</head>
+<body>
+	<h2>Style Heading H2</h2>
+	<p>
+		This is text on which we want to apply <strong>very special</strong>
+		styling.
+	</p>
+	<div class="container">
+		<div class="row">
+			<table class="table table-responsive table-bordered table-striped">
+				<thead>
+					<tr>
+						<th>Vendor Name</th>
+						<th>Vendor Email</th>
+						<th>Reg Amount</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="v : ${vendor_list}">
+						<td th:text="${v.name}"></td>
+						<td th:text="${v.email}"></td>
+						<td th:text="${v.regAmount}"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+	<button type="button" th:onclick="showAlert()">Show Alert</button>
+
+</body>
+</html>

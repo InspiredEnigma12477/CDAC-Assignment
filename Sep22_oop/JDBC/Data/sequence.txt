@@ -1,0 +1,17 @@
+JDBC : Java DB connectivity
+
+What is it ? : API --java.sql --to allow prog --to connect to DB , CRUD , close connection
+
+Why : Allows prog : platform independence DB apps + DB vendor inde.
+JDBC allows only partial DB independence. 
+
+JDBC Driver
+
+Steps in DB connectivity
+0. Establish connection with DB
+Objectives 
+1. Display all emp details (Statement API)
+2. Display emp details(id name salary joindate) from a specific department , joined after specific date , sorted details as per salary asc
+sql : select empid , name,salary, join_date from my_emp where deptid=? and join_date > ? order by salary
+
+Enter Layered Architecture

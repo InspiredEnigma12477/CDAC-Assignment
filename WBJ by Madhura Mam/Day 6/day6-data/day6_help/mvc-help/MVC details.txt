@@ -1,0 +1,50 @@
+Model 1 and Model 2 (MVC) Architecture
+
+Before developing any web application, we need to have idea about design models. 
+There are two types of programming models (design models)
+
+Model 1 Architecture
+Model 2 (MVC) Architecture
+
+Model 1 Architecture
+Servlet and JSP are the main technologies to develop the web applications.
+
+Servlet is considered faster alternative to CGI. Servlet technology doesn't create process, rather it uses threads from a thread pool  to handle request. The advantage of creating thread over process is that it doesn't allocate separate memory area , leading to better performance. Thus many subsequent requests can be easily handled by servlet.
+
+Problem in Servlet technology Servlet needs to recompile if any designing code is modified. It doesn't provide separation of concern. Presentation and Business logic are mixed up.
+
+JSP overcomes almost all the problems of Servlet. It provides better separation of concern, now presentation and business logic can be easily separated. You don't need to redeploy the application if JSP page is modified. JSP provides support to develop web application using JavaBean, custom tags and JSTL so that we can put the business logic separate from our JSP that will be easier to test and debug.
+
+Advantage of Model 1 Architecture
+Easy and Quick to develop web application
+
+Disadvantage of Model 1 Architecture
+
+Navigation control is decentralized since every page contains the logic to determine the next page. 
+
+If JSPs names are modified, we need to change it in all the pages leadining to the maintenance problem.
+
+Time consuming.
+Hard to extend It is better for small applications but not for large applications.
+
+Enter Model 2 (MVC) Architecture
+Model 2 is based on the MVC (Model View Controller) design pattern. The MVC design pattern consists of three modules model, view and controller.
+
+Model The model represents the state (data) and business logic of the application. (JavaBean , POJOs)
+
+View The view module is responsible to display data i.e. it represents the presentation.(JSP)
+
+Controller :  The Front controller module(Servlet/Filter) acts as an interface between view and model. It intercepts all the requests i.e. receives input and sends commands to Model / View to change accordingly.
+
+
+Advantage of Model 2 (MVC) Architecture
+
+Navigation control is centralized .
+Now only controller contains the logic to determine the next page.
+Easy to maintain
+Easy to extend
+Easy to test
+Better separation of concerns
+
+Disadvantage of Model 2 (MVC) Architecture
+Developing centralized dispatcher (a navigation controller) is tedius, especially when web app size grows. That's the reason , Spring MVC is so popular , which  implements Servlet based MVC pattern n supplies readymade components : Front Controller , Handler mapping , View Resolver ...

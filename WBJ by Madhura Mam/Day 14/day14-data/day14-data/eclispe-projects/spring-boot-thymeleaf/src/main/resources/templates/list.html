@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+<title>Users</title>
+
+</head>
+<body>
+	<h4>
+		<a th:href="@{/students/add}">Add Student Details</a>
+	</h4>
+	<div th:if="${#lists.isEmpty(students)}">
+		<h2>No Students yet!</h2>
+	</div>
+
+	<div th:unless="${#lists.isEmpty(students)}">
+
+		<table style="background-color: pink; margin: auto;">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Email</th>
+					<th>Phone No</th>
+					<th>Edit</th>
+					<th>Delete</th>
+				</tr>
+			</thead>
+			<tbody>
+
+				<tr th:each="student : ${students}">
+					<td th:text="${student.name}"></td>
+					<td th:text="${student.email}"></td>
+					<td th:text="${student.phoneNo}"></td>
+					<td><a th:href="@{/students/edit(id=${student.id})}">Edit</a></td>
+					<td><a th:href="@{/students/delete/{id}(id=${student.id})}">Delete</a></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+
+
+
+</body>
+</html>

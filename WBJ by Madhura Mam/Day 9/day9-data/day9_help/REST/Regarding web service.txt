@@ -1,0 +1,42 @@
+What is a web service ?
+A solution to distributed computing.
+
+Integral part of SOA (service oriented architecture)
+service = Business functionality to be exported to remote clnts via standard protocols(HTTP/s)
+server -- service provider
+clnt --service accessor
+
+Why -- To export the Business logic (functional logic --banking, customer service, payment gateway ,  stock exchange server BSE , NSE ...) to remote clients over standard set of protocols.
+
+Its equivalent to Java RMI (remote method invocation)
+In Java RMI -- java clnt object can directly invoke the remote method (hosted on the remote host) & get n process results. (i.e it gives you location transperency)
+BUT Java RMI ---is 100% java solution.
+There is no inter operability in that(i.e its a technologoy specific soln)
+How to arrive at technology inde soln ?
+
+CORBA --- Common obj request borker architecture
+tough to set up. (IDL ---i/f def language)
+Better alternative --- web services
+In 2002, the World Wide Web consortium(W3C) had released the definition of WSDL(web service definition language) and SOAP web services. This formed the standard of how web services are implemented.
+Earlier (J2EE 1.4 ) -- JAX-RPC
+Java API for XML based remote procedure calls
+Today replaced by JAX-WS
+
+In 2004, the web consortium also released the definition of an additional standard called RESTful. Over the past couple of years, this standard has become quite popular. And is being used by many of the popular websites around the world which include Facebook and Twitter.
+
+Corresponding J2EE specification  JAX RS
+
+JAX WS -- Java API for XML based web services -- Based upon 
+Protocol --SOAP -- simple object access protocol (runs over HTTP)
+Has additional header & message format .
++ Have to set up Naming service (UDDI --Universal Description, Discovery, and Integration) 
++ Have to set up WSDL (web service def. language)-- xml based web service def lang.
+--supports only XML as data exchange format.
+
+Too much to set up & eats up larger bandwidth !!
+So a simple soln is JAX RS -- Java API for RESTful web service
+JAX RS --- is a part of J2EE specifications
+Known Vendors --Apache , JBoss 
+& products --RESTeasy,Apache CXF
+BUT it's still difficult to set up.
+So spring , being integration master , comes to the rescue.....

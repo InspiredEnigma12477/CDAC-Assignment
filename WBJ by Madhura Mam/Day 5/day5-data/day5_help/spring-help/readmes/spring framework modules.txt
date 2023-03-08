@@ -1,0 +1,46 @@
+Spring Framework Modules
+1. Core Container
+It  consists of the Core, Beans, Context, and Expression Language modules 
+
+1.1 The Core module provides the fundamental parts of the framework, including the IoC based upon Dependency Injection 
+
+1.2 The Bean module provides BeanFactory , which is a  readymade implementation of the factory pattern.
+
+1.3 The Context module is based upon the Core and Beans modules .It provides a way  to access any spring beans(objects managed by Spring container) which are defined and configured. The ApplicationContext interface is the heart of  Context module.
+
+1.4 The SpEL module provides a powerful expression language for querying and manipulating an object graph at runtime.
+
+2. Data Access/Integration module
+The Data Access/Integration layer consists of the JDBC, ORM, OXM, JMS and Transaction modules 
+
+2.1 The JDBC module provides a JDBC-abstraction layer that removes the need for boilerplat JDBC related coding.
+
+2.2 The ORM module provides integration layers for popular object-relational mapping APIs, including JPA, JDO, Hibernate, and iBatis.
+
+2.3 The OXM module provides an abstraction layer that supports Object/XML mapping implementations for JAXB, XMLBeans, , XStream etc
+
+2.4  JMS module contains features for producing and consuming messages sent across application components
+
+2.5 The Transaction module supports programmatic and declarative transaction management for typically service layer or DAO layer spring beans.
+
+3. Web
+The Web layer consists of the Web, Web-MVC, Web-Socket, and Web-Portlet modules .
+
+ The Web module provides basic web integration features such as MVC support,multipart file-upload functionality ,init of  IoC container using servlet listeners ,  web application context , I18N etc.
+
+3.1 The Web-MVC module contains Spring's Model-View-Controller (MVC) implementation for web applications.
+
+3.2 The Web-Socket module provides support for WebSocket-based, two-way communication between the client and the server in web applications.
+
+3.3 The Web-Portlet module provides the MVC implementation to be used in a portlet environment
+
+Other important Modules
+
+1. The AOP module provides an aspect-oriented programming implementation allowing you to define method-interceptors and pointcuts to cleanly decouple code that implements functionality that should be separated.
+
+
+2. The Instrumentation module 
+
+3. The Messaging module provides support for STOMP as the WebSocket sub-protocol to use in web socket applications.
+
+4. The Test module supports the testing of Spring components with JUnit or TestNG frameworks.

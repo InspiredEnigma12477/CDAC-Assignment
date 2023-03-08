@@ -1,0 +1,163 @@
+Lab Status ??????
+Revise hibernate architecture
+Revise layers in hibernate (building blocks)
+Revise flow
+Hibernate based CRUD application n searching API n BLOB Handling
+Hibernate managed entity/pojo life cycle
+
+Integration with web app (Lab work )
+(user registration n login OR products scenario)
+
+
+Dis Advantages of Hibernate over JDBC:
+1. Learning curve !
+2. Booting time (loading hib frmwork) : time consuming
+3. If hibernate is not tuned properly , JDBC offers better performance than hibernate .
+
+
+Refer : 
+(hibernate api-docs & readme : hibernate session api)
+
+Which of the following layers are currently hibernate specific(native hibernate) ?
+
+DAO :  YES
+POJO : JPA compliant
+Utils : YES
+
+
+
+3. Objective : Get user details
+I/P : user id
+O/P : User details or error 
+API : session.get
+
+4. Confirm L1 cache
+by invoking session.get(...) multiple times.
+
+5. Hibernate POJO states :
+transient , persistent , detached.
+
+6. Objective : Display all user details
+Can you solve it using session.get ? : NO
+sql : "select * from users_tbl"
+
+
+
+
+6.1 Solve it using HQL(Hibernate query language)/JPQL (Java Persistence Query Language) : DB independent queries
+
+Object oriented query language, where table names are replaced by POJO class names & column names are replaced by POJO property names, in case sensitive manner.
+
+sql : "select * from users_tbl"
+hql : from User
+jpql : select u from User u
+u : POJO ref(alias)
+
+6.2. Create Query Object --- from Session i/f
+<T> org.hibernate.query.Query<T> createQuery(String jpql/hql,Class<T> resultType)
+T --result type.
+
+6.3. To execute query
+Query i/f method
+public List<T> getResultList() throws HibernateException
+--Rets list of PERSISTENT entities.
+NOTE : getResultList() 's results are NOT cached in L1 cache
+To enable caching --enable L2 cache n then enable Query level cache.
+
+
+7. Objective : Display all users registered between strt date n end date & under a specific role
+I/P : begin dt , end date , role
+eg : sql = select * from users where reg_date between ? and ? and user_role=?
+jpql="select u from User u where u.regDate between :strt_date and :end_date and u.userRole=:role
+
+
+Passing named  IN params to the query
+Query i/f method
+public Query<T> setParameter(String paramName,Object value) throws HibernateException.
+
+
+8 . User Login (Lab work)
+i/p : email n password
+o/p User details with success mesg or invalid login mesg
+Hint : Query API : public <T> T getSingleResult() throws NoResultExc, NonUniqueResExc,IllegalStateExc
+
+
+
+
+9. Objective : Display all user names registered  under a specific role
+
+
+10. Objective : Display all user's last name,reg amount,reg date registered after a particular reg date , n under a specific role
+
+
+
+
+
+
+String jpql="select u.lastName,u.regAmount,u.regDate from User u where u.regDate > :date and u.userRole=:role";
+List<Object[]> list=session.createQuery(jpql,Object[].class).setParameter("date", startDate).setParameter("rl", userRole).getResultList();
+In Tester : 
+list.forEach(o -> sop(o[0]+" "+o[1]+"  "+o[2]));
+
+INSTEAD use a constructor expression
+eg :
+jpql = "select new pojos.User(lastName,regAmount,regDate) from User u where u.regDate between :strt and :end and userRole=:rl";
+
+Pre requisite : MATCHING constr in POJO class
+
+11. Update 
+Objective : 
+1. Change password
+i/p --email , old password , new pass
+o/p : mesg indicating success or a failure
+
+
+12. Apply discount to reg amount , for all users , reged before a specific date.(Bulk update)
+i/p -- discount amt, reg date
+
+String jpql="update User u set u.regAmount=u.regAmount-:disc where u.regDate < :dt";
+12.1 Session API
+public Query<T> createQuery(String jpql) throws HibernateException
+jpql -- DML
+12.2 Query API
+public int executeUpdate() throws HibernateException
+--use case --DML
+
+
+13. Un subscribe user
+i/p user id
+o/p user details removed from DB
+(select + delete)
+
+
+14. Lab work
+Objective --delete user details for those users reged after a specific date
+via Bulk delete
+String jpql="delete from User u where u.regDate > :dt";
+
+15. Save n restore images to / from DB
+API of FileUtils class from Apache supplied commons-io jar
+<!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.11.0</version>
+		</dependency>
+Methods 
+
+1. public static byte[] readFileToByteArray(File file)
+                                  throws IOException
+Reads the contents of a file into a byte array. The file is always closed.
+
+2. public static void writeByteArrayToFile(File file,
+                        byte[] data)
+                                 throws IOException
+Writes a byte array to a file creating the file if it does not exist.
+
+15.1 Objective 
+Store image data for the specified user.
+i/p : user  email n image file name(path)
+o/p : message indicating success or failure
+
+15.2 
+Restore image from DB

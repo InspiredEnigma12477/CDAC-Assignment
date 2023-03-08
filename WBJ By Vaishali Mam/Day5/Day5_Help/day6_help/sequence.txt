@@ -1,0 +1,204 @@
+Today's Topics
+JSP Basics
+URL rewriting
+JSP Directives
+JSP Actions
+JSP using JavaBean
+JSTL
+----------------------------
+Revise
+What is a JSP ?
+Why ?
+Life cycle
+clnt sends 1st req to index.jsp --->1.  translation phase --> .java (translated page source) : server specific --Tomcat : work /index_jsp.java --->2. compilation --> .class --> loc--load-instantiate --> translated page class instance will be present server side heap (page) --> ServletConfig instance --> public void jspInit(Servlet <---JspPage <---HttpJspPage) : init seq over.
+
+3. req processing phase ---> WC pools out a thrd --> run() --> _jspService(rq,rs) throws SE,IOExc : should not be overridden by JSP prog --> servicing over --> run() rets --> pooled out thrd rets to pool , so that SAME thread can service any further request 
+
+@end of life cycle (shut down/re-deploy/un dep ) --> public void jspDestroy --> GC
+------------------------------------------------------
+
+1. JSP basic syntax
+refer to "readme_jsp"
+
+1.5 solve JSP Assignment
+
+2.  (Are there any problems observed in client pull , if cookies are disabled?) : YESS
+Soln : URL rewriting
+
+URL : http://localhost:8080/day8.1/details.jsp;jsessionid=84BE78D13C72F248FBC1D6FF0783D1EA
+
+http://localhost:8080/day8.1/logout.jsp;jsessionid=6235226A75FD90366BF93E9E4373D66A
+
+
+3. JSP Directives : commands meant for WC : to be processed in the translation phase
+
+Centralized err handling in JSP : errorPage , isErrorPage
+
+
+
+Enter JSP Using Java Beans
+1. What is a java bean ?
+2. Why Java Beans ?
+case study : CMS (admin role)
+
+Layers to bo copied from earlier (servlet based) assgnment
+Tables, POJOs, DAOs , DBUtils
+
+ref project : day5_cms
+
+Steps
+1. UserBean : for authentication of user
+1.1 public n packged class
+1.2 properties : email, pwd , user dao , User pojo ref
+1.3 arg less constr : user dao instance
+1.4 all setters n getters
+1.5 Add B.L method
+public String authenticateUser() throws Exception
+{
+  ....
+}
+
+3. JSP standard Actions Using java beans 
+3.1
+<jsp:useBean id="bean id" class="Fully qualified bean class name" scope="page|request|session|application"/>
+default scope : page
+eg : 
+
+
+3.2 <jsp:setProperty name="user" property="email" value="abc@gmail.com"/>
+
+
+
+<jsp:setProperty name="user" property="email" value="${param.em}"/>
+
+
+
+<jsp:setProperty name="user" property="email" param="em"/>
+
+
+
+<jsp:setProperty name="user" property="*"/>
+
+eg : em, pass: req param names
+JB property names : email , password : 
+How many setters will WC call ?
+
+
+
+
+WC : Tries to call ALL MATCHING setters
+Request param names MUST MATCH with JB property setters
+eg : http://host:port/day7.1/validate.jsp?em=abc&pass=1234
+validate.jsp
+<jsp:useBean id="user" class="beans.UserBean" scope="session"/>
+<jsp:setProperty name="voter" property="*"/>
+
+UserBean : setEmail n setPassword
+How many setters ? 
+
+4. How to invoke B.L method of a java bean  w/o java code(i.e scriptlet)
+Via EL syntax.
+
+
+
+5. How to invoke getters of JB ?
+5.1 <jsp:getProperty name="voter" property="validatedUser"/>
+
+
+OR 
+EL syntax :
+
+
+WC : 
+
+Any problems observed with server pull ?
+
+
+
+
+
+
+What's the solution ? (Double submit guard)
+replace server pull ---> clnt pull
+<c:redirect> : JSTL action --- only candidate list  related DB query gets fired.
+
+Which tag will you use in JSP for clnt pull ?(redirect scenario) --no standard action exists : so use 
+JSTL action
+
+Import JSTL core tag lib n use tag.
+Steps
+1. Copy/confirm jstl1.2.jar under <tomcat> / lib
+2. Import JSTL supplied core tag lib
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+3. Use the tag
+eg : In one.jsp : 
+<c:redirect url="two.jsp"/>
+WC : 
+If cookies are enabled ,WC sends resp : ??????????????????
+
+ if cookies are disabled , WC sends resp :   ?????????????????????
+
+
+Objective : Display topics list (for admin part of CMS)
+<c:forEach>
+
+Other JSTL Tags
+
+1. <c:set var="abc" value="${param.name}" scope="session"/>
+WC : session.setAttribute("abc",request.getParameter("name"));
+
+2. <c:remove var="abc"  scope="session"/>
+WC : session.removeAttribute("abc") (equivalent to Map's remove)
+
+3. <c:set var="abc" value="${param.name}"/>
+WC : pageContext.setAttribute("abc",request.getParameter("name"));
+
+4. eg : In HTML form 
+<input type="submit" name="btn" value="Withdraw">
+<input type="submit" name="btn" value="Deposit">
+In transactions.jsp
+<c:if test="${param.btn eq 'Withdraw'}">
+ In withdraw 
+</c:if>
+WC : 
+if(request.getParameter("btn").equals("Withdraw")
+ out.print("in withdraw")
+Use case : voter login --success -not yet voted --list.jsp ---status.jsp
+voter login --success -alrdy  voted ----status.jsp
+
+status.jsp : after casting a vote => increment votes n change voting status
+directly : u have alrdy voted => no action --display a message
+eg : 
+<c:if test="${sessionScope.voter.status}">
+ You have alrdy voted....
+</c:if>
+
+
+5. 
+<c:choose>
+ <c:when test="${param.btn eq 'Withdraw'}">
+ In withdraw 
+ </c:when>
+ <c:when test="${param.btn eq 'Deposit'}">
+In Deposit
+ </c:when>
+ <c:otherwise>
+ some other btn ......
+ </c:otherwise>
+</c:choose>
+
+URL :  
+http://host:port/one.jsp?name="Ranjana"
+
+In one.jsp
+<c:set var="abc" value="${param.name}" scope="session"/> 
+<c:redirect url="two.jsp"/>
+WC : response.sendRedirect(response.encodeRedirectURL("two.jsp"));
+
+In two.jsp
+${sessionScope.abc} : Ranjana  ---Even if cookies are enabled/disabled
+
+eg : 
+<c:redirect url="${sessionScope.user.validateUser()}.jsp"/>
+
+Objective : In case of invalid login , forward the clnt to login page BUT with error mesg

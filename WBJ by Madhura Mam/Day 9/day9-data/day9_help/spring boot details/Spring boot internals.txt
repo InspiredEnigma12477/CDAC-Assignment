@@ -1,0 +1,47 @@
+Spring boot internals explained :
+ 
+Important components of a Spring Boot Application
+
+Below is the starting point of a Spring Boot Application
+
+@SpringBootApplication
+public class HelloSpringBootApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(HelloSpringBootApplication.class, args);
+	}
+
+}
+About : org.springframework.boot.SpringApplication
+It's Class  used to bootstrap and launch a Spring application from a Java main method. 
+
+By default class will perform the following steps to bootstrap the application
+1. Create an ApplicationContext instance (representing SC)
+2. Manages life cycle of spring beans
+3. Launches embedded Tomcat container
+
+
+@SpringBootApplication - This is where all the spring boot magic happens.
+It consists of following 3 annotations.
+
+1. @SpringBootConfiguration
+It  tells spring boot  that this class here can have several bean definitions. We can define various spring beans here and those beans will be available at run time .
+
+2. @EnableAutoConfiguration
+It tells spring boot to automatically configure the spring application based on the dependencies that it sees on the classpath.
+
+eg:
+If we have a MySql dependency in our pom.xml , Spring Boot will automatically create a data source,using the properties in application.properties file.  
+
+If we have spring web in pom.xml , then spring boot will automatically create the dispatcher servlet n other beans (HandlerMapping , ViewResolver)
+
+All the xml, all the java based configuration is now gone.It all comes for free thanks to spring boot to enable auto configuration annotation. 
+
+3. @ComponentScan (equivalent to xml tag : context:component-scan)
+
+So this  tells us that spring boot to  scan through the classes and see which all classes are marked with the stereotype annotations like @Component Or @Service @Repository and manage  these spring beans . Default base-pkg is the pkg in which main class is defined.
+Can be overridden by
+eg : 
+@ComponentScan(basePackages = "com")
+For scanning entities :  (equivalent to packagesToScan)
+@EntityScan(basePackages = "com.app.pojos")
